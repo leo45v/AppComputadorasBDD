@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectBrl;
+using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDal.Personas;
 
 namespace WpfAppComputadoras
 {
@@ -25,6 +26,38 @@ namespace WpfAppComputadoras
         public MainWindow()
         {
             InitializeComponent();
+            Guid idNuevo = Guid.NewGuid();
+            UsuarioBrl.Insertar(new Usuario()
+            {
+                Contrasenia = "123",
+                Eliminado = false,
+                IdUsuario = idNuevo,
+                NombreUsuario = "Pedrito3",
+                Rol = new Rol()
+                {
+                    IdRol = 2,
+                }
+            });
+            Usuario miUsuario = UsuarioBrl.Seleccionar(idNuevo);
+            if (miUsuario != null)
+            {
+                lblPrueba.Content = String.Format("Usuario: {0}\n\rContraseña: {1}\n\rEliminado: {2}\n\rRol: {3}\n\rID: {4}",
+                    miUsuario.NombreUsuario, miUsuario.Contrasenia,
+                    miUsuario.Eliminado, miUsuario.Rol.NombreRol, miUsuario.IdUsuario);
+                miUsuario.NombreUsuario = "pollito";
+                miUsuario.Contrasenia = "321";
+                UsuarioBrl.Actualizar(miUsuario);
+                UsuarioBrl.Borrar(miUsuario);
+            }
+
+            Usuario verificarUsuario = UsuarioBrl.Seleccionar(idNuevo);
+            if (verificarUsuario != null)
+            {
+                lblPrueba.Content = "El Usuario \"" + idNuevo.ToString() + "\" No existe";
+            }
+
+
+
             ProductosBrl productos = new ProductosBrl();
             productos.rams.Add(new Ram()
             {

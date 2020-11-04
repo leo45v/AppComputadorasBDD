@@ -9,9 +9,9 @@ using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Operaciones;
 
 namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common
 {
-    public class OperationsSql 
+    public class OperationsSql
     {
-        private static string connectionString = ConfigurationManager.ConnectionStrings["BDDDIRECT"].ConnectionString;
+        private static string connectionString = ConfigurationManager.ConnectionStrings["LEO"].ConnectionString;
         private static SqlConnection connection = new SqlConnection(connectionString);
         private static SqlCommand command = new SqlCommand() { Connection = connection, CommandType = CommandType.Text };
         private static SqlTransaction transaccion;
@@ -88,11 +88,10 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common
                 command.Parameters.Clear();
             }
         }
-        public static void ExecuteTransactionRollback()
+        public static void ExecuteTransactionCancel()
         {
             if (transaccion != null)
             {
-                transaccion.Rollback();
                 transaccion = null;
                 command.Parameters.Clear();
             }
@@ -105,9 +104,9 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common
                 tOb2.GetProperty(propertyName).SetValue(objectTo, propertyValue);
             }
         }
-        public static ObjectData ExecuteReader()
+        public static Dictionary<string, object> ExecuteReader()
         {
-            ObjectData data = null;
+            Dictionary<string, object> data = null;
             using (SqlDataReader reader = command.ExecuteReader())
             {
                 if (reader.Read())
@@ -117,12 +116,12 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common
             }
             return data; //data.Count > 0 ? data : null;
         }
-        public static List<ObjectData> ExecuteReaderMany()
+        public static List<Dictionary<string, object>> ExecuteReaderMany()
         {
-            List<ObjectData> ListData = null;
+            List<Dictionary<string, object>> ListData = null;
             using (SqlDataReader reader = command.ExecuteReader())
             {
-                ListData = new List<ObjectData>();
+                ListData = new List<Dictionary<string, object>>();
                 while (reader.Read())
                 {
                     ListData.Add(GetData_FromSQL(reader));
