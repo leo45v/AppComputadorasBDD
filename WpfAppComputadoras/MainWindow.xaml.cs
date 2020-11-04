@@ -41,10 +41,10 @@ namespace WpfAppComputadoras
             Usuario miUsuario = UsuarioBrl.Seleccionar(idNuevo);
             if (miUsuario != null)
             {
-                lblPrueba.Content = String.Format("Usuario: {0}\n\rContraseña: {1}\n\rEliminado: {2}\n\rRol: {3}\n\rID: {4}",
-                    miUsuario.NombreUsuario, miUsuario.Contrasenia,
-                    miUsuario.Eliminado, miUsuario.Rol.NombreRol, miUsuario.IdUsuario);
-                miUsuario.NombreUsuario = "pollito";
+            //    lblPrueba.Content = String.Format("Usuario: {0}\n\rContraseña: {1}\n\rEliminado: {2}\n\rRol: {3}\n\rID: {4}",
+            //        miUsuario.NombreUsuario, miUsuario.Contrasenia,
+            //        miUsuario.Eliminado, miUsuario.Rol.NombreRol, miUsuario.IdUsuario);
+                miUsuario.NombreUsuario = "Polo1";
                 miUsuario.Contrasenia = "321";
                 UsuarioBrl.Actualizar(miUsuario);
                 UsuarioBrl.Borrar(miUsuario);
@@ -56,29 +56,6 @@ namespace WpfAppComputadoras
                 lblPrueba.Content = "El Usuario \"" + idNuevo.ToString() + "\" No existe";
             }
 
-
-
-            ProductosBrl productos = new ProductosBrl();
-            productos.rams.Add(new Ram()
-            {
-                Descontinuado = false,
-                Frecuencia = 3000,
-                IdProducto = Guid.NewGuid(),
-                Imagen = "",
-                Latencia = 23,
-                Marca = new Marca()
-                {
-                    IdMarca = 5,
-                },
-                Memoria = 16,
-                Nombre = "Ballistix",
-                PrecioUnidad = 70,
-                Stock = 10
-            });
-            //foreach (var item in productos.rams)
-            //{
-            //    Console.WriteLine(item);
-            //}
 
 
 
