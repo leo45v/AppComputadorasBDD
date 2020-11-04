@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Procesador" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAIAIAAAECAAAAAAAAAAAAAAAAAAAAAAAAAIA=</HashCode>
+      <FileName>Procesador.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Producto" Collapsed="true">
+    <Position X="1.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAADAAAAAAAAAAAAAAgAAAgAAQgBAAAAAAAAAAAAA=</HashCode>
+      <FileName>Producto.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Reserva" Collapsed="true">
+    <Position X="1.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAA=</HashCode>
+      <FileName>Reserva.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Usuario" Collapsed="true">
+    <Position X="3.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAEAAAAAAAEAAAAAAAAgAAAIAAAAAAAAA=</HashCode>
+      <FileName>Usuario.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Ram" Collapsed="true">
+    <Position X="0.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAABAAAAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Ram.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Grafica" Collapsed="true">
+    <Position X="3.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAEAAAAAAAAEAAAAAAAAAAAAgAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Grafica.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Gabinete" Collapsed="true">
+    <Position X="5.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAEA=</HashCode>
+      <FileName>Gabinete.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Fuente" Collapsed="true">
+    <Position X="7.75" Y="2.75" Width="1.5" />
+    <InheritanceLine Type="Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Producto" ManuallyRouted="true">
+      <Path>
+        <Point X="2.25" Y="2.312" />
+        <Point X="8.5" Y="2.312" />
+        <Point X="8.5" Y="2.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAEA=</HashCode>
+      <FileName>Fuente.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Marca" Collapsed="true">
+    <Position X="4" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Marca.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.PlacaBase" Collapsed="true">
+    <Position X="2.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAAAAAAAAAABAAAAAAAAAAAAAAAAAgAAAEA=</HashCode>
+      <FileName>PlacaBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Monitor" Collapsed="true">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAEAAAAAAAAABAAAAAAgAAAAEA=</HashCode>
+      <FileName>Monitor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Almacenamiento" Collapsed="true">
+    <Position X="7.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAIQ=</HashCode>
+      <FileName>Almacenamiento.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Cliente" Collapsed="true">
+    <Position X="10" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Cliente.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Administrador" Collapsed="true">
+    <Position X="9.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Administrador.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Persona" Collapsed="true">
+    <Position X="8.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABAAAEgAAAkAAAAAAAAAAAAAIEAAAAAAA=</HashCode>
+      <FileName>Persona.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Rol" Collapsed="true">
+    <Position X="5.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAEAAAAAAA=</HashCode>
+      <FileName>Rol.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.DetalleReserva" Collapsed="true">
+    <Position X="7.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAAAAAAAQAAAAAAAAAAAAAAAACAAAAAAAAA=</HashCode>
+      <FileName>DetalleReserva.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
