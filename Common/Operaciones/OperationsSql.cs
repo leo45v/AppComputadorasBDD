@@ -11,7 +11,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common
 {
     public class OperationsSql
     {
-        private static string connectionString = ConfigurationManager.ConnectionStrings["LEO"].ConnectionString;
+        private static string connectionString = ConfigurationManager.ConnectionStrings["BDDDIRECT"].ConnectionString;
         private static SqlConnection connection = new SqlConnection(connectionString);
         private static SqlCommand command = new SqlCommand() { Connection = connection, CommandType = CommandType.Text };
         private static SqlTransaction transaccion;
