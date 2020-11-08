@@ -11,24 +11,22 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common
 {
     public class OperationsSql
     {
-        private static string connectionString = ConfigurationManager.ConnectionStrings["BDDDIRECT"].ConnectionString;
-        private static SqlConnection connection = new SqlConnection(connectionString);
-        private static SqlCommand command = new SqlCommand() { Connection = connection, CommandType = CommandType.Text };
+        private static string myVar = ConfigurationManager.ConnectionStrings["BDDDIRECT"].ConnectionString;
+        //public static readonly string connectionString = ConfigurationManager.ConnectionStrings["BDDDIRECT"].ConnectionString;
+        private static readonly SqlConnection connection = new SqlConnection() { ConnectionString = myVar };
+        private static readonly SqlCommand command = new SqlCommand() { Connection = connection, CommandType = CommandType.Text };
         private static SqlTransaction transaccion;
-        public OperationsSql()
+
+        public string MyProperty
         {
-            //connectionString = ConfigurationManager.ConnectionStrings["BDDDIRECT"].ConnectionString;
-            //connection.ConnectionString = connectionString;
-            //command.Connection = connection;
-            //command.CommandType = CommandType.Text;
+            get
+            {
+
+                return myVar;
+            }
+            set { connection.ConnectionString = myVar; myVar = value; }
         }
-        //public staticOperationsSql(string connectionPath)
-        //{
-        //    connectionString = connectionPath;
-        //    connection.ConnectionString = connectionString;
-        //    command.Connection = connection;
-        //    command.CommandType = CommandType.Text;
-        //}
+
         public static void CloseConnection()
         {
             if (connection.State == ConnectionState.Open)
@@ -38,11 +36,11 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common
         }
         public static void OpenConnection()
         {
-            if (connection.State == ConnectionState.Open)
+            if (connection.State == ConnectionState.Closed)
             {
-                connection.Close();
+                connection.Open();
             }
-            connection.Open();
+            //connection.Open();
         }
         private static void CreateTransaction()
         {
@@ -129,9 +127,9 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common
             }
             return ListData.Count > 0 ? ListData : null;
         }
-        private static ObjectData GetData_FromSQL(SqlDataReader reader)
+        private static Dictionary<string, object> GetData_FromSQL(SqlDataReader reader)
         {
-            ObjectData data = new ObjectData();
+            Dictionary<string, object> data = new Dictionary<string, object>();
             foreach (DataRow drow in reader.GetSchemaTable().Rows)
             {
                 data.Add(drow.ItemArray[0].ToString(), reader[drow.ItemArray[0].ToString()]);

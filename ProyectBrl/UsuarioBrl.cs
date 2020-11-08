@@ -13,11 +13,11 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectBr
         }
         public static Usuario Seleccionar(Guid idUsuario)
         {
-            return UsuarioDal.Obtener_Por_Id(idUsuario);
+            return UsuarioDal.Obtener(idUsuario);
         }
         public static Usuario Seleccionar(Usuario usuario)
         {
-            return UsuarioDal.Obtener_Usuario(usuario);
+            return UsuarioDal.Obtener(usuario);
         }
         public static List<Usuario> Seleccionar_Todo()
         {
@@ -34,6 +34,14 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectBr
         public static bool Actualizar(Usuario usuario)
         {
             return UsuarioDal.Actualizar(usuario);
+        }
+        public static Guid Obtener_Id_Usuario(Usuario usuario)
+        {
+            return UsuarioDal.Obtener_Id_By_Password_Username(usuario.NombreUsuario, usuario.Contrasenia);
+        }
+        public static Guid Obtener_Id_Usuario(string userName, string password)
+        {
+            return UsuarioDal.Obtener_Id_By_Password_Username(userName, password);
         }
     }
 }

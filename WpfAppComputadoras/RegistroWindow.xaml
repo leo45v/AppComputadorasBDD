@@ -1,0 +1,245 @@
+﻿<Window x:Class="WpfAppComputadoras.RegistroWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfAppComputadoras"
+        mc:Ignorable="d"
+        Title="RegistroWindow"  Width="700" 
+    Height="750" MinHeight="750" MinWidth="700"  Background="{x:Null}" AllowsTransparency="True" 
+    WindowStyle="None" WindowStartupLocation="CenterScreen" ResizeMode="CanResizeWithGrip" Initialized="Window_Initialized" Closing="Window_Closing">
+    <Border CornerRadius="10,10,0,10">
+        <Border.Background>
+            <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                <GradientStop Color="#FF612F5C" Offset="0"/>
+                <GradientStop Color="#FF281717" Offset="0.5"/>
+                <GradientStop Color="#FF281717" />
+                
+                <!--<GradientStop Color="#FF314459" Offset="1"/>
+                <GradientStop Color="#FF161E27" Offset="0.5"/>
+                <GradientStop Color="#FF1B2E3D"/>-->
+            </LinearGradientBrush>
+        </Border.Background>
+        <Grid>
+            <Grid>
+                <Grid x:Name="grid_Division">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="10"/>
+                        <!-- Indicador si hay algun error abajo -->
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="10"/>
+                        <!-- a quie sera un punto de expansion-->
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="10"/>
+                        <!-- a quie sera un punto de expansion-->
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="25"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="170"/>
+                        <ColumnDefinition Width="15"/>
+                        <ColumnDefinition Width="220"/>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="220"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="25"/>
+                        <ColumnDefinition Width="25"/>
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="9" CornerRadius="10,10,0,0">
+                        <Border.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="Black"/>
+                                <GradientStop Color="#001A2A37" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <TextBlock Grid.Row="0" Grid.Column="0" MouseLeftButtonDown="Mover_Ventana_Controller" Grid.ColumnSpan="9"/>
+                    </Border>
+                    <!--<Image x:Name="Cerrar_Btn" Grid.Row="0" Grid.Column="8" MouseEnter="Label_MouseEnter" VerticalAlignment="Top" MouseLeave="Label_MouseLeave" MouseDown="Label_MouseDown" Width="25" Height="25" Source="Cabezera/Cerrar.png" ToolTip="Cerrar Aplicación" MouseUp="Cerrar_Btn_MouseUp">
+                        <Image.OpacityMask>
+                            <ImageBrush ImageSource="Cabezera/Cerrar.png"/>
+                        </Image.OpacityMask>
+                    </Image>
+                    <Image x:Name="Minimizar_Btn" Grid.Row="0" Grid.Column="7" MouseEnter="Minimizar_Enter"  MouseLeave="Minimizar_Salir"  MouseDown="Label_MouseDown_1" VerticalAlignment="Top" Width="25" Height="25" Source="Cabezera/Minimizar.png" ToolTip="Minimizar Aplicación" MouseUp="Minimizar_Btn_MouseUp">
+                        <Image.OpacityMask>
+                            <ImageBrush ImageSource="Cabezera/Minimizar.png"/>
+                        </Image.OpacityMask>
+                    </Image>-->
+                    <TextBlock x:Name="bloque_Init" Text="" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="WhiteSmoke" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="5"/>
+                    <Separator Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="5" Background="#FFAEAEAE" BorderThickness="24,0,10,0" IsEnabled="True"/>
+                    
+                    <TextBlock Text="Nombre Usuario:" Name="bloque_NombreUsuario" Grid.Column="1" Grid.Row="14" Foreground="WhiteSmoke" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    <TextBlock Text="Fecha de Nacimiento:" Grid.Column="1" Grid.Row="8" Foreground="WhiteSmoke" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    <TextBlock Text="Nombre:" Grid.Column="1" Grid.Row="6" Foreground="WhiteSmoke" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    <TextBlock Text="Dirección de e-mail:" Grid.Row="12" Grid.Column="1" x:Name="bloque_Email" Foreground="WhiteSmoke" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    <TextBlock Name="bloque_Contrasena" Text="Contraseña:" Grid.Column="1" Grid.Row="16" Foreground="WhiteSmoke" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    <TextBlock Text="Sexo:" Name="bloque_Sexo" Grid.Column="1" Grid.Row="10" Foreground="WhiteSmoke" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    <CheckBox x:Name="check_Aceptar_Condicion" TabIndex="11" Grid.Column="3" Grid.Row="19" Foreground="WhiteSmoke" Content="Acepta las Condiciones de Uso aplicableses a mi país de residencia y, si soy menor de 18 años, manifiesto y certifico que mi padre o tutor ha leído y aceptado las Condiciones de Uso en representación mía." Grid.ColumnSpan="3" GotFocus="check_Aceptar_Condicion_GotFocus"/>
+                    <CheckBox x:Name="check_AceptarRegistro" TabIndex="12" Visibility="Collapsed" IsEnabled="False" Grid.Column="3" Grid.Row="21" Foreground="#FFA8A8A8" Content="Regístrate para recibir noticias y ofertas especiales del Chat Universitario en la dirección de e-mail vinculada a esta cuenta." Grid.ColumnSpan="3" FontSize="9" GotFocus="check_AceptarRegistro_GotFocus"/>
+                    <TextBlock x:Name="txt_Usuario_Total" Grid.Column="3" Grid.Row="22" Foreground="WhiteSmoke" Text="Usuario TOTALES registrados: " HorizontalAlignment="Left" VerticalAlignment="Center" Grid.ColumnSpan="3"/>
+                    <Button Content="CREAR UNA CUENTA GRATUITA" TabIndex="13" Name="btn_Create_Account" Grid.Column="3" Grid.Row="24" Background="#FF741D1D" BorderBrush="#FF6C6C6C" BorderThickness="3" Foreground="White" Click="Btn_Create_Account"/>
+                    <Separator Grid.Column="3" Grid.Row="24" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Disabled" UseLayoutRounding="False" RenderTransformOrigin="0.5,0.5" Width="50" Margin="0,2" Height="1" MinWidth="50" MinHeight="1" Grid.ColumnSpan="3" Background="#FFCBCBCB">
+                        <Separator.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="90"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Separator.RenderTransform>
+                    </Separator>
+                    <Button Content="CANCELAR" Grid.Column="5" Grid.Row="24" Background="#00000000" Foreground="#FFC7C7C7" HorizontalAlignment="Left" Margin="10,0,0,0" BorderBrush="#00707070" Click="Btn_Cancel"/>
+                    <ComboBox x:Name="combo_sexo" TabIndex="5" Grid.Column="3" Height="25" Grid.Row="10" BorderBrush="#FFACACAC" GotFocus="combo_Sexo_GotFocus"/>
+                    <Grid Grid.Column="3" Grid.Row="8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="5"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="5"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <ComboBox x:Name="combo_Mes" TabIndex="2" ScrollViewer.PanningMode="None" Height="25" Grid.Column="0" SelectedIndex="0" GotFocus="combo_Mes_GotFocus">
+                            <ComboBoxItem Content="Mes"/>
+                            <ComboBoxItem Content="Enero"/>
+                            <ComboBoxItem Content="Febrero"/>
+                            <ComboBoxItem Content="Marzo"/>
+                            <ComboBoxItem Content="Abril"/>
+                            <ComboBoxItem Content="Mayo"/>
+                            <ComboBoxItem Content="Junio"/>
+                            <ComboBoxItem Content="Julio"/>
+                            <ComboBoxItem Content="Agosto"/>
+                            <ComboBoxItem Content="Septiembre"/>
+                            <ComboBoxItem Content="Octubre"/>
+                            <ComboBoxItem Content="Noviembre"/>
+                            <ComboBoxItem Content="Diciembre"/>
+                        </ComboBox>
+                        <ComboBox x:Name="combo_Dia" TabIndex="3" Height="25" ScrollViewer.PanningMode="None" Grid.Column="2" GotFocus="combo_Dia_GotFocus"/>
+                        <ComboBox x:Name="combo_Año" TabIndex="4" Height="25" ScrollViewer.PanningMode="Both" Grid.Column="4" GotFocus="combo_Año_GotFocus"/>
+                    </Grid>
+                    <TextBox x:Name="txt_Nombre" TabIndex="0" Text="Nombre" Height="25" Grid.Column="3" Grid.Row="6" GotFocus="txt_Nombre_GotFocus" TextAlignment="Justify" Foreground="#FFABADB3">
+                        <TextBox.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FFC7C7C7" Offset="0"/>
+                                <GradientStop Color="White" Offset="0.411"/>
+                            </LinearGradientBrush>
+                        </TextBox.Background>
+                    </TextBox>
+                    <TextBox x:Name="txt_Apellido" TabIndex="1" Text="Apellido" TextAlignment="Justify" Foreground="#FFABADB3" Height="25" Grid.Column="5" Grid.Row="6" GotFocus="txt_Apellido_GotFocus">
+                        <TextBox.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FFC7C7C7" Offset="0"/>
+                                <GradientStop Color="White" Offset="0.411"/>
+                            </LinearGradientBrush>
+                        </TextBox.Background>
+                    </TextBox>
+                    <TextBox x:Name="txt_Email" TabIndex="6" Text="Ingresa tu e-mail" TextAlignment="Justify" Foreground="#FFABADB3" Height="25" Grid.Column="3" Grid.Row="12" GotFocus="txt_Email_GotFocus" KeyUp="txt_Email_KeyUp" TextChanged="txt_Email_TextChanged">
+                        <TextBox.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FFC7C7C7" Offset="0"/>
+                                <GradientStop Color="White" Offset="0.411"/>
+                            </LinearGradientBrush>
+                        </TextBox.Background>
+                    </TextBox>
+                    <TextBox x:Name="txt_Email_Reiter" TabIndex="7" Text="Ingresa tu e-mail de  nuevo" TextAlignment="Justify" Foreground="#FFABADB3" Height="25" Grid.Column="5" Grid.Row="12" GotFocus="txt_Email_Reiter_GotFocus" KeyUp="txt_Email_Reiter_KeyUp">
+                        <TextBox.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FFC7C7C7" Offset="0"/>
+                                <GradientStop Color="White" Offset="0.411"/>
+                            </LinearGradientBrush>
+                        </TextBox.Background>
+                    </TextBox>
+                    <TextBlock x:Name="txt_Email_Corrige" Visibility="Hidden" Foreground="WhiteSmoke" Text="Este será el nombre de usuario que utilizarás para conectarte" Grid.Column="3" Grid.Row="13"/>
+                    <TextBlock x:Name="txt_Email_Corrige1" Visibility="Hidden" Foreground="#FFE06262" Text="Las direcciones de e-mail deben coincidir." Grid.Column="5" Grid.Row="13"/>
+                    <TextBox x:Name="txt_Password_1" TabIndex="9" Text="Contraseña" Foreground="#FFABADB3" Height="25" Grid.Column="3" Grid.Row="16" GotFocus="txt_Password_1_GotFocus" KeyUp="txt_Password_1_KeyUp" KeyDown="txt_Password_1_KeyDown" TextChanged="txt_Password_1_TextChanged"  >
+                        <TextBox.Background>
+                            <!--txt_Password_1_TextChanged-->
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FFC7C7C7" Offset="0"/>
+                                <GradientStop Color="White" Offset="0.411"/>
+                            </LinearGradientBrush>
+                        </TextBox.Background>
+                    </TextBox>
+                    <TextBox x:Name="txt_Password_2" TabIndex="10" Text="Vuelva a ingresa tu contraseña" Foreground="#FFABADB3" Height="25" Grid.Column="5" Grid.Row="16" GotFocus="txt_Password_2_GotFocus" TextAlignment="Justify" TextChanged="txt_Password_1_TextChanged">
+                        <TextBox.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FFC7C7C7" Offset="0"/>
+                                <GradientStop Color="White" Offset="0.411"/>
+                            </LinearGradientBrush>
+                        </TextBox.Background>
+                    </TextBox>
+                    <Grid Grid.Column="3" Grid.Row="15" Grid.ColumnSpan="3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5"/>
+                            <ColumnDefinition Width="180"/>
+                            <ColumnDefinition Width="5"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="5"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition/>
+                            <RowDefinition Height="5"/>
+                        </Grid.RowDefinitions>
+                        <Border Name="borde_Ground1" Visibility="Hidden" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="5" Grid.RowSpan="3" Background="#FF334963" CornerRadius="10"/>
+                        <Border Name="borde_Ground2" Visibility="Hidden" Grid.Column="1" Grid.Row="1">
+                            <Canvas>
+                                <TextBlock Canvas.Left="5" Foreground="White" x:Name="bloque_Contraseña" Height="110" Width="180"><Run Text="Por"/><Run Text=" razones de"/><Run Text=" seguridad"/><Run Text=", "/><LineBreak/><Run/><Run Text="te recomendamos"/><Run Text=" "/><LineBreak/><Run/><Run Text="encarecidamente que utilices "/><LineBreak/><Run Text="una contraseña única; distinta "/><LineBreak/><Run Text="de tus demás cuentas en línea."/></TextBlock>
+                            </Canvas>
+                        </Border>
+                        <Border Name="borde_Ground3" Visibility="Hidden"  Grid.Column="3" Grid.Row="1" BorderBrush="Bisque" Background="#FFE6E6E6" CornerRadius="10">
+                            <Canvas>
+                                <TextBlock Canvas.Left="10" FontSize="9" Canvas.Top="10" Text="Solidez de la contraseña: " x:Name="Bloque_requisitos" Foreground="Black"/>
+                                <Rectangle Name="fuerte1" Canvas.Top="12" Canvas.Left="160" Width="80" Height="10" Fill="#FFBFBFBF"/>
+                                <Rectangle Name="fuerte2" Canvas.Top="12" Canvas.Left="160" Width="80" Height="10" Fill="#FF00B050" Visibility="Hidden"/>
+                                <Rectangle Name="fuerte3" Canvas.Top="12" Canvas.Left="160" Width="60" Height="10" Fill="#FFFFC000" Visibility="Hidden"/>
+                                <Rectangle Name="fuerte4" Canvas.Top="12" Canvas.Left="160" Width="40" Height="10" Fill="Red" Visibility="Hidden"/>
+                                <Rectangle Name="fuerte5" Canvas.Top="12" Canvas.Left="160" Width="20" Height="10" Fill="#FF8C8C8C" Visibility="Hidden"/>
+                                <Image Name="level1" Canvas.Left="10" Canvas.Top="25" Width="15" Height="15" Source="assets/Requisitos/Punto1.png" Stretch="Fill"/>
+                                <TextBlock Name="level1_R" Canvas.Left="25" Canvas.Top="26" FontSize="8" Text="Tu contraseña deberá tener de 8 a 16 caracteres." Foreground="Black"/>
+                                <Image Name="level2" Canvas.Left="10" Canvas.Top="37" Width="15" Height="15" Source="assets/Requisitos/Punto1.png" Stretch="Fill"/>
+                                <TextBlock Name="level2_R" Canvas.Left="25" Canvas.Top="38" FontSize="8"><Run Text="Tu contraseña solo debe tener caracteres alfabéticos"/><LineBreak/><Run Text="(A–Z), caracteres numéricos (0–9), y puntuación."/></TextBlock>
+                                <Image Name="level3" Canvas.Left="10" Canvas.Top="60" Width="15" Height="15" Source="assets/Requisitos/Punto1.png" Stretch="Fill"/>
+                                <TextBlock Name="level3_R" Canvas.Left="25" Canvas.Top="61" FontSize="8"><Run Text="Tu contraseña debe tener al menos un carácter"/><LineBreak/><Run Text="alfabético y uno numérico."/></TextBlock>
+                                <Image Name="level4" Canvas.Left="10" Canvas.Top="82" Width="15" Height="15" Source="assets/Requisitos/Punto1.png" Stretch="Fill"/>
+                                <TextBlock Name="level4_R" Canvas.Left="25" Canvas.Top="83" FontSize="8" Text="No puedes usar el nombre de cuenta como contraseña."/>
+                                <Image Name="level5" Canvas.Left="10" Canvas.Top="95" Width="15" Height="15" Source="assets/Requisitos/Punto1.png" Stretch="Fill"/>
+                                <TextBlock Name="level5_R" Canvas.Left="25" Canvas.Top="96" FontSize="8" Text="No coinciden las contraseñas."/>
+                            </Canvas>
+                        </Border>
+                    </Grid>
+                    <TextBox x:Name="txt_NombreUsuario" TabIndex="8" Text="Nombre de Usuario" TextAlignment="Justify" Foreground="#FFABADB3" Height="25" Grid.Column="3" Grid.Row="14" GotFocus="txt_NombreUsuario_GotFocus">
+                        <TextBox.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FFC7C7C7" Offset="0"/>
+                                <GradientStop Color="White" Offset="0.411"/>
+                            </LinearGradientBrush>
+                        </TextBox.Background>
+                    </TextBox>
+                    <TextBlock x:Name="txt_NombreUsuario_Corrige" Visibility="Hidden" Foreground="WhiteSmoke" Text="Este será el nombre de usuario que utilizarás para conectarte" Grid.Column="5" Grid.Row="14"/>
+
+                </Grid>
+
+
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

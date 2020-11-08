@@ -10,4 +10,8 @@
     <ProjectReference Include="..\ProyectBrl\ProyectBrl.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="assets\Requisitos\" />
+  </ItemGroup>
+
 </Project>

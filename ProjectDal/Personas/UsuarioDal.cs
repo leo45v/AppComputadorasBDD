@@ -7,7 +7,6 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
 {
     public class UsuarioDal
     {
-
         public static void Insertar(Usuario usuario)
         {
             string queryString = @"INSERT INTO Usuario(IdUsuario, NombreUsuario, Contrasenia, Eliminado, IdRol) 
@@ -22,19 +21,20 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 OperationsSql.AddWithValueString("Deleted", usuario.Eliminado);
                 OperationsSql.AddWithValueString("IdRol", usuario.Rol.IdRol);
                 OperationsSql.ExecuteBasicCommandWithTransaction();
-                OperationsSql.ExecuteTransactionCommit();
+                //OperationsSql.ExecuteTransactionCommit();
             }
             catch (Exception ex)
             {
                 throw ex;
             }
-            finally { OperationsSql.CloseConnection(); }
+            //finally { OperationsSql.CloseConnection(); }
         }
-        public static Usuario Obtener_Usuario(Usuario usuario)
+
+        public static Usuario Obtener(Usuario usuario)
         {
-            return Obtener_Por_Id(usuario.IdUsuario);
+            return Obtener(usuario.IdUsuario);
         }
-        public static Usuario Obtener_Por_Id(Guid IdUsuario)
+        public static Usuario Obtener(Guid IdUsuario)
         {
             Usuario usuario = null;
             string queryString = @"SELECT usr.IdUsuario, usr.NombreUsuario, usr.Contrasenia, usr.Eliminado as Deleted, 
@@ -94,6 +94,34 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 OperationsSql.CloseConnection();
             }
             return usuarios;
+        }
+
+        public static Guid Obtener_Id_By_Password_Username(string userName, string password)
+        {
+            Guid idUsuario = Guid.Empty;
+            string queryString = @"SELECT IdUsuario
+                                   FROM Usuario 
+                                   WHERE NombreUsuario = @NombreUsuario AND Contrasenia = @Contrasenia AND Eliminado = 0";
+            try
+            {
+                OperationsSql.OpenConnection();
+                OperationsSql.CreateBasicCommandWithTransaction(queryString);
+                OperationsSql.AddWithValueString("NombreUsuario", userName);
+                OperationsSql.AddWithValueString("Contrasenia", password);
+                OperationsSql.ExecuteBasicCommandWithTransaction();
+                Dictionary<string, object> data = OperationsSql.ExecuteReader();
+                if (data != null)
+                {
+                    idUsuario = (Guid)data["IdUsuario"];
+                }
+                OperationsSql.ExecuteTransactionCommit();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally { OperationsSql.CloseConnection(); }
+            return idUsuario;
         }
         public static bool Actualizar(Usuario usuario)
         {
