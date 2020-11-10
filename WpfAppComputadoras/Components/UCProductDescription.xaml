@@ -18,7 +18,7 @@
                 <RowDefinition/>
                 <RowDefinition Height="2"/>
             </Grid.RowDefinitions>
-            <Grid Grid.Row="1" Grid.Column="1">
+            <Grid Grid.Row="1" Grid.Column="1" x:Name="gridTam">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="100"/>
                     <RowDefinition Height="50"/>
@@ -27,9 +27,9 @@
                     <RowDefinition/>
                     <RowDefinition Height="28"/>
                 </Grid.RowDefinitions>
-                <Image x:Name="imgProduct" Grid.Row="0" Source="/components/null.jpg" Stretch="Fill"/>
+                <Image x:Name="imgProduct" Grid.Row="0" Stretch="Fill"/>
                 <TextBlock x:Name="txtName" Text="NOMBRE DEL PRODUCTO NOMBRE DEL PRODUCTO NOMBRE DEL PRODUCTO NOMBRE DEL PRODUCTO" Grid.Row="1" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" FontSize="16"/>
-                <Grid Grid.Row="2">
+                <Grid Grid.Row="2" x:Name="stockContainer">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="40"/>
                         <ColumnDefinition Width="25"/>

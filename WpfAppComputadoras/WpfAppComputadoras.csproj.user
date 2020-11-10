@@ -10,6 +10,9 @@
     <Compile Update="Components\UCMainStore.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Components\UCMenu.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Components\UCProductDescription.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -17,6 +20,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Components\UCRangeSlider.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\UCPageEnsambleAutmatico.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\UCPageStore.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="RegistroWindow.xaml.cs">
@@ -30,6 +39,9 @@
     <Page Update="Components\UCMainStore.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Components\UCMenu.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Components\UCProductDescription.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -40,6 +52,12 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\UCPageEnsambleAutmatico.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\UCPageStore.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="RegistroWindow.xaml">

@@ -31,7 +31,7 @@
                     <Grid HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="1" Grid.Column="1" Visibility="Visible">
                         <Border x:Name="border" BorderThickness="1" CornerRadius="10,0,0,10" BorderBrush="Black" Panel.ZIndex="0" Width="107" Height="66">
                             <Border.Background>
-                                <ImageBrush x:Name="imgProduct" ImageSource="/components/null.jpg" Stretch="UniformToFill"/>
+                                <ImageBrush x:Name="imgProduct"  Stretch="UniformToFill"/>
                             </Border.Background>
                         </Border>
 

@@ -25,7 +25,7 @@ namespace WpfAppComputadoras.Components
         private string typeProduct;
         private int cantidad = 0;
         private int indexer = 0;
-        private List<UCProductDescription> ucPX = new List<UCProductDescription>();
+        public List<UCProductDescription> ucPX = new List<UCProductDescription>();
         private string idMarcaSelect = null;
         public string TypeProduct
         {
