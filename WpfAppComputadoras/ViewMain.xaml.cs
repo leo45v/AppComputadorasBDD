@@ -67,23 +67,7 @@ namespace WpfAppComputadoras
         {
             //string key = menuProducts.FirstOrDefault(element => element.Value == (UCProductView)sender).Key;
             string key = ((Button)sender).Name;
-
-            string[] justInCase = key.Split('_');
-            string aux = key;
-            if (justInCase.Length > 1)
-            {
-                aux = "";
-                foreach (string text in justInCase)
-                {
-                    aux += text + " ";
-                }
-                aux = aux.Trim();
-            }
-
-
-            MessageBox.Show("ORIGINAL: " + key + " AUXILIAR: " + aux);
-
-
+            //MessageBox.Show("ORIGINAL: " + key + " AUXILIAR: " + aux);
             ucMainStore.TypeProduct = key;
         }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

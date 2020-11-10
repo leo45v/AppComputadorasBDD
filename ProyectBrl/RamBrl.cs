@@ -5,17 +5,12 @@ using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDal.Pe
 
 namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectBrl
 {
-    public class RamBrl 
+    public class RamBrl
     {
-
-
-        //public new void Add(Ram ram)
-        //{
-        //    if (RamDal.Insertar(ram))
-        //    {
-        //        base.Add(ram);
-        //    }
-        //}
+        public static bool Add(Ram ram)
+        {
+            return RamDal.Insertar(ram);
+        }
         //public new void Remove(Ram ram)
         //{
         //    if (RamDal.Delete_Ram(ram.IdProducto))
@@ -24,13 +19,17 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectBr
         //    }
         //}
 
-        public static List<Producto> GetWithRange(int comienzo, int cantidad)
+        public static List<Producto> GetWithRange(int comienzo, int cantidad, int? idMarca, double? minPrice, double? maxPrice)
         {
-            return RamDal.GetWithRange(comienzo, cantidad);
+            return RamDal.GetWithRange(comienzo, cantidad, idMarca, minPrice, maxPrice);
         }
-        public static int Count()
+        public static int Count(int? idMarca, double? minPrice, double? maxPrice)
         {
-            return RamDal.Count();
+            return RamDal.Count(idMarca, minPrice, maxPrice);
+        }
+        public static List<Marca> Get_ListMarcasRam()
+        {
+            return RamDal.Get_ListMarcasRam();
         }
 
     }

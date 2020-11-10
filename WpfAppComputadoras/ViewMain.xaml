@@ -79,21 +79,21 @@
                     </Border>
                     <Grid x:Name="gridMenuProducts" Grid.Column="1" Grid.Row="1" Grid.RowSpan="3">
                         <Grid.RowDefinitions>
-                            <RowDefinition/>
+                            <RowDefinition Height="72"/>
                             <RowDefinition Height="5"/>
-                            <RowDefinition/>
+                            <RowDefinition Height="72"/>
                             <RowDefinition Height="5"/>
-                            <RowDefinition/>
+                            <RowDefinition Height="72"/>
                             <RowDefinition Height="5"/>
-                            <RowDefinition/>
+                            <RowDefinition Height="72"/>
                             <RowDefinition Height="5"/>
-                            <RowDefinition/>
+                            <RowDefinition Height="72"/>
                             <RowDefinition Height="5"/>
-                            <RowDefinition/>
+                            <RowDefinition Height="72"/>
                             <RowDefinition Height="5"/>
-                            <RowDefinition/>
+                            <RowDefinition Height="72"/>
                             <RowDefinition Height="5"/>
-                            <RowDefinition/>
+                            <RowDefinition Height="72"/>
                         </Grid.RowDefinitions>
                         <!--<Components:UCProductView x:Name="ucProcesador" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0"/>
                         <Components:UCProductView x:Name="ucGrafica" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2"/>

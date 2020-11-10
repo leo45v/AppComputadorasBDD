@@ -16,6 +16,9 @@
     <Compile Update="Components\UCProductView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Components\UCRangeSlider.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="RegistroWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -31,6 +34,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Components\UCProductView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Components\UCRangeSlider.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="MainWindow.xaml">

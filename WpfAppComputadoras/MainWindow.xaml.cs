@@ -30,6 +30,26 @@ namespace WpfAppComputadoras
         {
             InitializeComponent();
             txt_Usuario.Focus();
+            //for (int i = 0; i < 43; i++)
+            //{
+            //    RamBrl.Add(new Ram()
+            //    {
+            //        Descontinuado = false,
+            //        Frecuencia = new Random().Next(2100, 5000),
+            //        IdProducto = Guid.NewGuid(),
+            //        Imagen = "",
+            //        Latencia = new Random().Next(5, 40),
+            //        Marca = new Marca()
+            //        {
+            //            IdMarca = 1
+            //        },
+            //        Memoria = new Random().Next(4, 32),
+            //        Nombre = "Corsair Vengance RGB v" + i,
+            //        PrecioUnidad = (decimal)new Random().Next(10000, 100000) / 1000,
+            //        Stock = (short)new Random().Next(0, 20)
+            //    });
+            //}
+
             //ClientsBrl.Insertar(new Cliente()
             //{
             //    Apellido = "123",

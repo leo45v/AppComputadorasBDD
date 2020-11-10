@@ -69,7 +69,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             finally { OperationsSql.CloseConnection(); }
             return rams;
         }
-        public static List<Producto> GetWithRange(int start, int cant)
+        public static List<Producto> GetWithRange(int start, int cant, int? idMarca, double? minPrice, double? maxPrice)
         {
             List<Producto> rams = null;
             string query = @"SELECT r.IdProducto, 
@@ -77,8 +77,12 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                              mar.NombreMarca
                              FROM Ram r
                              INNER JOIN Producto pro ON pro.IdProducto = r.IdProducto
-                             INNER JOIN Marca mar ON mar.IdMarca = pro.IdMarca
-                             ORDER BY pro.Nombre ASC
+                             INNER JOIN Marca mar ON mar.IdMarca = pro.IdMarca " +
+                             (!(idMarca == 0) || (!(minPrice is null) && !(maxPrice is null)) ? @"WHERE " : @"") +
+                             (!(idMarca == 0) ? @"pro.IdMarca = " + idMarca + " " : @"") +
+                             (!(idMarca == 0) && (!(minPrice is null) && !(maxPrice is null)) ? @" AND " : @"") +
+                             (!(minPrice is null) && !(maxPrice is null) ? @"pro.PrecioUnidad > " + minPrice + " AND pro.PrecioUnidad < " + maxPrice + " " : @"") +
+                             @"ORDER BY pro.Nombre ASC
                              OFFSET " + start + @" ROWS
                              FETCH NEXT " + cant + @" ROWS ONLY";
             try
@@ -126,13 +130,54 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             return estado;
         }
-        public static int Count()
+        public static List<Marca> Get_ListMarcasRam()
+        {
+            List<Marca> listaMarcas = null;
+            string query = @"SELECT Marca.NombreMarca, Marca.IdMarca
+                            FROM Marca
+                            INNER JOIN Producto pro ON pro.IdMarca = Marca.IdMarca
+                            INNER JOIN Ram ON Ram.IdProducto = pro.IdProducto
+                            WHERE pro.Descontinuado = 0
+                            GROUP BY Marca.NombreMarca, Marca.IdMarca
+                            ORDER BY Marca.NombreMarca;
+";
+            try
+            {
+                OperationsSql.OpenConnection();
+                OperationsSql.CreateBasicCommandWithTransaction(query);
+                List<Dictionary<string, object>> data = OperationsSql.ExecuteReaderMany();
+                if (data != null)
+                {
+                    listaMarcas = new List<Marca>();
+                    foreach (Dictionary<string, object> item in data)
+                    {
+                        listaMarcas.Add(new Marca()
+                        {
+                            IdMarca = (byte)item["IdMarca"],
+                            NombreMarca = (string)item["NombreMarca"]
+                        });
+                    }
+                }
+                OperationsSql.ExecuteTransactionCommit();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally { OperationsSql.CloseConnection(); }
+            return listaMarcas;
+        }
+        public static int Count(int? idMarca, double? minPrice, double? maxPrice)
         {
             int cantidad = 0;
             string query = @"SELECT COUNT(*) as Cantidad
                              FROM Ram r
                              INNER JOIN Producto pro ON pro.IdProducto = r.IdProducto
-                             WHERE pro.Descontinuado = 0";
+                             WHERE pro.Descontinuado = 0 " +
+                             (!(idMarca == 0) || (!(minPrice is null) && !(maxPrice is null)) ? @" AND " : @"") +
+                             (!(idMarca == 0) ? @"pro.IdMarca = " + idMarca + " " : @"") +
+                             (!(idMarca == 0) && (!(minPrice is null) && !(maxPrice is null)) ? @" AND " : @"") +
+                             (!(minPrice is null) && !(maxPrice is null) ? @"pro.PrecioUnidad > " + minPrice + " AND pro.PrecioUnidad < " + maxPrice + " " : @"");
             try
             {
                 OperationsSql.OpenConnection();

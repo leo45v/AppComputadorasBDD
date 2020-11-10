@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.DirectoryServices.ActiveDirectory;
 using System.Text;
 using System.Windows;
@@ -25,32 +26,38 @@ namespace WpfAppComputadoras.Components
         private int cantidad = 0;
         private int indexer = 0;
         private List<UCProductDescription> ucPX = new List<UCProductDescription>();
+        private string idMarcaSelect = null;
         public string TypeProduct
         {
             get { return typeProduct; }
             set
             {
                 string[] justInCase = value.Split('_');
-                typeProduct = value;
+                string aux = value;
                 if (justInCase.Length > 1)
                 {
-                    typeProduct = "";
+                    aux = "";
                     foreach (string text in justInCase)
                     {
-                        typeProduct += text + " ";
+                        aux += text + " ";
                     }
-                    typeProduct = typeProduct.Trim();
+                    aux = aux.Trim();
                 }
-                LoadDataProduct(typeProduct);
+                if (aux == typeProduct)
+                {
+                    return;
+                }
+                typeProduct = aux;
+                LoadMarca(typeProduct);
+                LoadDataProduct(typeProduct, null);
             }
         }
 
         public UCMainStore()
         {
             InitializeComponent();
-
             int row = 1, col = 1;
-            for (int i = 0; i < 9; i++)
+            for (int i = 0; i < 10; i++)
             {
                 UCProductDescription px = new UCProductDescription("Empty");
                 if (i == 5)
@@ -64,23 +71,48 @@ namespace WpfAppComputadoras.Components
                 ucPX.Add(px);
                 col += 2;
             }
+            LoadDataProduct("Procesadores", idMarcaSelect);
+            cbMarca.DisplayMemberPath = "NombreMarca";
+            cbMarca.SelectedValuePath = "IdMarca";
+            //sliderPrice.LowerSlider.ValueChanged += EventSliderLower;
+            //sliderPrice.UpperSlider.ValueChanged += EventSliderUpper;
+            //sliderPrice.LowerSlider.Value = sliderPrice.LowerValue;
+            //sliderPrice.UpperSlider.Value = sliderPrice.UpperValue;
+            //txtMinValue.Text = "Bs." + sliderPrice.LowerValue;
+            //txtMaxValue.Text = "Bs." + sliderPrice.UpperValue;
 
+            var dp = DependencyPropertyDescriptor.FromProperty(
+             TextBlock.TextProperty,
+             typeof(TextBlock));
+            dp.AddValueChanged(txtMinValue, (sender, args) =>
+            {
+                LoadDataProduct(typeProduct, idMarcaSelect);
+            });
+            dp.AddValueChanged(txtMaxValue, (sender, args) =>
+            {
+                LoadDataProduct(typeProduct, idMarcaSelect);
+            });
         }
         public UCMainStore(string type)
         {
             InitializeComponent();
             this.typeProduct = type;
         }
-
-        private void LoadDataProduct(string type)
+        private void LoadDataProduct(string type, string? idMarca)
+        {
+            LoadDataProduct(type, 0, 0, idMarca);
+        }
+        private void LoadDataProduct(string type, int start, int index, string? idMarca)
         {
             List<Producto> productsList = null;
             Set_Visibility_UCPX(Visibility.Hidden);
-            lblTitle.Content = "Lista de " + type;
+            lblTitle.Text = "Lista de " + type;
+            cantidad = 0;
+            byte valuex = idMarca is null ? (byte)0 : idMarca is null ? (byte)0 : ((Marca)cbMarca.SelectedItem).IdMarca;
             if (type == "Ram")
             {
-                productsList = RamBrl.GetWithRange(0, 9);
-                cantidad = RamBrl.Count();
+                productsList = RamBrl.GetWithRange(start, 10, valuex, sliderPrice.LowerValue, sliderPrice.UpperValue);
+                cantidad = RamBrl.Count(valuex, sliderPrice.LowerValue, sliderPrice.UpperValue);
             }
             else if (type == "Procesador")
             {
@@ -103,10 +135,10 @@ namespace WpfAppComputadoras.Components
             else if (type == "Tarjeta Grafica")
             {
             }
+            ChangeButtons(cantidad, index);
             if (!(productsList is null))
             {
-                indexer = (int)Math.Floor((decimal)(cantidad / 9));
-                ChangeButtons(cantidad, 0);
+                //indexer = (int)Math.Floor((decimal)(cantidad / 10));
                 int counter = 0;
                 foreach (Producto item in productsList)
                 {
@@ -115,7 +147,42 @@ namespace WpfAppComputadoras.Components
                 }
             }
         }
+        private void LoadMarca(string type)
+        {
+            if (type == "Ram")
+            {
+                cbMarca.ItemsSource = RamBrl.Get_ListMarcasRam();
+            }
+            else if (type == "Procesador")
+            {
+                cbMarca.ItemsSource = null;
+            }
+            else if (type == "Almacenamiento")
+            {
+                cbMarca.ItemsSource = null;
+            }
+            else if (type == "Fuente")
+            {
+                cbMarca.ItemsSource = null;
+            }
+            else if (type == "Gabinete")
+            {
+                cbMarca.ItemsSource = null;
+            }
+            else if (type == "Monitor")
+            {
+                cbMarca.ItemsSource = null;
+            }
+            else if (type == "Mother Board")
+            {
+                cbMarca.ItemsSource = null;
+            }
+            else if (type == "Tarjeta Grafica")
+            {
+                cbMarca.ItemsSource = null;
+            }
 
+        }
         private void PrintProductInWindows(Producto producto, UCProductDescription ucProductDesc)
         {
             ucProductDesc.Visibility = Visibility.Visible;
@@ -137,14 +204,21 @@ namespace WpfAppComputadoras.Components
         private void ChangeButtons(int counter, int indexer)
         {
 
-            if (indexer == 0 && counter > 9)
+            if (indexer == 0 && counter > 10)
             {
                 btnSiguiente.Visibility = Visibility.Visible;
                 btnAtras.Visibility = Visibility.Visible;
                 btnSiguiente.IsEnabled = true;
                 btnAtras.IsEnabled = false;
             }
-            if (indexer > 0)
+            else if (indexer != 0 && (indexer + 1) * 10 > counter)
+            {
+                btnSiguiente.Visibility = Visibility.Visible;
+                btnAtras.Visibility = Visibility.Visible;
+                btnSiguiente.IsEnabled = false;
+                btnAtras.IsEnabled = true;
+            }
+            else if (indexer > 0)
             {
                 btnSiguiente.Visibility = Visibility.Visible;
                 btnAtras.Visibility = Visibility.Visible;
@@ -162,13 +236,14 @@ namespace WpfAppComputadoras.Components
 
         private void btnSiguiente_Click(object sender, RoutedEventArgs e)
         {
-            int indice = (int)Math.Floor((decimal)(cantidad / 9));
+            int indice = (int)Math.Floor((decimal)(cantidad / 10));
             indexer++;
             if (indexer > indice)
             {
                 indexer = indice;
             }
             ChangeButtons(cantidad, indexer);
+            LoadDataProduct(TypeProduct, indexer * 10, indexer, idMarcaSelect);
         }
 
         private void btnAtras_Click(object sender, RoutedEventArgs e)
@@ -179,6 +254,25 @@ namespace WpfAppComputadoras.Components
                 indexer = 0;
             }
             ChangeButtons(cantidad, indexer);
+            LoadDataProduct(TypeProduct, indexer * 10, indexer, idMarcaSelect);
+        }
+        private void EventSliderLower(object sender, RoutedEventArgs e)
+        {
+            txtMinValue.Text = "Bs." + sliderPrice.LowerSlider.Value;
+        }
+        private void EventSliderUpper(object sender, RoutedEventArgs e)
+        {
+            txtMaxValue.Text = "Bs." + sliderPrice.UpperSlider.Value;
+        }
+
+        private void cbMarca_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            idMarcaSelect = null;
+            if (cbMarca.Items.Count > 0)
+            {
+                idMarcaSelect = ((Marca)cbMarca.SelectedItem).NombreMarca;
+                LoadDataProduct(typeProduct, idMarcaSelect);
+            }
         }
     }
 }
