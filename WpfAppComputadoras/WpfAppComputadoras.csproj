@@ -7,11 +7,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Components\null.jpg" />
+    <None Remove="Components\Punto.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\ProyectBrl\ProyectBrl.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="assets\Requisitos\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Components\null.jpg" />
+    <Resource Include="Components\Punto.png" />
   </ItemGroup>
 
 </Project>

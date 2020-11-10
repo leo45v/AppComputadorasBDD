@@ -1,0 +1,68 @@
+﻿<UserControl x:Class="WpfAppComputadoras.Components.UCMainStore"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfAppComputadoras.Components"
+             mc:Ignorable="d" 
+             d:DesignHeight="610" d:DesignWidth="900">
+    <Grid Background="#FFA04040">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="55"/>
+            <RowDefinition Height="5"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Label x:Name="lblTitle" Content="Procesadores" Foreground="Wheat" Grid.Row="0" FontSize="36" />
+        <Separator  Grid.Row="1" Background="#FF02B6F9"/>
+        <Grid x:Name="gridListItems" Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="5"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5"/>
+                <RowDefinition/>
+                <RowDefinition Height="5"/>
+                <RowDefinition/>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="5"/>
+            </Grid.RowDefinitions>
+            <!--<local:UCProductDescription x:Name="ucP1" Grid.Row="1" Grid.Column="1"/>
+            <local:UCProductDescription x:Name="ucP2" Grid.Row="1" Grid.Column="3"/>
+            <local:UCProductDescription x:Name="ucP3" Grid.Row="1" Grid.Column="5"/>
+            <local:UCProductDescription x:Name="ucP4" Grid.Row="1" Grid.Column="7"/>
+            <local:UCProductDescription x:Name="ucP5" Grid.Row="1" Grid.Column="9"/>
+            <local:UCProductDescription x:Name="ucP6" Grid.Row="3" Grid.Column="1"/>
+            <local:UCProductDescription x:Name="ucP7" Grid.Row="3" Grid.Column="3"/>
+            <local:UCProductDescription x:Name="ucP8" Grid.Row="3" Grid.Column="5"/>
+            <local:UCProductDescription x:Name="ucP9" Grid.Row="3" Grid.Column="7"/>
+            <local:UCProductDescription x:Name="ucP10" Grid.Row="3" Grid.Column="9"/>-->
+            
+            <Grid Grid.Column="1" Grid.ColumnSpan="9" Grid.Row="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Separator Grid.Row="0" Background="#FF008DCF" Height="2" BorderThickness="2"/>
+                <Button x:Name="btnSiguiente" Width="200" Content="Siguiente" Grid.Column="0" HorizontalAlignment="Right" Grid.Row="1" Click="btnSiguiente_Click"/>
+                <Button x:Name="btnAtras" Width="200" Content="Atras"  Grid.Column="2" HorizontalAlignment="Left" Grid.Row="1" Click="btnAtras_Click"/>
+            </Grid>
+            
+        </Grid>
+    </Grid>
+</UserControl>

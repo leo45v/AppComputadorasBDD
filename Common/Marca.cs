@@ -6,7 +6,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common
 {
     public class Marca
     {
-        public short IdMarca { get; set; }
+        public byte IdMarca { get; set; }
         public string NombreMarca { get; set; }
     }
 }

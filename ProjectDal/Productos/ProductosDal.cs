@@ -33,5 +33,23 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 throw ex;
             }
         }
+
+        public static Producto Dictionary_A_Producto(Dictionary<string, object> data)
+        {
+            return new Producto()
+            {
+                IdProducto = (Guid)data["IdProducto"],
+                Descontinuado = (bool)data["Descontinuado"],
+                Imagen = (string)data["Imagen"],
+                Marca = new Marca()
+                {
+                    IdMarca = (byte)data["IdMarca"],
+                    NombreMarca = (string)data["NombreMarca"]
+                },
+                Nombre = (string)data["Nombre"],
+                PrecioUnidad = (decimal)data["PrecioUnidad"],
+                Stock = (short)data["Stock"]
+            };
+        }
     }
 }

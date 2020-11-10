@@ -24,7 +24,7 @@
   <Class Name="Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Usuario" Collapsed="true">
     <Position X="3.5" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAQAAAAAEAAAAAAAEAAAAAAAAgAAAIAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAQAAAABEAAAAAAAAAAAAAAAAgAAAIAAAAAAAAA=</HashCode>
       <FileName>Usuario.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -64,21 +64,21 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Marca" Collapsed="true">
-    <Position X="4" Y="1.25" Width="1.5" />
+    <Position X="3.75" Y="5.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Marca.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.PlacaBase" Collapsed="true">
-    <Position X="2.5" Y="0.5" Width="1.5" />
+    <Position X="3" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAgAAAAAAAAAAAABAAAAAAAAAAAAAAAAAgAAAEA=</HashCode>
       <FileName>PlacaBase.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Monitor" Collapsed="true">
-    <Position X="5.75" Y="0.5" Width="1.5" />
+    <Position X="5.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAEAAAAAAAAABAAAAAAgAAAAEA=</HashCode>
       <FileName>Monitor.cs</FileName>
@@ -108,7 +108,7 @@
   <Class Name="Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Persona" Collapsed="true">
     <Position X="8.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAABAAAEgAAAkAAAAAAAAAAAAAIEAAAAAAA=</HashCode>
+      <HashCode>EAAAAAAAAAABAAAEgAAAgAAAAAAAAAAAAAIEAAAAAAA=</HashCode>
       <FileName>Persona.cs</FileName>
     </TypeIdentifier>
   </Class>
