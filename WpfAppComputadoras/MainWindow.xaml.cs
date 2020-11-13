@@ -141,7 +141,7 @@ namespace WpfAppComputadoras
             {
                 password = txt_Contrasena.Text;
             }
-            if (Comprobar_Formato_Email_(Correo) && username != "" && password != "")
+            if (Correo.Length > 1 && username != "" && password != "")
             {
                 btn_Iniciar_Secion.IsEnabled = true;
             }

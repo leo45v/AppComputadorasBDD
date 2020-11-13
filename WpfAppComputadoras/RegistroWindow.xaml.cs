@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectBrl;
+using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common;
 
 namespace WpfAppComputadoras
 {
@@ -360,7 +361,7 @@ namespace WpfAppComputadoras
             string date_Year = combo_Año.SelectedValue.ToString();
             string date_Month = combo_Mes.SelectedValue.ToString();
             string date_Day = combo_Dia.SelectedValue.ToString();
-            bool checkCondition = check_Aceptar_Condicion.IsChecked.Value;
+            //bool checkCondition = check_Aceptar_Condicion.IsChecked.Value;
             if (userName.Length < 4 && !UsuarioBrl.NombreUsuario_Libre(userName))
             {
                 MessageBox.Show("El Nombre de Usuario esta en uso o Es demasiado corto", "Error en Nombre de Usuario", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -386,21 +387,46 @@ namespace WpfAppComputadoras
                 MessageBox.Show("La contraseña ingresado es muy corta, Verifique haber escrito la misma contraseña en ambos campos", "Error en Contraseña", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            if (sexo != "Sexo")
+            if (sexo == "Sexo")
             {
                 MessageBox.Show("Seleccione un sexo", "Error en el campo Sexo", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            if (date_Year != "Año" || date_Month != "Mes" || date_Day != "Día")
+            if (date_Year == "Año" || date_Month == "Mes" || date_Day == "Día")
             {
                 MessageBox.Show("Seleccione su fecha de nacimiento, verifique haber seleccionado el día, mes y año correspondientes", "Error en Fecha de Nacimiento", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            if (!checkCondition)
+            //if (!checkCondition)
+            //{
+            //    MessageBox.Show("No puedes crear una cuenta si no aceptas los terminos de condicion de uso", "No acepto las condiciones", MessageBoxButton.OK, MessageBoxImage.Error);
+            //    return;
+            //}
+            Cliente nuevoCliente = new Cliente()
             {
-                MessageBox.Show("No puedes crear una cuenta si no aceptas los terminos de condicion de uso", "No acepto las condiciones", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
+                Apellido = txt_Apellido.Text,
+                Eliminado = false,
+                Email = txt_Email.Text,
+                FechaNacimiento = new DateTime(int.Parse(combo_Año.Text),
+                combo_Mes.SelectedIndex,
+                int.Parse(combo_Dia.Text)),
+                IdPersona = Guid.NewGuid(),
+                Nombre = txt_Nombre.Text,
+                Sexo = (short)(combo_sexo.SelectedIndex - 1),
+                Usuario = new Usuario()
+                {
+                    Contrasenia = txt_Password_1.Text,
+                    Eliminado = false,
+                    IdUsuario = Guid.NewGuid(),
+                    NombreUsuario = txt_NombreUsuario.Text,
+                    Rol = new Rol()
+                    {
+                        IdRol = 1,
+                    }
+                }
+            };
+            ClientsBrl.Insertar(nuevoCliente);
+            MessageBox.Show("Cuenta creada Exitosamente", "Exito!", MessageBoxButton.OK, MessageBoxImage.Information);
         }
         private void Btn_Cancel(object sender, RoutedEventArgs e)
         {
