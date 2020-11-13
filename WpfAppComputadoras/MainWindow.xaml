@@ -106,12 +106,12 @@
         </Border>
         <Grid Grid.RowSpan="2">
             <TextBlock MouseLeftButtonDown="Mover_Ventana_Controller" Margin="0,0,0,266"/>
-            <TextBox Name="txt_Usuario" HorizontalAlignment="Center" Height="23" Margin="0,72,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="323" ToolTip="Ingrese su Correo Electrónico" Foreground="#FFB3B3B3" Background="#FF12151C" Text="Correo Electronico" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" TabIndex="0" KeyUp="Txt_Usuario_KeyUp">
+            <TextBox Name="txt_Usuario" HorizontalAlignment="Center" Height="23" Margin="0,72,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="323" ToolTip="Ingrese su Nombre de Usuario" Foreground="#FFB3B3B3" Background="#FF12151C" Text="" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" TabIndex="0" KeyUp="Txt_Usuario_KeyUp">
                 <TextBox.ContextMenu>
                     <ContextMenu DisplayMemberPath="TextBox"/>
                 </TextBox.ContextMenu>
             </TextBox>
-            <TextBox  Name="txt_Contrasena" HorizontalAlignment="Center" Height="23" Margin="0,126,0,0" Text="Password" VerticalAlignment="Top" Width="323" Foreground="#FFB3B3B3" Background="#FF12151C" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" TabIndex="1" KeyUp="Txt_Usuario_KeyUp"/>
+            <TextBox  Name="txt_Contrasena" HorizontalAlignment="Center" Height="23" Margin="0,126,0,0" Text="" VerticalAlignment="Top" Width="323" Foreground="#FFB3B3B3" Background="#FF12151C" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" TabIndex="1" KeyUp="Txt_Usuario_KeyUp"/>
             <CheckBox Content="Mantener sesión abierta" Visibility="Collapsed" IsEnabled="False" HorizontalAlignment="Left" Margin="25,239,0,0" VerticalAlignment="Top" Width="194" Foreground="#FFB3B3B3" IsTabStop="False"/>
             <Button Style="{StaticResource ButtonBackground1}" x:Name="btn_Iniciar_Secion" Content="Conectarse" HorizontalAlignment="Center" Margin="0,171,0,0" VerticalAlignment="Top" Width="140" Height="34" IsEnabled="False" Click="Btn_Iniciar_Secion_Click"/>
             <Button x:Name="btn_Close" Content="X" HorizontalAlignment="Left" Height="27" Margin="323,0,0,0" VerticalAlignment="Top" Width="44" RenderTransformOrigin="-0.301,0.487" Click="Btn_Close_Click"/>
