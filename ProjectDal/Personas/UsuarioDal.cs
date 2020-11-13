@@ -187,7 +187,36 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             finally { OperationsSql.CloseConnection(); }
             return estado;
         }
-
+        public static bool NombreUsuario_Libre(string nombreUsuario)
+        {
+            bool estado = false;
+            string queryString = @"SELECT COUNT(*) as Cantidad
+                                   FROM Usuario
+                                   WHERE NombreUsuario = @NombreUsuario";
+            try
+            {
+                OperationsSql.OpenConnection();
+                OperationsSql.CreateBasicCommandWithTransaction(queryString);
+                OperationsSql.AddWithValueString("NombreUsuario", nombreUsuario);
+                OperationsSql.ExecuteBasicCommandWithTransaction();
+                Dictionary<string, object> data = OperationsSql.ExecuteReader();
+                if (data != null)
+                {
+                    int cant = (int)data["Cantidad"];
+                    if (cant == 0)
+                    {
+                        estado = true;
+                    }
+                }
+                OperationsSql.ExecuteTransactionCommit();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally { OperationsSql.CloseConnection(); }
+            return estado;
+        }
         /*
          * Dictionary<string,object> => Coleccion de Datos
          * Su key o identificador es una cadena (Un texto)

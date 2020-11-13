@@ -124,6 +124,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             finally { OperationsSql.CloseConnection(); }
             return estado;
         }
+        
         private static Cliente ObjectData_To_Client(Dictionary<string, object> data)
         {
             return new Cliente()

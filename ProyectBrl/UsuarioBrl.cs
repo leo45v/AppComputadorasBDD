@@ -43,5 +43,9 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectBr
         {
             return UsuarioDal.Obtener_Id_By_Password_Username(userName, password);
         }
+        public static bool NombreUsuario_Libre(string nombreUsuario)
+        {
+            return UsuarioDal.NombreUsuario_Libre(nombreUsuario);
+        }
     }
 }

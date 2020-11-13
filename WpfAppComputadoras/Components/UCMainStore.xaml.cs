@@ -26,7 +26,24 @@ namespace WpfAppComputadoras.Components
         private int cantidad = 0;
         private int indexer = 0;
         public List<UCProductDescription> ucPX = new List<UCProductDescription>();
+        private byte idMarcaSelectFromCb;
+
+        public byte IdMarcaSelectFromCb
+        {
+            private get { return idMarcaSelectFromCb; }
+            set { idMarcaSelectFromCb = value; }
+        }
+
         private string idMarcaSelect = null;
+        public string IdMarcaSelect
+        {
+            private get { return idMarcaSelect; }
+            set
+            {
+                idMarcaSelect = value;
+                LoadDataProduct(typeProduct, idMarcaSelect);
+            }
+        }
         public string TypeProduct
         {
             get { return typeProduct; }
@@ -108,7 +125,7 @@ namespace WpfAppComputadoras.Components
             Set_Visibility_UCPX(Visibility.Hidden);
             lblTitle.Text = "Lista de " + type;
             cantidad = 0;
-            byte valuex = idMarca is null ? (byte)0 : idMarca is null ? (byte)0 : ((Marca)cbMarca.SelectedItem).IdMarca;
+            byte valuex = idMarca is null ? (byte)0 : idMarca is null ? (byte)0 : idMarcaSelectFromCb;
             if (type == "Ram")
             {
                 productsList = RamBrl.GetWithRange(start, 10, valuex, sliderPrice.LowerValue, sliderPrice.UpperValue);
@@ -116,6 +133,8 @@ namespace WpfAppComputadoras.Components
             }
             else if (type == "Procesador")
             {
+                productsList = ProcesadorBrl.GetWithRange(start, 10, valuex, sliderPrice.LowerValue, sliderPrice.UpperValue);
+                cantidad = ProcesadorBrl.Count(valuex, sliderPrice.LowerValue, sliderPrice.UpperValue);
             }
             else if (type == "Almacenamiento")
             {
@@ -183,7 +202,7 @@ namespace WpfAppComputadoras.Components
             }
 
         }
-        private void PrintProductInWindows(Producto producto, UCProductDescription ucProductDesc)
+        public void PrintProductInWindows(Producto producto, UCProductDescription ucProductDesc)
         {
             ucProductDesc.Visibility = Visibility.Visible;
             ucProductDesc.NameProduct = producto.Nombre;
@@ -203,7 +222,6 @@ namespace WpfAppComputadoras.Components
         }
         private void ChangeButtons(int counter, int indexer)
         {
-
             if (indexer == 0 && counter > 10)
             {
                 btnSiguiente.Visibility = Visibility.Visible;
@@ -271,6 +289,7 @@ namespace WpfAppComputadoras.Components
             if (cbMarca.Items.Count > 0)
             {
                 idMarcaSelect = ((Marca)cbMarca.SelectedItem).NombreMarca;
+                idMarcaSelectFromCb = ((Marca)cbMarca.SelectedItem).IdMarca;
                 LoadDataProduct(typeProduct, idMarcaSelect);
             }
         }

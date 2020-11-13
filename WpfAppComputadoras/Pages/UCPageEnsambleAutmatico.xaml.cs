@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -13,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectBrl;
 using WpfAppComputadoras.Components;
 
@@ -28,13 +30,24 @@ namespace WpfAppComputadoras.Pages
         private RadioButton chk_Automatico;
         private RadioButton chk_Manual;
         private double presupuesto = 0.0;
+        private StackPanel stackPanel;
+        #region AUTMATICO_PROPERTIES
+
+        private string tipo_PC = "Oficina";
+        private string marca_Procesador = "AMD";
+        #endregion
+
+
         public UCPageEnsambleAutmatico()
         {
             InitializeComponent();
-            RenderUI_Step2_AUTOMATICO();
+            //RenderUI_Step1();
+            stackPanel = RenderUI_Step1();
+            this.container.Children.Add(stackPanel);
         }
-        private void RenderUI_Step1()
+        public StackPanel RenderUI_Step1()
         {
+            StackPanel stackPanel = new StackPanel() { Name = "stackX" }; ;
             TextBlock txtNewLog = new TextBlock
             {
                 Text = "INGRESE SU PRESUPUESTO",
@@ -86,14 +99,18 @@ namespace WpfAppComputadoras.Pages
                 IsEnabled = false
             };
             btn_Siguiente.Click += Btn_Siguiente_Click;
-            container.Children.Add(txtNewLog);
-            container.Children.Add(txt_Presupuesto);
-            container.Children.Add(groupRadio);
-            container.Children.Add(btn_Siguiente);
+
+            stackPanel.Children.Add(txtNewLog);
+            stackPanel.Children.Add(txt_Presupuesto);
+            stackPanel.Children.Add(groupRadio);
+            stackPanel.Children.Add(btn_Siguiente);
+
+            return stackPanel;
         }
 
-        private void RenderUI_Step2_MANUAL()
+        private StackPanel RenderUI_Step2_MANUAL()
         {
+            StackPanel stackPanel = new StackPanel() { Name = "stackX" };
             Grid filter = new Grid();
             filter.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(250) });
             filter.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(5) });
@@ -110,6 +127,15 @@ namespace WpfAppComputadoras.Pages
             Grid.SetColumn(txtMarca, 0);
             Grid.SetRow(txtMarca, 0);
             ComboBox cbMarca = new ComboBox();
+            cbMarca.ItemsSource = ProcesadorBrl.Get_ListMarcas();
+            cbMarca.DisplayMemberPath = "NombreMarca";
+            cbMarca.SelectedValuePath = "IdMarca";
+            //cbMarca.SelectionChanged += CBMarca_SelectionChanged;
+
+            var dp = DependencyPropertyDescriptor.FromProperty(
+             ComboBox.TextProperty,
+             typeof(ComboBox));
+
             Grid.SetColumn(cbMarca, 0);
             Grid.SetRow(cbMarca, 1);
 
@@ -149,27 +175,45 @@ namespace WpfAppComputadoras.Pages
                 item.stockContainer.Visibility = Visibility.Hidden;
                 item.Visibility = Visibility.Visible;
             }
+            uCMainStore.TypeProduct = "Procesador";
             Grid.SetColumn(uCMainStore, 0);
             Grid.SetColumnSpan(uCMainStore, filter.ColumnDefinitions.Count);
             Grid.SetRow(uCMainStore, 2);
 
+            dp.AddValueChanged(cbMarca, (sender, args) =>
+            {
+                uCMainStore.IdMarcaSelectFromCb = ((Marca)cbMarca.SelectedItem).IdMarca;
+                uCMainStore.IdMarcaSelect = ((Marca)cbMarca.SelectedItem).NombreMarca;
+                //MessageBox.Show("IM CHANGED " + ((Marca)cbMarca.SelectedItem).NombreMarca);
+
+
+            });
 
             Button btn_NextStep = new Button() { Content = "Siguiente", Margin = new Thickness(0, 10, 0, 0), Width = 200, Height = 80 };
+            //btn_NextStep.IsEnabled = false;
+            btn_NextStep.Click += ((sender, args) =>
+            {
+                container.Children.Remove(stackPanel);
+                stackPanel = RenderUI_Step3_MANUAL();
+                container.Children.Add(stackPanel);
+            });
+
 
             filter.Children.Add(cbMarca);
             filter.Children.Add(txtMarca);
             filter.Children.Add(txtNombre);
             filter.Children.Add(txt_Nombre);
-
             filter.Children.Add(uCMainStore);
-            //cbMarca.ItemsSource = RamBrl.Get_ListMarcasRam();
-            //cbMarca.DisplayMemberPath = "NombreMarca";
-            //cbMarca.SelectedValuePath = "IdMarca";
-            container.Children.Add(filter);
-            container.Children.Add(btn_NextStep);
+
+
+            stackPanel.Children.Add(filter);
+            stackPanel.Children.Add(btn_NextStep);
+
+            return stackPanel;
         }
-        private void RenderUI_Step3_MANUAL()
+        private StackPanel RenderUI_Step3_MANUAL()
         {
+            StackPanel stackPanel = new StackPanel() { Name = "stackX" };
             Grid filter = new Grid();
             filter.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(150) });
             filter.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(5) });
@@ -189,6 +233,11 @@ namespace WpfAppComputadoras.Pages
             Grid.SetColumn(txtMarca, 0);
             Grid.SetRow(txtMarca, 0);
             ComboBox cbMarca = new ComboBox();
+            cbMarca.ItemsSource = RamBrl.Get_ListMarcasRam();
+            cbMarca.DisplayMemberPath = "NombreMarca";
+            cbMarca.SelectedValuePath = "IdMarca";
+            
+
             Grid.SetColumn(cbMarca, 0);
             Grid.SetRow(cbMarca, 1);
 
@@ -250,6 +299,20 @@ namespace WpfAppComputadoras.Pages
 
 
 
+            uCMainStore.TypeProduct = "Ram";
+            cbMarca.SelectionChanged += ((sender, args) =>
+            {
+                uCMainStore.IdMarcaSelectFromCb = ((Marca)cbMarca.SelectedItem).IdMarca;
+                uCMainStore.IdMarcaSelect = ((Marca)cbMarca.SelectedItem).NombreMarca;
+            });
+            btn_NextStep.Click += ((sender, args) =>
+            {
+                container.Children.Remove(stackPanel);
+                stackPanel = RenderUI_Step4_MANUAL();
+                container.Children.Add(stackPanel);
+            });
+
+
             filter.Children.Add(cbMarca);
             filter.Children.Add(txtMarca);
             filter.Children.Add(txtCapacidad);
@@ -262,12 +325,16 @@ namespace WpfAppComputadoras.Pages
             filter.Children.Add(txt_Nombre);
 
             filter.Children.Add(uCMainStore);
-            container.Children.Add(filter);
-            container.Children.Add(btn_NextStep);
+
+
+            stackPanel.Children.Add(filter);
+            stackPanel.Children.Add(btn_NextStep);
+            return stackPanel;
         }
 
-        private void RenderUI_Step4_MANUAL()
+        private StackPanel RenderUI_Step4_MANUAL()
         {
+            StackPanel stackPanel = new StackPanel() { Name = "stackX" };
             Grid filter = new Grid();
             filter.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(350) });
             filter.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(5) });
@@ -362,11 +429,16 @@ namespace WpfAppComputadoras.Pages
             filter.Children.Add(txt_Nombre);
 
             filter.Children.Add(uCMainStore);
-            container.Children.Add(filter);
-            container.Children.Add(btn_NextStep);
+
+            stackPanel.Children.Add(filter);
+            stackPanel.Children.Add(btn_NextStep);
+
+
+            return stackPanel;
         }
-        private void RenderUI_Step5_MANUAL()
+        private StackPanel RenderUI_Step5_MANUAL()
         {
+            StackPanel stackPanel = new StackPanel() { Name = "stackX" };
             Grid filter = new Grid();
             filter.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(250) });
             filter.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(5) });
@@ -438,11 +510,14 @@ namespace WpfAppComputadoras.Pages
             //cbMarca.ItemsSource = RamBrl.Get_ListMarcasRam();
             //cbMarca.DisplayMemberPath = "NombreMarca";
             //cbMarca.SelectedValuePath = "IdMarca";
-            container.Children.Add(filter);
-            container.Children.Add(btn_NextStep);
+            stackPanel.Children.Add(filter);
+            stackPanel.Children.Add(btn_NextStep);
+
+            return stackPanel;
         }
-        private void RenderUI_Step6_MANUAL()
+        private StackPanel RenderUI_Step6_MANUAL()
         {
+            StackPanel stackPanel = new StackPanel() { Name = "stackX" };
             Grid filter = new Grid();
             filter.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(250) });
             filter.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(5) });
@@ -514,11 +589,14 @@ namespace WpfAppComputadoras.Pages
             //cbMarca.ItemsSource = RamBrl.Get_ListMarcasRam();
             //cbMarca.DisplayMemberPath = "NombreMarca";
             //cbMarca.SelectedValuePath = "IdMarca";
-            container.Children.Add(filter);
-            container.Children.Add(btn_NextStep);
+            stackPanel.Children.Add(filter);
+            stackPanel.Children.Add(btn_NextStep);
+
+            return stackPanel;
         }
-        private void RenderUI_Step2_AUTOMATICO()
+        private StackPanel RenderUI_Step2_AUTOMATICO()
         {
+            StackPanel stackPanel = new StackPanel() { Name = "stackX" };
             Grid filter = new Grid();
             filter.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(250) });
             filter.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(5) });
@@ -544,18 +622,40 @@ namespace WpfAppComputadoras.Pages
             Grid.SetColumn(radTrabajo, 4);
             Grid.SetRow(radTrabajo, 1);
 
+            radOficina.Checked += Rad_Oficina_Checked;
+            radJuego.Checked += Rad_Oficina_Checked;
+            radTrabajo.Checked += Rad_Oficina_Checked;
 
             Button btn_NextStep = new Button() { Content = "Siguiente", Margin = new Thickness(0, 100, 0, 0), Width = 200, Height = 80 };
+            btn_NextStep.Click += Btn_Siguiente_Step2_Automatico;
 
             filter.Children.Add(txtTitle);
             filter.Children.Add(radOficina);
             filter.Children.Add(radJuego);
             filter.Children.Add(radTrabajo);
-            container.Children.Add(filter);
-            container.Children.Add(btn_NextStep);
+
+            stackPanel.Children.Add(filter);
+            stackPanel.Children.Add(btn_NextStep);
+
+            return stackPanel;
         }
-        private void RenderUI_Step3_AUTOMATICO()
+
+        private void Btn_Siguiente_Step2_Automatico(object sender, RoutedEventArgs e)
         {
+            container.Children.Remove(stackPanel);
+            stackPanel = RenderUI_Step3_AUTOMATICO();
+            container.Children.Add(stackPanel);
+        }
+
+        private void Rad_Oficina_Checked(object sender, RoutedEventArgs e)
+        {
+            RadioButton radioButton = (RadioButton)sender;
+            tipo_PC = radioButton.Content.ToString();
+        }
+
+        private StackPanel RenderUI_Step3_AUTOMATICO()
+        {
+            StackPanel stackPanel = new StackPanel() { Name = "stackX" };
             Grid filter = new Grid();
             filter.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(250) });
             filter.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(5) });
@@ -582,16 +682,39 @@ namespace WpfAppComputadoras.Pages
             Grid.SetRow(radTrabajo, 1);
 
 
+            radOficina.Checked += Rad_Procesador_Checked;
+            radJuego.Checked += Rad_Procesador_Checked;
+            radTrabajo.Checked += Rad_Procesador_Checked;
+
+
             Button btn_NextStep = new Button() { Content = "Siguiente", Margin = new Thickness(0, 100, 0, 0), Width = 200, Height = 80 };
+            btn_NextStep.Click += Btn_Siguiente_Step3_Automatico;
+
 
             filter.Children.Add(txtTitle);
             filter.Children.Add(radOficina);
             filter.Children.Add(radJuego);
             filter.Children.Add(radTrabajo);
-            container.Children.Add(filter);
-            container.Children.Add(btn_NextStep);
+
+            stackPanel.Children.Add(filter);
+            stackPanel.Children.Add(btn_NextStep);
+
+            return stackPanel;
         }
-       
+
+        private void Btn_Siguiente_Step3_Automatico(object sender, RoutedEventArgs e)
+        {
+            //container.Children.Remove(stackPanel);
+            //stackPanel = RenderUI_Step4_AUTOMATICO();
+            //container.Children.Add(stackPanel);
+        }
+
+        private void Rad_Procesador_Checked(object sender, RoutedEventArgs e)
+        {
+            RadioButton radioButton = (RadioButton)sender;
+            marca_Procesador = radioButton.Content.ToString();
+        }
+
         private void Txt_Presupuesto_Changed(object sender, RoutedEventArgs e)
         {
             ((TextBox)sender).Text = ((TextBox)sender).Text.Trim();
@@ -615,10 +738,21 @@ namespace WpfAppComputadoras.Pages
         }
         private void Btn_Siguiente_Click(object sender, RoutedEventArgs e)
         {
-            automatico = chk_Automatico.IsChecked.Value;
+
             if (presupuesto > 1.0)
             {
-                MessageBox.Show("ACEPTADO, PRESUPUIESTO DE: " + presupuesto.ToString() + " ESCOGIO EL MODO " + (automatico ? "AUTOMATICO" : "MANUAL"));
+                automatico = chk_Automatico.IsChecked.Value;
+                container.Children.Remove(stackPanel);
+                if (automatico)
+                {
+                    stackPanel = RenderUI_Step2_AUTOMATICO();
+                }
+                else
+                {
+                    stackPanel = RenderUI_Step2_MANUAL();
+                }
+                container.Children.Add(stackPanel);
+                //MessageBox.Show("ACEPTADO, PRESUPUIESTO DE: " + presupuesto.ToString() + " ESCOGIO EL MODO " + (automatico ? "AUTOMATICO" : "MANUAL"));
             }
         }
         private void Txt_Presupuesto_PreviewText(object sender, TextCompositionEventArgs e)

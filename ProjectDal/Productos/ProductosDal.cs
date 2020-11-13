@@ -12,7 +12,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
         //    OperationsSql = new OperationsSql();
         //}
 
-        protected static void Insertar(Producto producto)
+        public static void Insertar(Producto producto)
         {
             string queryString = @"INSERT INTO Producto(IdProducto, PrecioUnidad, Imagen, Nombre, Stock, IdMarca, Descontinuado) 
                                                  VALUES(@IdProducto, @PrecioUnidad, @Imagen, @Nombre, @Stock, @IdMarca, @Descontinuado)";

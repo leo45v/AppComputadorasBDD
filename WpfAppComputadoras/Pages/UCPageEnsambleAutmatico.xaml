@@ -8,7 +8,7 @@
              d:DesignHeight="613" d:DesignWidth="1180" FontSize="36" MinWidth="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FlowDirection="LeftToRight" Padding="-10,0,0,0">
     <Grid>
         <Border Background="Aqua"/>
-        <StackPanel x:Name="container" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <StackPanel x:Name="container" VerticalAlignment="Center" HorizontalAlignment="Center" Width="1180" Height="613">
         </StackPanel>
     </Grid>
 </UserControl>

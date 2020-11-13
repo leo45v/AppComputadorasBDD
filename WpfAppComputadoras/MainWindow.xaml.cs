@@ -30,6 +30,30 @@ namespace WpfAppComputadoras
         {
             InitializeComponent();
             txt_Usuario.Focus();
+            //for (int i = 0; i < 45; i++)
+            //{
+            //    int frecuenciabase = new Random().Next(18, 40) * 100;
+            //    int nucleos = new Random().Next(2, 17);
+            //    ProcesadorBrl.Insertar(new Procesador()
+            //    {
+            //        Consumo = new Random().Next(20, 400),
+            //        Descontinuado = false,
+            //        FrecuenciaBase = frecuenciabase,
+            //        FrecuenciaTurbo = frecuenciabase + new Random().Next(5, 15) * 100,
+            //        IdProducto = Guid.NewGuid(),
+            //        Imagen = "",
+            //        Litografia = new Random().Next(7, 15),
+            //        Marca = new Marca()
+            //        {
+            //            IdMarca = (byte)1
+            //        },
+            //        Nombre = "AMD r" + new Random().Next(3, 7) + " X" + i + " v" + (i * new Random().Next(2, 9) * 1000).ToString(),
+            //        NumeroNucleos = nucleos,
+            //        NumeroHilos = nucleos * new Random().Next(1, 3),
+            //        PrecioUnidad = (decimal)(120 * new Random().Next(125, 600) / 600),
+            //        Stock = (short)new Random().Next(0, 30)
+            //    });
+            //}
             //for (int i = 0; i < 43; i++)
             //{
             //    RamBrl.Add(new Ram()

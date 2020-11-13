@@ -4,49 +4,52 @@ using System.Text;
 
 namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDal.Personas.Productos
 {
-    public class RamDal
+    public class ProcesadorDal
     {
-        public static bool Insertar(Ram ram)
+        public static void Insertar(Procesador procesador)
         {
-            bool estado = false;
-            string query = @"INSERT INTO Ram (IdProducto, Memoria, Frecuencia, Latencia)
-                                       Values(@IdProducto, @Memoria, @Frecuencia, @Latencia)";
+            string queryString = @"INSERT INTO Procesador
+                                   (IdProducto, FrecuenciaBase, FrecuenciaTurbo, NumeroNucleos, NumeroHilos, Consumo, Litografia) 
+                                   VALUES
+                                   (@IdProducto, @FrecuenciaBase, @FrecuenciaTurbo, @NumeroNucleos, @NumeroHilos, @Consumo, @Litografia)";
             try
             {
                 OperationsSql.OpenConnection();
-                ProductosDal.Insertar(ram as Producto);
-                OperationsSql.CreateBasicCommandWithTransaction(query);
-                OperationsSql.AddWithValueString("Memoria", ram.Memoria);
-                OperationsSql.AddWithValueString("Frecuencia", ram.Frecuencia);
-                OperationsSql.AddWithValueString("Latencia", ram.Latencia);
+                ProductosDal.Insertar(procesador as Producto);
+                OperationsSql.CreateBasicCommandWithTransaction(queryString);
+                OperationsSql.AddWithValueString("FrecuenciaBase", procesador.FrecuenciaBase);
+                OperationsSql.AddWithValueString("FrecuenciaTurbo", procesador.FrecuenciaTurbo);
+                OperationsSql.AddWithValueString("NumeroNucleos", procesador.NumeroNucleos);
+                OperationsSql.AddWithValueString("NumeroHilos", procesador.NumeroHilos);
+                OperationsSql.AddWithValueString("Consumo", procesador.Consumo);
+                OperationsSql.AddWithValueString("Litografia", procesador.Litografia);
                 OperationsSql.ExecuteBasicCommandWithTransaction();
                 OperationsSql.ExecuteTransactionCommit();
-                estado = true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
             finally
             {
                 OperationsSql.CloseConnection();
             }
-            return estado;
         }
-        public static Ram Get(Guid idRam)
+        public static Procesador Get(Guid idProcesador)
         {
-            Ram ram = null;
-            return ram;
+            Procesador procesador = null;
+            return procesador;
         }
-        public static List<Ram> GetAll()
+        public static List<Procesador> GetAll()
         {
-            List<Ram> rams = null;
-            string query = @"SELECT r.IdProducto, r.Memoria, r.Frecuencia, r.Latencia
+            List<Procesador> procesadors = null;
+            string query = @"SELECT r.IdProducto, r.FrecuenciaBase, r.FrecuenciaTurbo, r.NumeroNucleos, r.NumeroHilos, r.Consumo, r.Litografia
                              pro.PrecioUnidad, pro.Imagen, pro.Nombre, pro.Stock, pro.IdMarca, pro.Descontinuado,
                              mar.NombreMarca
-                             FROM Ram r
+                             FROM Procesador r
                              INNER JOIN Producto pro ON pro.IdProducto = r.IdProducto
-                             INNER JOIN Marca mar ON mar.IdMarca = pro.IdMarca";
+                             INNER JOIN Marca mar ON mar.IdMarca = pro.IdMarca
+                             WHERE pro.Descontinuado = 0";
             try
             {
                 OperationsSql.OpenConnection();
@@ -54,10 +57,10 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 List<Dictionary<string, object>> data = OperationsSql.ExecuteReaderMany();
                 if (data != null)
                 {
-                    rams = new List<Ram>();
+                    procesadors = new List<Procesador>();
                     foreach (Dictionary<string, object> item in data)
                     {
-                        rams.Add(Dictionary_A_Ram(item));
+                        procesadors.Add(Dictionary_A_Procesador(item));
                     }
                 }
                 OperationsSql.ExecuteTransactionCommit();
@@ -67,15 +70,15 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 throw;
             }
             finally { OperationsSql.CloseConnection(); }
-            return rams;
+            return procesadors;
         }
         public static List<Producto> GetWithRange(int start, int cant, int? idMarca, double? minPrice, double? maxPrice)
         {
-            List<Producto> rams = null;
+            List<Producto> productos = null;
             string query = @"SELECT r.IdProducto, 
                              pro.PrecioUnidad, pro.Imagen, pro.Nombre, pro.Stock, pro.IdMarca, pro.Descontinuado,
                              mar.NombreMarca
-                             FROM Ram r
+                             FROM Procesador r
                              INNER JOIN Producto pro ON pro.IdProducto = r.IdProducto
                              INNER JOIN Marca mar ON mar.IdMarca = pro.IdMarca " +
                              (!(idMarca == 0) || (!(minPrice is null) && !(maxPrice is null)) ? @"WHERE " : @"") +
@@ -92,10 +95,10 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 List<Dictionary<string, object>> data = OperationsSql.ExecuteReaderMany();
                 if (data != null)
                 {
-                    rams = new List<Producto>();
+                    productos = new List<Producto>();
                     foreach (Dictionary<string, object> item in data)
                     {
-                        rams.Add(ProductosDal.Dictionary_A_Producto(item));
+                        productos.Add(ProductosDal.Dictionary_A_Producto(item));
                     }
                 }
                 OperationsSql.ExecuteTransactionCommit();
@@ -105,9 +108,9 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 throw;
             }
             finally { OperationsSql.CloseConnection(); }
-            return rams;
+            return productos;
         }
-        public static bool Delete_Ram(Guid idProducto)
+        public static bool Delete(Guid idProducto)
         {
             bool estado = false;
             string query = @"DELETE FROM Producto WHERE IdProducto = @IdProducto";
@@ -130,17 +133,16 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             return estado;
         }
-        public static List<Marca> Get_ListMarcasRam()
+        public static List<Marca> Get_ListMarcas()
         {
             List<Marca> listaMarcas = null;
             string query = @"SELECT Marca.NombreMarca, Marca.IdMarca
                             FROM Marca
                             INNER JOIN Producto pro ON pro.IdMarca = Marca.IdMarca
-                            INNER JOIN Ram ON Ram.IdProducto = pro.IdProducto
+                            INNER JOIN Procesador ON Procesador.IdProducto = pro.IdProducto
                             WHERE pro.Descontinuado = 0
                             GROUP BY Marca.NombreMarca, Marca.IdMarca
-                            ORDER BY Marca.NombreMarca;
-";
+                            ORDER BY Marca.NombreMarca";
             try
             {
                 OperationsSql.OpenConnection();
@@ -171,7 +173,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
         {
             int cantidad = 0;
             string query = @"SELECT COUNT(*) as Cantidad
-                             FROM Ram r
+                             FROM Procesador r
                              INNER JOIN Producto pro ON pro.IdProducto = r.IdProducto
                              WHERE pro.Descontinuado = 0 " +
                              (!(idMarca == 0) || (!(minPrice is null) && !(maxPrice is null)) ? @" AND " : @"") +
@@ -196,26 +198,28 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             finally { OperationsSql.CloseConnection(); }
             return cantidad;
         }
-        private static Ram Dictionary_A_Ram(Dictionary<string, object> data)
+        private static Procesador Dictionary_A_Procesador(Dictionary<string, object> data)
         {
-            return new Ram()
+            return new Procesador()
             {
                 IdProducto = (Guid)data["IdProducto"],
                 Descontinuado = (bool)data["Descontinuado"],
-                Frecuencia = (int)data["Frecuencia"],
+                FrecuenciaBase = (int)data["FrecuenciaBase"],
+                Consumo = (int)data["Consumo"],
                 Imagen = (string)data["Imagen"],
-                Latencia = (int)data["Latencia"],
+                FrecuenciaTurbo = (int)data["FrecuenciaTurbo"],
                 Marca = new Marca()
                 {
                     IdMarca = (byte)data["IdMarca"],
                     NombreMarca = (string)data["NombreMarca"]
                 },
-                Memoria = (int)data["Memoria"],
+                Litografia = (int)data["Litografia"],
                 Nombre = (string)data["Nombre"],
                 PrecioUnidad = (decimal)data["PrecioUnidad"],
-                Stock = (short)data["Stock"]
+                Stock = (short)data["Stock"],
+                NumeroHilos = (int)data["NumeroHilos"],
+                NumeroNucleos = (int)data["NumeroNucleos"]
             };
         }
     }
-
 }

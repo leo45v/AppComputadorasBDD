@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectBrl;
 
 namespace WpfAppComputadoras
 {
@@ -348,7 +349,58 @@ namespace WpfAppComputadoras
         }
         private void Btn_Create_Account(object sender, RoutedEventArgs e)
         {
-
+            string name = txt_Nombre.Text;
+            string lastName = txt_Apellido.Text;
+            string email = txt_Email.Text;
+            string emailR = txt_Email.Text;
+            string password = txt_Password_1.Text;
+            string passwordR = txt_Password_1.Text;
+            string userName = txt_NombreUsuario.Text;
+            string sexo = combo_sexo.SelectedValue.ToString();
+            string date_Year = combo_Año.SelectedValue.ToString();
+            string date_Month = combo_Mes.SelectedValue.ToString();
+            string date_Day = combo_Dia.SelectedValue.ToString();
+            bool checkCondition = check_Aceptar_Condicion.IsChecked.Value;
+            if (userName.Length < 4 && !UsuarioBrl.NombreUsuario_Libre(userName))
+            {
+                MessageBox.Show("El Nombre de Usuario esta en uso o Es demasiado corto", "Error en Nombre de Usuario", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            if (name.Length < 1)
+            {
+                MessageBox.Show("El Nombre es demasiado corto", "Error en Nombre", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            if (lastName.Length < 1)
+            {
+                MessageBox.Show("El Apellido es demasiado corto", "Error en Apellido", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            if (!MainWindow.Comprobar_Formato_Email_(email) && email != emailR)
+            {
+                MessageBox.Show("El correo ingresado no es aceptado, Verifique que el correo sea el mismo en ambos campos", "Error en Correo", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            if (password.Length < 3 && password != passwordR)
+            {
+                MessageBox.Show("La contraseña ingresado es muy corta, Verifique haber escrito la misma contraseña en ambos campos", "Error en Contraseña", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            if (sexo != "Sexo")
+            {
+                MessageBox.Show("Seleccione un sexo", "Error en el campo Sexo", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            if (date_Year != "Año" || date_Month != "Mes" || date_Day != "Día")
+            {
+                MessageBox.Show("Seleccione su fecha de nacimiento, verifique haber seleccionado el día, mes y año correspondientes", "Error en Fecha de Nacimiento", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            if (!checkCondition)
+            {
+                MessageBox.Show("No puedes crear una cuenta si no aceptas los terminos de condicion de uso", "No acepto las condiciones", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
         private void Btn_Cancel(object sender, RoutedEventArgs e)
         {
