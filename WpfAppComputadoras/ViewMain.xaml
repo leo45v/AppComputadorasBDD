@@ -74,7 +74,7 @@
                         <TextBlock Grid.Row="0" Grid.Column="0" MouseLeftButtonDown="Mover_Ventana_Controller" Grid.ColumnSpan="9"/>
                     </Border>
 
-                    <Components:UCMenu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="9" Margin="0,10,0,10" />
+                   
 
 
                     <Button x:Name="btn_close" Content="X" Grid.Column="4" Height="22" Margin="0,10,4,0" VerticalAlignment="Top" RenderTransformOrigin="0.455,0.6" Click="btn_close_Click"/>

@@ -81,7 +81,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                              (!(idMarca == 0) || (!(minPrice is null) && !(maxPrice is null)) ? @"WHERE " : @"") +
                              (!(idMarca == 0) ? @"pro.IdMarca = " + idMarca + " " : @"") +
                              (!(idMarca == 0) && (!(minPrice is null) && !(maxPrice is null)) ? @" AND " : @"") +
-                             (!(minPrice is null) && !(maxPrice is null) ? @"pro.PrecioUnidad > " + minPrice + " AND pro.PrecioUnidad < " + maxPrice + " " : @"") +
+                             (!(minPrice is null) && !(maxPrice is null) ? @"pro.PrecioUnidad > @minPrice AND pro.PrecioUnidad < @maxPrice " : @"") +
                              @"ORDER BY pro.Nombre ASC
                              OFFSET " + start + @" ROWS
                              FETCH NEXT " + cant + @" ROWS ONLY";
@@ -89,6 +89,8 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             {
                 OperationsSql.OpenConnection();
                 OperationsSql.CreateBasicCommandWithTransaction(query);
+                OperationsSql.AddWithValueString("minPrice", minPrice);
+                OperationsSql.AddWithValueString("maxPrice", maxPrice);
                 List<Dictionary<string, object>> data = OperationsSql.ExecuteReaderMany();
                 if (data != null)
                 {
@@ -170,6 +172,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
         public static int Count(int? idMarca, double? minPrice, double? maxPrice)
         {
             int cantidad = 0;
+
             string query = @"SELECT COUNT(*) as Cantidad
                              FROM Ram r
                              INNER JOIN Producto pro ON pro.IdProducto = r.IdProducto
@@ -177,10 +180,12 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                              (!(idMarca == 0) || (!(minPrice is null) && !(maxPrice is null)) ? @" AND " : @"") +
                              (!(idMarca == 0) ? @"pro.IdMarca = " + idMarca + " " : @"") +
                              (!(idMarca == 0) && (!(minPrice is null) && !(maxPrice is null)) ? @" AND " : @"") +
-                             (!(minPrice is null) && !(maxPrice is null) ? @"pro.PrecioUnidad > " + minPrice + " AND pro.PrecioUnidad < " + maxPrice + " " : @"");
+                            (!(minPrice is null) && !(maxPrice is null) ? @"pro.PrecioUnidad > @minPrice AND pro.PrecioUnidad < @maxPrice " : @"");
             try
             {
                 OperationsSql.OpenConnection();
+                OperationsSql.AddWithValueString("minPrice", minPrice);
+                OperationsSql.AddWithValueString("maxPrice", maxPrice);
                 OperationsSql.CreateBasicCommandWithTransaction(query);
                 Dictionary<string, object> data = OperationsSql.ExecuteReader();
                 if (data != null)

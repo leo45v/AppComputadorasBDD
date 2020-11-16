@@ -7,6 +7,9 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Administrator\AdmiMenuView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Components\UCMainStore.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -31,11 +34,29 @@
     <Compile Update="RegistroWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Reservas\UCAutomaticView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Reservas\UCComputerBuildView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Reservas\UCTypeComputerView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Reservas\UCTypeCPUView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Reservas\UCTypeGPUView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="ViewMain.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Administrator\AdmiMenuView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Components\UCMainStore.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -61,6 +82,21 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="RegistroWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Reservas\UCAutomaticView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Reservas\UCComputerBuildView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Reservas\UCTypeComputerView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Reservas\UCTypeCPUView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Reservas\UCTypeGPUView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="ViewMain.xaml">
