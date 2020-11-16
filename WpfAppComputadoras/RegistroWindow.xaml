@@ -93,9 +93,9 @@
                     <TextBlock Text="Dirección de e-mail:" Grid.Row="12" Grid.Column="1" x:Name="bloque_Email" Foreground="WhiteSmoke" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                     <TextBlock Name="bloque_Contrasena" Text="Contraseña:" Grid.Column="1" Grid.Row="16" Foreground="WhiteSmoke" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                     <TextBlock Text="Sexo:" Name="bloque_Sexo" Grid.Column="1" Grid.Row="10" Foreground="WhiteSmoke" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                    <CheckBox x:Name="check_Aceptar_Condicion" TabIndex="11" Grid.Column="3" Grid.Row="19" Foreground="WhiteSmoke" Content="Acepta las Condiciones de Uso aplicableses a mi país de residencia y, si soy menor de 18 años, manifiesto y certifico que mi padre o tutor ha leído y aceptado las Condiciones de Uso en representación mía." Grid.ColumnSpan="3" GotFocus="check_Aceptar_Condicion_GotFocus"/>
-                    <CheckBox x:Name="check_AceptarRegistro" TabIndex="12" Visibility="Collapsed" IsEnabled="False" Grid.Column="3" Grid.Row="21" Foreground="#FFA8A8A8" Content="Regístrate para recibir noticias y ofertas especiales del Chat Universitario en la dirección de e-mail vinculada a esta cuenta." Grid.ColumnSpan="3" FontSize="9" GotFocus="check_AceptarRegistro_GotFocus"/>
-                    <TextBlock x:Name="txt_Usuario_Total" Grid.Column="3" Grid.Row="22" Foreground="WhiteSmoke" Text="Usuario TOTALES registrados: " HorizontalAlignment="Left" VerticalAlignment="Center" Grid.ColumnSpan="3"/>
+                    <!--<CheckBox x:Name="check_Aceptar_Condicion" TabIndex="11" Grid.Column="3" Grid.Row="19" Foreground="WhiteSmoke" Content="Acepta las Condiciones de Uso aplicableses a mi país de residencia y, si soy menor de 18 años, manifiesto y certifico que mi padre o tutor ha leído y aceptado las Condiciones de Uso en representación mía." Grid.ColumnSpan="3" GotFocus="check_Aceptar_Condicion_GotFocus"/>-->
+                    <!--<CheckBox x:Name="check_AceptarRegistro" TabIndex="12" Visibility="Collapsed" IsEnabled="False" Grid.Column="3" Grid.Row="21" Foreground="#FFA8A8A8" Content="Regístrate para recibir noticias y ofertas especiales del Chat Universitario en la dirección de e-mail vinculada a esta cuenta." Grid.ColumnSpan="3" FontSize="9" GotFocus="check_AceptarRegistro_GotFocus"/>-->
+                    <!--<TextBlock x:Name="txt_Usuario_Total" Grid.Column="3" Grid.Row="22" Foreground="WhiteSmoke" Text="Usuario TOTALES registrados: " HorizontalAlignment="Left" VerticalAlignment="Center" Grid.ColumnSpan="3"/>-->
                     <Button Content="CREAR UNA CUENTA GRATUITA" TabIndex="13" Name="btn_Create_Account" Grid.Column="3" Grid.Row="24" Background="#FF741D1D" BorderBrush="#FF6C6C6C" BorderThickness="3" Foreground="White" Click="Btn_Create_Account"/>
                     <Separator Grid.Column="3" Grid.Row="24" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Disabled" UseLayoutRounding="False" RenderTransformOrigin="0.5,0.5" Width="50" Margin="0,2" Height="1" MinWidth="50" MinHeight="1" Grid.ColumnSpan="3" Background="#FFCBCBCB">
                         <Separator.RenderTransform>
@@ -108,7 +108,7 @@
                         </Separator.RenderTransform>
                     </Separator>
                     <Button Content="CANCELAR" Grid.Column="5" Grid.Row="24" Background="#00000000" Foreground="#FFC7C7C7" HorizontalAlignment="Left" Margin="10,0,0,0" BorderBrush="#00707070" Click="Btn_Cancel"/>
-                    <ComboBox x:Name="combo_sexo" TabIndex="5" Grid.Column="3" Height="25" Grid.Row="10" BorderBrush="#FFACACAC" GotFocus="combo_Sexo_GotFocus"/>
+                    <ComboBox x:Name="combo_sexo" TabIndex="5" Grid.Column="3" Height="25" Grid.Row="10" BorderBrush="#FFACACAC" /> <!--GotFocus="combo_Sexo_GotFocus"-->
                     <Grid Grid.Column="3" Grid.Row="8">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
@@ -117,7 +117,7 @@
                             <ColumnDefinition Width="5"/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <ComboBox x:Name="combo_Mes" TabIndex="2" ScrollViewer.PanningMode="None" Height="25" Grid.Column="0" SelectedIndex="0" GotFocus="combo_Mes_GotFocus">
+                        <ComboBox x:Name="combo_Mes" TabIndex="2" ScrollViewer.PanningMode="None" Height="25" Grid.Column="0" SelectedIndex="0">  <!--GotFocus="combo_Mes_GotFocus"-->
                             <ComboBoxItem Content="Mes"/>
                             <ComboBoxItem Content="Enero"/>
                             <ComboBoxItem Content="Febrero"/>
@@ -132,10 +132,10 @@
                             <ComboBoxItem Content="Noviembre"/>
                             <ComboBoxItem Content="Diciembre"/>
                         </ComboBox>
-                        <ComboBox x:Name="combo_Dia" TabIndex="3" Height="25" ScrollViewer.PanningMode="None" Grid.Column="2" GotFocus="combo_Dia_GotFocus"/>
-                        <ComboBox x:Name="combo_Año" TabIndex="4" Height="25" ScrollViewer.PanningMode="Both" Grid.Column="4" GotFocus="combo_Año_GotFocus"/>
+                        <ComboBox x:Name="combo_Dia" TabIndex="3" Height="25" ScrollViewer.PanningMode="None" Grid.Column="2" /> <!--GotFocus="combo_Dia_GotFocus"-->
+                        <ComboBox x:Name="combo_Año" TabIndex="4" Height="25" ScrollViewer.PanningMode="Both" Grid.Column="4" /> <!--GotFocus="combo_Año_GotFocus"-->
                     </Grid>
-                    <TextBox x:Name="txt_Nombre" TabIndex="0" Text="Nombre" Height="25" Grid.Column="3" Grid.Row="6" GotFocus="txt_Nombre_GotFocus" TextAlignment="Justify" Foreground="#FFABADB3">
+                    <TextBox x:Name="txt_Nombre" TabIndex="0" Text="" Height="25" Grid.Column="3" Grid.Row="6" TextAlignment="Justify" Foreground="#FFABADB3"> <!--GotFocus="txt_Nombre_GotFocus"-->
                         <TextBox.Background>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                 <GradientStop Color="#FFC7C7C7" Offset="0"/>
@@ -143,7 +143,7 @@
                             </LinearGradientBrush>
                         </TextBox.Background>
                     </TextBox>
-                    <TextBox x:Name="txt_Apellido" TabIndex="1" Text="Apellido" TextAlignment="Justify" Foreground="#FFABADB3" Height="25" Grid.Column="5" Grid.Row="6" GotFocus="txt_Apellido_GotFocus">
+                    <TextBox x:Name="txt_Apellido" TabIndex="1" Text="" TextAlignment="Justify" Foreground="#FFABADB3" Height="25" Grid.Column="5" Grid.Row="6" > <!--GotFocus="txt_Apellido_GotFocus"-->
                         <TextBox.Background>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                 <GradientStop Color="#FFC7C7C7" Offset="0"/>
@@ -151,7 +151,7 @@
                             </LinearGradientBrush>
                         </TextBox.Background>
                     </TextBox>
-                    <TextBox x:Name="txt_Email" TabIndex="6" Text="Ingresa tu e-mail" TextAlignment="Justify" Foreground="#FFABADB3" Height="25" Grid.Column="3" Grid.Row="12" GotFocus="txt_Email_GotFocus" KeyUp="txt_Email_KeyUp" TextChanged="txt_Email_TextChanged">
+                    <TextBox x:Name="txt_Email" TabIndex="6" Text="" TextAlignment="Justify" Foreground="#FFABADB3" Height="25" Grid.Column="3" Grid.Row="12"  KeyUp="txt_Email_KeyUp" TextChanged="txt_Email_TextChanged"><!--GotFocus="txt_Email_GotFocus"-->
                         <TextBox.Background>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                 <GradientStop Color="#FFC7C7C7" Offset="0"/>
@@ -159,7 +159,7 @@
                             </LinearGradientBrush>
                         </TextBox.Background>
                     </TextBox>
-                    <TextBox x:Name="txt_Email_Reiter" TabIndex="7" Text="Ingresa tu e-mail de  nuevo" TextAlignment="Justify" Foreground="#FFABADB3" Height="25" Grid.Column="5" Grid.Row="12" GotFocus="txt_Email_Reiter_GotFocus" KeyUp="txt_Email_Reiter_KeyUp">
+                    <TextBox x:Name="txt_Email_Reiter" TabIndex="7" Text="" TextAlignment="Justify" Foreground="#FFABADB3" Height="25" Grid.Column="5" Grid.Row="12" KeyUp="txt_Email_Reiter_KeyUp"> <!--GotFocus="txt_Email_Reiter_GotFocus"--> 
                         <TextBox.Background>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                 <GradientStop Color="#FFC7C7C7" Offset="0"/>
@@ -169,7 +169,7 @@
                     </TextBox>
                     <TextBlock x:Name="txt_Email_Corrige" Visibility="Hidden" Foreground="WhiteSmoke" Text="Este será el nombre de usuario que utilizarás para conectarte" Grid.Column="3" Grid.Row="13"/>
                     <TextBlock x:Name="txt_Email_Corrige1" Visibility="Hidden" Foreground="#FFE06262" Text="Las direcciones de e-mail deben coincidir." Grid.Column="5" Grid.Row="13"/>
-                    <TextBox x:Name="txt_Password_1" TabIndex="9" Text="Contraseña" Foreground="#FFABADB3" Height="25" Grid.Column="3" Grid.Row="16" GotFocus="txt_Password_1_GotFocus" KeyUp="txt_Password_1_KeyUp" KeyDown="txt_Password_1_KeyDown" TextChanged="txt_Password_1_TextChanged"  >
+                    <TextBox x:Name="txt_Password_1" TabIndex="9" Text="" Foreground="#FFABADB3" Height="25" Grid.Column="3" Grid.Row="16" KeyUp="txt_Password_1_KeyUp" KeyDown="txt_Password_1_KeyDown"> <!--GotFocus="txt_Password_1_GotFocus  TextChanged="txt_Password_1_TextChanged""--> 
                         <TextBox.Background>
                             <!--txt_Password_1_TextChanged-->
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -178,7 +178,7 @@
                             </LinearGradientBrush>
                         </TextBox.Background>
                     </TextBox>
-                    <TextBox x:Name="txt_Password_2" TabIndex="10" Text="Vuelva a ingresa tu contraseña" Foreground="#FFABADB3" Height="25" Grid.Column="5" Grid.Row="16" GotFocus="txt_Password_2_GotFocus" TextAlignment="Justify" TextChanged="txt_Password_1_TextChanged">
+                    <TextBox x:Name="txt_Password_2" TabIndex="10" Text="" Foreground="#FFABADB3" Height="25" Grid.Column="5" Grid.Row="16"  TextAlignment="Justify"><!--GotFocus="txt_Password_2_GotFocus TextChanged="txt_Password_1_TextChanged""-->
                         <TextBox.Background>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                 <GradientStop Color="#FFC7C7C7" Offset="0"/>
@@ -226,7 +226,7 @@
                             </Canvas>
                         </Border>
                     </Grid>
-                    <TextBox x:Name="txt_NombreUsuario" TabIndex="8" Text="Nombre de Usuario" TextAlignment="Justify" Foreground="#FFABADB3" Height="25" Grid.Column="3" Grid.Row="14" GotFocus="txt_NombreUsuario_GotFocus">
+                    <TextBox x:Name="txt_NombreUsuario" TabIndex="8" Text="" TextAlignment="Justify" Foreground="#FFABADB3" Height="25" Grid.Column="3" Grid.Row="14" ><!--GotFocus="txt_NombreUsuario_GotFocus"-->
                         <TextBox.Background>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                 <GradientStop Color="#FFC7C7C7" Offset="0"/>

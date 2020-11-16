@@ -107,12 +107,12 @@ namespace WpfAppComputadoras
             txt_Usuario.TabIndex = aux;
             if (((TextBox)sender) == txt_Usuario && txt_Usuario.Text == "")
             {
-                txt_Usuario.Text = "Correo Electronico";
+                txt_Usuario.Text = "";
                 username = "";
             }
             else if (((TextBox)sender) == txt_Contrasena && txt_Contrasena.Text == "")
             {
-                txt_Contrasena.Text = "Password";
+                txt_Contrasena.Text = "";
                 password = "";
             }
         }
