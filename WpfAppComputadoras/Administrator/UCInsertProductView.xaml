@@ -6,7 +6,11 @@
              xmlns:local="clr-namespace:WpfAppComputadoras.Administrator"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="#FF79A643">
-            
+    <Grid Background="#FF79A643" Margin="0,0,0,-95">
+        <TextBlock HorizontalAlignment="Left" Margin="45,33,0,0" Text="SELECCIONE EL  PRODUCTO QUE DESEA INSERTAR" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="20" FontFamily="Arial Black"/>
+        <Button Content="SIGUIENTE" HorizontalAlignment="Left" Margin="400,323,0,0" VerticalAlignment="Top" Height="40" Width="119" FontSize="22"/>
+        <ListBox Margin="54,93,421,182"/>
+
     </Grid>
+
 </UserControl>

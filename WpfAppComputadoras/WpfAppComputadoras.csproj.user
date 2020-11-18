@@ -10,7 +10,31 @@
     <Compile Update="Administrator\AdmiMenuView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Administrator\UCAlmancenamientoView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Administrator\UCFuenteView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Administrator\UCGabineteView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Administrator\UCInsertProductView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Administrator\UCMonitorView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Administrator\UCPlacaBaseView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Administrator\UCProcesadorView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Administrator\UCRamView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Administrator\UCTarjetaGraficaView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Components\UCMainStore.xaml.cs">
@@ -60,7 +84,31 @@
     <Page Update="Administrator\AdmiMenuView.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Administrator\UCAlmancenamientoView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Administrator\UCFuenteView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Administrator\UCGabineteView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Administrator\UCInsertProductView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Administrator\UCMonitorView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Administrator\UCPlacaBaseView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Administrator\UCProcesadorView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Administrator\UCRamView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Administrator\UCTarjetaGraficaView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Components\UCMainStore.xaml">
