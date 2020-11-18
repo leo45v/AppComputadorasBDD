@@ -69,8 +69,8 @@ namespace WpfAppComputadoras.Administrator
                 {
                     string tipo = ProductosBrl.GetType(producto.IdProducto);
                     uCItemProductView.CreatePageFromProduct(tipo, producto.IdProducto);
-                    if (!(uCItemProductView.uCProcesadorView is null)) 
-                    { 
+                    if (!(uCItemProductView.uCProcesadorView is null))
+                    {
                         uCItemProductView.uCProcesadorView.btnAction.Click += ((s, e) =>
                         {
                             if (uCItemProductView.uCProcesadorView.btnAction.Content.ToString() == "Actualizar" && ProcesadorBrl.Update(uCItemProductView.uCProcesadorView.procesador))
@@ -82,6 +82,18 @@ namespace WpfAppComputadoras.Administrator
                                 viewMain.admiMenuView.CargarProductos(ProductosBrl.GetWithRange(viewMain.pagSelect * 10, 10));
                             }
                         });
+                        uCItemProductView.uCProcesadorView.ShowDialog();
+                    }
+                });
+                uCItemProductView.btnVer.Click += ((object s, RoutedEventArgs e) =>
+                {
+                    string tipo = ProductosBrl.GetType(producto.IdProducto);
+                    uCItemProductView.CreatePageFromProduct(tipo, producto.IdProducto);
+                    if (!(uCItemProductView.uCProcesadorView is null))
+                    {
+                        uCItemProductView.uCProcesadorView.Height = 400;
+                        uCItemProductView.uCProcesadorView.Width = 640;
+                        uCItemProductView.uCProcesadorView.ModoVista();
                         uCItemProductView.uCProcesadorView.ShowDialog();
                     }
                 });

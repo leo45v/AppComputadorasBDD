@@ -16,11 +16,14 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             try
             {
                 OperationsSql.OpenConnection();
-                PersonaDal.Insertar(cliente as Persona);
-                OperationsSql.CreateBasicCommandWithTransaction(queryString);
-                OperationsSql.AddWithValueString("Email", cliente.Email);
-                OperationsSql.ExecuteBasicCommandWithTransaction();
-                OperationsSql.ExecuteTransactionCommit();
+                PersonaDal.cascada = true;
+                if (PersonaDal.Insertar(cliente as Persona))
+                {
+                    OperationsSql.CreateBasicCommandWithTransaction(queryString);
+                    OperationsSql.AddWithValueString("Email", cliente.Email);
+                    OperationsSql.ExecuteBasicCommandWithTransaction();
+                    OperationsSql.ExecuteTransactionCommit();
+                }
             }
             catch (Exception ex)
             {
@@ -28,6 +31,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             finally
             {
+                PersonaDal.cascada = false;
                 OperationsSql.CloseConnection();
             }
         }

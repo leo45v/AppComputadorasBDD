@@ -188,7 +188,6 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 ProductosDal.cascada = true;
                 if (ProductosDal.Update(procesador as Producto))
                 {
-                    ProductosDal.cascada = false;
                     OperationsSql.CreateBasicCommandWithTransaction(queryString);
                     OperationsSql.AddWithValueString(parameter: "FrecuenciaBase", procesador.FrecuenciaBase);
                     OperationsSql.AddWithValueString(parameter: "FrecuenciaTurbo", procesador.FrecuenciaTurbo);
@@ -207,7 +206,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             {
                 throw ex;
             }
-            finally { OperationsSql.CloseConnection(); }
+            finally { ProductosDal.cascada = false;  OperationsSql.CloseConnection(); }
             return estado;
         }
         public static int Count(int? idMarca, double? minPrice, double? maxPrice)

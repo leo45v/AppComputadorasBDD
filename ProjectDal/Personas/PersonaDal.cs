@@ -7,27 +7,37 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
 {
     public class PersonaDal
     {
-        public static void Insertar(Persona persona)
+        public static bool cascada = false;
+        public static bool Insertar(Persona persona)
         {
+            bool estado = false;
             string queryString = @"INSERT INTO Persona(IdPersona, Nombre, Apellido, Sexo, idUsuario, Eliminado, FechaNacimiento) 
                                                 VALUES(@IdPersona, @Nombre, @Apellido, @Sexo, @IdUsuario, @Eliminado, @FechaNacimiento)";
             try
             {
                 OperationsSql.OpenConnection();
-                UsuarioDal.Insertar(persona.Usuario as Usuario);
-                OperationsSql.CreateBasicCommandWithTransaction(queryString);
-                OperationsSql.AddWithValueString("IdPersona", persona.IdPersona);
-                OperationsSql.AddWithValueString("Nombre", persona.Nombre);
-                OperationsSql.AddWithValueString("Apellido", persona.Apellido);
-                OperationsSql.AddWithValueString("Sexo", persona.Sexo);
-                OperationsSql.AddWithValueString("Eliminado", persona.Eliminado);
-                OperationsSql.AddWithValueString("FechaNacimiento", persona.FechaNacimiento);
-                OperationsSql.ExecuteBasicCommandWithTransaction();
+                UsuarioDal.cascada = true;
+                if (UsuarioDal.Insertar(persona.Usuario as Usuario))
+                {
+                    OperationsSql.CreateBasicCommandWithTransaction(queryString);
+                    OperationsSql.AddWithValueString("IdPersona", persona.IdPersona);
+                    OperationsSql.AddWithValueString("Nombre", persona.Nombre);
+                    OperationsSql.AddWithValueString("Apellido", persona.Apellido);
+                    OperationsSql.AddWithValueString("Sexo", persona.Sexo);
+                    OperationsSql.AddWithValueString("Eliminado", persona.Eliminado);
+                    OperationsSql.AddWithValueString("FechaNacimiento", persona.FechaNacimiento);
+                    OperationsSql.ExecuteBasicCommandWithTransaction();
+                    if (!cascada)
+                    { OperationsSql.ExecuteTransactionCommit(); }
+                    estado = true;
+                }
             }
             catch (Exception ex)
             {
                 throw ex;
             }
+            finally { UsuarioDal.cascada = false; if (!cascada) { OperationsSql.CloseConnection(); } }
+            return estado;
         }
         public static Persona Obtener(Persona persona)
         {

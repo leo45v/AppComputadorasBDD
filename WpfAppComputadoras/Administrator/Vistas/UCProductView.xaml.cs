@@ -14,16 +14,16 @@ using System.Windows.Shapes;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectBrl;
 
-namespace WpfAppComputadoras.Administrator
+namespace WpfAppComputadoras.Administrator.Vistas
 {
     /// <summary>
-    /// Interaction logic for UCProcesadorView.xaml
+    /// Interaction logic for UCProductView.xaml
     /// </summary>
-    public partial class UCProcesadorView : Window
+    public partial class UCProductView : Window
     {
         public Procesador procesador = new Procesador();
         private List<Marca> marcas;
-        public UCProcesadorView()
+        public UCProductView()
         {
             InitializeComponent();
             LoadComboMarcas();
@@ -56,7 +56,7 @@ namespace WpfAppComputadoras.Administrator
             else { btnAction.Visibility = Visibility.Hidden; btnLoadImg.Visibility = Visibility.Hidden; }
 
         }
-        public UCProcesadorView(Guid idProducto)
+        public UCProductView(Guid idProducto)
         {
             InitializeComponent();
             LoadComboMarcas();

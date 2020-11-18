@@ -7,6 +7,39 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
 {
     public class AdministradorDal
     {
+        public static bool Insertar(Administrador administrador)
+        {
+            bool estado = false;
+            string queryString = @"INSERT INTO Administrador 
+                                   (IdPersona, FechaContrato, FechaNacimiento)
+                                   VALUES
+                                   (@IdPersona, @FechaContrato, @FechaNacimiento)";
+            try
+            {
+                OperationsSql.OpenConnection();
+                PersonaDal.cascada = true;
+                if (PersonaDal.Insertar(administrador as Persona))
+                {
+                    OperationsSql.CreateBasicCommandWithTransaction(queryString);
+                    OperationsSql.AddWithValueString("IdPersona", administrador.IdPersona);
+                    OperationsSql.AddWithValueString("FechaContrato", administrador.FechaContrato);
+                    OperationsSql.AddWithValueString("FechaNacimiento", administrador.FechaNacimiento);
+                    OperationsSql.ExecuteBasicCommandWithTransaction();
+                    OperationsSql.ExecuteTransactionCommit();
+                    estado = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                PersonaDal.cascada = false;
+                OperationsSql.CloseConnection();
+            }
+            return estado;
+        }
         public static Administrador Get_Administrador_By_IdUsuario(Guid idUsuario)
         {
             Administrador administrador = null;

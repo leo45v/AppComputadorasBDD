@@ -13,18 +13,22 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
             <ColumnDefinition/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <GridSplitter Grid.Column="0" Grid.ColumnSpan="4" HorizontalAlignment="Stretch" VerticalAlignment="Top" Background="Black" Height="2" />
-        <GridSplitter Grid.Column="0" Grid.ColumnSpan="4" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Background="Black" Height="2" />
+        <GridSplitter Grid.Column="0" Grid.ColumnSpan="5" HorizontalAlignment="Stretch" VerticalAlignment="Top" Background="Black" Height="2" />
+        <GridSplitter Grid.Column="0" Grid.ColumnSpan="5" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Background="Black" Height="2" />
         <GridSplitter Grid.Column="0" Width="2" HorizontalAlignment="Left" VerticalAlignment="Stretch" Background="Black" />
-        <Border Background="#D7D1ECFF" Grid.Column="0" Grid.ColumnSpan="4" />
+        <Border Background="#D7D1ECFF" Grid.Column="0" Grid.ColumnSpan="5" />
         <Image x:Name="imgProducto"  Grid.Column="0" Source="/assets/null.jpg" Stretch="Uniform" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,5,5,5"/>
         <GridSplitter Grid.Column="0" Width="2" HorizontalAlignment="Right" VerticalAlignment="Stretch" Background="Black" />
         <TextBlock x:Name="nombreProducto" Grid.Column="1" Text="PRUEBA" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" Margin="15,0,0,0"/>
         <GridSplitter Grid.Column="1" Width="2" HorizontalAlignment="Right" VerticalAlignment="Stretch" Background="Black" />
-        <TextBlock x:Name="descontinuadoProducto" Grid.Column="2" Text="No" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" Foreground="#FFD830A3" Margin="50,0,0,0"/>
+        <TextBlock x:Name="marcaProducto" Grid.Column="2" Text="No" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
         <GridSplitter Grid.Column="2" Width="2" HorizontalAlignment="Right" VerticalAlignment="Stretch" Background="Black" />
-        <Grid Grid.Column="3">
+        <GridSplitter Grid.Column="3" Width="2" HorizontalAlignment="Right" VerticalAlignment="Stretch" Background="Black" />
+        <TextBlock x:Name="tipoProducto" Grid.Column="3" Text="No" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
+        <GridSplitter Grid.Column="4" Width="2" HorizontalAlignment="Right" VerticalAlignment="Stretch" Background="Black" />
+        <Grid Grid.Column="4">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>

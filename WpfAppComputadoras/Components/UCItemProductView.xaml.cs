@@ -32,15 +32,16 @@ namespace WpfAppComputadoras.Components
         {
             imgProducto.Source = ViewMain.LoadImage(producto.Imagen);
             nombreProducto.Text = producto.Nombre;
-            descontinuadoProducto.Text = producto.Descontinuado ? "Si" : "No";
-            if (producto.Descontinuado)
-            {
-                descontinuadoProducto.Foreground = new SolidColorBrush(Color.FromRgb(216, 48, 163));
-            }
-            else
-            {
-                descontinuadoProducto.Foreground = new SolidColorBrush(Color.FromRgb(24, 114, 32));
-            }
+            marcaProducto.Text = producto.Marca.NombreMarca;
+            tipoProducto.Text = ProductosBrl.GetType(producto.IdProducto);
+            //if (producto.Descontinuado)
+            //{
+            //    descontinuadoProducto.Foreground = new SolidColorBrush(Color.FromRgb(216, 48, 163));
+            //}
+            //else
+            //{
+            //    descontinuadoProducto.Foreground = new SolidColorBrush(Color.FromRgb(24, 114, 32));
+            //}
             idProducto = producto.IdProducto;
         }
 

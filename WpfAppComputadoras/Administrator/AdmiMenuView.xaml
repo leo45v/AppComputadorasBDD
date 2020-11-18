@@ -12,19 +12,22 @@
         </Border>
         <Grid  Width="1045" Height="40" Margin="-73,-328,0,0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="257"/>
-                <ColumnDefinition Width="257"/>
-                <ColumnDefinition Width="257"/>
+                <ColumnDefinition Width="205.6"/>
+                <ColumnDefinition Width="205.6"/>
+                <ColumnDefinition Width="205.6"/>
+                <ColumnDefinition Width="205.6"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Border Background="#D7D1ECFF" Grid.Column="0" Grid.ColumnSpan="4" />
+            <Border Background="#D7D1ECFF" Grid.Column="0" Grid.ColumnSpan="5" />
             <GridSplitter Grid.Column="0" Width="2" HorizontalAlignment="Right" VerticalAlignment="Stretch" Background="Black" />
             <TextBlock Grid.Column="0" Text="Imagen" FontWeight="Bold" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" />
             <GridSplitter Grid.Column="1" Width="2" HorizontalAlignment="Right" VerticalAlignment="Stretch" Background="Black"/>
             <TextBlock Grid.Column="1" Text="Nombre" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" FontWeight="Bold"/>
             <GridSplitter Grid.Column="2" Width="2" HorizontalAlignment="Right" VerticalAlignment="Stretch" Background="Black"/>
-            <TextBlock Grid.Column="2" Text="Descontinuado" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" FontWeight="Bold"/>
-            <Grid Grid.Column="3">
+            <TextBlock Grid.Column="2" Text="Marca" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" FontWeight="Bold"/>
+            <GridSplitter Grid.Column="3" Width="2" HorizontalAlignment="Right" VerticalAlignment="Stretch" Background="Black"/>
+            <TextBlock Grid.Column="3" Text="Tipo" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" FontWeight="Bold"/>
+            <Grid Grid.Column="4">
             </Grid>
         </Grid>
         <ScrollViewer Margin="31,163,104,75" Background="White">

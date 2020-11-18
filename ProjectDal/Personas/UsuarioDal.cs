@@ -8,8 +8,10 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
 {
     public class UsuarioDal
     {
-        public static void Insertar(Usuario usuario)
+        public static bool cascada = false;
+        public static bool Insertar(Usuario usuario)
         {
+            bool estado = false;
             string queryString = @"INSERT INTO Usuario(IdUsuario, NombreUsuario, Contrasenia, Eliminado, IdRol) 
                                                 VALUES(@IdUsuario, @NombreUsuario, @Contrasenia, @Deleted, @IdRol)";
             try
@@ -22,13 +24,15 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 OperationsSql.AddWithValueString("Deleted", usuario.Eliminado);
                 OperationsSql.AddWithValueString("IdRol", usuario.Rol.IdRol);
                 OperationsSql.ExecuteBasicCommandWithTransaction();
-                //OperationsSql.ExecuteTransactionCommit();
+                if (!cascada) { OperationsSql.ExecuteTransactionCommit(); }
+                estado = true;
             }
             catch (Exception ex)
             {
                 throw ex;
             }
-            //finally { OperationsSql.CloseConnection(); }
+            finally { if (!cascada) { OperationsSql.CloseConnection(); } }
+            return estado;
         }
 
         public static Usuario Obtener(Usuario usuario)
