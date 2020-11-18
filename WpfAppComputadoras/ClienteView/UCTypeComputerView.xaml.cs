@@ -11,7 +11,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace WpfAppComputadoras.Reservas
+namespace WpfAppComputadoras.ClienteView
 {
     /// <summary>
     /// Interaction logic for UCTypeComputerView.xaml

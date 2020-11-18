@@ -116,6 +116,8 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                                    WHERE IdPersona = @IdPersona";
             try
             {
+                OperationsSql.AddWithValueString("IdPersona", persona.IdPersona);
+                UsuarioDal.cascada = true;
                 if (UsuarioDal.Actualizar(persona.Usuario))
                 {
                     OperationsSql.CreateBasicCommandWithTransaction(queryString);
@@ -131,6 +133,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             {
                 throw ex;
             }
+            finally { UsuarioDal.cascada = false; if (!cascada) { OperationsSql.ExecuteTransactionCommit(); OperationsSql.CloseConnection(); } }
             return estado;
         }
         public static bool Delete(Persona persona)
@@ -156,6 +159,33 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 throw;
             }
             finally { OperationsSql.CloseConnection(); }
+            return estado;
+        }
+        public static bool Delete(Guid idPersona)
+        {
+            bool estado = false;
+            string queryString = @"UPDATE Persona 
+                                   SET Eliminado = 1 
+                                   WHERE IdPersona = @IdPersona";
+            try
+            {
+                Persona dataPersona = Obtener_By_Id(idPersona);
+                OperationsSql.OpenConnection();
+                UsuarioDal.cascada = true;
+                if (UsuarioDal.Delete(dataPersona.Usuario.IdUsuario))
+                {
+                    OperationsSql.CreateBasicCommandWithTransaction(queryString);
+                    OperationsSql.AddWithValueString("IdPersona", idPersona);
+                    OperationsSql.ExecuteBasicCommandWithTransaction();
+                    OperationsSql.ExecuteTransactionCommit();
+                    estado = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally { UsuarioDal.cascada = false; OperationsSql.CloseConnection(); }
             return estado;
         }
         private static Persona ObjectData_To_Persona(Dictionary<string, object> data)

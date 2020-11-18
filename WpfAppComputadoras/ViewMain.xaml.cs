@@ -11,12 +11,11 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using WpfAppComputadoras.Components;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Enums;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectBrl;
-using WpfAppComputadoras.Reservas;
 using WpfAppComputadoras.Administrator;
+using WpfAppComputadoras.ClienteView;
 
 namespace WpfAppComputadoras
 {
@@ -26,7 +25,6 @@ namespace WpfAppComputadoras
     public partial class ViewMain : Window
     {
         private readonly MainWindow mainWindow;
-        private Dictionary<string, UCProductView> menuProducts = new Dictionary<string, UCProductView>();
 
         private Rol rol = new Rol();
         private Cliente cliente;
@@ -53,14 +51,15 @@ namespace WpfAppComputadoras
             if (rol.IdRol == ERol.Cliente)
             {
                 cliente = ClientsBrl.GetClienteByIdUsuario(idUsuario);
-                UCTypeComputerView uCTypeComputerView = new UCTypeComputerView();
-                gridAutomaitc.Children.Add(uCTypeComputerView);
+                ConfigClienteInterface(cliente.Usuario.Rol.IdRol);
+                txNombreView.Text = cliente.Nombre + " " + cliente.Apellido;
 
             }
             else if (rol.IdRol == ERol.Administrador)
             {
                 admin = AdministradorBrl.GetAdministradorByIdUsuario(idUsuario);
                 ConfigAdministradorInterface(admin.Usuario.Rol.IdRol);
+                txNombreView.Text = admin.Nombre + " " + admin.Apellido;
             }
             marcas = ProductosBrl.GetMarcas();
             //ucProcesador.lblProduct.Content = "Procesadores";
@@ -69,6 +68,11 @@ namespace WpfAppComputadoras
         }
         public int pagSelect = 0;
         public int maxProducts = 0;
+        public void ConfigClienteInterface(ERol eRol)
+        {
+            UCTypeComputerView uCTypeComputerView = new UCTypeComputerView();
+            gridAutomaitc.Children.Add(uCTypeComputerView);
+        }
         public void ConfigAdministradorInterface(ERol eRol)
         {
             if (eRol == ERol.Administrador)
@@ -213,6 +217,22 @@ namespace WpfAppComputadoras
             bi3.StreamSource = new MemoryStream(File.ReadAllBytes(@"" + pathImg));
             bi3.EndInit();
             return bi3;
+        }
+
+        private void BtnConfigurar_Click(object sender, RoutedEventArgs e)
+        {
+            if (ERol.Cliente == rol.IdRol)
+            {
+                btnConfigurar.IsEnabled = false;
+                gridAutomaitc.Children.Clear();
+                UCConfigClient uCConfigClient = new UCConfigClient(this, cliente);
+                uCConfigClient.bthAtras.Click += ((s, e) =>
+                {
+                    btnConfigurar.IsEnabled = true;
+                    ConfigClienteInterface(rol.IdRol);
+                });
+                gridAutomaitc.Children.Add(uCConfigClient);
+            }
         }
     }
 }

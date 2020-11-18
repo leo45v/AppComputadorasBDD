@@ -155,7 +155,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                     OperationsSql.AddWithValueString("Deleted", usuario.Eliminado);
                     OperationsSql.AddWithValueString("IdRol", usuario.Rol.IdRol);
                     OperationsSql.ExecuteBasicCommandWithTransaction();
-                    OperationsSql.ExecuteTransactionCommit();
+                    if (!cascada) { OperationsSql.ExecuteTransactionCommit(); }
                     estado = true;
                 }
             }
@@ -163,19 +163,19 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             {
                 throw;
             }
-            finally { OperationsSql.CloseConnection(); }
+            finally { if (!cascada) { OperationsSql.CloseConnection(); } }
             return estado;
         }
 
-        public static bool Borrar(Usuario usuario)
+        public static bool Delete(Usuario usuario)
         {
-            return Borrar_Por_Id(usuario.IdUsuario);
+            return Delete(usuario.IdUsuario);
         }
-        public static bool Borrar_Por_Id(Guid idUsuario)
+        public static bool Delete(Guid idUsuario)
         {
             bool estado = false;
             string queryString = @"UPDATE Usuario 
-                                   SET Eliminado = 1
+                                   SET Eliminado = 1 
                                    WHERE IdUsuario = @IdUsuario";
             try
             {
@@ -183,13 +183,17 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 OperationsSql.CreateBasicCommandWithTransaction(queryString);
                 OperationsSql.AddWithValueString("IdUsuario", idUsuario);
                 OperationsSql.ExecuteBasicCommandWithTransaction();
-                OperationsSql.ExecuteTransactionCommit();
+                if (!cascada)
+                {
+                    OperationsSql.ExecuteTransactionCommit();
+                }
+                estado = true;
             }
             catch (Exception)
             {
                 OperationsSql.ExecuteTransactionCancel();
             }
-            finally { OperationsSql.CloseConnection(); }
+            finally { if (!cascada) { OperationsSql.CloseConnection(); } }
             return estado;
         }
         public static bool NombreUsuario_Libre(string nombreUsuario)

@@ -43,15 +43,15 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                                    usr.IdUsuario, usr.NombreUsuario, usr.Contrasenia, usr.Eliminado as Deleted, usr.IdRol, 
                                    Rol.NombreRol
                                    FROM Persona pe
-                                   INNER JOIN Cliente cli ON cli.IdPersona = pe.IdPersona
-                                   INNER JOIN Usuario usr ON usr.IdUsuario = pe.idUsuario
+                                   INNER JOIN Cliente cli ON cli.IdPersona = pe.IdPersona 
+                                   INNER JOIN Usuario usr ON usr.IdUsuario = pe.IdUsuario 
                                    INNER JOIN Rol ON Rol.IdRol = usr.IdROl
-                                   WHERE pe.idUsuario = @idUsuario";
+                                   WHERE pe.IdUsuario = @IdUsuario";
             try
             {
                 OperationsSql.OpenConnection();
                 OperationsSql.CreateBasicCommandWithTransaction(queryString);
-                OperationsSql.AddWithValueString("idUsuario", idUsuario);
+                OperationsSql.AddWithValueString("IdUsuario", idUsuario);
                 OperationsSql.ExecuteBasicCommandWithTransaction();
                 Dictionary<string, object> data = OperationsSql.ExecuteReader();
                 if (data != null)
@@ -114,6 +114,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             {
                 OperationsSql.OpenConnection();
                 OperationsSql.AddWithValueString("IdPersona", cliente.IdPersona);
+                PersonaDal.cascada = true;
                 if (PersonaDal.Update(cliente as Persona))
                 {
                     OperationsSql.CreateBasicCommandWithTransaction(queryString);
@@ -121,15 +122,19 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                     OperationsSql.ExecuteBasicCommandWithTransaction();
                     OperationsSql.ExecuteTransactionCommit();
                 }
+                estado = true;
             }
             catch (Exception ex)
             {
                 throw ex;
             }
-            finally { OperationsSql.CloseConnection(); }
+            finally { PersonaDal.cascada = false; OperationsSql.CloseConnection(); }
             return estado;
         }
-
+        public static bool Delete(Guid idCliente)
+        {
+            return PersonaDal.Delete(idCliente);
+        }
         private static Cliente ObjectData_To_Client(Dictionary<string, object> data)
         {
             return new Cliente()

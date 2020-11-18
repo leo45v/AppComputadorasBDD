@@ -9,7 +9,6 @@
   <ItemGroup>
     <None Remove="Components\null.jpg" />
     <None Remove="Components\Punto.png" />
-    <None Remove="Pages\null.jpg" />
   </ItemGroup>
 
   <ItemGroup>

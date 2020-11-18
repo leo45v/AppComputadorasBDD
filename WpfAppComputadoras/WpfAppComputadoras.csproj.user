@@ -40,49 +40,13 @@
     <Compile Update="Administrator\Vistas\UCProductView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Cliente\UCConfigClient.xaml.cs">
+    <Compile Update="ClienteView\UCTypeComputerView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Components\UCItemProductView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Components\UCMainStore.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Components\UCMenu.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Components\UCProductDescription.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Components\UCProductView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Components\UCRangeSlider.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Pages\UCPageEnsambleAutmatico.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Pages\UCPageStore.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="RegistroWindow.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Reservas\UCAutomaticView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Reservas\UCComputerBuildView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Reservas\UCTypeComputerView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Reservas\UCTypeCPUView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Reservas\UCTypeGPUView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="ViewMain.xaml.cs">
@@ -123,52 +87,16 @@
     <Page Update="Administrator\Vistas\UCProductView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Cliente\UCConfigClient.xaml">
+    <Page Update="ClienteView\UCTypeComputerView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Components\UCItemProductView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Components\UCMainStore.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Components\UCMenu.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Components\UCProductDescription.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Components\UCProductView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Components\UCRangeSlider.xaml">
-      <SubType>Designer</SubType>
-    </Page>
     <Page Update="MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Pages\UCPageEnsambleAutmatico.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Pages\UCPageStore.xaml">
-      <SubType>Designer</SubType>
-    </Page>
     <Page Update="RegistroWindow.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Reservas\UCAutomaticView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Reservas\UCComputerBuildView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Reservas\UCTypeComputerView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Reservas\UCTypeCPUView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Reservas\UCTypeGPUView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="ViewMain.xaml">
