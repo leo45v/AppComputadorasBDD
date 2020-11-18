@@ -9,19 +9,20 @@
       Title="AdmiMenuView">
 
     <Grid>
-        <Border Background="White"/>
+        <Border Background="#FFFD9999">
+            <ListBox Margin="31,163,104,35"/>
+        </Border>
+        <TextBlock HorizontalAlignment="Left" Margin="1014,335,0,0" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <Button Content="+" HorizontalAlignment="Left" Margin="36,39,0,0" VerticalAlignment="Top" Width="23" RenderTransformOrigin="0.87,1.202"/>
+        <TextBlock HorizontalAlignment="Left" Margin="64,39,0,0" Text="AGREGAR PRODUCTO" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="-0.081,-0.815" FontWeight="Bold" FontFamily="Arial Black" FontSize="14"/>
+        <Button Content="BUSCAR" HorizontalAlignment="Left" Margin="332,137,0,0" VerticalAlignment="Top" RenderTransformOrigin="-2.196,-0.2" Width="55"/>
+        <TextBox HorizontalAlignment="Left" Margin="36,137,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="272"/>
+        <Button Content="EDITAR" HorizontalAlignment="Left" Margin="707,167,0,0" VerticalAlignment="Top" Width="57"/>
+        <Button Content="ELIMINAR" HorizontalAlignment="Left" Margin="707,0,0,0" VerticalAlignment="Center" Width="57"/>
+        <Button Content="VER" HorizontalAlignment="Left" Margin="707,268,0,0" VerticalAlignment="Top" Width="57"/>
+        <Button Content="CANCELAR" HorizontalAlignment="Left" Margin="707,312,0,0" VerticalAlignment="Top" Width="67"/>
 
-        <TextBlock x:Name="___No_Name_" HorizontalAlignment="Left" Margin="31,23,0,0" Text="Insertar Producto" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Height="17" Width="108">
-            <TextBlock.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="0.632"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </TextBlock.RenderTransform>
-        </TextBlock>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="135,26,0,0" VerticalAlignment="Top"/>
 
     </Grid>
+
 </Page>

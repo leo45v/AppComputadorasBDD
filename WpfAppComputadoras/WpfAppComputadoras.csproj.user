@@ -10,6 +10,9 @@
     <Compile Update="Administrator\AdmiMenuView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Administrator\UCInsertProductView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Components\UCMainStore.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -55,6 +58,9 @@
   </ItemGroup>
   <ItemGroup>
     <Page Update="Administrator\AdmiMenuView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Administrator\UCInsertProductView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Components\UCMainStore.xaml">
