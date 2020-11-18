@@ -167,20 +167,21 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             return estado;
         }
 
-        public static bool Delete(Usuario usuario)
+        public static bool ActivarDesactivar(Usuario usuario, bool desactivar)
         {
-            return Delete(usuario.IdUsuario);
+            return ActivarDesactivar(usuario.IdUsuario, desactivar);
         }
-        public static bool Delete(Guid idUsuario)
+        public static bool ActivarDesactivar(Guid idUsuario, bool desactivar)
         {
             bool estado = false;
             string queryString = @"UPDATE Usuario 
-                                   SET Eliminado = 1 
+                                   SET Eliminado = @Eliminado 
                                    WHERE IdUsuario = @IdUsuario";
             try
             {
                 OperationsSql.OpenConnection();
                 OperationsSql.CreateBasicCommandWithTransaction(queryString);
+                OperationsSql.AddWithValueString("Eliminado", desactivar);
                 OperationsSql.AddWithValueString("IdUsuario", idUsuario);
                 OperationsSql.ExecuteBasicCommandWithTransaction();
                 if (!cascada)

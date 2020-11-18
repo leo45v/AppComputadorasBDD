@@ -25,11 +25,11 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectBr
         }
         public static bool Borrar(Guid idUsuario)
         {
-            return UsuarioDal.Delete(idUsuario);
+            return UsuarioDal.ActivarDesactivar(idUsuario, true);
         }
         public static bool Borrar(Usuario usuario)
         {
-            return UsuarioDal.Delete(usuario);
+            return UsuarioDal.ActivarDesactivar(usuario, true);
         }
         public static bool Actualizar(Usuario usuario)
         {

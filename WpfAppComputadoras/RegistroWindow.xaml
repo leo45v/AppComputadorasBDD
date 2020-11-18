@@ -109,7 +109,8 @@
                     </Separator>
                     <Button Content="CANCELAR" Grid.Column="5" Grid.Row="24" Background="#00000000" Foreground="#FFC7C7C7" HorizontalAlignment="Left" Margin="10,0,0,0" BorderBrush="#00707070" Click="Btn_Cancel"/>
                     <ComboBox x:Name="combo_sexo" TabIndex="5" Grid.Column="3" Height="25" Grid.Row="10" BorderBrush="#FFACACAC" /> <!--GotFocus="combo_Sexo_GotFocus"-->
-                    <Grid Grid.Column="3" Grid.Row="8">
+                    <DatePicker x:Name="dpFechaNacimiento" Grid.Column="3" Grid.Row="8" Height="25"/>
+                    <!--<Grid Grid.Column="3" Grid.Row="8">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition Width="5"/>
@@ -117,7 +118,7 @@
                             <ColumnDefinition Width="5"/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <ComboBox x:Name="combo_Mes" TabIndex="2" ScrollViewer.PanningMode="None" Height="25" Grid.Column="0" SelectedIndex="0">  <!--GotFocus="combo_Mes_GotFocus"-->
+                        <ComboBox x:Name="combo_Mes" TabIndex="2" ScrollViewer.PanningMode="None" Height="25" Grid.Column="0" SelectedIndex="0">  --><!--GotFocus="combo_Mes_GotFocus"--><!--
                             <ComboBoxItem Content="Mes"/>
                             <ComboBoxItem Content="Enero"/>
                             <ComboBoxItem Content="Febrero"/>
@@ -132,9 +133,9 @@
                             <ComboBoxItem Content="Noviembre"/>
                             <ComboBoxItem Content="Diciembre"/>
                         </ComboBox>
-                        <ComboBox x:Name="combo_Dia" TabIndex="3" Height="25" ScrollViewer.PanningMode="None" Grid.Column="2" /> <!--GotFocus="combo_Dia_GotFocus"-->
-                        <ComboBox x:Name="combo_Año" TabIndex="4" Height="25" ScrollViewer.PanningMode="Both" Grid.Column="4" /> <!--GotFocus="combo_Año_GotFocus"-->
-                    </Grid>
+                        <ComboBox x:Name="combo_Dia" TabIndex="3" Height="25" ScrollViewer.PanningMode="None" Grid.Column="2" /> --><!--GotFocus="combo_Dia_GotFocus"--><!--
+                        <ComboBox x:Name="combo_Año" TabIndex="4" Height="25" ScrollViewer.PanningMode="Both" Grid.Column="4" /> --><!--GotFocus="combo_Año_GotFocus"--><!--
+                    </Grid>-->
                     <TextBox x:Name="txt_Nombre" TabIndex="0" Text="" Height="25" Grid.Column="3" Grid.Row="6" TextAlignment="Justify" Foreground="#FFABADB3"> <!--GotFocus="txt_Nombre_GotFocus"-->
                         <TextBox.Background>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">

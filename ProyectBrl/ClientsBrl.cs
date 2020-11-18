@@ -21,7 +21,11 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectBr
         }
         public static bool Delete(Guid idCliente)
         {
-            return ClienteDal.Delete(idCliente);
+            return ClienteDal.ActivarDesactivar(idCliente, true);
+        }
+        public static bool ActivarCuenta(Guid idCliente)
+        {
+            return ClienteDal.ActivarDesactivar(idCliente, false);
         }
     }
 }

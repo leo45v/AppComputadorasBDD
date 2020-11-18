@@ -131,9 +131,9 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             finally { PersonaDal.cascada = false; OperationsSql.CloseConnection(); }
             return estado;
         }
-        public static bool Delete(Guid idCliente)
+        public static bool ActivarDesactivar(Guid idCliente, bool desactivado)
         {
-            return PersonaDal.Delete(idCliente);
+            return PersonaDal.ActivarDesactivar(idCliente, desactivado);
         }
         private static Cliente ObjectData_To_Client(Dictionary<string, object> data)
         {

@@ -28,20 +28,20 @@ namespace WpfAppComputadoras
         }
         private void Window_Initialized(object sender, EventArgs e)
         {
-            combo_Dia.Items.Clear();
-            combo_Año.Items.Clear();
-            combo_Dia.Items.Add("Día");
-            combo_Dia.SelectedIndex = 0;
-            combo_Año.Items.Add("Año");
-            combo_Año.SelectedIndex = 0;
-            for (int i = 0; i < 31; i++)
-            {
-                combo_Dia.Items.Add(i + 1);
-            }
-            for (int i = 0; i < 70; i++)
-            {
-                combo_Año.Items.Add(2015 - i);
-            }
+            //combo_Dia.Items.Clear();
+            //combo_Año.Items.Clear();
+            //combo_Dia.Items.Add("Día");
+            //combo_Dia.SelectedIndex = 0;
+            //combo_Año.Items.Add("Año");
+            //combo_Año.SelectedIndex = 0;
+            //for (int i = 0; i < 31; i++)
+            //{
+            //    combo_Dia.Items.Add(i + 1);
+            //}
+            //for (int i = 0; i < 70; i++)
+            //{
+            //    combo_Año.Items.Add(2015 - i);
+            //}
             combo_sexo.Items.Clear();
             combo_sexo.Items.Add("Sexo");
             combo_sexo.SelectedIndex = 0;
@@ -86,9 +86,9 @@ namespace WpfAppComputadoras
             string passwordR = txt_Password_1.Text;
             string userName = txt_NombreUsuario.Text;
             string sexo = combo_sexo.SelectedValue.ToString();
-            string date_Year = combo_Año.SelectedValue.ToString();
-            string date_Month = combo_Mes.SelectedValue.ToString();
-            string date_Day = combo_Dia.SelectedValue.ToString();
+            string date_Year = dpFechaNacimiento.SelectedDate.Value.Year.ToString();
+            string date_Month = dpFechaNacimiento.SelectedDate.Value.Month.ToString();
+            string date_Day = dpFechaNacimiento.SelectedDate.Value.Day.ToString();
             //bool checkCondition = check_Aceptar_Condicion.IsChecked.Value;
             if (userName.Length < 4 && !UsuarioBrl.NombreUsuario_Libre(userName))
             {
@@ -135,9 +135,7 @@ namespace WpfAppComputadoras
                 Apellido = txt_Apellido.Text,
                 Eliminado = false,
                 Email = txt_Email.Text,
-                FechaNacimiento = new DateTime(int.Parse(combo_Año.Text),
-                combo_Mes.SelectedIndex,
-                int.Parse(combo_Dia.Text)),
+                FechaNacimiento = dpFechaNacimiento.SelectedDate.Value,
                 IdPersona = Guid.NewGuid(),
                 Nombre = txt_Nombre.Text,
                 Sexo = (byte)(combo_sexo.SelectedIndex - 1),
@@ -153,13 +151,13 @@ namespace WpfAppComputadoras
                     }
                 }
             };
-            ClientsBrl.Insertar(nuevoCliente);
+        ClientsBrl.Insertar(nuevoCliente);
             MessageBox.Show("Cuenta creada Exitosamente", "Exito!", MessageBoxButton.OK, MessageBoxImage.Information);
         }
-        private void Btn_Cancel(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
-
+    private void Btn_Cancel(object sender, RoutedEventArgs e)
+    {
+        this.Close();
     }
+
+}
 }

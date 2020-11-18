@@ -138,9 +138,9 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
         }
         public static bool Delete(Persona persona)
         {
-            return Delete_By_Id(persona.IdPersona);
+            return Delete(persona.IdPersona);
         }
-        public static bool Delete_By_Id(Guid idPersona)
+        public static bool Delete(Guid idPersona)
         {
             bool estado = false;
             string queryString = @"DELETE  
@@ -161,21 +161,22 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             finally { OperationsSql.CloseConnection(); }
             return estado;
         }
-        public static bool Delete(Guid idPersona)
+        public static bool ActivarDesactivar(Guid idPersona, bool desactivar)
         {
             bool estado = false;
             string queryString = @"UPDATE Persona 
-                                   SET Eliminado = 1 
+                                   SET Eliminado = @Eliminado 
                                    WHERE IdPersona = @IdPersona";
             try
             {
                 Persona dataPersona = Obtener_By_Id(idPersona);
                 OperationsSql.OpenConnection();
                 UsuarioDal.cascada = true;
-                if (UsuarioDal.Delete(dataPersona.Usuario.IdUsuario))
+                OperationsSql.AddWithValueString("Eliminado", desactivar);
+                OperationsSql.AddWithValueString("IdPersona", idPersona);
+                if (UsuarioDal.ActivarDesactivar(dataPersona.Usuario.IdUsuario, desactivar))
                 {
                     OperationsSql.CreateBasicCommandWithTransaction(queryString);
-                    OperationsSql.AddWithValueString("IdPersona", idPersona);
                     OperationsSql.ExecuteBasicCommandWithTransaction();
                     OperationsSql.ExecuteTransactionCommit();
                     estado = true;

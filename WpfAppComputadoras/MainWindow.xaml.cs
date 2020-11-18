@@ -30,6 +30,7 @@ namespace WpfAppComputadoras
         {
             InitializeComponent();
             txt_Usuario.Focus();
+            //ClientsBrl.ActivarCuenta(new Guid("855eeaa5-3655-4214-9497-31deca0acef2"));
             //for (int i = 0; i < 80; i++)
             //{
             //    int frecuenciabase = new Random().Next(18, 40) * 100;
