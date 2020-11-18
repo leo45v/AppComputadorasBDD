@@ -47,5 +47,9 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectBr
         {
             return UsuarioDal.NombreUsuario_Libre(nombreUsuario);
         }
+        public static Rol GetRol(Guid idPersona)
+        {
+            return UsuarioDal.GetRol(idPersona);
+        }
     }
 }

@@ -11,5 +11,9 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectBr
         {
             ClienteDal.Insertar(cliente);
         }
+        public static Cliente GetClienteByIdUsuario(Guid idUsuario)
+        {
+            return ClienteDal.Get_Cliente_By_IdUsuario(idUsuario);
+        }
     }
 }

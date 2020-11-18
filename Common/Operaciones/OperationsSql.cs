@@ -58,7 +58,27 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common
         }
         public static void AddWithValueString(string parameter, object value)
         {
-            command.Parameters.AddWithValue("@" + parameter, value);
+            SqlParameter param = new SqlParameter()
+            {
+                ParameterName = "@" + parameter,
+                Value = value
+            };
+            if (VerificarParameter(param))
+            {
+                command.Parameters.AddWithValue("@" + parameter, value);
+            }
+
+        }
+        public static bool VerificarParameter(SqlParameter sqlParameter)
+        {
+            foreach (SqlParameter item in command.Parameters)
+            {
+                if (item.ParameterName == sqlParameter.ParameterName)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
         public static void ExecuteBasicCommandWithTransaction()
         {

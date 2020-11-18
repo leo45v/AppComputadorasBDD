@@ -42,11 +42,12 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
         {
             List<Ram> rams = null;
             string query = @"SELECT r.IdProducto, r.Memoria, r.Frecuencia, r.Latencia
-                             pro.PrecioUnidad, pro.Imagen, pro.Nombre, pro.Stock, pro.IdMarca, pro.Descontinuado,
+                             pro.PrecioUnidad, pro.Imagen, pro.Nombre, pro.Stock, pro.IdMarca, pro.Descontinuado, pro.Eliminado 
                              mar.NombreMarca
                              FROM Ram r
                              INNER JOIN Producto pro ON pro.IdProducto = r.IdProducto
-                             INNER JOIN Marca mar ON mar.IdMarca = pro.IdMarca";
+                             INNER JOIN Marca mar ON mar.IdMarca = pro.IdMarca
+                             WHERE pro.Eliminado = 0";
             try
             {
                 OperationsSql.OpenConnection();
@@ -73,12 +74,13 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
         {
             List<Producto> rams = null;
             string query = @"SELECT r.IdProducto, 
-                             pro.PrecioUnidad, pro.Imagen, pro.Nombre, pro.Stock, pro.IdMarca, pro.Descontinuado,
+                             pro.PrecioUnidad, pro.Imagen, pro.Nombre, pro.Stock, pro.IdMarca, pro.Descontinuado, pro.Eliminado 
                              mar.NombreMarca
                              FROM Ram r
                              INNER JOIN Producto pro ON pro.IdProducto = r.IdProducto
                              INNER JOIN Marca mar ON mar.IdMarca = pro.IdMarca " +
-                             (!(idMarca == 0) || (!(minPrice is null) && !(maxPrice is null)) ? @"WHERE " : @"") +
+                             @"WHERE pro.Eliminado = 0 "+
+                             (!(idMarca == 0) || (!(minPrice is null) && !(maxPrice is null)) ? @"AND " : @"") +
                              (!(idMarca == 0) ? @"pro.IdMarca = " + idMarca + " " : @"") +
                              (!(idMarca == 0) && (!(minPrice is null) && !(maxPrice is null)) ? @" AND " : @"") +
                              (!(minPrice is null) && !(maxPrice is null) ? @"pro.PrecioUnidad > @minPrice AND pro.PrecioUnidad < @maxPrice " : @"") +
@@ -109,29 +111,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             finally { OperationsSql.CloseConnection(); }
             return rams;
         }
-        public static bool Delete_Ram(Guid idProducto)
-        {
-            bool estado = false;
-            string query = @"DELETE FROM Producto WHERE IdProducto = @IdProducto";
-            try
-            {
-                OperationsSql.OpenConnection();
-                OperationsSql.CreateBasicCommandWithTransaction(query);
-                OperationsSql.AddWithValueString("IdProducto", idProducto);
-                OperationsSql.ExecuteBasicCommandWithTransaction();
-                OperationsSql.ExecuteTransactionCommit();
-                estado = true;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            finally
-            {
-                OperationsSql.CloseConnection();
-            }
-            return estado;
-        }
+        
         public static List<Marca> Get_ListMarcasRam()
         {
             List<Marca> listaMarcas = null;
@@ -139,7 +119,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                             FROM Marca
                             INNER JOIN Producto pro ON pro.IdMarca = Marca.IdMarca
                             INNER JOIN Ram ON Ram.IdProducto = pro.IdProducto
-                            WHERE pro.Descontinuado = 0
+                            WHERE pro.Eliminado = 0
                             GROUP BY Marca.NombreMarca, Marca.IdMarca
                             ORDER BY Marca.NombreMarca;
 ";
@@ -176,7 +156,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             string query = @"SELECT COUNT(*) as Cantidad
                              FROM Ram r
                              INNER JOIN Producto pro ON pro.IdProducto = r.IdProducto
-                             WHERE pro.Descontinuado = 0 " +
+                             WHERE pro.Eliminado = 0 " +
                              (!(idMarca == 0) || (!(minPrice is null) && !(maxPrice is null)) ? @" AND " : @"") +
                              (!(idMarca == 0) ? @"pro.IdMarca = " + idMarca + " " : @"") +
                              (!(idMarca == 0) && (!(minPrice is null) && !(maxPrice is null)) ? @" AND " : @"") +
@@ -218,7 +198,8 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 Memoria = (int)data["Memoria"],
                 Nombre = (string)data["Nombre"],
                 PrecioUnidad = (decimal)data["PrecioUnidad"],
-                Stock = (short)data["Stock"]
+                Stock = (short)data["Stock"],
+                Eliminado = (bool)data["Eliminado"]
             };
         }
     }

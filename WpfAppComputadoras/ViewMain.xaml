@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfAppComputadoras" 
         xmlns:Components="clr-namespace:WpfAppComputadoras.Components"
-        xmlns:Pages="clr-namespace:WpfAppComputadoras.Pages"
+        xmlns:Reservas="clr-namespace:WpfAppComputadoras.Reservas"
         mc:Ignorable="d"
         Title="ViewMain" Height="735" MinHeight="735" MinWidth="1200" Width="1200"
         AllowsTransparency="True" WindowStyle="None" WindowStartupLocation="CenterScreen" ResizeMode="CanResizeWithGrip" Background="{x:Null}" Closing="Window_Closing">
@@ -80,9 +80,11 @@
                     <Button x:Name="btn_close" Content="X" Grid.Column="4" Height="22" Margin="0,10,4,0" VerticalAlignment="Top" RenderTransformOrigin="0.455,0.6" Click="btn_close_Click"/>
                     <!--<Pages:UCPageStore Grid.Row="1" Grid.RowSpan="3" Grid.Column="1" Grid.ColumnSpan="4"/>-->
                     
-                    <Pages:UCPageEnsambleAutmatico Grid.Row="1" Grid.RowSpan="3" Grid.Column="1" Grid.ColumnSpan="4"/>
+                    <!--<Pages:UCPageEnsambleAutmatico Grid.Row="1" Grid.RowSpan="3" Grid.Column="1" Grid.ColumnSpan="4"/>-->
+                    <Grid x:Name="gridAutomaitc" Grid.Row="1" Grid.RowSpan="3" Grid.Column="1" Grid.ColumnSpan="4">
+                        <!--<Reservas:UCTypeComputerView/>-->
+                    </Grid>
 
-                    
                 </Grid>
             </Border>
         </Border>

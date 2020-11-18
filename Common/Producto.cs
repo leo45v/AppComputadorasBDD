@@ -18,8 +18,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common
 
         public bool Descontinuado { get; set; }
         public Marca Marca { get; set; }
-
-
+        public bool Eliminado { get; set; }
 
     }
 }

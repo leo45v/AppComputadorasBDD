@@ -15,10 +15,6 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectBr
         {
             return ProcesadorDal.Count(idMarca, minPrice, maxPrice);
         }
-        public static bool Delete(Guid idProcesador)
-        {
-            return ProcesadorDal.Delete(idProcesador);
-        }
         public static List<Producto> GetWithRange(int start, int cant, int? idMarca, double? minPrice, double? maxPrice)
         {
             return ProcesadorDal.GetWithRange(start, cant, idMarca, minPrice, maxPrice);
@@ -30,6 +26,10 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectBr
         public static Procesador Get(Guid idProcesador)
         {
             return ProcesadorDal.Get(idProcesador);
+        }
+        public static bool Update(Procesador procesador)
+        {
+            return ProcesadorDal.Update(procesador);
         }
     }
 }

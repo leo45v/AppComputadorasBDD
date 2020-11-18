@@ -30,7 +30,7 @@ namespace WpfAppComputadoras
         {
             InitializeComponent();
             txt_Usuario.Focus();
-            //for (int i = 0; i < 45; i++)
+            //for (int i = 0; i < 80; i++)
             //{
             //    int frecuenciabase = new Random().Next(18, 40) * 100;
             //    int nucleos = new Random().Next(2, 17);
@@ -47,14 +47,15 @@ namespace WpfAppComputadoras
             //        {
             //            IdMarca = (byte)1
             //        },
-            //        Nombre = "AMD r" + new Random().Next(3, 7) + " X" + i + " v" + (i * new Random().Next(2, 9) * 1000).ToString(),
+            //        Nombre = "AMD r" + new Random().Next(3, 10) + " X" + i + " v" + (i * new Random().Next(2, 9) * 1000).ToString(),
             //        NumeroNucleos = nucleos,
             //        NumeroHilos = nucleos * new Random().Next(1, 3),
             //        PrecioUnidad = (decimal)(120 * new Random().Next(125, 600) / 600),
-            //        Stock = (short)new Random().Next(0, 30)
+            //        Stock = (short)new Random().Next(0, 30),
+            //        Eliminado = false
             //    });
             //}
-            //for (int i = 0; i < 43; i++)
+            //for (int i = 0; i < 80; i++)
             //{
             //    RamBrl.Add(new Ram()
             //    {
@@ -65,12 +66,13 @@ namespace WpfAppComputadoras
             //        Latencia = new Random().Next(5, 40),
             //        Marca = new Marca()
             //        {
-            //            IdMarca = 1
+            //            IdMarca = (byte)5
             //        },
             //        Memoria = new Random().Next(4, 32),
-            //        Nombre = "Corsair Vengance RGB v" + i,
+            //        Nombre = "Crucial RGB xf" + i,
             //        PrecioUnidad = (decimal)new Random().Next(10000, 100000) / 1000,
-            //        Stock = (short)new Random().Next(0, 20)
+            //        Stock = (short)new Random().Next(0, 20),
+            //        Eliminado = false
             //    });
             //}
 
@@ -105,41 +107,40 @@ namespace WpfAppComputadoras
             int aux = txt_Contrasena.TabIndex;
             txt_Contrasena.TabIndex = txt_Usuario.TabIndex;
             txt_Usuario.TabIndex = aux;
-            if (((TextBox)sender) == txt_Usuario && txt_Usuario.Text == "")
+            if (sender.GetType() == typeof(TextBox) && txt_Usuario.Text == "")
             {
-                txt_Usuario.Text = "";
+                txt_Usuario.Text = "Nombre de Usuario";
                 username = "";
             }
-            else if (((TextBox)sender) == txt_Contrasena && txt_Contrasena.Text == "")
+            else if (sender.GetType() == typeof(PasswordBox) && txt_Contrasena.Password == "")
             {
-                txt_Contrasena.Text = "";
+                txt_Contrasena.Password = "Password";
                 password = "";
             }
         }
         private void TextBox_GotFocus(object sender, RoutedEventArgs e)
         {
-
-            if (((TextBox)sender) == txt_Usuario && txt_Usuario.Text == "Correo Electronico")
+            if (sender.GetType() == typeof(TextBox) && txt_Usuario.Text == "Nombre de Usuario")
             {
                 txt_Usuario.Text = "";
                 username = "";
             }
-            else if (((TextBox)sender) == txt_Contrasena && txt_Contrasena.Text == "Password")
+            else if (sender.GetType() == typeof(PasswordBox) && txt_Contrasena.Password == "Password")
             {
-                txt_Contrasena.Text = "";
+                txt_Contrasena.Password = "";
                 password = "";
             }
         }
         private void Txt_Usuario_KeyUp(object sender, KeyEventArgs e)
         {
             string Correo = txt_Usuario.Text;
-            if (((TextBox)sender) == txt_Usuario)
+            if (sender.GetType() == typeof(TextBox) && ((TextBox)sender) == txt_Usuario)
             {
                 username = txt_Usuario.Text;
             }
-            if (((TextBox)sender) == txt_Contrasena)
+            if (sender.GetType() == typeof(PasswordBox) && ((PasswordBox)sender) == txt_Contrasena)
             {
-                password = txt_Contrasena.Text;
+                password = txt_Contrasena.Password;
             }
             if (Correo.Length > 1 && username != "" && password != "")
             {
@@ -175,12 +176,29 @@ namespace WpfAppComputadoras
 
         private void Btn_Iniciar_Secion_Click(object sender, RoutedEventArgs e)
         {
+            if (username == "Nombre de Usuario" || password == "Password")
+            {
+                return;
+            }
+            if (username == "")
+            {
+                MessageBox.Show("Ingrese su Nombre de Usuario");
+                return;
+            }
+            if (password == "")
+            {
+                return;
+            }
             idUsuario = UsuarioBrl.Obtener_Id_Usuario(username, password);
             if (idUsuario != Guid.Empty)
             {
-                ViewMain viewMain = new ViewMain(this);
+                ViewMain viewMain = new ViewMain(this, idUsuario);
                 viewMain.Show();
                 this.Hide();
+            }
+            else
+            {
+                MessageBox.Show("Nombre de Usuario o Contraseña incorrectos", "", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 

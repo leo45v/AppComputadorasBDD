@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Enums;
 
 namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDal.Personas
 {
@@ -124,7 +125,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             finally { OperationsSql.CloseConnection(); }
             return estado;
         }
-        
+
         private static Cliente ObjectData_To_Client(Dictionary<string, object> data)
         {
             return new Cliente()
@@ -132,7 +133,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 IdPersona = (Guid)data["IdPersona"],
                 Nombre = (string)data["Nombre"],
                 Apellido = (string)data["Apellido"],
-                Sexo = (short)int.Parse(data["Sexo"].ToString()),
+                Sexo = (byte)data["Sexo"],
                 Eliminado = (bool)data["Eliminado"],
                 Email = (string)data["Email"],
                 Usuario = new Usuario()
@@ -143,10 +144,10 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                     Eliminado = (bool)data["Deleted"],
                     Rol = new Rol()
                     {
-                        IdRol = (byte)data["IdRol"],
+                        IdRol = (ERol)(byte)data["IdRol"],
                         NombreRol = (string)data["NombreRol"],
                     }
-                }
+                },
             };
         }
     }

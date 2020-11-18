@@ -1,28 +1,53 @@
-﻿<Page x:Class="WpfAppComputadoras.Administrator.AdmiMenuView"
+﻿<UserControl x:Class="WpfAppComputadoras.Administrator.AdmiMenuView"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:WpfAppComputadoras.Administrator"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="AdmiMenuView">
-
+      d:DesignHeight="613" d:DesignWidth="1180">
     <Grid>
         <Border Background="#FFFD9999">
-            <ListBox Margin="31,163,104,35"/>
+
         </Border>
-        <TextBlock HorizontalAlignment="Left" Margin="1014,335,0,0" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <Grid  Width="1045" Height="40" Margin="-73,-328,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="257"/>
+                <ColumnDefinition Width="257"/>
+                <ColumnDefinition Width="257"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Border Background="#D7D1ECFF" Grid.Column="0" Grid.ColumnSpan="4" />
+            <GridSplitter Grid.Column="0" Width="2" HorizontalAlignment="Right" VerticalAlignment="Stretch" Background="Black" />
+            <TextBlock Grid.Column="0" Text="Imagen" FontWeight="Bold" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            <GridSplitter Grid.Column="1" Width="2" HorizontalAlignment="Right" VerticalAlignment="Stretch" Background="Black"/>
+            <TextBlock Grid.Column="1" Text="Nombre" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" FontWeight="Bold"/>
+            <GridSplitter Grid.Column="2" Width="2" HorizontalAlignment="Right" VerticalAlignment="Stretch" Background="Black"/>
+            <TextBlock Grid.Column="2" Text="Descontinuado" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" FontWeight="Bold"/>
+            <Grid Grid.Column="3">
+            </Grid>
+        </Grid>
+        <ScrollViewer Margin="31,163,104,75" Background="White">
+            <StackPanel x:Name="lstProductos" >
+            </StackPanel>
+        </ScrollViewer>
+
+        <!--<ListBox x:Name="lstProductos" Margin="31,163,104,35"/>-->
         <Button Content="+" HorizontalAlignment="Left" Margin="36,39,0,0" VerticalAlignment="Top" Width="23" RenderTransformOrigin="0.87,1.202"/>
         <TextBlock HorizontalAlignment="Left" Margin="64,39,0,0" Text="AGREGAR PRODUCTO" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="-0.081,-0.815" FontWeight="Bold" FontFamily="Arial Black" FontSize="14"/>
-        <Button Content="BUSCAR" HorizontalAlignment="Left" Margin="332,137,0,0" VerticalAlignment="Top" RenderTransformOrigin="-2.196,-0.2" Width="55"/>
-        <TextBox HorizontalAlignment="Left" Margin="36,137,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="272"/>
-        <Button Content="EDITAR" HorizontalAlignment="Left" Margin="707,167,0,0" VerticalAlignment="Top" Width="57"/>
-        <Button Content="ELIMINAR" HorizontalAlignment="Left" Margin="707,0,0,0" VerticalAlignment="Center" Width="57"/>
-        <Button Content="VER" HorizontalAlignment="Left" Margin="707,268,0,0" VerticalAlignment="Top" Width="57"/>
-        <Button Content="CANCELAR" HorizontalAlignment="Left" Margin="707,312,0,0" VerticalAlignment="Top" Width="67"/>
-
-
+        <Button Content="BUSCAR" HorizontalAlignment="Left" Margin="332,86,0,0" VerticalAlignment="Top" RenderTransformOrigin="-2.196,-0.2" Width="55"/>
+        <TextBox HorizontalAlignment="Left" Margin="36,86,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="272"/>
+        <Button Content="EDITAR" HorizontalAlignment="Left" Margin="1096,176,0,0" VerticalAlignment="Top" Width="56"/>
+        <Button Content="ELIMINAR" HorizontalAlignment="Left" Margin="1096,287,0,0" VerticalAlignment="Top" Width="57"/>
+        <Button Content="VER" HorizontalAlignment="Left" Margin="1096,226,0,0" VerticalAlignment="Top" Width="57"/>
+        <StackPanel  Margin="50,550,50,10" Orientation="Horizontal" HorizontalAlignment="Center" >
+            <Button x:Name="btnFirst" Width="50" Content="&lt;&lt;"/>
+            <Button x:Name="btnPrevious" Width="50" Content="&lt;"/>
+            <StackPanel x:Name="stackPagina" Orientation="Horizontal">
+            </StackPanel>
+            <Button x:Name="btnNext" Width="50" Content="&gt;"/>
+            <Button x:Name="btnLast" Width="50" Content="&gt;&gt;"/>
+        </StackPanel>
+        <!--<Button Content="CANCELAR" HorizontalAlignment="Left" Margin="707,312,0,0" VerticalAlignment="Top" Width="67"/>-->
     </Grid>
-
-</Page>
+</UserControl>

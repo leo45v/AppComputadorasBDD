@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common;
+using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Enums;
 
 namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDal.Personas
 {
@@ -217,6 +218,37 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             finally { OperationsSql.CloseConnection(); }
             return estado;
         }
+        public static Rol GetRol(Guid IdUsuario)
+        {
+            Rol rol = null;
+            string query = @"SELECT Rol.IdRol, Rol.NombreRol 
+                                   FROM Usuario usr 
+                                   INNER JOIN Rol ON Rol.IdRol = usr.IdRol 
+                                   WHERE usr.IdUsuario = @IdUsuario";
+            try
+            {
+                OperationsSql.OpenConnection();
+                OperationsSql.CreateBasicCommandWithTransaction(query);
+                OperationsSql.AddWithValueString("IdUsuario", IdUsuario);
+                OperationsSql.ExecuteBasicCommandWithTransaction();
+                Dictionary<string, object> data = OperationsSql.ExecuteReader();
+                if (data != null)
+                {
+                    rol = new Rol()
+                    {
+                        IdRol = (ERol)(byte)data["IdRol"],
+                        NombreRol = (string)data["NombreRol"]
+                    };
+                }
+                OperationsSql.ExecuteTransactionCommit();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally { OperationsSql.CloseConnection(); }
+            return rol;
+        }
         /*
          * Dictionary<string,object> => Coleccion de Datos
          * Su key o identificador es una cadena (Un texto)
@@ -239,7 +271,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 Eliminado = (bool)data["Deleted"],
                 Rol = new Rol()
                 {
-                    IdRol = (byte)data["IdRol"],
+                    IdRol = (ERol)(byte)data["IdRol"],
                     NombreRol = (string)data["NombreRol"],
                 }
             };

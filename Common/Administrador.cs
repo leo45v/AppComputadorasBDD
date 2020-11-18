@@ -10,7 +10,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common
 
         public DateTime FechaContrato { get; set; }
 
-        public DateType FechaNacimiento { get; set; }
+        public DateTime FechaNacimiento { get; set; }
     
 
     }

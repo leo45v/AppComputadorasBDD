@@ -11,6 +11,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectBrl;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common;
+using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Enums;
 
 namespace WpfAppComputadoras
 {
@@ -20,10 +21,6 @@ namespace WpfAppComputadoras
     public partial class RegistroWindow : Window
     {
         private MainWindow mainWindow;
-        private Dictionary<string, bool> boton_activo = new Dictionary<string, bool>();
-        //private bool[] boton_Activo = new bool[14];
-        private bool Nivel1 = false, Nivel2 = false, Nivel3 = false, Nivel4 = false, Nivel5 = false;
-        private bool editable = false;
         public RegistroWindow(MainWindow main)
         {
             InitializeComponent();
@@ -51,21 +48,6 @@ namespace WpfAppComputadoras
             combo_sexo.Items.Add("Masculino");
             combo_sexo.Items.Add("Femenino");
             combo_sexo.Items.Add("Indefinido");
-
-            boton_activo.Add("Nombre", false);
-            boton_activo.Add("Apellido", false);
-            boton_activo.Add("Sexo", false);
-            boton_activo.Add("NombreUsuario", false);
-            boton_activo.Add("Password1", false);
-            boton_activo.Add("Password2", false);
-            boton_activo.Add("Email", false);
-            boton_activo.Add("EmailR", false);
-            boton_activo.Add("Año", false);
-            boton_activo.Add("Mes", false);
-            boton_activo.Add("Dia", false);
-            boton_activo.Add("Condiciones", false);
-            boton_activo.Add("Aceptar", false);
-            editable = true;
         }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
@@ -158,7 +140,7 @@ namespace WpfAppComputadoras
                 int.Parse(combo_Dia.Text)),
                 IdPersona = Guid.NewGuid(),
                 Nombre = txt_Nombre.Text,
-                Sexo = (short)(combo_sexo.SelectedIndex - 1),
+                Sexo = (byte)(combo_sexo.SelectedIndex - 1),
                 Usuario = new Usuario()
                 {
                     Contrasenia = txt_Password_1.Text,
@@ -167,7 +149,7 @@ namespace WpfAppComputadoras
                     NombreUsuario = txt_NombreUsuario.Text,
                     Rol = new Rol()
                     {
-                        IdRol = 1,
+                        IdRol = ERol.Cliente,
                     }
                 }
             };
@@ -178,6 +160,6 @@ namespace WpfAppComputadoras
         {
             this.Close();
         }
-      
+
     }
 }
