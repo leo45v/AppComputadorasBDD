@@ -40,6 +40,9 @@
     <Compile Update="Administrator\Vistas\UCProductView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Cliente\UCConfigClient.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Components\UCItemProductView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -118,6 +121,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Administrator\Vistas\UCProductView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Cliente\UCConfigClient.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Components\UCItemProductView.xaml">
