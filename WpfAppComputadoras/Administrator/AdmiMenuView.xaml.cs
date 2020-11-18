@@ -69,18 +69,21 @@ namespace WpfAppComputadoras.Administrator
                 {
                     string tipo = ProductosBrl.GetType(producto.IdProducto);
                     uCItemProductView.CreatePageFromProduct(tipo, producto.IdProducto);
-                    uCItemProductView.uCProcesadorView.btnAction.Click += ((s, e) =>
-                    {
-                        if (uCItemProductView.uCProcesadorView.btnAction.Content.ToString() == "Actualizar" && ProcesadorBrl.Update(uCItemProductView.uCProcesadorView.procesador))
+                    if (!(uCItemProductView.uCProcesadorView is null)) 
+                    { 
+                        uCItemProductView.uCProcesadorView.btnAction.Click += ((s, e) =>
                         {
-                            int buttonCant = ViewMain.RedondeoSiempre((double)viewMain.maxProducts / 10);
-                            MessageBox.Show("El Procesador se modifico con exito!!", "", MessageBoxButton.OK, MessageBoxImage.Information);
-                            uCItemProductView.uCProcesadorView.Close();
-                            viewMain.LoadButton(viewMain.pagSelect, buttonCant);
-                            viewMain.admiMenuView.CargarProductos(ProductosBrl.GetWithRange(viewMain.pagSelect * 10, 10));
-                        }
-                    });
-                    uCItemProductView.uCProcesadorView.ShowDialog();
+                            if (uCItemProductView.uCProcesadorView.btnAction.Content.ToString() == "Actualizar" && ProcesadorBrl.Update(uCItemProductView.uCProcesadorView.procesador))
+                            {
+                                int buttonCant = ViewMain.RedondeoSiempre((double)viewMain.maxProducts / 10);
+                                MessageBox.Show("El Procesador se modifico con exito!!", "", MessageBoxButton.OK, MessageBoxImage.Information);
+                                uCItemProductView.uCProcesadorView.Close();
+                                viewMain.LoadButton(viewMain.pagSelect, buttonCant);
+                                viewMain.admiMenuView.CargarProductos(ProductosBrl.GetWithRange(viewMain.pagSelect * 10, 10));
+                            }
+                        });
+                        uCItemProductView.uCProcesadorView.ShowDialog();
+                    }
                 });
                 uCItemProductViews.Add(uCItemProductView);
                 lstProductos.Children.Add(uCItemProductView);
