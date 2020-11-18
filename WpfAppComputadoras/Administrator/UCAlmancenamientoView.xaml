@@ -16,7 +16,15 @@
         <TextBox HorizontalAlignment="Left" Margin="61,304,0,0" Text="Escritura" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.306,0.93"/>
         <TextBox HorizontalAlignment="Left" Margin="61,342,0,0" Text="Lectura" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <TextBox HorizontalAlignment="Left" Margin="61,379,0,0" Text="Tipo" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <Button Content="INSERTAR" HorizontalAlignment="Left" Margin="223,377,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.079,0.352" Width="63"/>
+        <Button Content="INSERTAR" HorizontalAlignment="Left" Margin="315,380,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.079,0.352" Width="63"/>
+        <TextBlock HorizontalAlignment="Left" Margin="207,119,0,0" Text="Precio Unidad" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="207,151,0,0" Text="Nombre" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="207,192,0,0" Text="Stock" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="207,230,0,0" Text="Marca" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.673,6.255"/>
+        <TextBlock HorizontalAlignment="Left" Margin="207,271,0,0" Text="Capacidad" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="207,309,0,0" Text="Escritura" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="207,342,0,0" Text="Lectura" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="207,379,0,0" Text="Tipo" TextWrapping="Wrap" VerticalAlignment="Top"/>
 
     </Grid>
 

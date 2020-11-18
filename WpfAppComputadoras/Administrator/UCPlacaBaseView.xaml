@@ -16,7 +16,15 @@
         <TextBox HorizontalAlignment="Left" Margin="61,304,0,0" Text="NumeroDims" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.306,0.93"/>
         <TextBox HorizontalAlignment="Left" Margin="61,342,0,0" Text="CapacidadMemoria" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <TextBox HorizontalAlignment="Left" Margin="61,379,0,0" Text="Tamano" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <Button Content="INSERTAR" HorizontalAlignment="Left" Margin="217,411,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.079,0.352" Width="63"/>
+        <Button Content="INSERTAR" HorizontalAlignment="Left" Margin="444,388,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.079,0.352" Width="63"/>
+        <TextBlock HorizontalAlignment="Left" Margin="219,117,0,0" Text="Precio Unidad" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="219,160,0,0" Text="Nombre" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="219,200,0,0" Text="Stock" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="219,234,0,0" Text="Marca" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="219,266,0,0" Text="Soporte Procesador" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="219,304,0,0" Text="NumeroDims" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="219,342,0,0" Text="Capacidad Memoria" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="219,379,0,0" Text="Tamano" TextWrapping="Wrap" VerticalAlignment="Top"/>
 
     </Grid>
 </UserControl>

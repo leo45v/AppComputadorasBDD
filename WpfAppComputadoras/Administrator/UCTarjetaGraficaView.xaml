@@ -16,7 +16,15 @@
         <TextBox HorizontalAlignment="Left" Margin="61,304,0,0" Text="FrecuenciaBase" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.306,0.93"/>
         <TextBox HorizontalAlignment="Left" Margin="61,342,0,0" Text="FrecuenciaTurbo" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <TextBox HorizontalAlignment="Left" Margin="61,379,0,0" Text="TipoMemoria" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <Button Content="INSERTAR" HorizontalAlignment="Left" Margin="253,377,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.079,0.352" Width="63"/>
+        <Button Content="INSERTAR" HorizontalAlignment="Left" Margin="354,375,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.079,0.352" Width="63"/>
+        <TextBlock HorizontalAlignment="Left" Margin="212,117,0,0" Text="Precio Unidad" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="212,151,0,0" Text="Nombre" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="212,191,0,0" Text="Stock" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="216,227,0,0" Text="Marca" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="1.204,1.379"/>
+        <TextBlock HorizontalAlignment="Left" Margin="212,266,0,0" Text="Vram" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="212,304,0,0" Text="Frecuencia Base" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="212,342,0,0" Text="Frecuencia Turbo" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="212,379,0,0" Text="Tipo Memoria" TextWrapping="Wrap" VerticalAlignment="Top"/>
 
     </Grid>
 </UserControl>
