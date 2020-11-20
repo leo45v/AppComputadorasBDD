@@ -12,10 +12,10 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="1" Margin="5,0,0,0">
-            <TextBox x:Name="txtCapacidad" HorizontalAlignment="Left" Text="Capacidad" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-            <TextBox x:Name="txtEscritura" HorizontalAlignment="Left" Text="Escritura" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.306,0.93"/>
-            <TextBox x:Name="txtLectura" HorizontalAlignment="Left" Text="Lectura" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-            <TextBox x:Name="txtTipo" HorizontalAlignment="Left" Text="Tipo" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+            <TextBox x:Name="txtCapacidad" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+            <TextBox x:Name="txtEscritura" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.306,0.93"/>
+            <TextBox x:Name="txtLectura" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+            <TextBox x:Name="txtTipo" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         </StackPanel>
         <StackPanel Grid.Column="0" Margin="5,0,0,0" >
         <TextBlock HorizontalAlignment="Right" Text="Capacidad" TextWrapping="Wrap" VerticalAlignment="Stretch" Height="17.96"/>

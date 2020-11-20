@@ -12,10 +12,10 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="1" Margin="5,0,0,0">
-        <TextBox HorizontalAlignment="Stretch" Text="Vram" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="120"/>
-        <TextBox HorizontalAlignment="Stretch" Text="FrecuenciaBase" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="120" RenderTransformOrigin="0.306,0.93"/>
-        <TextBox HorizontalAlignment="Stretch" Text="FrecuenciaTurbo" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="120"/>
-        <TextBox HorizontalAlignment="Stretch" Text="TipoMemoria" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="120"/>
+        <TextBox x:Name="txtVram" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="120"/>
+        <TextBox x:Name="txtFrecuenciaBase" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="120" RenderTransformOrigin="0.306,0.93"/>
+        <TextBox x:Name="txtFrecuenciaTurbo" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="120"/>
+        <TextBox x:Name="txtTipoMemoria" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="120"/>
         </StackPanel>
         <StackPanel Grid.Column="0">
         <TextBlock HorizontalAlignment="Right" Text="Vram" TextWrapping="Wrap" VerticalAlignment="Stretch" Height="17.96"/>

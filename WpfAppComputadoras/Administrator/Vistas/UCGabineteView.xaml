@@ -12,10 +12,10 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="1" Margin="5,0,0,0">
-        <TextBox x:Name="txtAltura" HorizontalAlignment="Stretch" Text="Altura" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="120"/>
-        <TextBox x:Name="lstColores" HorizontalAlignment="Stretch" Text="Color" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="120"/>
-        <TextBox x:Name="txtPeso" HorizontalAlignment="Stretch" Text="Peso" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="120"/>
-        <TextBox x:Name="txtLargo" HorizontalAlignment="Stretch" Text="Largo" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="120"/>
+        <TextBox x:Name="txtAltura" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="120"/>
+        <TextBox x:Name="lxtColores" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="120"/>
+        <TextBox x:Name="txtPeso" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="120"/>
+        <TextBox x:Name="txtLargo" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="120"/>
         </StackPanel>
         <StackPanel Grid.Column="0">
         <TextBlock HorizontalAlignment="Right" Text="Altura" TextWrapping="Wrap" VerticalAlignment="Stretch" Height="17.96"/>

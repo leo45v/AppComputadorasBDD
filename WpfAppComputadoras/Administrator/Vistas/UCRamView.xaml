@@ -11,10 +11,10 @@
             <ColumnDefinition Width="120"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.Column="1" Margin="5,0,0,0">
-        <TextBox HorizontalAlignment="Stretch" Text="Memoria" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="120"/>
-        <TextBox HorizontalAlignment="Stretch" Text="Frecuencia" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="120" RenderTransformOrigin="0.306,0.93"/>
-        <TextBox HorizontalAlignment="Stretch" Text="Latencia" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="120"/>
+        <StackPanel x:Name="txtLatencia" Grid.Column="1" Margin="5,0,0,0">
+        <TextBox x:Name="txtMemoria" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="120"/>
+        <TextBox x:Name="txtFrecuencia" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="120" RenderTransformOrigin="0.306,0.93"/>
+        <TextBox x:Name="txtLatencia1" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="120"/>
         </StackPanel>
         <StackPanel Grid.Column="0">
         <TextBlock HorizontalAlignment="Right" Text="Memoria" TextWrapping="Wrap" VerticalAlignment="Stretch" Height="17.96"/>

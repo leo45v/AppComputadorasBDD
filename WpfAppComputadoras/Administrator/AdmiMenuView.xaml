@@ -41,9 +41,6 @@
         <TextBlock HorizontalAlignment="Left" Margin="193,44,0,0" Text="AGREGAR PRODUCTO" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="-0.081,-0.815" FontWeight="Bold" FontFamily="Arial Black" FontSize="14"/>
         <Button Content="BUSCAR" HorizontalAlignment="Left" Margin="332,86,0,0" VerticalAlignment="Top" RenderTransformOrigin="-2.196,-0.2" Width="55"/>
         <TextBox HorizontalAlignment="Left" Margin="36,86,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="272"/>
-        <Button Content="EDITAR" HorizontalAlignment="Left" Margin="1096,176,0,0" VerticalAlignment="Top" Width="56"/>
-        <Button Content="ELIMINAR" HorizontalAlignment="Left" Margin="1096,287,0,0" VerticalAlignment="Top" Width="57"/>
-        <Button Content="VER" HorizontalAlignment="Left" Margin="1096,226,0,0" VerticalAlignment="Top" Width="57"/>
         <StackPanel  Margin="50,550,50,10" Orientation="Horizontal" HorizontalAlignment="Center" >
             <Button x:Name="btnFirst" Width="50" Content="&lt;&lt;"/>
             <Button x:Name="btnPrevious" Width="50" Content="&lt;"/>

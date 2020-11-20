@@ -16,8 +16,8 @@
             <TextBlock HorizontalAlignment="Right" Text="Certificacion" TextWrapping="Wrap" VerticalAlignment="Stretch" Height="17.96"/>
         </StackPanel>
         <StackPanel Grid.Column="1" Margin="5,0,0,0">
-        <TextBox x:Name="txtPotencia" HorizontalAlignment="Stretch" Text="Potencia" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="120"/>
-        <TextBox x:Name="txtCertificacion"  HorizontalAlignment="Stretch" Text="Certificacion" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="120" RenderTransformOrigin="0.306,0.93"/>
+        <TextBox x:Name="txtPotencia" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="120"/>
+        <TextBox x:Name="txtCertificacion"  HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="120" RenderTransformOrigin="0.306,0.93"/>
         </StackPanel>
     </Grid>
 </UserControl>

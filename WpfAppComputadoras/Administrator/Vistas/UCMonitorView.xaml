@@ -12,9 +12,9 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="1" Margin="5,0,0,0">
-            <TextBox x:Name="txtTamano" HorizontalAlignment="Stretch" Text="Tamano" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="120"/>
-            <TextBox x:Name="txtFrecuencia" HorizontalAlignment="Stretch" Text="Frecuencia" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="120"/>
-            <TextBox x:Name="lstColor"  HorizontalAlignment="Stretch" Text="Color" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="120"/>
+            <TextBox x:Name="txtTamano" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="120"/>
+            <TextBox x:Name="txtFrecuencia" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="120"/>
+            <TextBox x:Name="txtColor"  HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="120"/>
             <ComboBox x:Name="cbResolucion" HorizontalAlignment="Stretch" Text="Resolucion" VerticalAlignment="Stretch" Width="120"/>
             <ComboBox x:Name="cbRatio" HorizontalAlignment="Stretch" Text="Ratio"  VerticalAlignment="Stretch" Width="120"/>
         </StackPanel>

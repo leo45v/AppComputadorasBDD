@@ -20,12 +20,12 @@
             <TextBlock Height="17.96" HorizontalAlignment="Right" Text="Litografia" TextWrapping="Wrap" VerticalAlignment="Top"/>
         </StackPanel>
         <StackPanel Grid.Column="1" Margin="5,0,0,0">
-            <TextBox x:Name="txtFrecuenciaBase" HorizontalAlignment="Left"  Text="FrecuenciaBase" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-            <TextBox x:Name="txtFrecuenciaTurbo"  HorizontalAlignment="Left"  Text="FrecuenciaTurbo" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.306,0.93"/>
-            <TextBox x:Name="txtNumeroNucleos" HorizontalAlignment="Left" Text="NumeroNucleos" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-            <TextBox x:Name="txtNumeroHilos" HorizontalAlignment="Left" Text="NumeroHilos" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-            <TextBox x:Name="txtConsumo" HorizontalAlignment="Left" Text="Consumo" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.389,-0.253"/>
-            <TextBox x:Name="txtLitografia" HorizontalAlignment="Left" Text="Litografia" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.389,-0.253"/>
+            <TextBox x:Name="txtFrecuenciaBase" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+            <TextBox x:Name="txtFrecuenciaTurbo"  HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.306,0.93"/>
+            <TextBox x:Name="txtNumeroNucleos" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+            <TextBox x:Name="txtNumeroHilos" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+            <TextBox x:Name="txtConsumo" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.389,-0.253"/>
+            <TextBox x:Name="txtLitografia" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.389,-0.253"/>
         </StackPanel>
     </Grid>
 </UserControl>
