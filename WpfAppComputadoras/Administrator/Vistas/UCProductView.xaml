@@ -15,7 +15,7 @@
             <RowDefinition Height="50"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <TextBlock HorizontalAlignment="Center"  Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Text="INSERTE DATOS PARA PROCESADOR" TextWrapping="Wrap" VerticalAlignment="Center" FontFamily="Arial Black" FontSize="20"/>
+        <TextBlock x:Name="lblTitle" HorizontalAlignment="Center"  Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Text="INSERTE DATOS PARA PROCESADOR" TextWrapping="Wrap" VerticalAlignment="Center" FontFamily="Arial Black" FontSize="20"/>
 
         <StackPanel Grid.Column="0" Grid.Row="1">
             <Image x:Name="imgProduct" Height="100" Width="176" Source="/assets/null.jpg" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center" StretchDirection="Both"/>
@@ -42,31 +42,10 @@
 
 
         </StackPanel>
-        <StackPanel x:Name="containerTipo"  Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Margin="0,63,0,0">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="120"/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <StackPanel Grid.Column="0">
-                    <TextBlock Height="17.96" HorizontalAlignment="Right" Text="Frecuencia Base" TextWrapping="Wrap" VerticalAlignment="Stretch"/>
-                    <TextBlock Height="17.96" HorizontalAlignment="Right"  Text="Frecuencia Turbo" TextWrapping="Wrap" VerticalAlignment="Stretch"/>
-                    <TextBlock Height="17.96" HorizontalAlignment="Right" Text="Numero Nucleos" TextWrapping="Wrap" VerticalAlignment="Top"/>
-                    <TextBlock Height="17.96" HorizontalAlignment="Right" Text="Numero Hilos" TextWrapping="Wrap" VerticalAlignment="Top"/>
-                    <TextBlock Height="17.96" HorizontalAlignment="Right" Text="Consumo" TextWrapping="Wrap" VerticalAlignment="Top"/>
-                    <TextBlock Height="17.96" HorizontalAlignment="Right" Text="Litografia" TextWrapping="Wrap" VerticalAlignment="Top"/>
-                </StackPanel>
-                <StackPanel Grid.Column="1" Margin="5,0,0,0">
-                    <TextBox x:Name="txtFrecuenciaBase" HorizontalAlignment="Left"  Text="FrecuenciaBase" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                    <TextBox x:Name="txtFrecuenciaTurbo"  HorizontalAlignment="Left"  Text="FrecuenciaTurbo" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.306,0.93"/>
-                    <TextBox x:Name="txtNumeroNucleos" HorizontalAlignment="Left" Text="NumeroNucleos" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                    <TextBox x:Name="txtNumeroHilos" HorizontalAlignment="Left" Text="NumeroHilos" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                    <TextBox x:Name="txtConsumo" HorizontalAlignment="Left" Text="Consumo" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.389,-0.253"/>
-                    <TextBox x:Name="txtLitografia" HorizontalAlignment="Left" Text="Litografia" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.389,-0.253"/>
-                </StackPanel>
-            </Grid>
+        <StackPanel x:Name="containerTipo"  Grid.Column="1" Grid.Row="1" VerticalAlignment="Top" Margin="0,150,0,0">
+            
         </StackPanel>
-        <Button x:Name="btnAction" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Content="INSERTAR" HorizontalAlignment="Center" VerticalAlignment="Bottom" RenderTransformOrigin="-0.079,0.352" Width="63" Margin="0,35,0,15"/>
+        <Button x:Name="btnAction" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Content="INSERTAR" HorizontalAlignment="Center" VerticalAlignment="Bottom" RenderTransformOrigin="-0.079,0.352" Width="63" Margin="0,35,0,15" Click="BtnAction_Click" />
 
     </Grid>
 </Window>

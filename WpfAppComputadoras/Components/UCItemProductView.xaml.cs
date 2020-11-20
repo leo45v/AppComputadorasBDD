@@ -11,8 +11,10 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common;
+using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Enums;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectBrl;
 using WpfAppComputadoras.Administrator;
+using WpfAppComputadoras.Administrator.Vistas;
 
 namespace WpfAppComputadoras.Components
 {
@@ -22,7 +24,7 @@ namespace WpfAppComputadoras.Components
     public partial class UCItemProductView : UserControl
     {
         private Guid idProducto;
-        public UCProcesadorView uCProcesadorView;
+        public UCProductView uCProcesadorView;
         public UCItemProductView()
         {
             InitializeComponent();
@@ -49,7 +51,11 @@ namespace WpfAppComputadoras.Components
         {
             if (tipo == "Procesador")
             {
-                uCProcesadorView = new UCProcesadorView(idProducto);
+                uCProcesadorView = new UCProductView(idProducto, ETipoProducto.Procesador);
+            }
+            else if (tipo == "Ram")
+            {
+                uCProcesadorView = new UCProductView(idProducto, ETipoProducto.Ram);
             }
         }
 

@@ -11,16 +11,23 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace WpfAppComputadoras.Administrator
+namespace WpfAppComputadoras.Administrator.Vistas
 {
     /// <summary>
-    /// Interaction logic for UCGabineteView.xaml
+    /// Interaction logic for UCRamView.xaml
     /// </summary>
-    public partial class UCGabineteView : UserControl
+    public partial class UCRamView : UserControl
     {
-        public UCGabineteView()
+        private UCProductView mainView;
+        public UCRamView(UCProductView uCProductView)
         {
             InitializeComponent();
+            mainView = uCProductView;
+        }
+
+        private void UserControl_Initialized(object sender, EventArgs e)
+        {
+
         }
     }
 }

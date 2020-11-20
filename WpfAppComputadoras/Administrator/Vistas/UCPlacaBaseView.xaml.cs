@@ -11,16 +11,24 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace WpfAppComputadoras.Administrator
+namespace WpfAppComputadoras.Administrator.Vistas
 {
     /// <summary>
-    /// Interaction logic for UCFuenteView.xaml
+    /// Interaction logic for UCPlacaBaseView.xaml
     /// </summary>
-    public partial class UCFuenteView : UserControl
+    public partial class UCPlacaBaseView : UserControl
     {
-        public UCFuenteView()
+        private UCProductView mainView;
+        public UCPlacaBaseView(UCProductView uCProductView)
         {
             InitializeComponent();
+            mainView = uCProductView;
+
+        }
+
+        private void UserControl_Initialized(object sender, EventArgs e)
+        {
+
         }
     }
 }

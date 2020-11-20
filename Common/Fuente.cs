@@ -6,7 +6,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common
 {
     public class Fuente : Producto
     {
-        public string Potencia { get; set; }
-        public string Tamano { get; set; }
+        public int Potencia { get; set; }
+        public string Certificacion { get; set; }
     }
 }

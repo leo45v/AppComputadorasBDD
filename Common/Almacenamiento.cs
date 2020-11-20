@@ -8,13 +8,13 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common
     {
       
 
-        public string Capacidad { get; set; }
+        public int Capacidad { get; set; }
 
         public string Tipo { get; set; }
 
-        public string Escritura { get; set; }
+        public int Escritura { get; set; }
 
-        public string  Lectura { get; set; }
+        public int Lectura { get; set; }
 
     }
 }

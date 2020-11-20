@@ -4,23 +4,32 @@ using System.Text;
 
 namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDal.Personas.Productos
 {
-    public class RamDal
+    public class GabineteDal
     {
-        public static bool Insertar(Ram ram)
+        public static bool Insertar(Gabinete gabinete)
         {
             bool estado = false;
-            string query = @"INSERT INTO Ram (IdProducto, Memoria, Frecuencia, Latencia)
-                                       Values(@IdProducto, @Memoria, @Frecuencia, @Latencia)";
+            string query = @"INSERT INTO Gabinete (IdProducto, Altura, Peso, Largo)
+                                       Values(@IdProducto, @Altura, @Peso, @Largo)";
             try
             {
                 OperationsSql.OpenConnection();
-                ProductosDal.Insertar(ram as Producto);
-                OperationsSql.CreateBasicCommandWithTransaction(query);
-                OperationsSql.AddWithValueString("Memoria", ram.Memoria);
-                OperationsSql.AddWithValueString("Frecuencia", ram.Frecuencia);
-                OperationsSql.AddWithValueString("Latencia", ram.Latencia);
-                OperationsSql.ExecuteBasicCommandWithTransaction();
-                OperationsSql.ExecuteTransactionCommit();
+                ProductosDal.cascada = true;
+                if (ProductosDal.Insertar(gabinete as Producto))
+                {
+                    ProductosDal.cascada = false;
+                    OperationsSql.CreateBasicCommandWithTransaction(query);
+                    OperationsSql.AddWithValueString("IdProducto", gabinete.IdProducto);
+                    OperationsSql.AddWithValueString("Altura", gabinete.Altura);
+                    OperationsSql.AddWithValueString("Peso", gabinete.Peso);
+                    OperationsSql.AddWithValueString("Largo", gabinete.Largo);
+                    OperationsSql.ExecuteBasicCommandWithTransaction();
+                    foreach (Colores item in gabinete.Colores)
+                    {
+                        ProductosDal.InsertarColores(gabinete.IdProducto, item.IdColor);
+                    }
+                    OperationsSql.ExecuteTransactionCommit();
+                }
                 estado = true;
             }
             catch (Exception)
@@ -33,13 +42,14 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             return estado;
         }
-        public static Ram Get(Guid idRam)
+
+        public static Gabinete Get(Guid idGabinete)
         {
-            Ram ram = null;
-            string query = @"SELECT r.IdProducto, r.Memoria, r.Frecuencia, r.Latencia, 
+            Gabinete gabinete = null;
+            string query = @"SELECT r.IdProducto, r.Altura, r.Peso, r.Largo 
                              pro.PrecioUnidad, pro.Imagen, pro.Nombre, pro.Stock, pro.IdMarca, pro.Descontinuado, pro.Eliminado, 
                              mar.NombreMarca
-                             FROM Ram r
+                             FROM Gabinete r
                              INNER JOIN Producto pro ON pro.IdProducto = r.IdProducto
                              INNER JOIN Marca mar ON mar.IdMarca = pro.IdMarca
                              WHERE pro.Eliminado = 0 AND pro.IdProducto = @IdProducto";
@@ -47,11 +57,12 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             {
                 OperationsSql.OpenConnection();
                 OperationsSql.CreateBasicCommandWithTransaction(query);
-                OperationsSql.AddWithValueString("IdProducto", idRam);
+                OperationsSql.AddWithValueString("IdProducto", idGabinete);
                 Dictionary<string, object> data = OperationsSql.ExecuteReader();
                 if (data != null)
                 {
-                    ram = Dictionary_A_Ram(data);
+                    gabinete = Dictionary_A_Gabinete(data);
+                    gabinete.Colores = ProductosDal.GetColores(idGabinete);
                 }
                 OperationsSql.ExecuteTransactionCommit();
             }
@@ -60,15 +71,15 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 throw;
             }
             finally { OperationsSql.CloseConnection(); }
-            return ram;
+            return gabinete;
         }
-        public static List<Ram> GetAll()
+        public static List<Gabinete> GetAll()
         {
-            List<Ram> rams = null;
-            string query = @"SELECT r.IdProducto, r.Memoria, r.Frecuencia, r.Latencia
-                             pro.PrecioUnidad, pro.Imagen, pro.Nombre, pro.Stock, pro.IdMarca, pro.Descontinuado, pro.Eliminado 
+            List<Gabinete> gabinetes = null;
+            string query = @"SELECT r.IdProducto, r.Altura, r.Peso, r.Largo,  
+                             pro.PrecioUnidad, pro.Imagen, pro.Nombre, pro.Stock, pro.IdMarca, pro.Descontinuado, pro.Eliminado, 
                              mar.NombreMarca
-                             FROM Ram r
+                             FROM Gabinete r
                              INNER JOIN Producto pro ON pro.IdProducto = r.IdProducto
                              INNER JOIN Marca mar ON mar.IdMarca = pro.IdMarca
                              WHERE pro.Eliminado = 0";
@@ -79,10 +90,12 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 List<Dictionary<string, object>> data = OperationsSql.ExecuteReaderMany();
                 if (data != null)
                 {
-                    rams = new List<Ram>();
+                    gabinetes = new List<Gabinete>();
                     foreach (Dictionary<string, object> item in data)
                     {
-                        rams.Add(Dictionary_A_Ram(item));
+                        Gabinete gabinete = Dictionary_A_Gabinete(item);
+                        gabinete.Colores = ProductosDal.GetColores(gabinete.IdProducto);
+                        gabinetes.Add(gabinete);
                     }
                 }
                 OperationsSql.ExecuteTransactionCommit();
@@ -92,22 +105,22 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 throw;
             }
             finally { OperationsSql.CloseConnection(); }
-            return rams;
+            return gabinetes;
         }
         public static List<Producto> GetWithRange(int start, int cant, int? idMarca, double? minPrice, double? maxPrice)
         {
-            List<Producto> rams = null;
+            List<Producto> productos = null;
             string query = @"SELECT r.IdProducto, 
-                             pro.PrecioUnidad, pro.Imagen, pro.Nombre, pro.Stock, pro.IdMarca, pro.Descontinuado, pro.Eliminado 
+                             pro.PrecioUnidad, pro.Imagen, pro.Nombre, pro.Stock, pro.IdMarca, pro.Descontinuado, pro.Eliminado, 
                              mar.NombreMarca
-                             FROM Ram r
+                             FROM Gabinete r
                              INNER JOIN Producto pro ON pro.IdProducto = r.IdProducto
                              INNER JOIN Marca mar ON mar.IdMarca = pro.IdMarca " +
                              @"WHERE pro.Eliminado = 0 " +
                              (!(idMarca == 0) || (!(minPrice is null) && !(maxPrice is null)) ? @"AND " : @"") +
                              (!(idMarca == 0) ? @"pro.IdMarca = " + idMarca + " " : @"") +
                              (!(idMarca == 0) && (!(minPrice is null) && !(maxPrice is null)) ? @" AND " : @"") +
-                             (!(minPrice is null) && !(maxPrice is null) ? @"pro.PrecioUnidad > @minPrice AND pro.PrecioUnidad < @maxPrice " : @"") +
+                             (!(minPrice is null) && !(maxPrice is null) ? @"pro.PrecioUnidad > " + minPrice + " AND pro.PrecioUnidad < " + maxPrice + " " : @"") +
                              @"ORDER BY pro.Nombre ASC
                              OFFSET " + start + @" ROWS
                              FETCH NEXT " + cant + @" ROWS ONLY";
@@ -115,15 +128,13 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             {
                 OperationsSql.OpenConnection();
                 OperationsSql.CreateBasicCommandWithTransaction(query);
-                OperationsSql.AddWithValueString("minPrice", minPrice);
-                OperationsSql.AddWithValueString("maxPrice", maxPrice);
                 List<Dictionary<string, object>> data = OperationsSql.ExecuteReaderMany();
                 if (data != null)
                 {
-                    rams = new List<Producto>();
+                    productos = new List<Producto>();
                     foreach (Dictionary<string, object> item in data)
                     {
-                        rams.Add(ProductosDal.Dictionary_A_Producto(item));
+                        productos.Add(ProductosDal.Dictionary_A_Producto(item));
                     }
                 }
                 OperationsSql.ExecuteTransactionCommit();
@@ -133,20 +144,18 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 throw;
             }
             finally { OperationsSql.CloseConnection(); }
-            return rams;
+            return productos;
         }
-
         public static List<Marca> Get_ListMarcas()
         {
             List<Marca> listaMarcas = null;
             string query = @"SELECT Marca.NombreMarca, Marca.IdMarca
                             FROM Marca
                             INNER JOIN Producto pro ON pro.IdMarca = Marca.IdMarca
-                            INNER JOIN Ram ON Ram.IdProducto = pro.IdProducto
+                            INNER JOIN Gabinete ON Gabinete.IdProducto = pro.IdProducto
                             WHERE pro.Eliminado = 0
                             GROUP BY Marca.NombreMarca, Marca.IdMarca
-                            ORDER BY Marca.NombreMarca;
-";
+                            ORDER BY Marca.NombreMarca";
             try
             {
                 OperationsSql.OpenConnection();
@@ -173,25 +182,26 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             finally { OperationsSql.CloseConnection(); }
             return listaMarcas;
         }
-        public static bool Update(Ram ram)
+        public static bool Update(Gabinete gabinete)
         {
             bool estado = false;
-            string queryString = @"UPDATE Ram 
-                                   SET Memoria = @Memoria, 
-                                       Frecuencia = @Frecuencia, 
-                                       Latencia = @Latencia 
+            string queryString = @"UPDATE Gabinete 
+                                   SET Altura = @Altura, 
+                                       Peso = @Peso, 
+                                       Largo = @Largo 
                                    WHERE IdProducto = @IdProducto";
             try
             {
                 OperationsSql.OpenConnection();
                 ProductosDal.cascada = true;
-                if (ProductosDal.Update(ram as Producto))
+                if (ProductosDal.Update(gabinete as Producto))
                 {
                     OperationsSql.CreateBasicCommandWithTransaction(queryString);
-                    OperationsSql.AddWithValueString(parameter: "Memoria", ram.Memoria);
-                    OperationsSql.AddWithValueString(parameter: "Frecuencia", ram.Frecuencia);
-                    OperationsSql.AddWithValueString(parameter: "Latencia", ram.Latencia);
+                    OperationsSql.AddWithValueString(parameter: "Altura", gabinete.Altura);
+                    OperationsSql.AddWithValueString(parameter: "Peso", gabinete.Peso);
+                    OperationsSql.AddWithValueString(parameter: "Largo", gabinete.Largo);
                     OperationsSql.ExecuteBasicCommandWithTransaction();
+                    //UPDATE COLORES -> GABINETE 
                     OperationsSql.ExecuteTransactionCommit();
                     estado = true;
                 }
@@ -207,20 +217,17 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
         public static int Count(int? idMarca, double? minPrice, double? maxPrice)
         {
             int cantidad = 0;
-
             string query = @"SELECT COUNT(*) as Cantidad
-                             FROM Ram r
+                             FROM Gabinete r
                              INNER JOIN Producto pro ON pro.IdProducto = r.IdProducto
                              WHERE pro.Eliminado = 0 " +
                              (!(idMarca == 0) || (!(minPrice is null) && !(maxPrice is null)) ? @" AND " : @"") +
                              (!(idMarca == 0) ? @"pro.IdMarca = " + idMarca + " " : @"") +
                              (!(idMarca == 0) && (!(minPrice is null) && !(maxPrice is null)) ? @" AND " : @"") +
-                            (!(minPrice is null) && !(maxPrice is null) ? @"pro.PrecioUnidad > @minPrice AND pro.PrecioUnidad < @maxPrice " : @"");
+                             (!(minPrice is null) && !(maxPrice is null) ? @"pro.PrecioUnidad > " + minPrice + " AND pro.PrecioUnidad < " + maxPrice + " " : @"");
             try
             {
                 OperationsSql.OpenConnection();
-                OperationsSql.AddWithValueString("minPrice", minPrice);
-                OperationsSql.AddWithValueString("maxPrice", maxPrice);
                 OperationsSql.CreateBasicCommandWithTransaction(query);
                 Dictionary<string, object> data = OperationsSql.ExecuteReader();
                 if (data != null)
@@ -236,27 +243,26 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             finally { OperationsSql.CloseConnection(); }
             return cantidad;
         }
-        private static Ram Dictionary_A_Ram(Dictionary<string, object> data)
+        private static Gabinete Dictionary_A_Gabinete(Dictionary<string, object> data)
         {
-            return new Ram()
+            return new Gabinete()
             {
                 IdProducto = (Guid)data["IdProducto"],
                 Descontinuado = (bool)data["Descontinuado"],
-                Frecuencia = (int)data["Frecuencia"],
+                Altura = (int)data["Altura"],
+                Peso = (decimal)data["Peso"],
                 Imagen = (string)data["Imagen"],
-                Latencia = (int)data["Latencia"],
                 Marca = new Marca()
                 {
                     IdMarca = (byte)data["IdMarca"],
                     NombreMarca = (string)data["NombreMarca"]
                 },
-                Memoria = (int)data["Memoria"],
                 Nombre = (string)data["Nombre"],
                 PrecioUnidad = (decimal)data["PrecioUnidad"],
                 Stock = (short)data["Stock"],
-                Eliminado = (bool)data["Eliminado"]
+                Eliminado = (bool)data["Eliminado"],
+                Tamano = (int)data["Tamano"]
             };
         }
     }
-
 }

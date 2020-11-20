@@ -3,31 +3,31 @@ using System.Collections.Generic;
 using System.Text;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDal.Personas.Productos;
 
-namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectBrl
+namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectBrl.Productos
 {
     public class ProcesadorBrl
     {
-        public static void Insertar(Procesador procesador)
+        public bool Insert(Procesador procesador)
         {
-            ProcesadorDal.Insertar(procesador);
+          return  ProcesadorDal.Insertar(procesador);
         }
-        public static int Count(int? idMarca, double? minPrice, double? maxPrice)
+        public int Count(int? idMarca, double? minPrice, double? maxPrice)
         {
             return ProcesadorDal.Count(idMarca, minPrice, maxPrice);
         }
-        public static List<Producto> GetWithRange(int start, int cant, int? idMarca, double? minPrice, double? maxPrice)
+        public List<Producto> GetWithRange(int start, int cant, int? idMarca, double? minPrice, double? maxPrice)
         {
             return ProcesadorDal.GetWithRange(start, cant, idMarca, minPrice, maxPrice);
         }
-        public static List<Marca> Get_ListMarcas()
+        public List<Marca> Get_ListMarcas()
         {
             return ProcesadorDal.Get_ListMarcas();
         }
-        public static Procesador Get(Guid idProcesador)
+        public Procesador Get(Guid idProcesador)
         {
             return ProcesadorDal.Get(idProcesador);
         }
-        public static bool Update(Procesador procesador)
+        public bool Update(Procesador procesador)
         {
             return ProcesadorDal.Update(procesador);
         }

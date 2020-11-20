@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="WpfAppComputadoras.Administrator.Vistas.UCPlacaBaseView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfAppComputadoras.Administrator"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800" Initialized="UserControl_Initialized">
+    <Grid Background="#FFE6DDA5">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="120"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="1" Margin="5,0,0,0">
+            <TextBox HorizontalAlignment="Stretch" Text="SoporteProcesador" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="120"/>
+            <TextBox HorizontalAlignment="Stretch" Text="NumeroDims" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="120" RenderTransformOrigin="0.306,0.93"/>
+            <TextBox HorizontalAlignment="Stretch" Text="CapacidadMemoria" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="120"/>
+            <TextBox HorizontalAlignment="Stretch" Text="Tamano" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="120"/>
+        </StackPanel>
+        <StackPanel Grid.Column="0">
+        <TextBlock HorizontalAlignment="Right" Text="Soporte Procesador" TextWrapping="Wrap" VerticalAlignment="Stretch" Height="17.96"/>
+        <TextBlock HorizontalAlignment="Right" Text="NumeroDims" TextWrapping="Wrap" VerticalAlignment="Stretch" Height="17.96"/>
+        <TextBlock HorizontalAlignment="Right" Text="Capacidad Memoria" TextWrapping="Wrap" VerticalAlignment="Stretch" Height="17.96"/>
+        <TextBlock HorizontalAlignment="Right" Text="Tamano" TextWrapping="Wrap" VerticalAlignment="Stretch" Height="17.96"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

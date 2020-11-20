@@ -13,6 +13,7 @@ using System.Windows.Shapes;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Enums;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectBrl;
+using WpfAppComputadoras.Administrator.Vistas;
 using WpfAppComputadoras.Components;
 
 namespace WpfAppComputadoras.Administrator
@@ -73,7 +74,7 @@ namespace WpfAppComputadoras.Administrator
                     {
                         uCItemProductView.uCProcesadorView.btnAction.Click += ((s, e) =>
                         {
-                            if (uCItemProductView.uCProcesadorView.btnAction.Content.ToString() == "Actualizar" && ProcesadorBrl.Update(uCItemProductView.uCProcesadorView.procesador))
+                            if (uCItemProductView.uCProcesadorView.btnAction.Content.ToString() == "Actualizar" && ProductosBrl.Procesador.Update(uCItemProductView.uCProcesadorView.procesador))
                             {
                                 int buttonCant = ViewMain.RedondeoSiempre((double)viewMain.maxProducts / 10);
                                 MessageBox.Show("El Procesador se modifico con exito!!", "", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -99,6 +100,34 @@ namespace WpfAppComputadoras.Administrator
                 });
                 uCItemProductViews.Add(uCItemProductView);
                 lstProductos.Children.Add(uCItemProductView);
+            }
+        }
+
+        private void UserControl_Initialized(object sender, EventArgs e)
+        {
+            cbTipoProducto.Items.Add("Tipo Producto");//0
+            cbTipoProducto.Items.Add("Almacenamiento");
+            cbTipoProducto.Items.Add("Fuente");
+            cbTipoProducto.Items.Add("Gabinete");
+            cbTipoProducto.Items.Add("Monitor");
+            cbTipoProducto.Items.Add("PlacaBase");
+            cbTipoProducto.Items.Add("Procesador");
+            cbTipoProducto.Items.Add("Ram");
+            cbTipoProducto.Items.Add("Tarjeta Grafica");//8
+            cbTipoProducto.SelectedIndex = 0;
+        }
+
+        private void BtnInsertarProducto_Click(object sender, RoutedEventArgs e)
+        {
+            if (cbTipoProducto.SelectedIndex > 0)
+            {
+                UCProductView uCInsertProductView = new UCProductView((ETipoProducto)(cbTipoProducto.SelectedIndex - 1));
+                if (!(uCInsertProductView is null))
+                {
+                    uCInsertProductView.Height = 400;
+                    uCInsertProductView.Width = 640;
+                    uCInsertProductView.ShowDialog();
+                }
             }
         }
     }

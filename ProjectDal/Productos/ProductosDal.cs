@@ -13,8 +13,9 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
         //    OperationsSql = new OperationsSql();
         //}
 
-        public static void Insertar(Producto producto)
+        public static bool Insertar(Producto producto)
         {
+            bool estado = true;
             string queryString = @"INSERT INTO Producto(IdProducto, PrecioUnidad, Imagen, Nombre, Stock, IdMarca, Descontinuado, Eliminado) 
                                                  VALUES(@IdProducto, @PrecioUnidad, @Imagen, @Nombre, @Stock, @IdMarca, @Descontinuado, @Eliminado)";
             try
@@ -29,11 +30,15 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 OperationsSql.AddWithValueString("Descontinuado", producto.Descontinuado);
                 OperationsSql.AddWithValueString("Eliminado", producto.Eliminado);
                 OperationsSql.ExecuteBasicCommandWithTransaction();
+                if (!cascada) { OperationsSql.ExecuteTransactionCommit(); }
+                estado = true;
             }
             catch (Exception ex)
             {
                 throw ex;
             }
+            finally { if (!cascada) { OperationsSql.CloseConnection(); } }
+            return estado;
         }
         public static List<Producto> GetWithRange(int inicio, int cantidad = 10)
         {
@@ -227,6 +232,60 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             finally { OperationsSql.CloseConnection(); }
             return marcas;
+        }
+        public static bool InsertarColores(Guid idProducto, int idColor)
+        {
+            bool estado = false;
+            string query = @"INSERT INTO ProductoColor (IdProducto, IdColor)
+                                                 Values(@IdProducto, @IdColor)";
+            try
+            {
+                OperationsSql.OpenConnection();
+                OperationsSql.CreateBasicCommandWithTransaction(query);
+                OperationsSql.AddWithValueString("IdProducto", idProducto);
+                OperationsSql.AddWithValueString("IdColor", idColor);
+                OperationsSql.ExecuteBasicCommandWithTransaction();
+                estado = true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return estado;
+        }
+        public static List<Colores> GetColores(Guid idProducto)
+        {
+            List<Colores> colores = null;
+            string query = @"SELECT co.IdColor, co.Nombre 
+                             FROM Colores co 
+                             INNER JOIN ProductoColor pc ON pc.IdColor = co.IdColor 
+                             WHERE pc.IdProducto = @IdProducto";
+            try
+            {
+                OperationsSql.OpenConnection();
+                OperationsSql.CreateBasicCommandWithTransaction(query);
+                OperationsSql.AddWithValueString("IdProducto", idProducto);
+                List<Dictionary<string, object>> data = OperationsSql.ExecuteReaderMany();
+                if (data != null)
+                {
+                    colores = new List<Colores>();
+                    foreach (Dictionary<string, object> item in data)
+                    {
+                        colores.Add(new Colores()
+                        {
+                            IdColor = (int)item["IdColor"],
+                            Nombre = (string)item["Nombre"]
+                        });
+                    }
+                }
+                OperationsSql.ExecuteTransactionCommit();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally { OperationsSql.CloseConnection(); }
+            return colores;
         }
         //public static bool Delete(Guid idProducto)
         //{

@@ -11,16 +11,23 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace WpfAppComputadoras.Administrator
+namespace WpfAppComputadoras.Administrator.Vistas
 {
     /// <summary>
-    /// Interaction logic for UCMonitorView.xaml
+    /// Interaction logic for UCTarjetaGraficaView.xaml
     /// </summary>
-    public partial class UCMonitorView : UserControl
+    public partial class UCTarjetaGraficaView : UserControl
     {
-        public UCMonitorView()
+        private UCProductView mainView;
+        public UCTarjetaGraficaView(UCProductView uCProductView)
         {
             InitializeComponent();
+            mainView = uCProductView;
+        }
+
+        private void UserControl_Initialized(object sender, EventArgs e)
+        {
+
         }
     }
 }

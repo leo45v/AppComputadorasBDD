@@ -10,31 +10,31 @@
     <Compile Update="Administrator\AdmiMenuView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Administrator\UCAlmancenamientoView.xaml.cs">
+    <Compile Update="Administrator\Vistas\UCAlmancenamientoView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Administrator\UCFuenteView.xaml.cs">
+    <Compile Update="Administrator\Vistas\UCFuenteView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Administrator\UCGabineteView.xaml.cs">
+    <Compile Update="Administrator\Vistas\UCGabineteView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Administrator\UCInsertProductView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Administrator\UCMonitorView.xaml.cs">
+    <Compile Update="Administrator\Vistas\UCMonitorView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Administrator\UCPlacaBaseView.xaml.cs">
+    <Compile Update="Administrator\Vistas\UCPlacaBaseView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Administrator\UCProcesadorView.xaml.cs">
+    <Compile Update="Administrator\Vistas\UCProcesadorView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Administrator\UCRamView.xaml.cs">
+    <Compile Update="Administrator\Vistas\UCRamView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Administrator\UCTarjetaGraficaView.xaml.cs">
+    <Compile Update="Administrator\Vistas\UCTarjetaGraficaView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Administrator\Vistas\UCProductView.xaml.cs">
@@ -57,31 +57,31 @@
     <Page Update="Administrator\AdmiMenuView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Administrator\UCAlmancenamientoView.xaml">
+    <Page Update="Administrator\Vistas\UCAlmancenamientoView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Administrator\UCFuenteView.xaml">
+    <Page Update="Administrator\Vistas\UCFuenteView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Administrator\UCGabineteView.xaml">
+    <Page Update="Administrator\Vistas\UCGabineteView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Administrator\UCInsertProductView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Administrator\UCMonitorView.xaml">
+    <Page Update="Administrator\Vistas\UCMonitorView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Administrator\UCPlacaBaseView.xaml">
+    <Page Update="Administrator\Vistas\UCPlacaBaseView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Administrator\UCProcesadorView.xaml">
+    <Page Update="Administrator\Vistas\UCProcesadorView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Administrator\UCRamView.xaml">
+    <Page Update="Administrator\Vistas\UCRamView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Administrator\UCTarjetaGraficaView.xaml">
+    <Page Update="Administrator\Vistas\UCTarjetaGraficaView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Administrator\Vistas\UCProductView.xaml">

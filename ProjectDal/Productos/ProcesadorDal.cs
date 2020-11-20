@@ -6,8 +6,9 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
 {
     public class ProcesadorDal
     {
-        public static void Insertar(Procesador procesador)
+        public static bool Insertar(Procesador procesador)
         {
+            bool estado = false;
             string queryString = @"INSERT INTO Procesador
                                    (IdProducto, FrecuenciaBase, FrecuenciaTurbo, NumeroNucleos, NumeroHilos, Consumo, Litografia) 
                                    VALUES
@@ -15,16 +16,21 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             try
             {
                 OperationsSql.OpenConnection();
-                ProductosDal.Insertar(procesador as Producto);
-                OperationsSql.CreateBasicCommandWithTransaction(queryString);
-                OperationsSql.AddWithValueString(parameter: "FrecuenciaBase", value: procesador.FrecuenciaBase);
-                OperationsSql.AddWithValueString(parameter: "FrecuenciaTurbo", value: procesador.FrecuenciaTurbo);
-                OperationsSql.AddWithValueString(parameter: "NumeroNucleos", value: procesador.NumeroNucleos);
-                OperationsSql.AddWithValueString(parameter: "NumeroHilos", value: procesador.NumeroHilos);
-                OperationsSql.AddWithValueString(parameter: "Consumo", value: procesador.Consumo);
-                OperationsSql.AddWithValueString(parameter: "Litografia", value: procesador.Litografia);
-                OperationsSql.ExecuteBasicCommandWithTransaction();
-                OperationsSql.ExecuteTransactionCommit();
+                ProductosDal.cascada = true;
+                if (ProductosDal.Insertar(procesador as Producto))
+                {
+                    ProductosDal.cascada = false;
+                    OperationsSql.CreateBasicCommandWithTransaction(queryString);
+                    OperationsSql.AddWithValueString(parameter: "FrecuenciaBase", value: procesador.FrecuenciaBase);
+                    OperationsSql.AddWithValueString(parameter: "FrecuenciaTurbo", value: procesador.FrecuenciaTurbo);
+                    OperationsSql.AddWithValueString(parameter: "NumeroNucleos", value: procesador.NumeroNucleos);
+                    OperationsSql.AddWithValueString(parameter: "NumeroHilos", value: procesador.NumeroHilos);
+                    OperationsSql.AddWithValueString(parameter: "Consumo", value: procesador.Consumo);
+                    OperationsSql.AddWithValueString(parameter: "Litografia", value: procesador.Litografia);
+                    OperationsSql.ExecuteBasicCommandWithTransaction();
+                    OperationsSql.ExecuteTransactionCommit();
+                    estado = true;
+                }
             }
             catch (Exception ex)
             {
@@ -34,6 +40,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             {
                 OperationsSql.CloseConnection();
             }
+            return estado;
         }
         public static Procesador Get(Guid idProcesador)
         {
@@ -206,7 +213,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             {
                 throw ex;
             }
-            finally { ProductosDal.cascada = false;  OperationsSql.CloseConnection(); }
+            finally { ProductosDal.cascada = false; OperationsSql.CloseConnection(); }
             return estado;
         }
         public static int Count(int? idMarca, double? minPrice, double? maxPrice)

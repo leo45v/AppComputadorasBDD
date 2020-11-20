@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common;
+using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Enums;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectBrl;
 
 namespace WpfAppComputadoras.Administrator.Vistas
@@ -21,13 +22,28 @@ namespace WpfAppComputadoras.Administrator.Vistas
     /// </summary>
     public partial class UCProductView : Window
     {
+        public Almacenamiento almacenamiento = new Almacenamiento();
+        public Fuente fuente = new Fuente();
+        public Gabinete gabinete = new Gabinete();
+        public Monitor monitor = new Monitor();
+        public PlacaBase placaBase = new PlacaBase();
         public Procesador procesador = new Procesador();
+        public Ram ram = new Ram();
+        public Grafica tarjetaGrafica = new Grafica();
+
+        private Producto producto = new Producto();
+        private ETipoProducto tipoProducto;
+
         private List<Marca> marcas;
-        public UCProductView()
+        public UCProductView(ETipoProducto tipoProducto)
         {
             InitializeComponent();
             LoadComboMarcas();
             btnAction.Content = "Insertar";
+            containerTipo.Children.Clear();
+            this.tipoProducto = tipoProducto;
+            LoadInterface(Guid.Empty);
+            lblTitle.Text = "INGRESE LOS DATOS PARA INSERTAR EL " + tipoProducto.ToString().ToUpper();
         }
         public void ModoVista()
         {
@@ -40,29 +56,118 @@ namespace WpfAppComputadoras.Administrator.Vistas
             {
                 noVista = false;
             }
-            txtConsumo.IsEnabled = noVista;
-            txtFrecuenciaBase.IsEnabled = noVista;
-            txtFrecuenciaTurbo.IsEnabled = noVista;
-            txtLitografia.IsEnabled = noVista;
             cbMarca.IsEnabled = noVista;
             txtNombre.IsEnabled = noVista;
-            txtNumeroNucleos.IsEnabled = noVista;
             txtPrecioUnidad.IsEnabled = noVista;
             txtStock.IsEnabled = noVista;
-            txtNumeroHilos.IsEnabled = noVista;
             btnAction.IsEnabled = noVista;
             btnLoadImg.IsEnabled = noVista;
             if (noVista) { btnAction.Visibility = Visibility.Visible; btnLoadImg.Visibility = Visibility.Visible; }
             else { btnAction.Visibility = Visibility.Hidden; btnLoadImg.Visibility = Visibility.Hidden; }
-
         }
-        public UCProductView(Guid idProducto)
+        public UCProductView(Guid idProducto, ETipoProducto tipoProducto)
         {
             InitializeComponent();
             LoadComboMarcas();
-            procesador = ProcesadorBrl.Get(idProducto);
-            LlenarCampos(procesador);
             btnAction.Content = "Actualizar";
+            containerTipo.Children.Clear();
+            this.tipoProducto = tipoProducto;
+            LoadInterface(idProducto);
+            lblTitle.Text = "MODIFIQUE LOS DATOS PARA EL " + tipoProducto.ToString().ToUpper();
+        }
+        public void LoadInterface(Guid idProducto)
+        {
+            bool modoInsert = false;
+            if (idProducto == Guid.Empty)
+            {
+                modoInsert = true;
+            }
+
+            if (tipoProducto == ETipoProducto.Procesador)
+            {
+                if (!modoInsert)
+                {
+                    procesador = ProductosBrl.Procesador.Get(idProducto);
+                    producto = procesador as Producto;
+                }
+                UCProcesadorView uCViewTypeProduct = new UCProcesadorView(this);
+                containerTipo.Children.Add(uCViewTypeProduct);
+
+            }
+            else if (tipoProducto == ETipoProducto.Ram)
+            {
+                if (!modoInsert)
+                {
+                    ram = ProductosBrl.Ram.Get(idProducto);
+                    producto = ram as Producto;
+                }
+                UCRamView uCViewTypeProduct = new UCRamView(this);
+                containerTipo.Children.Add(uCViewTypeProduct);
+            }
+            else if (tipoProducto == ETipoProducto.Almacenamiento)
+            {
+                if (!modoInsert)
+                {
+                    almacenamiento = ProductosBrl.Almacenamiento.Get(idProducto);
+                    producto = almacenamiento as Producto;
+                }
+                UCAlmancenamientoView uCViewTypeProduct = new UCAlmancenamientoView(this);
+                containerTipo.Children.Add(uCViewTypeProduct);
+            }
+            else if (tipoProducto == ETipoProducto.Fuente)
+            {
+                if (!modoInsert)
+                {
+                    fuente = ProductosBrl.Fuente.Get(idProducto);
+                    producto = fuente as Producto;
+                }
+                UCFuenteView uCViewTypeProduct = new UCFuenteView(this);
+                containerTipo.Children.Add(uCViewTypeProduct);
+            }
+            else if (tipoProducto == ETipoProducto.Gabinete)
+            {
+                if (!modoInsert)
+                {
+                    gabinete = ProductosBrl.Gabinete.Get(idProducto);
+                    producto = gabinete as Producto;
+                }
+                UCGabineteView uCViewTypeProduct = new UCGabineteView(this);
+                containerTipo.Children.Add(uCViewTypeProduct);
+            }
+            else if (tipoProducto == ETipoProducto.Monitor)
+            {
+                if (!modoInsert)
+                {
+                    monitor = ProductosBrl.Montior.Get(idProducto);
+                    producto = monitor as Producto;
+                }
+                UCMonitorView uCViewTypeProduct = new UCMonitorView(this);
+                containerTipo.Children.Add(uCViewTypeProduct);
+            }
+            else if (tipoProducto == ETipoProducto.PlacaBase)
+            {
+                if (!modoInsert)
+                {
+                    placaBase = ProductosBrl.PlacaBase.Get(idProducto);
+                    producto = placaBase as Producto;
+                }
+                UCPlacaBaseView uCViewTypeProduct = new UCPlacaBaseView(this);
+                containerTipo.Children.Add(uCViewTypeProduct);
+            }
+            else if (tipoProducto == ETipoProducto.TarjetaGrafica)
+            {
+                if (!modoInsert)
+                {
+                    tarjetaGrafica = ProductosBrl.TarjetaGrafica.Get(idProducto);
+                    producto = tarjetaGrafica as Producto;
+                }
+                UCTarjetaGraficaView uCViewTypeProduct = new UCTarjetaGraficaView(this);
+                containerTipo.Children.Add(uCViewTypeProduct);
+            }
+            if (!modoInsert)
+            {
+                LlenarCampos(producto);
+            }
         }
         public void LoadComboMarcas()
         {
@@ -71,58 +176,168 @@ namespace WpfAppComputadoras.Administrator.Vistas
             cbMarca.DisplayMemberPath = "NombreMarca";
             cbMarca.SelectedValuePath = "IdMarca";
         }
-        public void LlenarCampos(Procesador item)
+        public void LlenarCampos(Producto item)
         {
-            txtConsumo.Text = item.Consumo.ToString();
-            txtFrecuenciaBase.Text = item.FrecuenciaBase.ToString();
-            txtFrecuenciaTurbo.Text = item.FrecuenciaTurbo.ToString();
-            txtLitografia.Text = item.Litografia.ToString();
-            cbMarca.SelectedValue = item.Marca.IdMarca;
-            txtNombre.Text = item.Nombre;
-            txtNumeroNucleos.Text = item.NumeroNucleos.ToString();
-            txtPrecioUnidad.Text = item.PrecioUnidad.ToString();
-            txtStock.Text = item.Stock.ToString();
-            txtNumeroHilos.Text = item.NumeroHilos.ToString();
-            imgProduct.Source = ViewMain.LoadImage(item.Imagen);
-            imgProduct.Stretch = Stretch.Uniform;
+            if (!(item is null))
+            {
+                cbMarca.SelectedValue = item.Marca.IdMarca;
+                txtNombre.Text = item.Nombre;
+                txtPrecioUnidad.Text = item.PrecioUnidad.ToString();
+                txtStock.Text = item.Stock.ToString();
+                imgProduct.Source = ViewMain.LoadImage(item.Imagen);
+                imgProduct.Stretch = Stretch.Uniform;
+            }
         }
 
-
-        private void btnAction_Click(object sender, RoutedEventArgs e)
+        private void BtnAction_Click(object sender, RoutedEventArgs e)
         {
-            if (btnAction.Content.ToString() == "Actualizar" && ProcesadorBrl.Update(procesador))
+            bool estado = false;
+
+            if (tipoProducto == ETipoProducto.Almacenamiento)
+            {
+
+                almacenamiento.Nombre = producto.Nombre;
+                almacenamiento.Imagen = producto.Imagen;
+                almacenamiento.Marca.IdMarca = producto.Marca.IdMarca;
+                almacenamiento.PrecioUnidad = producto.PrecioUnidad;
+                almacenamiento.Stock = producto.Stock;
+                if (btnAction.Content.ToString() == "Actualizar")
+                {
+                    estado = ProductosBrl.Almacenamiento.Update(almacenamiento);
+                }
+                else if (btnAction.Content.ToString() == "Insertar")
+                {
+                    estado = ProductosBrl.Almacenamiento.Insert(almacenamiento);
+                }
+            }
+            else if (tipoProducto == ETipoProducto.Fuente)
+            {
+                fuente.Nombre = producto.Nombre;
+                fuente.Imagen = producto.Imagen;
+                fuente.Marca.IdMarca = producto.Marca.IdMarca;
+                fuente.PrecioUnidad = producto.PrecioUnidad;
+                fuente.Stock = producto.Stock;
+                if (btnAction.Content.ToString() == "Actualizar")
+                {
+                    estado = ProductosBrl.Fuente.Update(fuente);
+                }
+                else if (btnAction.Content.ToString() == "Insertar")
+                {
+                    estado = ProductosBrl.Fuente.Insert(fuente);
+                }
+            }
+            else if (tipoProducto == ETipoProducto.Gabinete)
+            {
+                gabinete.Nombre = producto.Nombre;
+                gabinete.Imagen = producto.Imagen;
+                gabinete.Marca.IdMarca = producto.Marca.IdMarca;
+                gabinete.PrecioUnidad = producto.PrecioUnidad;
+                gabinete.Stock = producto.Stock;
+                if (btnAction.Content.ToString() == "Actualizar")
+                {
+                    estado = ProductosBrl.Gabinete.Update(gabinete);
+                }
+                else if (btnAction.Content.ToString() == "Insertar")
+                {
+                    estado = ProductosBrl.Gabinete.Insert(gabinete);
+                }
+            }
+            else if (tipoProducto == ETipoProducto.Monitor)
+            {
+                monitor.Nombre = producto.Nombre;
+                monitor.Imagen = producto.Imagen;
+                monitor.Marca.IdMarca = producto.Marca.IdMarca;
+                monitor.PrecioUnidad = producto.PrecioUnidad;
+                monitor.Stock = producto.Stock;
+                if (btnAction.Content.ToString() == "Actualizar")
+                {
+                    estado = ProductosBrl.Montior.Update(monitor);
+                }
+                else if (btnAction.Content.ToString() == "Insertar")
+                {
+                    estado = ProductosBrl.Montior.Insert(monitor);
+                }
+            }
+            else if (tipoProducto == ETipoProducto.PlacaBase)
+            {
+                placaBase.Nombre = producto.Nombre;
+                placaBase.Imagen = producto.Imagen;
+                placaBase.Marca.IdMarca = producto.Marca.IdMarca;
+                placaBase.PrecioUnidad = producto.PrecioUnidad;
+                placaBase.Stock = producto.Stock;
+                if (btnAction.Content.ToString() == "Actualizar")
+                {
+                    estado = ProductosBrl.PlacaBase.Update(placaBase);
+                }
+                else if (btnAction.Content.ToString() == "Insertar")
+                {
+                    estado = ProductosBrl.PlacaBase.Insert(placaBase);
+                }
+            }
+            else if (tipoProducto == ETipoProducto.Procesador)
+            {
+                procesador.Nombre = producto.Nombre;
+                procesador.Imagen = producto.Imagen;
+                procesador.Marca.IdMarca = producto.Marca.IdMarca;
+                procesador.PrecioUnidad = producto.PrecioUnidad;
+                procesador.Stock = producto.Stock;
+                if (btnAction.Content.ToString() == "Actualizar")
+                {
+                    estado = ProductosBrl.Procesador.Update(procesador);
+                }
+                else if (btnAction.Content.ToString() == "Insertar")
+                {
+                    estado = ProductosBrl.Procesador.Insert(procesador);
+                }
+            }
+            else if (tipoProducto == ETipoProducto.Ram)
+            {
+                ram.Nombre = producto.Nombre;
+                ram.Imagen = producto.Imagen;
+                ram.Marca.IdMarca = producto.Marca.IdMarca;
+                ram.PrecioUnidad = producto.PrecioUnidad;
+                ram.Stock = producto.Stock;
+                if (btnAction.Content.ToString() == "Actualizar")
+                {
+                    estado = ProductosBrl.Ram.Update(ram);
+                }
+                else if (btnAction.Content.ToString() == "Insertar")
+                {
+                    estado = ProductosBrl.Ram.Insert(ram);
+                }
+            }
+            else if (tipoProducto == ETipoProducto.TarjetaGrafica)
+            {
+                tarjetaGrafica.Nombre = producto.Nombre;
+                tarjetaGrafica.Imagen = producto.Imagen;
+                tarjetaGrafica.Marca.IdMarca = producto.Marca.IdMarca;
+                tarjetaGrafica.PrecioUnidad = producto.PrecioUnidad;
+                tarjetaGrafica.Stock = producto.Stock;
+                if (btnAction.Content.ToString() == "Actualizar")
+                {
+                    estado = ProductosBrl.TarjetaGrafica.Update(tarjetaGrafica);
+                }
+                else if (btnAction.Content.ToString() == "Insertar")
+                {
+                    estado = ProductosBrl.TarjetaGrafica.Insert(tarjetaGrafica);
+                }
+            }
+
+            if (estado)
             {
                 MessageBox.Show("El Procesador se modifico con exito!!", "", MessageBoxButton.OK, MessageBoxImage.Information);
                 this.Close();
             }
+
         }
 
         private void Window_Initialized(object sender, EventArgs e)
         {
-            txtConsumo.PreviewTextInput += Prevent_PreviewTextInput;
-            txtConsumo.TextChanged += TxtConsumo_TextChanged;
-
-            txtFrecuenciaBase.PreviewTextInput += Prevent_PreviewTextInput;
-            txtFrecuenciaBase.TextChanged += TxtFrecuenciaBase_TextChanged;
-
-            txtFrecuenciaTurbo.PreviewTextInput += Prevent_PreviewTextInput;
-            txtFrecuenciaTurbo.TextChanged += TxtFrecuenciaTurbo_TextChanged;
-
-            txtLitografia.PreviewTextInput += Prevent_PreviewTextInput;
-            txtLitografia.TextChanged += TxtLitografia_TextChanged;
-
-            //cbMarca.SelectedValue = item.Marca.IdMarca;
-            txtNumeroNucleos.PreviewTextInput += Prevent_PreviewTextInput;
-            txtNumeroNucleos.TextChanged += TxtNumeroNucleos_TextChanged;
-
             txtPrecioUnidad.PreviewTextInput += Prevent_PreviewTextInputDecimal;
             txtPrecioUnidad.TextChanged += TxtPrecioUnidad_TextChanged;
 
             txtStock.PreviewTextInput += Prevent_PreviewTextInput;
             txtStock.TextChanged += TxtStock_TextChanged;
-
-            txtNumeroHilos.PreviewTextInput += Prevent_PreviewTextInput;
-            txtNumeroHilos.TextChanged += TxtNumeroHilos_TextChanged;
 
             cbMarca.SelectionChanged += CbMarca_SelectionChanged;
 
@@ -133,30 +348,19 @@ namespace WpfAppComputadoras.Administrator.Vistas
         private void TxtNombre_TextChanged(object s, TextChangedEventArgs e)
         {
             if (!String.IsNullOrWhiteSpace(((TextBox)s).Text))
-            { procesador.Nombre = ((TextBox)s).Text; }
+            { producto.Nombre = ((TextBox)s).Text; }
         }
 
         private void CbMarca_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            procesador.Marca.IdMarca = (byte)cbMarca.SelectedValue;
+            producto.Marca.IdMarca = (byte)cbMarca.SelectedValue;
         }
-
-        private void TxtNumeroHilos_TextChanged(object s, TextChangedEventArgs e)
-        {
-            ((TextBox)s).Text = ((TextBox)s).Text.Trim();
-            if (((TextBox)s).Text.Length > 0 && ((TextBox)s).Text.Substring(0, 1) == "0")
-            { ((TextBox)s).Text = ((TextBox)s).Text[1..]; }
-            if (!String.IsNullOrWhiteSpace(((TextBox)s).Text))
-            { procesador.NumeroHilos = int.Parse(((TextBox)s).Text); }
-        }
-
         private void TxtStock_TextChanged(object s, TextChangedEventArgs e)
         {
             ((TextBox)s).Text = ((TextBox)s).Text.Trim();
             if (!String.IsNullOrWhiteSpace(((TextBox)s).Text))
-            { procesador.Stock = short.Parse(((TextBox)s).Text); }
+            { producto.Stock = short.Parse(((TextBox)s).Text); }
         }
-
         private void TxtPrecioUnidad_TextChanged(object s, TextChangedEventArgs e)
         {
             ((TextBox)s).Text = ((TextBox)s).Text.Trim();
@@ -165,54 +369,8 @@ namespace WpfAppComputadoras.Administrator.Vistas
             if (((TextBox)s).Text.Length > 0 && (((TextBox)s).Text.Substring(0, 1) == "0"))
             { ((TextBox)s).Text = ((TextBox)s).Text[1..]; }
             if (!String.IsNullOrWhiteSpace(((TextBox)s).Text))
-            { procesador.PrecioUnidad = decimal.Parse(((TextBox)s).Text); }
+            { producto.PrecioUnidad = decimal.Parse(((TextBox)s).Text); }
         }
-
-        private void TxtNumeroNucleos_TextChanged(object s, TextChangedEventArgs e)
-        {
-            ((TextBox)s).Text = ((TextBox)s).Text.Trim();
-            if (((TextBox)s).Text.Length > 0 && ((TextBox)s).Text.Substring(0, 1) == "0")
-            { ((TextBox)s).Text = ((TextBox)s).Text[1..]; }
-            if (!String.IsNullOrWhiteSpace(((TextBox)s).Text))
-            { procesador.NumeroNucleos = int.Parse(((TextBox)s).Text); }
-        }
-
-        private void TxtLitografia_TextChanged(object s, TextChangedEventArgs e)
-        {
-            ((TextBox)s).Text = ((TextBox)s).Text.Trim();
-            if (((TextBox)s).Text.Length > 0 && ((TextBox)s).Text.Substring(0, 1) == "0")
-            { ((TextBox)s).Text = ((TextBox)s).Text[1..]; }
-            if (!String.IsNullOrWhiteSpace(((TextBox)s).Text))
-            { procesador.Litografia = int.Parse(((TextBox)s).Text); }
-        }
-
-        private void TxtFrecuenciaTurbo_TextChanged(object s, TextChangedEventArgs e)
-        {
-            ((TextBox)s).Text = ((TextBox)s).Text.Trim();
-            if (((TextBox)s).Text.Length > 0 && ((TextBox)s).Text.Substring(0, 1) == "0")
-            { ((TextBox)s).Text = ((TextBox)s).Text[1..]; }
-            if (!String.IsNullOrWhiteSpace(((TextBox)s).Text))
-            { procesador.FrecuenciaTurbo = int.Parse(((TextBox)s).Text); }
-        }
-
-        private void TxtFrecuenciaBase_TextChanged(object s, TextChangedEventArgs e)
-        {
-            ((TextBox)s).Text = ((TextBox)s).Text.Trim();
-            if (((TextBox)s).Text.Length > 0 && ((TextBox)s).Text.Substring(0, 1) == "0")
-            { ((TextBox)s).Text = ((TextBox)s).Text[1..]; }
-            if (!String.IsNullOrWhiteSpace(((TextBox)s).Text))
-            { procesador.FrecuenciaBase = int.Parse(((TextBox)s).Text); }
-        }
-
-        private void TxtConsumo_TextChanged(object s, TextChangedEventArgs e)
-        {
-            ((TextBox)s).Text = ((TextBox)s).Text.Trim();
-            if (((TextBox)s).Text.Length > 0 && ((TextBox)s).Text.Substring(0, 1) == "0")
-            { ((TextBox)s).Text = ((TextBox)s).Text[1..]; }
-            if (!String.IsNullOrWhiteSpace(((TextBox)s).Text))
-            { procesador.Consumo = int.Parse(((TextBox)s).Text); }
-        }
-
         private void Prevent_PreviewTextInputDecimal(object sender, TextCompositionEventArgs e)
         {
             bool approvedDecimalPoint = false;
@@ -242,18 +400,9 @@ namespace WpfAppComputadoras.Administrator.Vistas
                 };
                 if (abrir_.ShowDialog() == true)
                 {
-                    procesador.Imagen = abrir_.FileName;
+                    producto.Imagen = abrir_.FileName;
                     imgProduct.Source = ViewMain.LoadImage(abrir_.FileName);
-                    //Servidor.Recuperar_Imagen(@abrir_.FileName);
-                    //imagen_a.Contenido = File.ReadAllBytes(@abrir_.FileName);
-                    //imagen_a.Name_Format = "Perfil.jpg";
                 }
-                //Thread cargar_Imagen = new Thread(Cargar_imagen);
-                //cargar_Imagen.Start();
-
-                ///ejecutar cambio de foto para todos ...
-
-                //img_Perfil_Friend
             }
             catch (Exception ex)
             {
