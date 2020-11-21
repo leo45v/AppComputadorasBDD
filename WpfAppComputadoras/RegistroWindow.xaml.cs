@@ -1,17 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectBrl;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Enums;
+using WpfAppComputadoras.Extra;
 
 namespace WpfAppComputadoras
 {
@@ -28,20 +22,6 @@ namespace WpfAppComputadoras
         }
         private void Window_Initialized(object sender, EventArgs e)
         {
-            //combo_Dia.Items.Clear();
-            //combo_Año.Items.Clear();
-            //combo_Dia.Items.Add("Día");
-            //combo_Dia.SelectedIndex = 0;
-            //combo_Año.Items.Add("Año");
-            //combo_Año.SelectedIndex = 0;
-            //for (int i = 0; i < 31; i++)
-            //{
-            //    combo_Dia.Items.Add(i + 1);
-            //}
-            //for (int i = 0; i < 70; i++)
-            //{
-            //    combo_Año.Items.Add(2015 - i);
-            //}
             combo_sexo.Items.Clear();
             combo_sexo.Items.Add("Sexo");
             combo_sexo.SelectedIndex = 0;
@@ -105,7 +85,7 @@ namespace WpfAppComputadoras
                 MessageBox.Show("El Apellido es demasiado corto", "Error en Apellido", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            if (!MainWindow.Comprobar_Formato_Email_(email) && email != emailR)
+            if (!Methods.Comprobar_Formato_Email_(email) && email != emailR)
             {
                 MessageBox.Show("El correo ingresado no es aceptado, Verifique que el correo sea el mismo en ambos campos", "Error en Correo", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;

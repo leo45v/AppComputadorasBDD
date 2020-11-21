@@ -5,7 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WpfAppComputadoras.Administrator.Vistas"
              mc:Ignorable="d" 
-             WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Initialized="Window_Initialized" Height="400" Width="520">
+             WindowStartupLocation="CenterScreen"
+            Closed="UCProductView_Closed"
+        ResizeMode="NoResize" Initialized="Window_Initialized" Height="400" Width="520">
     <Grid Background="#FF7E6363">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -18,7 +20,8 @@
         <TextBlock x:Name="lblTitle" HorizontalAlignment="Center"  Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Text="INSERTE DATOS PARA PROCESADOR" TextWrapping="Wrap" VerticalAlignment="Center" FontFamily="Arial Black" FontSize="20"/>
 
         <StackPanel Grid.Column="0" Grid.Row="1">
-            <Image x:Name="imgProduct" Height="100" Width="176" Source="/assets/null.jpg" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center" StretchDirection="Both"/>
+            <Image x:Name="imgProduct" 
+                   Height="100" Width="176" Source="/assets/null.jpg" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center" StretchDirection="Both"/>
             <Button x:Name="btnLoadImg" Content="Cambiar Imagen" Background="#FFC93AFF" Foreground="WhiteSmoke"  Width="125" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnCargarImagen" Margin="0,7,0,19"/>
             <Grid>
                 <Grid.ColumnDefinitions>

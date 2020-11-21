@@ -23,6 +23,8 @@ GO
 ALTER TABLE Monitor DROP COLUMN Color;
 GO
 
+ALTER TABLE Producto ALTER COLUMN Imagen NVARCHAR(MAX) NOT NULL;
+
 INSERT INTO Color(IdColor, ColorRgb, Nombre)
 VALUES(1, '255,0,0', 'Rojo'),
       (2, '0,255,0', 'Verde'),

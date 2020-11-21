@@ -75,6 +75,10 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             return administrador;
         }
+        public static bool ActivarDesactivar(Guid idAdministrador, bool desactivado)
+        {
+            return PersonaDal.ActivarDesactivar(idAdministrador, desactivado);
+        }
         private static Administrador ObjectData_To_Administrador(Dictionary<string, object> data)
         {
             return new Administrador()

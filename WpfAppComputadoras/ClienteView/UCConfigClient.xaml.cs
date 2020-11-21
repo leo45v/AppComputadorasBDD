@@ -1,16 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common;
+using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Enums;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectBrl;
 
 namespace WpfAppComputadoras.ClienteView
@@ -24,18 +16,32 @@ namespace WpfAppComputadoras.ClienteView
         private Administrador admin;
         private ViewMain mainView;
         private bool modoVista = false;
+        private Rol tipoRol;
         public UCConfigClient(ViewMain viewMain, Cliente clienteView)
         {
             InitializeComponent();
             cliente = clienteView;
             mainView = viewMain;
             LoadCliente(clienteView);
+            tipoRol = clienteView.Usuario.Rol;
         }
         public UCConfigClient(ViewMain viewMain, Administrador adminView)
         {
             InitializeComponent();
             admin = adminView;
             mainView = viewMain;
+            LoadAdministrador(adminView);
+            tipoRol = adminView.Usuario.Rol;
+            //admiMenuView --> RELOAD
+        }
+        public void LoadAdministrador(Administrador admin)
+        {
+            txtApellido.Text = admin.Apellido;
+            txtContrasenia.Text = admin.Usuario.Contrasenia;
+            txtFechaNacimiento.SelectedDate = admin.FechaNacimiento;
+            txtNombre.Text = admin.Nombre;
+            txtNombreUsuario.Text = admin.Usuario.NombreUsuario;
+            txtSexo.SelectedIndex = admin.Sexo + 1;
         }
 
         public void LoadCliente(Cliente cli)
@@ -46,6 +52,7 @@ namespace WpfAppComputadoras.ClienteView
             txtNombre.Text = cli.Nombre;
             txtNombreUsuario.Text = cli.Usuario.NombreUsuario;
             txtSexo.SelectedIndex = cli.Sexo + 1;
+            //FALTA EMAIL 
         }
 
         private void UserControl_Initialized(object sender, EventArgs e)
@@ -58,6 +65,25 @@ namespace WpfAppComputadoras.ClienteView
             txtSexo.SelectedIndex = 0;
             txtApellido.IsEnabled = false;
             ViewMode(true);
+            bthAtras.Click += BthAtras_Click;
+
+        }
+
+        private void BthAtras_Click(object sender, RoutedEventArgs e)
+        {
+            if (tipoRol.IdRol == ERol.Cliente)
+            {
+                mainView.btnConfigurar.IsEnabled = true;
+                mainView.gridAutomaitc.Children.Clear();
+                mainView.gridAutomaitc.Children.Add(mainView.uCTypeComputerView);
+            }
+            else if (tipoRol.IdRol == ERol.Administrador)
+            {
+                mainView.btnConfigurar.IsEnabled = true;
+                mainView.gridAutomaitc.Children.Clear();
+                mainView.gridAutomaitc.Children.Add(mainView.admiMenuView);
+                //mainView.ConfigAdministradorInterface(ERol.Administrador);
+            }
         }
 
         public void ViewMode(bool activo)
@@ -95,10 +121,21 @@ namespace WpfAppComputadoras.ClienteView
             MessageBoxResult resultMsj = MessageBox.Show("Estas seguro de querer \"Eliminar\" tu cuenta?", "", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (resultMsj == MessageBoxResult.Yes)
             {
-                if (ClientsBrl.Delete(cliente.IdPersona))
+                if (tipoRol.IdRol == ERol.Cliente)
                 {
-                    MessageBox.Show("Se elimino la cuenta");
-                    mainView.Close();
+                    if (ClientsBrl.Delete(cliente.IdPersona))
+                    {
+                        MessageBox.Show("Se elimino la cuenta");
+                        mainView.Close();
+                    }
+                }
+                else if (tipoRol.IdRol == ERol.Administrador)
+                {
+                    if (AdministradorBrl.Delete(admin.IdPersona))
+                    {
+                        MessageBox.Show("Se elimino la cuenta");
+                        mainView.Close();
+                    }
                 }
             }
         }

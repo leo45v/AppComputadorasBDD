@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Enums;
 
 namespace WpfAppComputadoras.ClienteView
 {
@@ -18,9 +19,13 @@ namespace WpfAppComputadoras.ClienteView
     /// </summary>
     public partial class UCTypeComputerView : UserControl
     {
+        public double presupuesto;
+        public TipoComputadora tipoComputadora;
+        public object parametros;
         public UCTypeComputerView()
         {
             InitializeComponent();
         }
+
     }
 }

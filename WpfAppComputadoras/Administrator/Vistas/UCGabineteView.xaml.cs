@@ -1,17 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common;
+using WpfAppComputadoras.Extra;
 
 namespace WpfAppComputadoras.Administrator.Vistas
 {
@@ -22,7 +15,6 @@ namespace WpfAppComputadoras.Administrator.Vistas
     {
         private UCProductView mainView;
         private List<ComboColor> newComboColor;
-        private List<Colores> listSelected = new List<Colores>();
         public UCGabineteView(UCProductView uCProductView)
         {
             InitializeComponent();

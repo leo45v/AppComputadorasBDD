@@ -1,19 +1,17 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Enums;
+using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Extras;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectBrl;
+using WpfAnimatedGif;
+using WpfAppComputadoras.Extra;
 
 namespace WpfAppComputadoras.Administrator.Vistas
 {
@@ -76,6 +74,7 @@ namespace WpfAppComputadoras.Administrator.Vistas
 
         private List<Marca> marcas;
         public ViewMain mainView;
+        private bool imagenChanged = false;
 
         public UCProductView(ViewMain viewMain, ETipoProducto tipoProducto)
         {
@@ -215,7 +214,7 @@ namespace WpfAppComputadoras.Administrator.Vistas
         }
         public void LoadComboMarcas()
         {
-            marcas = ViewMain.MarcaList;
+            marcas = mainView.MarcaList;
             cbMarca.ItemsSource = marcas;
             cbMarca.DisplayMemberPath = "NombreMarca";
             cbMarca.SelectedValuePath = "IdMarca";
@@ -228,7 +227,7 @@ namespace WpfAppComputadoras.Administrator.Vistas
                 txtNombre.Text = item.Nombre;
                 txtPrecioUnidad.Text = item.PrecioUnidad.ToString();
                 txtStock.Text = item.Stock.ToString();
-                imgProduct.Source = ViewMain.LoadImage(item.Imagen);
+                ImageBehavior.SetAnimatedSource(imgProduct, Methods.LoadImage(item.Imagen));
                 imgProduct.Stretch = Stretch.Uniform;
             }
         }
@@ -381,6 +380,7 @@ namespace WpfAppComputadoras.Administrator.Vistas
             }
             if (estado)
             {
+                imagenChanged = false;
                 if (btnAction.Content.ToString() == "Actualizar")
                 {
                     MessageBox.Show("El " + tipoProducto.ToString() + " se Modifico con exito!!", "", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -389,9 +389,20 @@ namespace WpfAppComputadoras.Administrator.Vistas
                 {
                     MessageBox.Show("El " + tipoProducto.ToString() + " se Inserto con exito!!", "", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
-
                 mainView.ConfigAdministradorInterface(mainView.rol.IdRol);
-                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Error");
+            }
+            this.Close();
+        }
+
+        private void UCProductView_Closed(object sender, EventArgs e)
+        {
+            if (imagenChanged)
+            {
+                Archivo.Borrar_Imagen(producto.Imagen);
             }
         }
 
@@ -451,28 +462,15 @@ namespace WpfAppComputadoras.Administrator.Vistas
             if (!(char.IsDigit(e.Text, e.Text.Length - 1) && ((TextBox)sender).Text.Length < 4))
             { e.Handled = true; }
         }
-
-        private string lastDirectory = @"C:\";
         private void btnCargarImagen(object sender, RoutedEventArgs e)
         {
-            try
+            string[] pathImagen = Methods.SelectImagen(tipoProducto.ToString());
+            if (!String.IsNullOrWhiteSpace(pathImagen[1]))
             {
-                OpenFileDialog abrir_ = new OpenFileDialog
-                {
-                    Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png, *.gif) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png; *.gif",
-                    InitialDirectory = lastDirectory,
-                    Title = "Seleccione una imagen para cargar."
-                };
-                if (abrir_.ShowDialog() == true)
-                {
-                    lastDirectory = abrir_.FileName;
-                    producto.Imagen = abrir_.FileName;
-                    imgProduct.Source = ViewMain.LoadImage(abrir_.FileName);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
+                producto.Imagen = pathImagen[0];
+                ImageBehavior.SetAnimatedSource(imgProduct, Methods.LoadImage(pathImagen[1]));
+                //imgProduct.Source = Methods.LoadImage(pathImagen[1]);
+                imagenChanged = true;
             }
         }
     }

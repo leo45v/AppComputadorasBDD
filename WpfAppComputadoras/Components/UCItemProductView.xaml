@@ -19,7 +19,7 @@
         <GridSplitter Grid.Column="0" Grid.ColumnSpan="5" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Background="Black" Height="2" />
         <GridSplitter Grid.Column="0" Width="2" HorizontalAlignment="Left" VerticalAlignment="Stretch" Background="Black" />
         <Border Background="#D7D1ECFF" Grid.Column="0" Grid.ColumnSpan="5" />
-        <Image x:Name="imgProducto"  Grid.Column="0" Source="/assets/null.jpg" Stretch="Uniform" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,5,5,5"/>
+        <Image x:Name="imgProducto"  Grid.Column="0" Source="pack://application:,,,/assets/null.jpg" Stretch="Uniform" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,5,5,5"/>
         <GridSplitter Grid.Column="0" Width="2" HorizontalAlignment="Right" VerticalAlignment="Stretch" Background="Black" />
         <TextBlock x:Name="nombreProducto" Grid.Column="1" Text="PRUEBA" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" Margin="15,0,0,0"/>
         <GridSplitter Grid.Column="1" Width="2" HorizontalAlignment="Right" VerticalAlignment="Stretch" Background="Black" />

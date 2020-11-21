@@ -1,20 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Enums;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectBrl;
-using WpfAppComputadoras.Administrator;
+using WpfAnimatedGif;
 using WpfAppComputadoras.Administrator.Vistas;
+using WpfAppComputadoras.Extra;
 
 namespace WpfAppComputadoras.Components
 {
@@ -84,7 +76,8 @@ namespace WpfAppComputadoras.Components
         }
         public void LoadProduct(Producto producto)
         {
-            imgProducto.Source = ViewMain.LoadImage(producto.Imagen);
+            ImageBehavior.SetAnimatedSource(imgProducto, Methods.LoadImage(producto.Imagen));
+            //imgProducto.Source = Methods.LoadImage(producto.Imagen);
             nombreProducto.Text = producto.Nombre;
             marcaProducto.Text = producto.Marca.NombreMarca;
             tipoProducto.Text = ProductosBrl.GetType(producto.IdProducto).ToString();

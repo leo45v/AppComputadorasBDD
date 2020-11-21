@@ -24,6 +24,7 @@
         <Button x:Name="btnEditar" Content="EDITAR CUENTA" HorizontalAlignment="Left" Margin="296,175,0,0" VerticalAlignment="Top" Height="30" Width="117" Click="BtnEditar_Click"/>
         <Button x:Name="btnModificar" Content="+" HorizontalAlignment="Left" Margin="296,77,0,0" VerticalAlignment="Top" Height="30" Width="37" FontSize="20" Click="BtnModificar_Click"/>
         <Button x:Name="bthAtras" Content="Atras" HorizontalAlignment="Left" Margin="509,313,0,0" VerticalAlignment="Top" Height="30" Width="117"/>
-
+        <Grid x:Name="cointainerClients" Margin="453,92,40,155">
+        </Grid>
     </Grid>
 </UserControl>

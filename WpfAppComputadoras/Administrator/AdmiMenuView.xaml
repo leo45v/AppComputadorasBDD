@@ -39,8 +39,12 @@
         <Button Content="+" HorizontalAlignment="Left" Margin="36,39,0,0" VerticalAlignment="Top" Width="23" RenderTransformOrigin="0.87,1.202" Click="BtnInsertarProducto_Click"/>
         <ComboBox x:Name="cbTipoProducto" Margin="63,39,0,0" VerticalAlignment="Top" Width="120" HorizontalAlignment="Left"/>
         <TextBlock HorizontalAlignment="Left" Margin="193,44,0,0" Text="AGREGAR PRODUCTO" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="-0.081,-0.815" FontWeight="Bold" FontFamily="Arial Black" FontSize="14"/>
-        <Button Content="BUSCAR" HorizontalAlignment="Left" Margin="332,86,0,0" VerticalAlignment="Top" RenderTransformOrigin="-2.196,-0.2" Width="55" Click="Btn_Buscar_Click"/>
-        <TextBox x:Name="txtSearch" HorizontalAlignment="Left" Margin="36,86,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="272" TextChanged="TxtSearch_Changed"/>
+        <Button Content="BUSCAR" HorizontalAlignment="Left" Margin="735,90,0,0" VerticalAlignment="Top" RenderTransformOrigin="-2.196,-0.2" Width="55" Click="Btn_Buscar_Click" Height="21.96"/>
+        <Button Content="LIMPIAR" HorizontalAlignment="Left" Margin="834,90,0,0" VerticalAlignment="Top" RenderTransformOrigin="-2.196,-0.2" Width="55" Height="21.96" Click="Btn_LimpiarBuscador_Click"/>
+        <TextBox x:Name="txtSearch" HorizontalAlignment="Left" Margin="420,90,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="272" TextChanged="TxtSearch_Changed" Height="21.96"/>
+        <ComboBox x:Name="cbMarca" HorizontalAlignment="Left" Width="170" VerticalAlignment="Top" Margin="31,90,0,0" />
+        <ComboBox x:Name="cbTipo" HorizontalAlignment="Left" Width="170" VerticalAlignment="Top" Margin="225,90,0,0" />
+
         <StackPanel  Margin="50,550,50,10" Orientation="Horizontal" HorizontalAlignment="Center" >
             <Button x:Name="btnFirst" Width="50" Content="&lt;&lt;"/>
             <Button x:Name="btnPrevious" Width="50" Content="&lt;"/>

@@ -1,58 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Enums;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectBrl;
 using WpfAppComputadoras.Administrator;
 using WpfAppComputadoras.ClienteView;
+using WpfAppComputadoras.Extra;
 
 namespace WpfAppComputadoras
 {
-    public class ComboColor : Colores
-    {
-        public Boolean Check_Status
-        {
-            get;
-            set;
-        }
-        private Brush myVar;
 
-        public Brush ColorPath
-        {
-            get { return new SolidColorBrush(Color.FromRgb(ColorRGB.R, ColorRGB.G, ColorRGB.B)); }
-            private set { myVar = value; }
-        }
-    }
     /// <summary>
     /// Interaction logic for ViewMain.xaml
     /// </summary>
     public partial class ViewMain : Window
     {
         private readonly MainWindow mainWindow;
-
         public Rol rol = new Rol();
         private Cliente cliente;
         private Administrador admin;
         public AdmiMenuView admiMenuView;
-
-        private static List<Marca> marcas;
-
+        public UCTypeComputerView uCTypeComputerView;
+        private List<Marca> marcas;
         public string queryProductName = "";
         public Marca queryProductMarca = null;
         public ETipoProducto queryProductTipo = ETipoProducto.None;
-        public static List<Marca> MarcaList
+        public List<Marca> MarcaList
         {
             get { return marcas; }
             private set
@@ -61,24 +38,22 @@ namespace WpfAppComputadoras
             }
         }
         private List<Colores> colores;
-
         public List<Colores> Colores
         {
             get { return colores; }
             set { colores = value; }
         }
-
-
         public ViewMain(MainWindow main, Guid idUsuario)
         {
             InitializeComponent();
             mainWindow = main;
-
+            marcas = ProductosBrl.GetMarcas();
+            colores = ProductosBrl.GetColores();
             rol = UsuarioBrl.GetRol(idUsuario);
             if (rol.IdRol == ERol.Cliente)
             {
                 cliente = ClientsBrl.GetClienteByIdUsuario(idUsuario);
-                ConfigClienteInterface(cliente.Usuario.Rol.IdRol);
+                ConfigClienteInterface();
                 txNombreView.Text = cliente.Nombre + " " + cliente.Apellido;
 
             }
@@ -88,8 +63,6 @@ namespace WpfAppComputadoras
                 LoadInterfaceAdmin(admin.Usuario.Rol.IdRol);
                 txNombreView.Text = admin.Nombre + " " + admin.Apellido;
             }
-            marcas = ProductosBrl.GetMarcas();
-            colores = ProductosBrl.GetColores();
             //ucProcesador.lblProduct.Content = "Procesadores";
             //ucProcesador.imgProduct.Source = LoadImage("assets/procesadores.jpg");
             //ucProcesador.imgProduct.Stretch = Stretch.Fill;
@@ -104,9 +77,10 @@ namespace WpfAppComputadoras
             private set { }
         }
 
-        public void ConfigClienteInterface(ERol eRol)
+        private void ConfigClienteInterface()
         {
-            UCTypeComputerView uCTypeComputerView = new UCTypeComputerView();
+            uCTypeComputerView = new UCTypeComputerView();
+            gridAutomaitc.Children.Clear();
             gridAutomaitc.Children.Add(uCTypeComputerView);
         }
         public int buttonCant = 0;
@@ -114,7 +88,7 @@ namespace WpfAppComputadoras
         private void LoadInterfaceAdmin(ERol eRol)
         {
             admiMenuView = new AdmiMenuView(this, eRol);
-            buttonCant = RedondeoSiempre((double)MaxProducts / cantidad);
+            buttonCant = Methods.RedondeoSiempre((double)MaxProducts / cantidad);
             gridAutomaitc.Children.Clear();
             gridAutomaitc.Children.Add(admiMenuView);
             ConfigAdministradorInterface(eRol);
@@ -172,7 +146,7 @@ namespace WpfAppComputadoras
         {
             if (eRol == ERol.Administrador)
             {
-                buttonCant = RedondeoSiempre((double)MaxProducts / cantidad);
+                buttonCant = Methods.RedondeoSiempre((double)MaxProducts / cantidad);
                 //pagSelect = 0;
                 LoadProductosAndLoadButtons();
             }
@@ -211,17 +185,6 @@ namespace WpfAppComputadoras
                         btn.Background = new SolidColorBrush(Color.FromRgb(255, 255, 255));
                     }
                     btn.Click += Btn_Click;
-                    //btn.Click += ((s, ev) =>
-                    //{
-                    //    int aux = int.Parse(((Button)s).Content.ToString()) - 1;
-                    //    if (aux == pagSelect)
-                    //    {
-                    //        return;
-                    //    }
-                    //    pagSelect = aux;
-                    //    admiMenuView.CargarProductos(ProductosBrl.GetWithRangeWithFillter(pagSelect * 10, 10, queryProductName, queryProductMarca, queryProductTipo));
-                    //    LoadButton(pagSelect > 0 ? pagSelect - 1 : 0, cant);
-                    //});
                     admiMenuView.stackPagina.Children.Add(btn);
                 }
                 else
@@ -248,17 +211,6 @@ namespace WpfAppComputadoras
             admiMenuView.CargarProductos(ProductosBrl.GetWithRangeWithFillter(pagSelect * 10, 10, queryProductName, queryProductMarca, queryProductTipo));
             LoadButton(pagSelect > 0 ? pagSelect - 1 : 0, buttonCant);
         }
-
-        public static int RedondeoSiempre(double number)
-        {
-            int n = (int)number;
-            double decimales = number - n;
-            if (decimales != 0)
-            {
-                n++;
-            }
-            return n;
-        }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             mainWindow.Show();
@@ -271,16 +223,6 @@ namespace WpfAppComputadoras
         {
             this.DragMove();
         }
-        public static BitmapImage LoadImage(string path)
-        {
-            string pathImg = String.IsNullOrWhiteSpace(path) ? "assets/null.jpg" : path;
-            BitmapImage bi3 = new BitmapImage();
-            bi3.BeginInit();
-            bi3.StreamSource = new MemoryStream(File.ReadAllBytes(@"" + pathImg));
-            bi3.EndInit();
-            return bi3;
-        }
-
         private void BtnConfigurar_Click(object sender, RoutedEventArgs e)
         {
             if (ERol.Cliente == rol.IdRol)
@@ -288,11 +230,23 @@ namespace WpfAppComputadoras
                 btnConfigurar.IsEnabled = false;
                 gridAutomaitc.Children.Clear();
                 UCConfigClient uCConfigClient = new UCConfigClient(this, cliente);
-                uCConfigClient.bthAtras.Click += ((s, e) =>
-                {
-                    btnConfigurar.IsEnabled = true;
-                    ConfigClienteInterface(rol.IdRol);
-                });
+                //uCConfigClient.bthAtras.Click += ((s, e) =>
+                //{
+                //    btnConfigurar.IsEnabled = true;
+                //    ConfigClienteInterface();
+                //});
+                gridAutomaitc.Children.Add(uCConfigClient);
+            }
+            else if (ERol.Administrador == rol.IdRol)
+            {
+                btnConfigurar.IsEnabled = false;
+                gridAutomaitc.Children.Clear();
+                UCConfigClient uCConfigClient = new UCConfigClient(this, admin);
+                //uCConfigClient.bthAtras.Click += ((s, e) =>
+                //{
+                //    btnConfigurar.IsEnabled = true;
+                //    ConfigClienteInterface(rol.IdRol);
+                //});
                 gridAutomaitc.Children.Add(uCConfigClient);
             }
         }

@@ -11,5 +11,13 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectBr
         {
             return AdministradorDal.Get_Administrador_By_IdUsuario(idUsuario);
         }
+        public static bool Delete(Guid idAdministrador)
+        {
+            return AdministradorDal.ActivarDesactivar(idAdministrador, true);
+        }
+        public static bool ActivarCuenta(Guid idAdministrador)
+        {
+            return AdministradorDal.ActivarDesactivar(idAdministrador, false);
+        }
     }
 }

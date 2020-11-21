@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Enums;
+using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Extras;
 
 namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDal.Personas.Productos
 {
@@ -22,6 +23,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                                                  VALUES(@IdProducto, @PrecioUnidad, @Imagen, @Nombre, @Stock, @IdMarca, @Descontinuado, @Eliminado)";
             try
             {
+                OperationsSql.OpenConnection();
                 OperationsSql.CreateBasicCommandWithTransaction(queryString);
                 OperationsSql.AddWithValueString("IdProducto", producto.IdProducto);
                 OperationsSql.AddWithValueString("PrecioUnidad", producto.PrecioUnidad);

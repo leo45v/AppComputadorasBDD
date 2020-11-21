@@ -1,0 +1,153 @@
+{
+  "Estudio": {
+    "Almacenamiento": {
+      "min": 500000,
+      "max": 2000000
+    },
+    "Fuente": {
+      "Certificacion": "Ninguna",
+      "Potencia": {
+        "min": 400,
+        "max": 550
+      }
+    },
+    "PlacaBase": {
+      "PrecioUnidad": {
+        "min": 50,
+        "max": 100
+      },
+      "NumeroDims": {
+        "min": 2,
+        "max": 4
+      }
+    },
+    "Procesador": {
+      "NumeroNucleos": {
+        "min": 2,
+        "max": 4
+      },
+      "NumeroHilo": {
+        "min": 2,
+        "max": 4
+      },
+      "Consumo": {
+        "min": 50,
+        "max": 150
+      },
+      "FrecuenciaBase": {
+        "min": 1800,
+        "max": 3000
+      }
+    },
+    "Ram": {
+      "Memoria": {
+        "min": 4,
+        "max": 8
+      },
+      "Cantidad": {
+        "min": 1,
+        "max": 2
+      },
+      "Frecuencia": {
+        "min": 2100,
+        "max": 2666
+      }
+    },
+    "TarjetaGrafica": {
+      "Vram": {
+        "min": 1,
+        "max": 2
+      }
+    },
+    "Monitor": {
+      "Frecuencia": {
+        "min": 60,
+        "max": 60
+      }
+    },
+    "Gabinete": {
+      "PrecioUnidad": {
+        "min": 50,
+        "max": 80
+      }
+    }
+  },
+  "Oficina": {
+    "Almacenamiento": {
+
+    },
+    "Fuente": {
+
+    },
+    "PlacaBase": {
+
+    },
+    "Procesador": {
+
+    },
+    "Ram": {
+
+    },
+    "TarjetaGrafica": {
+
+    },
+    "Monitor": {
+
+    },
+    "Gabinete": {
+
+    }
+  },
+  "TrabajoDiseno": {
+    "Almacenamiento": {
+
+    },
+    "Fuente": {
+
+    },
+    "PlacaBase": {
+
+    },
+    "Procesador": {
+
+    },
+    "Ram": {
+
+    },
+    "TarjetaGrafica": {
+
+    },
+    "Monitor": {
+
+    },
+    "Gabinete": {
+
+    }
+  },
+  "Gaming": {
+    "Almacenamiento": {
+
+    },
+    "Fuente": {
+
+    },
+    "PlacaBase": {
+
+    },
+    "Procesador": {
+
+    },
+    "Ram": {
+
+    },
+    "TarjetaGrafica": {
+
+    },
+    "Monitor": {
+
+    },
+    "Gabinete": {
+
+    }
+  }
+}

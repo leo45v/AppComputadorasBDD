@@ -1,18 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Enums;
-using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectBrl;
 using WpfAppComputadoras.Administrator.Vistas;
 using WpfAppComputadoras.Components;
 
@@ -26,8 +18,8 @@ namespace WpfAppComputadoras.Administrator
         public readonly ViewMain viewMain;
         public AdmiMenuView(ViewMain viewMainObj, ERol eRol)
         {
-            InitializeComponent();
             viewMain = viewMainObj;
+            InitializeComponent();
         }
         public void CargarProductos(List<Producto> productos)
         {
@@ -57,6 +49,22 @@ namespace WpfAppComputadoras.Administrator
             cbTipoProducto.Items.Add("Ram");
             cbTipoProducto.Items.Add("Tarjeta Grafica");//8
             cbTipoProducto.SelectedIndex = 0;
+
+
+            List<Marca> listita = viewMain.MarcaList;
+            listita.Insert(0, new Marca() { IdMarca = 0, NombreMarca = "Tipo Marca" });
+
+            cbMarca.ItemsSource = viewMain.MarcaList;
+            cbMarca.DisplayMemberPath = "NombreMarca";
+            cbMarca.SelectedValuePath = "IdMarca";
+            cbMarca.SelectedIndex = 0;
+            //cbMarca.SelectedIndex = cbMarca.Items.Count - 1;
+            //cbMarca.Items.MoveCurrentToFirst();
+
+            cbTipoProducto.Items.Cast<object>().ToList().ForEach(i =>
+                cbTipo.Items.Add(i)
+            );
+            cbTipo.SelectedIndex = 0;
         }
 
         private void BtnInsertarProducto_Click(object sender, RoutedEventArgs e)
@@ -87,6 +95,28 @@ namespace WpfAppComputadoras.Administrator
 
         private void Btn_Buscar_Click(object sender, RoutedEventArgs e)
         {
+            Marca marcaSelect = (Marca)cbMarca.SelectedItem;
+            if (marcaSelect.IdMarca != 0)
+            {
+                viewMain.queryProductMarca = marcaSelect;
+            }
+            else
+            {
+                viewMain.queryProductMarca = null;
+            }
+            viewMain.queryProductTipo = (ETipoProducto)cbTipo.SelectedIndex - 1;
+            viewMain.pagSelect = 0;
+            viewMain.ConfigAdministradorInterface(viewMain.rol.IdRol);
+        }
+
+        private void Btn_LimpiarBuscador_Click(object sender, RoutedEventArgs e)
+        {
+            txtSearch.Clear();
+            cbTipo.SelectedIndex = 0;
+            cbMarca.SelectedIndex = 0;
+            viewMain.queryProductName = "";
+            viewMain.queryProductMarca = null;
+            viewMain.queryProductTipo = (ETipoProducto)cbTipo.SelectedIndex - 1;
             viewMain.pagSelect = 0;
             viewMain.ConfigAdministradorInterface(viewMain.rol.IdRol);
         }
