@@ -36,12 +36,14 @@ namespace WpfAppComputadoras.Administrator.Vistas
 
         private void TxtCertificacion_TextChanged(object sender, TextChangedEventArgs e)
         {
-            throw new NotImplementedException();
+            if (!String.IsNullOrWhiteSpace(((TextBox)sender).Text))
+            { mainView.fuente.Certificacion = ((TextBox)sender).Text; }
         }
 
         private void TxtPotencia_TextChanged(object sender, TextChangedEventArgs e)
         {
-            throw new NotImplementedException();
+            if (!String.IsNullOrWhiteSpace(((TextBox)sender).Text))
+            { mainView.fuente.Potencia = int.Parse(((TextBox)sender).Text); }
         }
     }
 }

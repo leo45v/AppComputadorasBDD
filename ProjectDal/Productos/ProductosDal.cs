@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Enums;
 
@@ -319,19 +320,20 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 OperationsSql.AddWithValueString("IdProducto", idProducto);
                 OperationsSql.AddWithValueString("IdColor", idColor);
                 OperationsSql.ExecuteBasicCommandWithTransaction();
+                OperationsSql.RemoveValueParams();
                 estado = true;
             }
             catch (Exception)
             {
-                throw;
+                //ALREADY EXIST -> 
             }
             return estado;
         }
         public static List<Colores> GetColores(Guid idProducto)
         {
             List<Colores> colores = null;
-            string query = @"SELECT co.IdColor, co.Nombre 
-                             FROM Colores co 
+            string query = @"SELECT co.IdColor, co.Nombre, co.ColorRgb
+                             FROM Color co 
                              INNER JOIN ProductoColor pc ON pc.IdColor = co.IdColor 
                              WHERE pc.IdProducto = @IdProducto";
             try
@@ -345,10 +347,48 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                     colores = new List<Colores>();
                     foreach (Dictionary<string, object> item in data)
                     {
+                        string[] rgb = item["ColorRgb"].ToString().Split(",");
                         colores.Add(new Colores()
                         {
-                            IdColor = (int)item["IdColor"],
-                            Nombre = (string)item["Nombre"]
+                            IdColor = (short)item["IdColor"],
+                            Nombre = (string)item["Nombre"],
+                            ColorRGB = Color.FromArgb(255, int.Parse(rgb[0]), int.Parse(rgb[1]), int.Parse(rgb[2]))
+                        });
+                    }
+                }
+                if (!cascada)
+                {
+                    OperationsSql.ExecuteTransactionCommit();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally { if (!cascada) { OperationsSql.CloseConnection(); } }
+            return colores;
+        }
+        public static List<Colores> GetColores()
+        {
+            List<Colores> colores = null;
+            string query = @"SELECT co.IdColor, co.ColorRgb, co.Nombre
+                             FROM Color co";
+            try
+            {
+                OperationsSql.OpenConnection();
+                OperationsSql.CreateBasicCommandWithTransaction(query);
+                List<Dictionary<string, object>> data = OperationsSql.ExecuteReaderMany();
+                if (data != null)
+                {
+                    colores = new List<Colores>();
+                    foreach (Dictionary<string, object> item in data)
+                    {
+                        string[] rgb = item["ColorRgb"].ToString().Split(",");
+                        colores.Add(new Colores()
+                        {
+                            IdColor = (short)item["IdColor"],
+                            Nombre = (string)item["Nombre"],
+                            ColorRGB = Color.FromArgb(255, int.Parse(rgb[0]), int.Parse(rgb[1]), int.Parse(rgb[2]))
                         });
                     }
                 }
@@ -360,6 +400,29 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             finally { OperationsSql.CloseConnection(); }
             return colores;
+        }
+        public static bool DeleteColorProduct(Guid idProducto, int idColor)
+        {
+            bool estado = false;
+            string queryString = @"DELETE ProductoColor 
+                                   WHERE IdProducto = @IdProducto AND IdColor = @IdColor";
+            try
+            {
+                OperationsSql.OpenConnection();
+                OperationsSql.CreateBasicCommandWithTransaction(queryString);
+                OperationsSql.AddWithValueString("IdProducto", idProducto);
+                OperationsSql.AddWithValueString("IdColor", idColor);
+                OperationsSql.ExecuteBasicCommandWithTransaction();
+                OperationsSql.RemoveValueParams();
+                if (!cascada) { OperationsSql.ExecuteTransactionCommit(); }
+                estado = true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally { if (!cascada) { OperationsSql.CloseConnection(); } }
+            return estado;
         }
         //public static bool Delete(Guid idProducto)
         //{

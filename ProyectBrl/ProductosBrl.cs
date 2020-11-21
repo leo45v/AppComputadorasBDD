@@ -91,7 +91,10 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectBr
         {
             return ProductosDal.GetMarcas();
         }
-
+        public static List<Colores> GetColores()
+        {
+            return ProductosDal.GetColores();
+        }
     }
 }
 

@@ -23,12 +23,37 @@ namespace WpfAppComputadoras.Administrator.Vistas
         {
             InitializeComponent();
             mainView = uCProductView;
+        }
 
+        private void TxtTamano_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (!String.IsNullOrWhiteSpace(((TextBox)sender).Text))
+            { mainView.placaBase.Tamano = ((TextBox)sender).Text; }
+        }
+
+        private void TxtSoporteProcesador_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void TxtNumeroDims_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (!String.IsNullOrWhiteSpace(((TextBox)sender).Text))
+            { mainView.placaBase.NumeroDims = int.Parse(((TextBox)sender).Text); }
+        }
+
+        private void TxtCapacidad_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (!String.IsNullOrWhiteSpace(((TextBox)sender).Text))
+            { mainView.placaBase.CapacidadMem = int.Parse(((TextBox)sender).Text); }
         }
 
         private void UserControl_Initialized(object sender, EventArgs e)
         {
-
+            txtCapacidad.TextChanged += TxtCapacidad_TextChanged;
+            txtNumeroDims.TextChanged += TxtNumeroDims_TextChanged;
+            //txtSoporteProcesador.TextChanged += TxtSoporteProcesador_TextChanged;
+            txtTamano.TextChanged += TxtTamano_TextChanged;
         }
     }
 }

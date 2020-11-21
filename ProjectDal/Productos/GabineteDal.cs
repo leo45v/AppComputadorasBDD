@@ -18,16 +18,16 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 if (ProductosDal.Insertar(gabinete as Producto))
                 {
                     ProductosDal.cascada = false;
+                    foreach (Colores item in gabinete.Colores)
+                    {
+                        ProductosDal.InsertarColores(gabinete.IdProducto, item.IdColor);
+                    }
                     OperationsSql.CreateBasicCommandWithTransaction(query);
                     OperationsSql.AddWithValueString("IdProducto", gabinete.IdProducto);
                     OperationsSql.AddWithValueString("Altura", gabinete.Altura);
                     OperationsSql.AddWithValueString("Peso", gabinete.Peso);
                     OperationsSql.AddWithValueString("Largo", gabinete.Largo);
                     OperationsSql.ExecuteBasicCommandWithTransaction();
-                    foreach (Colores item in gabinete.Colores)
-                    {
-                        ProductosDal.InsertarColores(gabinete.IdProducto, item.IdColor);
-                    }
                     OperationsSql.ExecuteTransactionCommit();
                 }
                 estado = true;
@@ -46,7 +46,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
         public static Gabinete Get(Guid idGabinete)
         {
             Gabinete gabinete = null;
-            string query = @"SELECT r.IdProducto, r.Altura, r.Peso, r.Largo 
+            string query = @"SELECT r.IdProducto, r.Altura, r.Peso, r.Largo,  
                              pro.PrecioUnidad, pro.Imagen, pro.Nombre, pro.Stock, pro.IdMarca, pro.Descontinuado, pro.Eliminado, 
                              mar.NombreMarca
                              FROM Gabinete r
@@ -196,12 +196,30 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 ProductosDal.cascada = true;
                 if (ProductosDal.Update(gabinete as Producto))
                 {
+                    List<Colores> coloresExistentes = ProductosDal.GetColores(gabinete.IdProducto);
+                    foreach (Colores item in gabinete.Colores)
+                    {
+                        if (coloresExistentes is null || !coloresExistentes.Exists(x => x.Nombre == item.Nombre))
+                        {
+                            ProductosDal.InsertarColores(gabinete.IdProducto, item.IdColor);
+                        }
+                    }
+                    if (!(coloresExistentes is null))
+                    {
+                        foreach (Colores item in coloresExistentes)
+                        {
+                            if (!gabinete.Colores.Exists(x => x.Nombre == item.Nombre)) // ROJO, BLANCO
+                            {
+                                ProductosDal.DeleteColorProduct(gabinete.IdProducto, item.IdColor);
+                            }
+                        }
+                    }
                     OperationsSql.CreateBasicCommandWithTransaction(queryString);
+                    OperationsSql.AddWithValueString(parameter: "IdProducto", gabinete.IdProducto);
                     OperationsSql.AddWithValueString(parameter: "Altura", gabinete.Altura);
                     OperationsSql.AddWithValueString(parameter: "Peso", gabinete.Peso);
                     OperationsSql.AddWithValueString(parameter: "Largo", gabinete.Largo);
                     OperationsSql.ExecuteBasicCommandWithTransaction();
-                    //UPDATE COLORES -> GABINETE 
                     OperationsSql.ExecuteTransactionCommit();
                     estado = true;
                 }
@@ -260,8 +278,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 Nombre = (string)data["Nombre"],
                 PrecioUnidad = (decimal)data["PrecioUnidad"],
                 Stock = (short)data["Stock"],
-                Eliminado = (bool)data["Eliminado"],
-                Tamano = (int)data["Tamano"]
+                Eliminado = (bool)data["Eliminado"]
             };
         }
     }

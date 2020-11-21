@@ -23,7 +23,7 @@ namespace WpfAppComputadoras.Administrator
     /// </summary>
     public partial class AdmiMenuView : UserControl
     {
-        private readonly ViewMain viewMain;
+        public readonly ViewMain viewMain;
         public AdmiMenuView(ViewMain viewMainObj, ERol eRol)
         {
             InitializeComponent();

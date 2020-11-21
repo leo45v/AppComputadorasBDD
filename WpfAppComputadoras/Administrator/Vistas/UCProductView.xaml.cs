@@ -75,7 +75,7 @@ namespace WpfAppComputadoras.Administrator.Vistas
         private ETipoProducto tipoProducto;
 
         private List<Marca> marcas;
-        private ViewMain mainView;
+        public ViewMain mainView;
 
         public UCProductView(ViewMain viewMain, ETipoProducto tipoProducto)
         {
@@ -459,13 +459,13 @@ namespace WpfAppComputadoras.Administrator.Vistas
             {
                 OpenFileDialog abrir_ = new OpenFileDialog
                 {
-                    Filter = "JPEG Files (*.jpeg)|*.jpeg|PNG Files (*.png)|*.png|JPG Files (*.jpg)|*.jpg|GIF Files (*.gif)|*.gif",
+                    Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png, *.gif) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png; *.gif",
                     InitialDirectory = lastDirectory,
                     Title = "Seleccione una imagen para cargar."
                 };
                 if (abrir_.ShowDialog() == true)
                 {
-                    lastDirectory = abrir_.InitialDirectory;
+                    lastDirectory = abrir_.FileName;
                     producto.Imagen = abrir_.FileName;
                     imgProduct.Source = ViewMain.LoadImage(abrir_.FileName);
                 }

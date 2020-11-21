@@ -20,6 +20,21 @@ using WpfAppComputadoras.ClienteView;
 
 namespace WpfAppComputadoras
 {
+    public class ComboColor : Colores
+    {
+        public Boolean Check_Status
+        {
+            get;
+            set;
+        }
+        private Brush myVar;
+
+        public Brush ColorPath
+        {
+            get { return new SolidColorBrush(Color.FromRgb(ColorRGB.R, ColorRGB.G, ColorRGB.B)); }
+            private set { myVar = value; }
+        }
+    }
     /// <summary>
     /// Interaction logic for ViewMain.xaml
     /// </summary>
@@ -45,6 +60,14 @@ namespace WpfAppComputadoras
                 marcas = value;
             }
         }
+        private List<Colores> colores;
+
+        public List<Colores> Colores
+        {
+            get { return colores; }
+            set { colores = value; }
+        }
+
 
         public ViewMain(MainWindow main, Guid idUsuario)
         {
@@ -66,6 +89,7 @@ namespace WpfAppComputadoras
                 txNombreView.Text = admin.Nombre + " " + admin.Apellido;
             }
             marcas = ProductosBrl.GetMarcas();
+            colores = ProductosBrl.GetColores();
             //ucProcesador.lblProduct.Content = "Procesadores";
             //ucProcesador.imgProduct.Source = LoadImage("assets/procesadores.jpg");
             //ucProcesador.imgProduct.Stretch = Stretch.Fill;

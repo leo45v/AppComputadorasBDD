@@ -38,12 +38,14 @@ namespace WpfAppComputadoras.Administrator.Vistas
 
         private void TxtTamano_TextChanged(object sender, TextChangedEventArgs e)
         {
-            throw new NotImplementedException();
+            if (!String.IsNullOrWhiteSpace(((TextBox)sender).Text))
+            { mainView.monitor.Tamano = int.Parse(((TextBox)sender).Text); }
         }
 
         private void TxtFrecuencia_TextChanged(object sender, TextChangedEventArgs e)
         {
-            throw new NotImplementedException();
+            if (!String.IsNullOrWhiteSpace(((TextBox)sender).Text))
+            { mainView.monitor.Frecuencia = int.Parse(((TextBox)sender).Text); }
         }
     }
 }

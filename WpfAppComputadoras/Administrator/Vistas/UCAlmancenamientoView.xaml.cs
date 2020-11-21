@@ -43,22 +43,26 @@ namespace WpfAppComputadoras.Administrator.Vistas
 
         private void TxtTipo_TextChanged(object sender, TextChangedEventArgs e)
         {
-            throw new NotImplementedException();
+            if (!String.IsNullOrWhiteSpace(((TextBox)sender).Text))
+            { mainView.almacenamiento.Tipo = ((TextBox)sender).Text; }
         }
 
         private void TxtLectura_TextChanged(object sender, TextChangedEventArgs e)
         {
-            throw new NotImplementedException();
+            if (!String.IsNullOrWhiteSpace(((TextBox)sender).Text))
+            { mainView.almacenamiento.Lectura = int.Parse(((TextBox)sender).Text); }
         }
 
         private void TxtEscritura_TextChanged(object sender, TextChangedEventArgs e)
         {
-            throw new NotImplementedException();
+            if (!String.IsNullOrWhiteSpace(((TextBox)sender).Text))
+            { mainView.almacenamiento.Escritura = int.Parse(((TextBox)sender).Text); }
         }
 
         private void TxtCapacidad_TextChanged(object sender, TextChangedEventArgs e)
         {
-            throw new NotImplementedException();
+            if (!String.IsNullOrWhiteSpace(((TextBox)sender).Text))
+            { mainView.almacenamiento.Capacidad = int.Parse(((TextBox)sender).Text); }
         }
     }
 }

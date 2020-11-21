@@ -114,6 +114,10 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common
                 command.Parameters.Clear();
             }
         }
+        public static void RemoveValueParams()
+        {
+            command.Parameters.Clear();
+        }
         private static void FillObjectWithProperty(ref object objectTo, string propertyName, object propertyValue)
         {
             Type tOb2 = objectTo.GetType();
