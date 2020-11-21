@@ -186,17 +186,18 @@ namespace WpfAppComputadoras
                         btn.Foreground = new SolidColorBrush(Color.FromRgb(0, 0, 0));
                         btn.Background = new SolidColorBrush(Color.FromRgb(255, 255, 255));
                     }
-                    btn.Click += ((s, ev) =>
-                    {
-                        int aux = int.Parse(((Button)s).Content.ToString()) - 1;
-                        if (aux == pagSelect)
-                        {
-                            return;
-                        }
-                        pagSelect = aux;
-                        admiMenuView.CargarProductos(ProductosBrl.GetWithRangeWithFillter(pagSelect * 10, 10, queryProductName, queryProductMarca, queryProductTipo));
-                        LoadButton(pagSelect > 0 ? pagSelect - 1 : 0, cant);
-                    });
+                    btn.Click += Btn_Click;
+                    //btn.Click += ((s, ev) =>
+                    //{
+                    //    int aux = int.Parse(((Button)s).Content.ToString()) - 1;
+                    //    if (aux == pagSelect)
+                    //    {
+                    //        return;
+                    //    }
+                    //    pagSelect = aux;
+                    //    admiMenuView.CargarProductos(ProductosBrl.GetWithRangeWithFillter(pagSelect * 10, 10, queryProductName, queryProductMarca, queryProductTipo));
+                    //    LoadButton(pagSelect > 0 ? pagSelect - 1 : 0, cant);
+                    //});
                     admiMenuView.stackPagina.Children.Add(btn);
                 }
                 else
@@ -211,6 +212,19 @@ namespace WpfAppComputadoras
                 }
             }
         }
+
+        private void Btn_Click(object sender, RoutedEventArgs e)
+        {
+            int aux = int.Parse(((Button)sender).Content.ToString()) - 1;
+            if (aux == pagSelect)
+            {
+                return;
+            }
+            pagSelect = aux;
+            admiMenuView.CargarProductos(ProductosBrl.GetWithRangeWithFillter(pagSelect * 10, 10, queryProductName, queryProductMarca, queryProductTipo));
+            LoadButton(pagSelect > 0 ? pagSelect - 1 : 0, buttonCant);
+        }
+
         public static int RedondeoSiempre(double number)
         {
             int n = (int)number;
