@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -26,13 +27,16 @@ namespace WpfAppComputadoras
     {
         private readonly MainWindow mainWindow;
 
-        private Rol rol = new Rol();
+        public Rol rol = new Rol();
         private Cliente cliente;
         private Administrador admin;
         public AdmiMenuView admiMenuView;
 
         private static List<Marca> marcas;
 
+        public string queryProductName = "";
+        public Marca queryProductMarca = null;
+        public ETipoProducto queryProductTipo = ETipoProducto.None;
         public static List<Marca> MarcaList
         {
             get { return marcas; }
@@ -58,7 +62,7 @@ namespace WpfAppComputadoras
             else if (rol.IdRol == ERol.Administrador)
             {
                 admin = AdministradorBrl.GetAdministradorByIdUsuario(idUsuario);
-                ConfigAdministradorInterface(admin.Usuario.Rol.IdRol);
+                LoadInterfaceAdmin(admin.Usuario.Rol.IdRol);
                 txNombreView.Text = admin.Nombre + " " + admin.Apellido;
             }
             marcas = ProductosBrl.GetMarcas();
@@ -67,66 +71,86 @@ namespace WpfAppComputadoras
             //ucProcesador.imgProduct.Stretch = Stretch.Fill;
         }
         public int pagSelect = 0;
-        public int maxProducts = 0;
+        //public int maxProducts = 0;
+        //private int myVar;
+
+        public int MaxProducts
+        {
+            get { return ProductosBrl.CountWithFilter(queryProductName, queryProductMarca, queryProductTipo); }
+            private set { }
+        }
+
         public void ConfigClienteInterface(ERol eRol)
         {
             UCTypeComputerView uCTypeComputerView = new UCTypeComputerView();
             gridAutomaitc.Children.Add(uCTypeComputerView);
         }
+        public int buttonCant = 0;
+        public int cantidad = 10;
+        private void LoadInterfaceAdmin(ERol eRol)
+        {
+            admiMenuView = new AdmiMenuView(this, eRol);
+            buttonCant = RedondeoSiempre((double)MaxProducts / cantidad);
+            gridAutomaitc.Children.Clear();
+            gridAutomaitc.Children.Add(admiMenuView);
+            ConfigAdministradorInterface(eRol);
+            admiMenuView.btnFirst.Click += BtnFirst_Click;
+            admiMenuView.btnLast.Click += BtnLast_Click;
+            admiMenuView.btnPrevious.Click += BtnPrevious_Click;
+            admiMenuView.btnNext.Click += BtnNext_Click;
+        }
+
+        private void BtnNext_Click(object sender, RoutedEventArgs e)
+        {
+            if (pagSelect == buttonCant - 1)
+            {
+                return;
+            }
+            pagSelect++;
+            LoadProductosAndLoadButtons();
+        }
+
+        private void BtnPrevious_Click(object sender, RoutedEventArgs e)
+        {
+            if (pagSelect == 0)
+            {
+                return;
+            }
+            pagSelect--;
+            LoadProductosAndLoadButtons();
+        }
+
+        private void BtnLast_Click(object sender, RoutedEventArgs e)
+        {
+            if (pagSelect == buttonCant - 1)
+            {
+                return;
+            }
+            pagSelect = buttonCant - 1;
+            LoadProductosAndLoadButtons();
+        }
+
+        private void BtnFirst_Click(object sender, RoutedEventArgs e)
+        {
+            if (pagSelect == 0)
+            {
+                return;
+            }
+            pagSelect = 0;
+            LoadProductosAndLoadButtons();
+        }
+        public void LoadProductosAndLoadButtons()
+        {
+            admiMenuView.CargarProductos(ProductosBrl.GetWithRangeWithFillter(pagSelect * 10, 10, queryProductName, queryProductMarca, queryProductTipo));
+            LoadButton(pagSelect > 0 ? pagSelect - 1 : 0, buttonCant);
+        }
         public void ConfigAdministradorInterface(ERol eRol)
         {
             if (eRol == ERol.Administrador)
             {
-                int init = 0;
-                int cantidad = 10;
-                maxProducts = ProductosBrl.Count;
-                int buttonCant = RedondeoSiempre((double)maxProducts / cantidad);
-                List<Producto> productos = ProductosBrl.GetWithRange(init, cantidad);
-                admiMenuView = new AdmiMenuView(this, eRol);
-                gridAutomaitc.Children.Clear();
-                gridAutomaitc.Children.Add(admiMenuView);
-                admiMenuView.CargarProductos(productos);
-                admiMenuView.btnFirst.Click += ((s, ev) =>
-                {
-                    if (pagSelect == 0)
-                    {
-                        return;
-                    }
-                    pagSelect = 0;
-                    admiMenuView.CargarProductos(ProductosBrl.GetWithRange(0, 10));
-                    LoadButton(0, buttonCant);
-                });
-                admiMenuView.btnLast.Click += ((s, ev) =>
-                {
-                    if (pagSelect == buttonCant - 1)
-                    {
-                        return;
-                    }
-                    pagSelect = buttonCant - 1;
-                    admiMenuView.CargarProductos(ProductosBrl.GetWithRange((buttonCant - 1) * 10, 10));
-                    LoadButton(buttonCant - 1, buttonCant);
-                });
-                admiMenuView.btnPrevious.Click += ((s, ev) =>
-                {
-                    if (pagSelect == 0)
-                    {
-                        return;
-                    }
-                    pagSelect--;
-                    admiMenuView.CargarProductos(ProductosBrl.GetWithRange(pagSelect * 10, 10));
-                    LoadButton(pagSelect > 0 ? pagSelect - 1 : 0, buttonCant);
-                });
-                admiMenuView.btnNext.Click += ((s, ev) =>
-                {
-                    if (pagSelect == buttonCant - 1)
-                    {
-                        return;
-                    }
-                    pagSelect++;
-                    admiMenuView.CargarProductos(ProductosBrl.GetWithRange(pagSelect * 10, 10));
-                    LoadButton(pagSelect > 0 ? pagSelect - 1 : 0, buttonCant);
-                });
-                LoadButton(pagSelect, buttonCant);
+                buttonCant = RedondeoSiempre((double)MaxProducts / cantidad);
+                //pagSelect = 0;
+                LoadProductosAndLoadButtons();
             }
         }
         public void LoadButton(int start, int cant)
@@ -170,7 +194,7 @@ namespace WpfAppComputadoras
                             return;
                         }
                         pagSelect = aux;
-                        admiMenuView.CargarProductos(ProductosBrl.GetWithRange(pagSelect * 10, 10));
+                        admiMenuView.CargarProductos(ProductosBrl.GetWithRangeWithFillter(pagSelect * 10, 10, queryProductName, queryProductMarca, queryProductTipo));
                         LoadButton(pagSelect > 0 ? pagSelect - 1 : 0, cant);
                     });
                     admiMenuView.stackPagina.Children.Add(btn);

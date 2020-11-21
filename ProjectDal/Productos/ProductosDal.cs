@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Enums;
 
 namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDal.Personas.Productos
 {
@@ -42,7 +43,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
         }
         public static List<Producto> GetWithRange(int inicio, int cantidad = 10)
         {
-            List<Producto> rams = null;
+            List<Producto> productos = null;
             string query = @"SELECT pro.IdProducto, pro.Eliminado, 
                              pro.PrecioUnidad, pro.Imagen, pro.Nombre, pro.Stock, pro.IdMarca, pro.Descontinuado,
                              mar.NombreMarca
@@ -59,10 +60,10 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 List<Dictionary<string, object>> data = OperationsSql.ExecuteReaderMany();
                 if (data != null)
                 {
-                    rams = new List<Producto>();
+                    productos = new List<Producto>();
                     foreach (Dictionary<string, object> item in data)
                     {
-                        rams.Add(ProductosDal.Dictionary_A_Producto(item));
+                        productos.Add(ProductosDal.Dictionary_A_Producto(item));
                     }
                 }
                 OperationsSql.ExecuteTransactionCommit();
@@ -72,7 +73,57 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 throw;
             }
             finally { OperationsSql.CloseConnection(); }
-            return rams;
+            return productos;
+        }
+        public static List<Producto> GetWithRangeWithFillter(int inicio, int cantidad, string productName, Marca marca, ETipoProducto tipoProduct)
+        {
+            List<Producto> productos = null;
+            string query = @"SELECT pro.IdProducto, pro.Eliminado, 
+                             pro.PrecioUnidad, pro.Imagen, pro.Nombre, pro.Stock, pro.IdMarca, pro.Descontinuado,
+                             mar.NombreMarca
+                             FROM Producto pro 
+                             INNER JOIN Marca mar ON mar.IdMarca = pro.IdMarca 
+                             INNER JOIN ProductoTipo pt ON pt.IdProducto = pro.IdProducto
+                             WHERE pro.Eliminado = 0 ";
+            if (!(productName is null))
+            {
+                query += @" AND pro.Nombre LIKE '%' + @NombreProducto + '%' ";
+                OperationsSql.AddWithValueString("NombreProducto", productName);
+            }
+            if (!(marca is null))
+            {
+                query += @" AND pro.IdMarca = @IdMarca ";
+                OperationsSql.AddWithValueString("IdMarca", marca.IdMarca);
+            }
+            if (tipoProduct != ETipoProducto.None)
+            {
+                query += @" AND pt.Tipo = @TipoProducto ";
+                OperationsSql.AddWithValueString("TipoProducto", tipoProduct.ToString());
+            }
+            query += @" ORDER BY pro.Nombre ASC
+                             OFFSET " + inicio + @" ROWS
+                             FETCH NEXT " + cantidad + @" ROWS ONLY";
+            try
+            {
+                OperationsSql.OpenConnection();
+                OperationsSql.CreateBasicCommandWithTransaction(query);
+                List<Dictionary<string, object>> data = OperationsSql.ExecuteReaderMany();
+                if (data != null)
+                {
+                    productos = new List<Producto>();
+                    foreach (Dictionary<string, object> item in data)
+                    {
+                        productos.Add(ProductosDal.Dictionary_A_Producto(item));
+                    }
+                }
+                OperationsSql.ExecuteTransactionCommit();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally { OperationsSql.CloseConnection(); }
+            return productos;
         }
         public static bool Update(Producto producto)
         {
@@ -134,23 +185,46 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             finally { OperationsSql.CloseConnection(); }
             return cantidad;
         }
-        public static Producto Dictionary_A_Producto(Dictionary<string, object> data)
+        public static int CountWithFilter(string productName, Marca marca, ETipoProducto tipoProduct)
         {
-            return new Producto()
+            int cantidad = 0;
+            string query = @"SELECT COUNT(*) as Cantidad
+                             FROM Producto pro
+                             INNER JOIN ProductoTipo pt ON pt.IdProducto = pro.IdProducto 
+                             WHERE pro.Eliminado = 0";
+            if (!(String.IsNullOrWhiteSpace(productName)))
             {
-                IdProducto = (Guid)data["IdProducto"],
-                Descontinuado = (bool)data["Descontinuado"],
-                Imagen = (string)data["Imagen"],
-                Marca = new Marca()
+                query += @" AND pro.Nombre LIKE '%' + @NombreProducto + '%' ";
+                OperationsSql.AddWithValueString("NombreProducto", productName);
+            }
+            if (!(marca is null))
+            {
+                query += @" AND pro.IdMarca = @IdMarca ";
+                OperationsSql.AddWithValueString("IdMarca", marca.IdMarca);
+            }
+            if (tipoProduct != ETipoProducto.None)
+            {
+                query += @" AND pt.Tipo = @TipoProducto ";
+                OperationsSql.AddWithValueString("TipoProducto", tipoProduct.ToString());
+            }
+            try
+            {
+                OperationsSql.OpenConnection();
+                OperationsSql.CreateBasicCommandWithTransaction(query);
+                Dictionary<string, object> data = OperationsSql.ExecuteReader();
+                if (data != null)
                 {
-                    IdMarca = (byte)data["IdMarca"],
-                    NombreMarca = (string)data["NombreMarca"]
-                },
-                Nombre = (string)data["Nombre"],
-                PrecioUnidad = (decimal)data["PrecioUnidad"],
-                Stock = (short)data["Stock"],
-                Eliminado = (bool)data["Eliminado"]
-            };
+                    cantidad = (int)data["Cantidad"];
+
+                }
+                OperationsSql.ExecuteTransactionCommit();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally { OperationsSql.CloseConnection(); }
+            return cantidad;
         }
         public static bool Delete(Guid idProducto)
         {
@@ -175,9 +249,9 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             return estado;
         }
-        public static string GetType(Guid idProducto)
+        public static ETipoProducto GetType(Guid idProducto)
         {
-            string tipo = null;
+            ETipoProducto tipo = ETipoProducto.None;
             string query = @"SELECT Tipo
                              FROM ProductoTipo pro
                              WHERE pro.IdProducto = @IdProducto";
@@ -189,7 +263,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 Dictionary<string, object> data = OperationsSql.ExecuteReader();
                 if (data != null)
                 {
-                    tipo = (string)data["Tipo"];
+                    tipo = (ETipoProducto)Enum.Parse(typeof(ETipoProducto), (string)data["Tipo"]);
 
                 }
                 OperationsSql.ExecuteTransactionCommit();
@@ -310,5 +384,23 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
         //    }
         //    return estado;
         //}
+        public static Producto Dictionary_A_Producto(Dictionary<string, object> data)
+        {
+            return new Producto()
+            {
+                IdProducto = (Guid)data["IdProducto"],
+                Descontinuado = (bool)data["Descontinuado"],
+                Imagen = (string)data["Imagen"],
+                Marca = new Marca()
+                {
+                    IdMarca = (byte)data["IdMarca"],
+                    NombreMarca = (string)data["NombreMarca"]
+                },
+                Nombre = (string)data["Nombre"],
+                PrecioUnidad = (decimal)data["PrecioUnidad"],
+                Stock = (short)data["Stock"],
+                Eliminado = (bool)data["Eliminado"]
+            };
+        }
     }
 }

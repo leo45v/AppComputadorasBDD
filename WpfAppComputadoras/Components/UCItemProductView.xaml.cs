@@ -23,57 +23,78 @@ namespace WpfAppComputadoras.Components
     /// </summary>
     public partial class UCItemProductView : UserControl
     {
-        private Guid idProducto;
+        private readonly ViewMain mainView;
         public UCProductView uCProcesadorView;
-        public UCItemProductView()
+        private readonly Producto producto;
+        public UCItemProductView(ViewMain viewMain, Producto producto)
         {
             InitializeComponent();
+            mainView = viewMain;
+            this.producto = producto;
+            LoadProduct(producto);
+            btnEliminar.Click += BtnEliminar_Click;
+            btnEditar.Click += BtnEditar_Click;
+            btnVer.Click += BtnVer_Click;
         }
 
-        public void LoadProduct(Producto producto)
+        private void BtnVer_Click(object sender, RoutedEventArgs e)
         {
-            imgProducto.Source = ViewMain.LoadImage(producto.Imagen);
-            nombreProducto.Text = producto.Nombre;
-            marcaProducto.Text = producto.Marca.NombreMarca;
-            tipoProducto.Text = ProductosBrl.GetType(producto.IdProducto);
-            //if (producto.Descontinuado)
-            //{
-            //    descontinuadoProducto.Foreground = new SolidColorBrush(Color.FromRgb(216, 48, 163));
-            //}
-            //else
-            //{
-            //    descontinuadoProducto.Foreground = new SolidColorBrush(Color.FromRgb(24, 114, 32));
-            //}
-            idProducto = producto.IdProducto;
-        }
-
-        public void CreatePageFromProduct(string tipo, Guid idProducto)
-        {
-            if (tipo == "Procesador")
+            ETipoProducto tipo = ProductosBrl.GetType(producto.IdProducto);
+            CreatePageFromProduct(tipo, producto.IdProducto);
+            if (!(uCProcesadorView is null))
             {
-                uCProcesadorView = new UCProductView(idProducto, ETipoProducto.Procesador);
-            }
-            else if (tipo == "Ram")
-            {
-                uCProcesadorView = new UCProductView(idProducto, ETipoProducto.Ram);
+                uCProcesadorView.Height = 400;
+                uCProcesadorView.Width = 640;
+                uCProcesadorView.ModoVista();
+                uCProcesadorView.ShowDialog();
             }
         }
 
-        private void btnEliminar_Click(object sender, RoutedEventArgs e)
+        private void BtnEditar_Click(object sender, RoutedEventArgs e)
+        {
+            ETipoProducto tipo = ProductosBrl.GetType(producto.IdProducto);
+            CreatePageFromProduct(tipo, producto.IdProducto);
+            if (!(uCProcesadorView is null))
+            {
+                uCProcesadorView.ShowDialog();
+            }
+        }
+
+        private void BtnEliminar_Click(object sender, RoutedEventArgs e)
         {
             MessageBoxResult resultOption = MessageBox.Show("Estas Seguro de Eliminar el Producto?", "", MessageBoxButton.YesNo, MessageBoxImage.Warning);
             if (resultOption == MessageBoxResult.Yes)
             {
-                if (ProductosBrl.Delete(idProducto))
+                if (ProductosBrl.Delete(producto.IdProducto))
                 {
                     MessageBox.Show("Producto Eliminado", "Eliminado", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    int auxPag = mainView.pagSelect;
+                    if (auxPag >= mainView.buttonCant)
+                    {
+                        auxPag--;
+                    }
+                    mainView.pagSelect = auxPag;
+                    mainView.ConfigAdministradorInterface(mainView.rol.IdRol);
                 }
                 else
                 {
                     MessageBox.Show("Error al Eliminar el producto", "", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-
+        }
+        public void LoadProduct(Producto producto)
+        {
+            imgProducto.Source = ViewMain.LoadImage(producto.Imagen);
+            nombreProducto.Text = producto.Nombre;
+            marcaProducto.Text = producto.Marca.NombreMarca;
+            tipoProducto.Text = ProductosBrl.GetType(producto.IdProducto).ToString();
+        }
+        public void CreatePageFromProduct(ETipoProducto tipo, Guid idProducto)
+        {
+            if (tipo != ETipoProducto.None)
+            {
+                uCProcesadorView = new UCProductView(mainView, idProducto, tipo);
+            }
         }
     }
 }

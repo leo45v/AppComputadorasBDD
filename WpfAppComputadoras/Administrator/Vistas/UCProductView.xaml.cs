@@ -22,22 +22,65 @@ namespace WpfAppComputadoras.Administrator.Vistas
     /// </summary>
     public partial class UCProductView : Window
     {
-        public Almacenamiento almacenamiento = new Almacenamiento();
-        public Fuente fuente = new Fuente();
-        public Gabinete gabinete = new Gabinete();
-        public Monitor monitor = new Monitor();
-        public PlacaBase placaBase = new PlacaBase();
-        public Procesador procesador = new Procesador();
+        public Almacenamiento almacenamiento = new Almacenamiento()
+        {
+            Marca = new Marca(),
+            Descontinuado = false,
+            Eliminado = false,
+        };
+        public Fuente fuente = new Fuente()
+        {
+            Marca = new Marca(),
+            Descontinuado = false,
+            Eliminado = false,
+        };
+        public Gabinete gabinete = new Gabinete()
+        {
+            Marca = new Marca(),
+            Descontinuado = false,
+            Eliminado = false,
+        };
+        public Monitor monitor = new Monitor()
+        {
+            Marca = new Marca(),
+            Descontinuado = false,
+            Eliminado = false,
+        };
+        public PlacaBase placaBase = new PlacaBase()
+        {
+            Marca = new Marca(),
+            Descontinuado = false,
+            Eliminado = false,
+        };
+        public Procesador procesador = new Procesador()
+        {
+            Marca = new Marca(),
+            Descontinuado = false,
+            Eliminado = false,
+        };
         public Ram ram = new Ram();
-        public Grafica tarjetaGrafica = new Grafica();
+        public Grafica tarjetaGrafica = new Grafica()
+        {
+            Marca = new Marca(),
+            Descontinuado = false,
+            Eliminado = false,
+        };
 
-        private Producto producto = new Producto();
+        private Producto producto = new Producto()
+        {
+            Marca = new Marca(),
+            Descontinuado = false,
+            Eliminado = false,
+        };
         private ETipoProducto tipoProducto;
 
         private List<Marca> marcas;
-        public UCProductView(ETipoProducto tipoProducto)
+        private ViewMain mainView;
+
+        public UCProductView(ViewMain viewMain, ETipoProducto tipoProducto)
         {
             InitializeComponent();
+            mainView = viewMain;
             LoadComboMarcas();
             btnAction.Content = "Insertar";
             containerTipo.Children.Clear();
@@ -65,9 +108,10 @@ namespace WpfAppComputadoras.Administrator.Vistas
             if (noVista) { btnAction.Visibility = Visibility.Visible; btnLoadImg.Visibility = Visibility.Visible; }
             else { btnAction.Visibility = Visibility.Hidden; btnLoadImg.Visibility = Visibility.Hidden; }
         }
-        public UCProductView(Guid idProducto, ETipoProducto tipoProducto)
+        public UCProductView(ViewMain viewMain, Guid idProducto, ETipoProducto tipoProducto)
         {
             InitializeComponent();
+            mainView = viewMain;
             LoadComboMarcas();
             btnAction.Content = "Actualizar";
             containerTipo.Children.Clear();
@@ -192,10 +236,16 @@ namespace WpfAppComputadoras.Administrator.Vistas
         private void BtnAction_Click(object sender, RoutedEventArgs e)
         {
             bool estado = false;
-
+            if (btnAction.Content.ToString() == "Insertar")
+            {
+                if (producto.IdProducto == Guid.Empty)
+                {
+                    producto.IdProducto = Guid.NewGuid();
+                }
+            }
             if (tipoProducto == ETipoProducto.Almacenamiento)
             {
-
+                almacenamiento.IdProducto = producto.IdProducto;
                 almacenamiento.Nombre = producto.Nombre;
                 almacenamiento.Imagen = producto.Imagen;
                 almacenamiento.Marca.IdMarca = producto.Marca.IdMarca;
@@ -212,6 +262,7 @@ namespace WpfAppComputadoras.Administrator.Vistas
             }
             else if (tipoProducto == ETipoProducto.Fuente)
             {
+                fuente.IdProducto = producto.IdProducto;
                 fuente.Nombre = producto.Nombre;
                 fuente.Imagen = producto.Imagen;
                 fuente.Marca.IdMarca = producto.Marca.IdMarca;
@@ -228,6 +279,7 @@ namespace WpfAppComputadoras.Administrator.Vistas
             }
             else if (tipoProducto == ETipoProducto.Gabinete)
             {
+                gabinete.IdProducto = producto.IdProducto;
                 gabinete.Nombre = producto.Nombre;
                 gabinete.Imagen = producto.Imagen;
                 gabinete.Marca.IdMarca = producto.Marca.IdMarca;
@@ -244,6 +296,7 @@ namespace WpfAppComputadoras.Administrator.Vistas
             }
             else if (tipoProducto == ETipoProducto.Monitor)
             {
+                monitor.IdProducto = producto.IdProducto;
                 monitor.Nombre = producto.Nombre;
                 monitor.Imagen = producto.Imagen;
                 monitor.Marca.IdMarca = producto.Marca.IdMarca;
@@ -260,6 +313,7 @@ namespace WpfAppComputadoras.Administrator.Vistas
             }
             else if (tipoProducto == ETipoProducto.PlacaBase)
             {
+                placaBase.IdProducto = producto.IdProducto;
                 placaBase.Nombre = producto.Nombre;
                 placaBase.Imagen = producto.Imagen;
                 placaBase.Marca.IdMarca = producto.Marca.IdMarca;
@@ -276,6 +330,7 @@ namespace WpfAppComputadoras.Administrator.Vistas
             }
             else if (tipoProducto == ETipoProducto.Procesador)
             {
+                procesador.IdProducto = producto.IdProducto;
                 procesador.Nombre = producto.Nombre;
                 procesador.Imagen = producto.Imagen;
                 procesador.Marca.IdMarca = producto.Marca.IdMarca;
@@ -292,6 +347,7 @@ namespace WpfAppComputadoras.Administrator.Vistas
             }
             else if (tipoProducto == ETipoProducto.Ram)
             {
+                ram.IdProducto = producto.IdProducto;
                 ram.Nombre = producto.Nombre;
                 ram.Imagen = producto.Imagen;
                 ram.Marca.IdMarca = producto.Marca.IdMarca;
@@ -308,6 +364,7 @@ namespace WpfAppComputadoras.Administrator.Vistas
             }
             else if (tipoProducto == ETipoProducto.TarjetaGrafica)
             {
+                tarjetaGrafica.IdProducto = producto.IdProducto;
                 tarjetaGrafica.Nombre = producto.Nombre;
                 tarjetaGrafica.Imagen = producto.Imagen;
                 tarjetaGrafica.Marca.IdMarca = producto.Marca.IdMarca;
@@ -322,13 +379,20 @@ namespace WpfAppComputadoras.Administrator.Vistas
                     estado = ProductosBrl.TarjetaGrafica.Insert(tarjetaGrafica);
                 }
             }
-
             if (estado)
             {
-                MessageBox.Show("El Procesador se modifico con exito!!", "", MessageBoxButton.OK, MessageBoxImage.Information);
+                if (btnAction.Content.ToString() == "Actualizar")
+                {
+                    MessageBox.Show("El " + tipoProducto.ToString() + " se Modifico con exito!!", "", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else if (btnAction.Content.ToString() == "Insertar")
+                {
+                    MessageBox.Show("El " + tipoProducto.ToString() + " se Inserto con exito!!", "", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+
+                mainView.ConfigAdministradorInterface(mainView.rol.IdRol);
                 this.Close();
             }
-
         }
 
         private void Window_Initialized(object sender, EventArgs e)
@@ -388,6 +452,7 @@ namespace WpfAppComputadoras.Administrator.Vistas
             { e.Handled = true; }
         }
 
+        private string lastDirectory = @"C:\";
         private void btnCargarImagen(object sender, RoutedEventArgs e)
         {
             try
@@ -395,11 +460,12 @@ namespace WpfAppComputadoras.Administrator.Vistas
                 OpenFileDialog abrir_ = new OpenFileDialog
                 {
                     Filter = "JPEG Files (*.jpeg)|*.jpeg|PNG Files (*.png)|*.png|JPG Files (*.jpg)|*.jpg|GIF Files (*.gif)|*.gif",
-                    InitialDirectory = @"C:\",
+                    InitialDirectory = lastDirectory,
                     Title = "Seleccione una imagen para cargar."
                 };
                 if (abrir_.ShowDialog() == true)
                 {
+                    lastDirectory = abrir_.InitialDirectory;
                     producto.Imagen = abrir_.FileName;
                     imgProduct.Source = ViewMain.LoadImage(abrir_.FileName);
                 }

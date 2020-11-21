@@ -6,6 +6,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Enums
 {
     public enum ETipoProducto
     {
+        None = -1,
         Almacenamiento = 0,
         Fuente = 1,
         Gabinete = 2,

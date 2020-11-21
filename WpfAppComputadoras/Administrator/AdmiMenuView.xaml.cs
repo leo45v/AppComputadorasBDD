@@ -23,83 +23,25 @@ namespace WpfAppComputadoras.Administrator
     /// </summary>
     public partial class AdmiMenuView : UserControl
     {
-        private ViewMain viewMain;
-        private ERol rol;
-        List<UCItemProductView> uCItemProductViews = new List<UCItemProductView>();
+        private readonly ViewMain viewMain;
         public AdmiMenuView(ViewMain viewMainObj, ERol eRol)
         {
             InitializeComponent();
             viewMain = viewMainObj;
-            rol = eRol;
         }
         public void CargarProductos(List<Producto> productos)
         {
             lstProductos.Children.Clear();
-            uCItemProductViews.Clear();
-            foreach (Producto producto in productos)
+            if (!(productos is null))
             {
-                UCItemProductView uCItemProductView = new UCItemProductView();
-                uCItemProductView.LoadProduct(producto);
-                uCItemProductView.Height = 37.5;
-                uCItemProductView.btnEliminar.Click += ((s, e) =>
+                foreach (Producto producto in productos)
                 {
-                    MessageBoxResult resultOption = MessageBox.Show("Estas Seguro de Eliminar el Producto?", "", MessageBoxButton.YesNo, MessageBoxImage.Warning);
-                    if (resultOption == MessageBoxResult.Yes)
+                    UCItemProductView uCItemProductView = new UCItemProductView(viewMain, producto)
                     {
-                        if (ProductosBrl.Delete(producto.IdProducto))
-                        {
-                            MessageBox.Show("Producto Eliminado", "Eliminado", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-                            int auxPag = viewMain.pagSelect;
-                            viewMain.ConfigAdministradorInterface(rol);
-                            int buttonCant = ViewMain.RedondeoSiempre((double)viewMain.maxProducts / 10);
-                            if (auxPag >= buttonCant)
-                            {
-                                auxPag--;
-                            }
-                            viewMain.pagSelect = auxPag;
-                            viewMain.LoadButton(auxPag, buttonCant);
-                            viewMain.admiMenuView.CargarProductos(ProductosBrl.GetWithRange(auxPag * 10, 10));
-                        }
-                        else
-                        {
-                            MessageBox.Show("Error al Eliminar el producto", "", MessageBoxButton.OK, MessageBoxImage.Error);
-                        }
-                    }
-                });
-                uCItemProductView.btnEditar.Click += ((s, e) =>
-                {
-                    string tipo = ProductosBrl.GetType(producto.IdProducto);
-                    uCItemProductView.CreatePageFromProduct(tipo, producto.IdProducto);
-                    if (!(uCItemProductView.uCProcesadorView is null))
-                    {
-                        uCItemProductView.uCProcesadorView.btnAction.Click += ((s, e) =>
-                        {
-                            if (uCItemProductView.uCProcesadorView.btnAction.Content.ToString() == "Actualizar" && ProductosBrl.Procesador.Update(uCItemProductView.uCProcesadorView.procesador))
-                            {
-                                int buttonCant = ViewMain.RedondeoSiempre((double)viewMain.maxProducts / 10);
-                                MessageBox.Show("El Procesador se modifico con exito!!", "", MessageBoxButton.OK, MessageBoxImage.Information);
-                                uCItemProductView.uCProcesadorView.Close();
-                                viewMain.LoadButton(viewMain.pagSelect, buttonCant);
-                                viewMain.admiMenuView.CargarProductos(ProductosBrl.GetWithRange(viewMain.pagSelect * 10, 10));
-                            }
-                        });
-                        uCItemProductView.uCProcesadorView.ShowDialog();
-                    }
-                });
-                uCItemProductView.btnVer.Click += ((object s, RoutedEventArgs e) =>
-                {
-                    string tipo = ProductosBrl.GetType(producto.IdProducto);
-                    uCItemProductView.CreatePageFromProduct(tipo, producto.IdProducto);
-                    if (!(uCItemProductView.uCProcesadorView is null))
-                    {
-                        uCItemProductView.uCProcesadorView.Height = 400;
-                        uCItemProductView.uCProcesadorView.Width = 640;
-                        uCItemProductView.uCProcesadorView.ModoVista();
-                        uCItemProductView.uCProcesadorView.ShowDialog();
-                    }
-                });
-                uCItemProductViews.Add(uCItemProductView);
-                lstProductos.Children.Add(uCItemProductView);
+                        Height = 37.5
+                    };
+                    lstProductos.Children.Add(uCItemProductView);
+                }
             }
         }
 
@@ -121,7 +63,7 @@ namespace WpfAppComputadoras.Administrator
         {
             if (cbTipoProducto.SelectedIndex > 0)
             {
-                UCProductView uCInsertProductView = new UCProductView((ETipoProducto)(cbTipoProducto.SelectedIndex - 1));
+                UCProductView uCInsertProductView = new UCProductView(viewMain, (ETipoProducto)(cbTipoProducto.SelectedIndex - 1));
                 if (!(uCInsertProductView is null))
                 {
                     uCInsertProductView.Height = 400;
@@ -129,6 +71,24 @@ namespace WpfAppComputadoras.Administrator
                     uCInsertProductView.ShowDialog();
                 }
             }
+        }
+
+        private void TxtSearch_Changed(object sender, TextChangedEventArgs e)
+        {
+            if (String.IsNullOrWhiteSpace(txtSearch.Text))
+            {
+                viewMain.queryProductName = null;
+            }
+            else
+            {
+                viewMain.queryProductName = txtSearch.Text;
+            }
+        }
+
+        private void Btn_Buscar_Click(object sender, RoutedEventArgs e)
+        {
+            viewMain.pagSelect = 0;
+            viewMain.ConfigAdministradorInterface(viewMain.rol.IdRol);
         }
     }
 }
