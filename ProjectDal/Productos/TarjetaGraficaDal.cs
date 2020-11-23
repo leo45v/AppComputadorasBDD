@@ -9,8 +9,8 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
         public static bool Insertar(Grafica tarjetaGrafica)
         {
             bool estado = false;
-            string query = @"INSERT INTO tarjetaGrafica (IdProducto, Vram, FrecuenciaBase, FrecuenciaTurbo, TipoMemoria)
-                                       Values(@IdProducto, @Vram, @FrecuenciaBase, @FrecuenciaTurbo, @TipoMemoria)";
+            string query = @"INSERT INTO tarjetaGrafica (IdProducto, Vram, FrecuenciaBase, FrecuenciaTurbo, TipoMemoria, Consumo)
+                                       Values(@IdProducto, @Vram, @FrecuenciaBase, @FrecuenciaTurbo, @TipoMemoria, @Consumo)";
             try
             {
                 OperationsSql.OpenConnection();
@@ -24,6 +24,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                     OperationsSql.AddWithValueString("FrecuenciaBase", tarjetaGrafica.FrecuenciaBase);
                     OperationsSql.AddWithValueString("FrecuenciaTurbo", tarjetaGrafica.FrecuenciaTurbo);
                     OperationsSql.AddWithValueString("TipoMemoria", tarjetaGrafica.TipoMemoria);
+                    OperationsSql.AddWithValueString("Consumo", tarjetaGrafica.Consumo);
                     OperationsSql.ExecuteBasicCommandWithTransaction();
                     OperationsSql.ExecuteTransactionCommit();
                 }
@@ -42,7 +43,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
         public static Grafica Get(Guid idTarjetaGrafica)
         {
             Grafica tarjetaGrafica = null;
-            string query = @"SELECT r.IdProducto, r.Vram, r.FrecuenciaBase, r.FrecuenciaTurbo, r.TipoMemoria,   
+            string query = @"SELECT r.IdProducto, r.Vram, r.FrecuenciaBase, r.FrecuenciaTurbo, r.TipoMemoria, r.Consumo,   
                              pro.PrecioUnidad, pro.Imagen, pro.Nombre, pro.Stock, pro.IdMarca, pro.Descontinuado, pro.Eliminado, 
                              mar.NombreMarca
                              FROM TarjetaGrafica r
@@ -71,7 +72,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
         public static List<Grafica> GetAll()
         {
             List<Grafica> graficas = null;
-            string query = @"SELECT r.IdProducto, r.Vram, r.FrecuenciaBase, r.FrecuenciaTurbo, r.TipoMemoria,   
+            string query = @"SELECT r.IdProducto, r.Vram, r.FrecuenciaBase, r.FrecuenciaTurbo, r.TipoMemoria, r.Consumo,    
                              pro.PrecioUnidad, pro.Imagen, pro.Nombre, pro.Stock, pro.IdMarca, pro.Descontinuado, pro.Eliminado, 
                              mar.NombreMarca
                              FROM TarjetaGrafica r
@@ -183,7 +184,8 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                                    SET Vram = @Vram, 
                                        FrecuenciaBase = @FrecuenciaBase, 
                                        FrecuenciaTurbo = @FrecuenciaTurbo,  
-                                       TipoMemoria = @TipoMemoria   
+                                       TipoMemoria = @TipoMemoria,
+                                       Consumo = @Consumo
                                    WHERE IdProducto = @IdProducto";
             try
             {
@@ -196,6 +198,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                     OperationsSql.AddWithValueString(parameter: "FrecuenciaBase", tarjetaGrafica.FrecuenciaBase);
                     OperationsSql.AddWithValueString(parameter: "FrecuenciaTurbo", tarjetaGrafica.FrecuenciaTurbo);
                     OperationsSql.AddWithValueString(parameter: "TipoMemoria", tarjetaGrafica.TipoMemoria);
+                    OperationsSql.AddWithValueString(parameter: "Consumo", tarjetaGrafica.Consumo);
                     OperationsSql.ExecuteBasicCommandWithTransaction();
                     OperationsSql.ExecuteTransactionCommit();
                     estado = true;
@@ -257,7 +260,8 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 Stock = (short)data["Stock"],
                 Eliminado = (bool)data["Eliminado"],
                 FrecuenciaTurbo = (int)data["FrecuenciaTurbo"],
-                TipoMemoria = (string)data["TipoMemoria"]
+                TipoMemoria = (string)data["TipoMemoria"],
+                Consumo = (int)data["Consumo"]
             };
         }
     }

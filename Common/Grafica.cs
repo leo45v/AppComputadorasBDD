@@ -12,5 +12,6 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common
 
         public int FrecuenciaTurbo { get; set; }
         public string TipoMemoria { get; set; }
+        public int Consumo { get; set; }
     }
 }

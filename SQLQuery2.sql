@@ -80,3 +80,6 @@ ALTER TABLE PlacaBase
 ADD
 CONSTRAINT [FK_PlacaBase_SocketProcesador] FOREIGN KEY ([SoporteProcesador]) REFERENCES [dbo].[SocketProcesador] ([IdSocket]) ON DELETE CASCADE ON UPDATE CASCADE
 GO
+
+ALTER TABLE TarjetaGrafica
+ADD Consumo INT NOT NULL DEFAULT 0;

@@ -22,7 +22,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                     OperationsSql.CreateBasicCommandWithTransaction(query);
                     OperationsSql.AddWithValueString("IdProducto", fuente.IdProducto);
                     OperationsSql.AddWithValueString("Potencia", fuente.Potencia);
-                    OperationsSql.AddWithValueString("Certificacion", fuente.Certificacion);
+                    OperationsSql.AddWithValueString("Certificacion", (int)fuente.Certificacion);
                     OperationsSql.ExecuteBasicCommandWithTransaction();
                     OperationsSql.ExecuteTransactionCommit();
                 }

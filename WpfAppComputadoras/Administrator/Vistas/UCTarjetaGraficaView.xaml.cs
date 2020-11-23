@@ -18,6 +18,7 @@ namespace WpfAppComputadoras.Administrator.Vistas
             txtFrecuenciaTurbo.Text = uCProductView.tarjetaGrafica.FrecuenciaTurbo.ToString();
             txtTipoMemoria.Text = uCProductView.tarjetaGrafica.TipoMemoria;
             txtVram.Text = uCProductView.tarjetaGrafica.Vram.ToString();
+            txtConsumo.Text = uCProductView.tarjetaGrafica.Consumo.ToString();
         }
         private void ModoVista(bool activo)
         {
@@ -25,6 +26,7 @@ namespace WpfAppComputadoras.Administrator.Vistas
             txtFrecuenciaTurbo.IsEnabled = !activo;
             txtTipoMemoria.IsEnabled = !activo;
             txtVram.IsEnabled = !activo;
+            txtConsumo.IsEnabled = !activo;
         }
         private void UserControl_Initialized(object sender, EventArgs e)
         {
@@ -32,6 +34,13 @@ namespace WpfAppComputadoras.Administrator.Vistas
             txtFrecuenciaTurbo.TextChanged += TxtFrecuenciaTurbo_TextChanged;
             txtTipoMemoria.TextChanged += TxtTipoMemoria_TextChanged;
             txtVram.TextChanged += TxtVram_TextChanged;
+            txtConsumo.TextChanged += TxtConsumo_TextChanged;
+        }
+
+        private void TxtConsumo_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (!String.IsNullOrWhiteSpace(((TextBox)sender).Text))
+            { mainView.tarjetaGrafica.Consumo = int.Parse(((TextBox)sender).Text); }
         }
 
         private void TxtVram_TextChanged(object sender, TextChangedEventArgs e)
