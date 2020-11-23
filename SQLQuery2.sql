@@ -50,7 +50,7 @@ CREATE TABLE SocketProcesador(
 GO
 
 INSERT INTO SocketProcesador(IdSocket, NombreSocket, Descripcion)
-VALUES (0,'NINGUNO', 'ERROR'),
+VALUES (0,'Ninguno', 'ERROR'),
        (1, 'Socket_604_2002','Intel Xeon Año 2002'),
        (102, 'LGA_1155_2011','Intel 2da Generación Año 2011'),
        (103, 'LGA_1155_2012','Intel 3ra Generación Año 2012'),

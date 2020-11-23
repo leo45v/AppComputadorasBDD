@@ -407,7 +407,7 @@ namespace WpfAppComputadoras.Administrator.Vistas
 
 
 
-                    Clipboard.SetText(SQLCopy.SqlQueryCopy);
+                    SQLCopy.WriteIntoFile();
                     MessageBox.Show(SQLCopy.SqlQueryCopy, "CONSULTA COPIAR");
                     SQLCopy.SqlQueryCopy = "";
                 }
