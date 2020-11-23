@@ -408,7 +408,7 @@ namespace WpfAppComputadoras.Administrator.Vistas
 
 
                     SQLCopy.WriteIntoFile();
-                    MessageBox.Show(SQLCopy.SqlQueryCopy, "CONSULTA COPIAR");
+                    //MessageBox.Show(SQLCopy.SqlQueryCopy, "CONSULTA COPIAR");
                     SQLCopy.SqlQueryCopy = "";
                 }
                 mainView.ConfigAdministradorInterface(mainView.rol.IdRol);
