@@ -266,7 +266,16 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 Dictionary<string, object> data = OperationsSql.ExecuteReader();
                 if (data != null)
                 {
-                    tipo = (ETipoProducto)Enum.Parse(typeof(ETipoProducto), (string)data["Tipo"]);
+                    string tipox = (string)data["Tipo"];
+                    if (tipox == "Mother Board")
+                    {
+                        tipox = "PlacaBase";
+                    }
+                    else if (tipox == "Trajeta Grafica")
+                    {
+                        tipox = "TarjetaGrafica";
+                    }
+                    tipo = (ETipoProducto)Enum.Parse(typeof(ETipoProducto), tipox);
 
                 }
                 OperationsSql.ExecuteTransactionCommit();
@@ -425,6 +434,61 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             finally { if (!cascada) { OperationsSql.CloseConnection(); } }
             return estado;
+        }
+        public static bool Insertar_Socket(SocketProcesador socketProcesador)
+        {
+            bool estado = false;
+            string query = @"INSERT INTO SocketProcesador (IdSocket, NombreSocket, Descripcion)
+                                                 Values(@IdSocket, @NombreSocket, @Descripcion)";
+            try
+            {
+                OperationsSql.OpenConnection();
+                OperationsSql.CreateBasicCommandWithTransaction(query);
+                OperationsSql.AddWithValueString("IdSocket", socketProcesador.IdSocket);
+                OperationsSql.AddWithValueString("NombreSocket", socketProcesador.NombreSocket);
+                OperationsSql.AddWithValueString("Descripcion", socketProcesador.Descripcion);
+                OperationsSql.ExecuteBasicCommandWithTransaction();
+                OperationsSql.ExecuteTransactionCommit();
+                estado = true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally { OperationsSql.CloseConnection(); }
+            return estado;
+        }
+        public static List<SocketProcesador> Get_Sockets_From_Procesadores()
+        {
+            List<SocketProcesador> socketProcesadors = null;
+            string query = @"SELECT IdSocket, NombreSocket, Descripcion
+                             FROM SocketProcesador";
+            try
+            {
+                OperationsSql.OpenConnection();
+                OperationsSql.CreateBasicCommandWithTransaction(query);
+                List<Dictionary<string, object>> data = OperationsSql.ExecuteReaderMany();
+                if (data != null)
+                {
+                    socketProcesadors = new List<SocketProcesador>();
+                    foreach (Dictionary<string, object> item in data)
+                    {
+                        socketProcesadors.Add(new SocketProcesador()
+                        {
+                            IdSocket = (int)item["IdSocket"],
+                            NombreSocket = (ESocketProcesador)Enum.Parse(typeof(ESocketProcesador), (string)item["NombreSocket"]),
+                            Descripcion = (string)item["Descripcion"]
+                        });
+                    }
+                }
+                OperationsSql.ExecuteTransactionCommit();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally { OperationsSql.CloseConnection(); }
+            return socketProcesadors;
         }
         //public static bool Delete(Guid idProducto)
         //{

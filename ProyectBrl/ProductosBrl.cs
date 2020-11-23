@@ -95,6 +95,14 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectBr
         {
             return ProductosDal.GetColores();
         }
+        public static List<SocketProcesador> Get_Sockets()
+        {
+            return ProductosDal.Get_Sockets_From_Procesadores();
+        }
+        public static bool Insert_Socket(SocketProcesador socketProcesador)
+        {
+            return ProductosDal.Insertar_Socket(socketProcesador);
+        }
     }
 }
 

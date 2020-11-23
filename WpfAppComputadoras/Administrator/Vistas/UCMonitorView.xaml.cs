@@ -12,13 +12,22 @@ namespace WpfAppComputadoras.Administrator.Vistas
         public UCMonitorView(UCProductView uCProductView)
         {
             InitializeComponent();
+            ModoVista(uCProductView.VistaMode);
             mainView = uCProductView;
             txtFrecuencia.Text = uCProductView.monitor.Frecuencia.ToString();
-            //txtRatio.Text = uCProductView.monitor.Ratio;
-            //txtResolucion.Text = uCProductView.monitor.Resolucion;
+            cbRatio.Text = uCProductView.monitor.Ratio;
+            cbResolucion.Text = uCProductView.monitor.Resolucion;
             txtTamano.Text = uCProductView.monitor.Tamano.ToString();
+            txtColor.Text = uCProductView.monitor.Tamano.ToString();
         }
-
+        private void ModoVista(bool activo)
+        {
+            txtFrecuencia.IsEnabled = !activo;
+            cbRatio.IsEnabled = !activo;
+            cbResolucion.IsEnabled = !activo;
+            txtTamano.IsEnabled = !activo;
+            txtColor.IsEnabled = !activo;
+        }
         private void UserControl_Initialized(object sender, EventArgs e)
         {
             txtFrecuencia.TextChanged += TxtFrecuencia_TextChanged;

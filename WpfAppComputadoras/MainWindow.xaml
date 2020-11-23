@@ -117,5 +117,14 @@
             <Button x:Name="btn_Close" Content="X" HorizontalAlignment="Left" Height="27" Margin="323,0,0,0" VerticalAlignment="Top" Width="44" RenderTransformOrigin="-0.301,0.487" Click="Btn_Close_Click"/>
             <Button x:Name="btn_minimize" Content="_" HorizontalAlignment="Left" Height="27" Margin="279,0,0,0" VerticalAlignment="Top" Width="44" RenderTransformOrigin="-0.301,0.487" Click="Btn_minimize_Click"/>
         </Grid>
+        <Border x:Name="bdWaiting" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" BorderBrush="#FF1D6C06" Width="200" Height="85" BorderThickness="5,5,5,5" CornerRadius="20,20,20,20" Visibility="Hidden">
+            <Border.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF037268"/>
+                    <GradientStop Color="#FF20FFAE" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+            <TextBlock Text="Conectando..." HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black" FontSize="22" FontWeight="Bold" FontStyle="Italic" />
+        </Border>
     </Grid>
 </Window>

@@ -14,10 +14,11 @@
         <StackPanel Grid.Column="0">
             <TextBlock Height="17.96" HorizontalAlignment="Right" Text="Frecuencia Base" TextWrapping="Wrap" VerticalAlignment="Stretch"/>
             <TextBlock Height="17.96" HorizontalAlignment="Right"  Text="Frecuencia Turbo" TextWrapping="Wrap" VerticalAlignment="Stretch"/>
-            <TextBlock Height="17.96" HorizontalAlignment="Right" Text="Numero Nucleos" TextWrapping="Wrap" VerticalAlignment="Top"/>
-            <TextBlock Height="17.96" HorizontalAlignment="Right" Text="Numero Hilos" TextWrapping="Wrap" VerticalAlignment="Top"/>
-            <TextBlock Height="17.96" HorizontalAlignment="Right" Text="Consumo" TextWrapping="Wrap" VerticalAlignment="Top"/>
-            <TextBlock Height="17.96" HorizontalAlignment="Right" Text="Litografia" TextWrapping="Wrap" VerticalAlignment="Top"/>
+            <TextBlock Height="17.96" HorizontalAlignment="Right" Text="Numero Nucleos" TextWrapping="Wrap" VerticalAlignment="Stretch"/>
+            <TextBlock Height="17.96" HorizontalAlignment="Right" Text="Numero Hilos" TextWrapping="Wrap" VerticalAlignment="Stretch"/>
+            <TextBlock Height="17.96" HorizontalAlignment="Right" Text="Consumo" TextWrapping="Wrap" VerticalAlignment="Stretch"/>
+            <TextBlock Height="17.96" HorizontalAlignment="Right" Text="Litografia" TextWrapping="Wrap" VerticalAlignment="Stretch"/>
+            <TextBlock Height="21.96" HorizontalAlignment="Right" Text="Socket" TextWrapping="Wrap" VerticalAlignment="Stretch"/>
         </StackPanel>
         <StackPanel Grid.Column="1" Margin="5,0,0,0">
             <TextBox x:Name="txtFrecuenciaBase" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
@@ -26,6 +27,7 @@
             <TextBox x:Name="txtNumeroHilos" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
             <TextBox x:Name="txtConsumo" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.389,-0.253"/>
             <TextBox x:Name="txtLitografia" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.389,-0.253"/>
+            <ComboBox x:Name="cbSocket" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.389,-0.253"/>
         </StackPanel>
     </Grid>
 </UserControl>

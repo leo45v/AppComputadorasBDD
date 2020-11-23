@@ -14,14 +14,18 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             try
             {
                 OperationsSql.OpenConnection();
-                ProductosDal.Insertar(ram as Producto);
-                OperationsSql.CreateBasicCommandWithTransaction(query);
-                OperationsSql.AddWithValueString("Memoria", ram.Memoria);
-                OperationsSql.AddWithValueString("Frecuencia", ram.Frecuencia);
-                OperationsSql.AddWithValueString("Latencia", ram.Latencia);
-                OperationsSql.ExecuteBasicCommandWithTransaction();
-                OperationsSql.ExecuteTransactionCommit();
-                estado = true;
+                ProductosDal.cascada = true;
+                if (ProductosDal.Insertar(ram as Producto))
+                {
+                    ProductosDal.cascada = false;
+                    OperationsSql.CreateBasicCommandWithTransaction(query);
+                    OperationsSql.AddWithValueString("Memoria", ram.Memoria);
+                    OperationsSql.AddWithValueString("Frecuencia", ram.Frecuencia);
+                    OperationsSql.AddWithValueString("Latencia", ram.Latencia);
+                    OperationsSql.ExecuteBasicCommandWithTransaction();
+                    OperationsSql.ExecuteTransactionCommit();
+                    estado = true;
+                }
             }
             catch (Exception)
             {

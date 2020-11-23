@@ -79,180 +79,180 @@
 
     },
     "Fuente": {
-     "Certificacion": "Ninguna",
+      "Certificacion": "Ninguna",
       "Potencia": {
         "min": 400,
         "max": 550
       }
     },
     "PlacaBase": {
-       "PrecioUnidad": {
-        "min": 50,
-        "max": 150
-    },
-    "Procesador": {
-          "NumeroNucleos": {
-        "min": 2,
-        "max": 4
-      },
-      "NumeroHilo": {
-        "min": 2,
-        "max": 4
-      },
-      "Consumo": {
-        "min": 50,
-        "max": 150
-      },
-      "FrecuenciaBase": {
-        "min": 1800,
-        "max": 3000
-      }
-    },
-    "Ram": {
-       "Memoria": {
-        "min": 4,
-        "max": 8
-    },
-    "TarjetaGrafica": {
-     "Vram": {
-        "min": 1,
-        "max": 2
-    },
-    "Monitor": {
-       "Frecuencia": {
-        "min": 60,
-        "max": 60
-      }
-    },
-    "Gabinete": {
-     "PrecioUnidad": {
-        "min": 50,
-        "max": 80
-      }
-    
-    }
-  },
-  "TrabajoDiseno": {
-    "Almacenamiento": {
-     "min": 1000000,
-      "max": 5000000
-    },
-    "Fuente": {
-        "Certificacion": "GOLD PLUS 80",
-      "Potencia": {
-        "min": 650,
-        "max": 1000
-      }
-    },
-    "PlacaBase": {
-     "PrecioUnidad": {
-        "min": 120,
-        "max": 360
-      },
-      "NumeroDims": {
-        "min": 2,
-        "max": 8
-      }
-    },
-    "Procesador": {
-     "NumeroNucleos": {
-        "min": 6,
-        "max": 12
-      },
-      "NumeroHilo": {
-        "min": 6,
-        "max": 24
-      },
-      "Consumo": {
-        "min": 65,
-        "max": 150
-      },
-      "FrecuenciaBase": {
-        "min": 2666,
-        "max": 4000
-      }
-    },
-    "Ram": {
-      "Memoria": {
-        "min": 32,
-        "max": 128
-    },
-    "TarjetaGrafica": {
-      "Vram": {
-        "min": 6,
-        "max": 11
-    },
-    "Monitor": {
-       "Frecuencia": {
-        "min": 60,
-        "max": 144
-    },
-    "Gabinete": {
       "PrecioUnidad": {
-        "min": 100,
-        "max": 350
-      }
-    }
-  },
-  "Gaming": {
-    "Almacenamiento": {
-     "min": 1000000,
-      "max": 3000000
-    },
-    "Fuente": {
-        "Certificacion": "GOLD PLUS 80",
-      "Potencia": {
-        "min": 500,
-        "max": 1200
-      }
-    },
-    "PlacaBase": {
-     "PrecioUnidad": {
-        "min": 120,
-        "max": 360
-      },
-      "NumeroDims": {
-        "min": 2,
-        "max": 8
-      }
-    },
-    "Procesador": {
-     "NumeroNucleos": {
-        "min": 4,
-        "max": 12
-      },
-      "NumeroHilo": {
-        "min": 4,
-        "max": 24
-      },
-      "Consumo": {
-        "min": 65,
+        "min": 50,
         "max": 150
       },
-      "FrecuenciaBase": {
-        "min": 2666,
-        "max": 4200
-      }
-    },
-    "Ram": {
-      "Memoria": {
-        "min": 16,
-        "max": 128
-    },
-    "TarjetaGrafica": {
-      "Vram": {
-        "min": 4,
-        "max": 15
-    },
-    "Monitor": {
-       "Frecuencia": {
-        "min": 60,
-        "max": 240
-    },
-    "Gabinete": {
-      "PrecioUnidad": {
-        "min": 65,
-        "max": 350
-      }
-    }
-  }
+      "Procesador": {
+        "NumeroNucleos": {
+          "min": 2,
+          "max": 4
+        },
+        "NumeroHilo": {
+          "min": 2,
+          "max": 4
+        },
+        "Consumo": {
+          "min": 50,
+          "max": 150
+        },
+        "FrecuenciaBase": {
+          "min": 1800,
+          "max": 3000
+        }
+      },
+      "Ram": {
+        "Memoria": {
+          "min": 4,
+          "max": 8
+        },
+        "TarjetaGrafica": {
+          "Vram": {
+            "min": 1,
+            "max": 2
+          },
+          "Monitor": {
+            "Frecuencia": {
+              "min": 60,
+              "max": 60
+            }
+          },
+          "Gabinete": {
+            "PrecioUnidad": {
+              "min": 50,
+              "max": 80
+            }
+
+          }
+        },
+        "TrabajoDiseno": {
+          "Almacenamiento": {
+            "min": 1000000,
+            "max": 5000000
+          },
+          "Fuente": {
+            "Certificacion": "GOLD PLUS 80",
+            "Potencia": {
+              "min": 650,
+              "max": 1000
+            }
+          },
+          "PlacaBase": {
+            "PrecioUnidad": {
+              "min": 120,
+              "max": 360
+            },
+            "NumeroDims": {
+              "min": 2,
+              "max": 8
+            }
+          },
+          "Procesador": {
+            "NumeroNucleos": {
+              "min": 6,
+              "max": 12
+            },
+            "NumeroHilo": {
+              "min": 6,
+              "max": 24
+            },
+            "Consumo": {
+              "min": 65,
+              "max": 150
+            },
+            "FrecuenciaBase": {
+              "min": 2666,
+              "max": 4000
+            }
+          },
+          "Ram": {
+            "Memoria": {
+              "min": 32,
+              "max": 128
+            },
+            "TarjetaGrafica": {
+              "Vram": {
+                "min": 6,
+                "max": 11
+              },
+              "Monitor": {
+                "Frecuencia": {
+                  "min": 60,
+                  "max": 144
+                },
+                "Gabinete": {
+                  "PrecioUnidad": {
+                    "min": 100,
+                    "max": 350
+                  }
+                }
+              },
+              "Gaming": {
+                "Almacenamiento": {
+                  "min": 1000000,
+                  "max": 3000000
+                },
+                "Fuente": {
+                  "Certificacion": "GOLD PLUS 80",
+                  "Potencia": {
+                    "min": 500,
+                    "max": 1200
+                  }
+                },
+                "PlacaBase": {
+                  "PrecioUnidad": {
+                    "min": 120,
+                    "max": 360
+                  },
+                  "NumeroDims": {
+                    "min": 2,
+                    "max": 8
+                  }
+                },
+                "Procesador": {
+                  "NumeroNucleos": {
+                    "min": 4,
+                    "max": 12
+                  },
+                  "NumeroHilo": {
+                    "min": 4,
+                    "max": 24
+                  },
+                  "Consumo": {
+                    "min": 65,
+                    "max": 150
+                  },
+                  "FrecuenciaBase": {
+                    "min": 2666,
+                    "max": 4200
+                  }
+                },
+                "Ram": {
+                  "Memoria": {
+                    "min": 16,
+                    "max": 128
+                  },
+                  "TarjetaGrafica": {
+                    "Vram": {
+                      "min": 4,
+                      "max": 15
+                    },
+                    "Monitor": {
+                      "Frecuencia": {
+                        "min": 60,
+                        "max": 240
+                      },
+                      "Gabinete": {
+                        "PrecioUnidad": {
+                          "min": 65,
+                          "max": 350
+                        }
+                      }
+                    }

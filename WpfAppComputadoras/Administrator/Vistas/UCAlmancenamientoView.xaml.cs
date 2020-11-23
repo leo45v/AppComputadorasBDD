@@ -13,12 +13,20 @@ namespace WpfAppComputadoras.Administrator.Vistas
         {
             InitializeComponent();
             mainView = uCProductView;
+            ModoVista(uCProductView.VistaMode);
             txtCapacidad.Text = uCProductView.almacenamiento.Capacidad.ToString();
             txtEscritura.Text = uCProductView.almacenamiento.Escritura.ToString();
             txtLectura.Text = uCProductView.almacenamiento.Lectura.ToString();
             txtTipo.Text = uCProductView.almacenamiento.Tipo;
         }
 
+        private void ModoVista(bool activo)
+        {
+            txtCapacidad.IsEnabled = !activo;
+            txtEscritura.IsEnabled = !activo;
+            txtLectura.IsEnabled = !activo;
+            txtTipo.IsEnabled = !activo;
+        }
         private void UserControl_Initialized(object sender, EventArgs e)
         {
             txtCapacidad.TextChanged += TxtCapacidad_TextChanged;

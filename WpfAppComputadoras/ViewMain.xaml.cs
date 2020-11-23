@@ -25,31 +25,33 @@ namespace WpfAppComputadoras
         private Administrador admin;
         public AdmiMenuView admiMenuView;
         public UCTypeComputerView uCTypeComputerView;
-        private List<Marca> marcas;
         public string queryProductName = "";
         public Marca queryProductMarca = null;
         public ETipoProducto queryProductTipo = ETipoProducto.None;
         public List<Marca> MarcaList
         {
-            get { return marcas; }
-            private set
-            {
-                marcas = value;
-            }
+            get;
         }
-        private List<Colores> colores;
         public List<Colores> Colores
         {
-            get { return colores; }
-            set { colores = value; }
+            get; set;
         }
+        private List<SocketProcesador> socketProcesadors;
+
+        public List<SocketProcesador> SocketsList
+        {
+            get { return socketProcesadors; }
+            set { socketProcesadors = value; }
+        }
+
         public ViewMain(MainWindow main, Guid idUsuario)
         {
             InitializeComponent();
             mainWindow = main;
-            marcas = ProductosBrl.GetMarcas();
-            colores = ProductosBrl.GetColores();
+            MarcaList = main.ListaMarcas;
+            Colores = main.ListaColores;
             rol = UsuarioBrl.GetRol(idUsuario);
+            socketProcesadors = ProductosBrl.Get_Sockets();
             if (rol.IdRol == ERol.Cliente)
             {
                 cliente = ClientsBrl.GetClienteByIdUsuario(idUsuario);

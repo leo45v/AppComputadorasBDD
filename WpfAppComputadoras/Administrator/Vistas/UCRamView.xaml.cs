@@ -12,9 +12,18 @@ namespace WpfAppComputadoras.Administrator.Vistas
         public UCRamView(UCProductView uCProductView)
         {
             InitializeComponent();
+            ModoVista(uCProductView.VistaMode);
             mainView = uCProductView;
+            txtFrecuencia.Text = uCProductView.ram.Frecuencia.ToString();
+            txtLatencia1.Text = uCProductView.ram.Latencia.ToString();
+            txtMemoria.Text = uCProductView.ram.Memoria.ToString();
         }
-
+        private void ModoVista(bool activo)
+        {
+            txtFrecuencia.IsEnabled = !activo;
+            txtLatencia1.IsEnabled = !activo;
+            txtMemoria.IsEnabled = !activo;
+        }
         private void UserControl_Initialized(object sender, EventArgs e)
         {
             txtFrecuencia.TextChanged += TxtFrecuencia_TextChanged;

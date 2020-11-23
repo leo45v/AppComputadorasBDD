@@ -10,7 +10,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
         {
             bool estado = false;
             string query = @"INSERT INTO tarjetaGrafica (IdProducto, Vram, FrecuenciaBase, FrecuenciaTurbo, TipoMemoria)
-                                       Values(@IdProducto, @NumeroDims, @CapacidadMem, @Tamano)";
+                                       Values(@IdProducto, @Vram, @FrecuenciaBase, @FrecuenciaTurbo, @TipoMemoria)";
             try
             {
                 OperationsSql.OpenConnection();

@@ -12,9 +12,20 @@ namespace WpfAppComputadoras.Administrator.Vistas
         public UCTarjetaGraficaView(UCProductView uCProductView)
         {
             InitializeComponent();
+            ModoVista(uCProductView.VistaMode);
             mainView = uCProductView;
+            txtFrecuenciaBase.Text = uCProductView.tarjetaGrafica.FrecuenciaBase.ToString();
+            txtFrecuenciaTurbo.Text = uCProductView.tarjetaGrafica.FrecuenciaTurbo.ToString();
+            txtTipoMemoria.Text = uCProductView.tarjetaGrafica.TipoMemoria;
+            txtVram.Text = uCProductView.tarjetaGrafica.Vram.ToString();
         }
-
+        private void ModoVista(bool activo)
+        {
+            txtFrecuenciaBase.IsEnabled = !activo;
+            txtFrecuenciaTurbo.IsEnabled = !activo;
+            txtTipoMemoria.IsEnabled = !activo;
+            txtVram.IsEnabled = !activo;
+        }
         private void UserControl_Initialized(object sender, EventArgs e)
         {
             txtFrecuenciaBase.TextChanged += TxtFrecuenciaBase_TextChanged;

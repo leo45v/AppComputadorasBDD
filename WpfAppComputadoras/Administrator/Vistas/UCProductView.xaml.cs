@@ -11,6 +11,7 @@ using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Enums;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Extras;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectBrl;
 using WpfAnimatedGif;
+using WpfAppComputadoras.Components;
 using WpfAppComputadoras.Extra;
 
 namespace WpfAppComputadoras.Administrator.Vistas
@@ -49,14 +50,19 @@ namespace WpfAppComputadoras.Administrator.Vistas
             Marca = new Marca(),
             Descontinuado = false,
             Eliminado = false,
+            SoporteProcesador = new SocketProcesador()
         };
         public Procesador procesador = new Procesador()
         {
             Marca = new Marca(),
             Descontinuado = false,
             Eliminado = false,
+            Socket = new SocketProcesador()
         };
-        public Ram ram = new Ram();
+        public Ram ram = new Ram()
+        {
+            Marca = new Marca()
+        };
         public Grafica tarjetaGrafica = new Grafica()
         {
             Marca = new Marca(),
@@ -69,27 +75,32 @@ namespace WpfAppComputadoras.Administrator.Vistas
             Marca = new Marca(),
             Descontinuado = false,
             Eliminado = false,
+            Imagen = ""
         };
         private ETipoProducto tipoProducto;
 
         private List<Marca> marcas;
         public ViewMain mainView;
         private bool imagenChanged = false;
-
+        public bool VistaMode = false;
         public UCProductView(ViewMain viewMain, ETipoProducto tipoProducto)
         {
             InitializeComponent();
             mainView = viewMain;
+
             LoadComboMarcas();
             btnAction.Content = "Insertar";
             containerTipo.Children.Clear();
             this.tipoProducto = tipoProducto;
             LoadInterface(Guid.Empty);
+            ImageBehavior.SetAnimatedSource(imgProduct, Methods.LoadImage(""));
             lblTitle.Text = "INGRESE LOS DATOS PARA INSERTAR EL " + tipoProducto.ToString().ToUpper();
         }
         public void ModoVista()
         {
             Modo("vista");
+            lblTitle.Text = "DATOS DEL " + tipoProducto.ToString().ToUpper();
+
         }
         private void Modo(string tipo)
         {
@@ -107,10 +118,11 @@ namespace WpfAppComputadoras.Administrator.Vistas
             if (noVista) { btnAction.Visibility = Visibility.Visible; btnLoadImg.Visibility = Visibility.Visible; }
             else { btnAction.Visibility = Visibility.Hidden; btnLoadImg.Visibility = Visibility.Hidden; }
         }
-        public UCProductView(ViewMain viewMain, Guid idProducto, ETipoProducto tipoProducto)
+        public UCProductView(UCItemProductView mainV, ViewMain viewMain, Guid idProducto, ETipoProducto tipoProducto)
         {
             InitializeComponent();
             mainView = viewMain;
+            this.VistaMode = mainV.VistaMode;
             LoadComboMarcas();
             btnAction.Content = "Actualizar";
             containerTipo.Children.Clear();
@@ -235,6 +247,10 @@ namespace WpfAppComputadoras.Administrator.Vistas
         private void BtnAction_Click(object sender, RoutedEventArgs e)
         {
             bool estado = false;
+
+            SQLCopy.SqlQueryCopy = "";
+
+
             if (btnAction.Content.ToString() == "Insertar")
             {
                 if (producto.IdProducto == Guid.Empty)
@@ -388,6 +404,12 @@ namespace WpfAppComputadoras.Administrator.Vistas
                 else if (btnAction.Content.ToString() == "Insertar")
                 {
                     MessageBox.Show("El " + tipoProducto.ToString() + " se Inserto con exito!!", "", MessageBoxButton.OK, MessageBoxImage.Information);
+
+
+
+                    Clipboard.SetText(SQLCopy.SqlQueryCopy);
+                    MessageBox.Show(SQLCopy.SqlQueryCopy, "CONSULTA COPIAR");
+                    SQLCopy.SqlQueryCopy = "";
                 }
                 mainView.ConfigAdministradorInterface(mainView.rol.IdRol);
             }

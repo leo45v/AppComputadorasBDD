@@ -18,6 +18,7 @@ namespace WpfAppComputadoras.Administrator.Vistas
         public UCGabineteView(UCProductView uCProductView)
         {
             InitializeComponent();
+            ModoVista(uCProductView.VistaMode);
             mainView = uCProductView;
             txtAltura.Text = uCProductView.gabinete.Altura.ToString();
             txtLargo.Text = uCProductView.gabinete.Largo.ToString();
@@ -46,10 +47,17 @@ namespace WpfAppComputadoras.Administrator.Vistas
                 newComboColor.Add(comboColor);
             }
             lxtColores.ItemsSource = newComboColor;
-            
+
             BindListBOX();
         }
-
+        private void ModoVista(bool activo)
+        {
+            txtAltura.IsEnabled = !activo;
+            txtLargo.IsEnabled = !activo;
+            txtPeso.IsEnabled = !activo;
+            lxtColores.IsEnabled = !activo;
+            lstSe.IsEnabled = !activo;
+        }
         private void UserControl_Initialized(object sender, EventArgs e)
         {
             txtAltura.TextChanged += TxtAltura_TextChanged;

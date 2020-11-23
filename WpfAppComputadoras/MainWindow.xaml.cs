@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Threading;
+using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectBrl;
 
 namespace WpfAppComputadoras
@@ -14,10 +17,21 @@ namespace WpfAppComputadoras
         public Guid idUsuario = Guid.Empty;
         private string password = "";
         private string username = "";
+        public List<Colores> ListaColores { get; private set; }
+        public List<Marca> ListaMarcas { get; private set; }
+        public delegate string NoArgDelegate();
+
         public MainWindow()
         {
             InitializeComponent();
             txt_Usuario.Focus();
+            Thread thread = new Thread(GetDataBg);
+            thread.Start();
+        }
+        private void GetDataBg()
+        {
+            this.ListaMarcas = ProductosBrl.GetMarcas();
+            this.ListaColores = ProductosBrl.GetColores();
         }
         private void Mover_Ventana_Controller(object sender, MouseButtonEventArgs e)
         {
@@ -97,21 +111,64 @@ namespace WpfAppComputadoras
             {
                 return;
             }
-            idUsuario = UsuarioBrl.Obtener_Id_Usuario(txt_Usuario.Text, txt_Contrasena.Password);
+            bdWaiting.Visibility = Visibility.Visible;
+            ModoLogin(true);
+            object args = new object[2] { txt_Usuario.Text, txt_Contrasena.Password };
+            var loginProcess = new Thread(LogueoBg);
+            loginProcess.Start(args);
+
+        }
+        private void LogueoBg(object args)
+        {
+            Array argArray = new object[3];
+            argArray = (Array)args;
+            //Application.Current.Dispatcher.Invoke(new Action<bool>(ModoLogin), true);
+            idUsuario = UsuarioBrl.Obtener_Id_Usuario((string)argArray.GetValue(0), (string)argArray.GetValue(1));
+
+
+            //Thread.Sleep(5000);
+
+
+
+            Application.Current.Dispatcher.Invoke(new Action<Guid>(UIAccept), idUsuario);
+            //if (idUsuario != Guid.Empty)
+            //{
+            //    Application.Current.Dispatcher.Invoke(new Action<Guid>(UIAccept), idUsuario);
+            //    Application.Current.Dispatcher.Invoke(new Action(txt_Usuario.Clear));
+            //    Application.Current.Dispatcher.Invoke(new Action(txt_Contrasena.Clear));
+            //    ViewMain viewMain = new ViewMain(this, idUsuario);
+            //    viewMain.Show();
+            //    this.Hide();
+            //}
+            //else
+            //{
+            //    MessageBox.Show("Nombre de Usuario o Contraseña incorrectos", "", MessageBoxButton.OK, MessageBoxImage.Warning);
+            //    Application.Current.Dispatcher.Invoke(new Action<bool>(ModoLogin), true);
+            //}
+        }
+        private void UIAccept(Guid idUsuario)
+        {
+            bdWaiting.Visibility = Visibility.Hidden;
             if (idUsuario != Guid.Empty)
             {
                 txt_Usuario.Clear();
                 txt_Contrasena.Clear();
                 ViewMain viewMain = new ViewMain(this, idUsuario);
                 viewMain.Show();
+                ModoLogin(false);
                 this.Hide();
             }
             else
             {
                 MessageBox.Show("Nombre de Usuario o Contraseña incorrectos", "", MessageBoxButton.OK, MessageBoxImage.Warning);
+                ModoLogin(false);
             }
         }
-
+        private void ModoLogin(bool estado)
+        {
+            txt_Usuario.IsEnabled = !estado;
+            txt_Contrasena.IsEnabled = !estado;
+        }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             RegistroWindow registroWindow = new RegistroWindow(this);

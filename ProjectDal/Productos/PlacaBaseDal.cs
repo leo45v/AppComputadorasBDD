@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Enums;
 
 namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDal.Personas.Productos
 {
@@ -9,8 +10,8 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
         public static bool Insertar(PlacaBase placaBase)
         {
             bool estado = false;
-            string query = @"INSERT INTO PlacaBase (IdProducto, NumeroDims, CapacidadMem, Tamano)
-                                       Values(@IdProducto, @NumeroDims, @CapacidadMem, @Tamano)";
+            string query = @"INSERT INTO PlacaBase (IdProducto, NumeroDims, CapacidadMem, Tamano, SoporteProcesador)
+                                       Values(@IdProducto, @NumeroDims, @CapacidadMem, @Tamano, @SoporteProcesador)";
             try
             {
                 OperationsSql.OpenConnection();
@@ -23,6 +24,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                     OperationsSql.AddWithValueString("NumeroDims", placaBase.NumeroDims);
                     OperationsSql.AddWithValueString("CapacidadMem", placaBase.CapacidadMem);
                     OperationsSql.AddWithValueString("Tamano", placaBase.Tamano);
+                    OperationsSql.AddWithValueString("SoporteProcesador", placaBase.SoporteProcesador.IdSocket);
                     OperationsSql.ExecuteBasicCommandWithTransaction();
                     OperationsSql.ExecuteTransactionCommit();
                 }
@@ -41,12 +43,14 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
         public static PlacaBase Get(Guid idPlacaBase)
         {
             PlacaBase placaBase = null;
-            string query = @"SELECT r.IdProducto, r.NumeroDims, r.CapacidadMem, r.Tamano,   
+            string query = @"SELECT r.IdProducto, r.NumeroDims, r.CapacidadMem, r.Tamano, r.SoporteProcesador as IdSocket, 
                              pro.PrecioUnidad, pro.Imagen, pro.Nombre, pro.Stock, pro.IdMarca, pro.Descontinuado, pro.Eliminado, 
-                             mar.NombreMarca
+                             mar.NombreMarca, 
+                             sp.NombreSocket, sp.Descripcion 
                              FROM PlacaBase r
                              INNER JOIN Producto pro ON pro.IdProducto = r.IdProducto
                              INNER JOIN Marca mar ON mar.IdMarca = pro.IdMarca
+                             INNER JOIN SocketProcesador sp ON sp.IdSocket = r.SoporteProcesador
                              WHERE pro.Eliminado = 0 AND pro.IdProducto = @IdProducto";
             try
             {
@@ -71,12 +75,14 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
         public static List<PlacaBase> GetAll()
         {
             List<PlacaBase> placaBases = null;
-            string query = @"SELECT r.IdProducto, r.NumeroDims, r.CapacidadMem, r.Tamano, 
+            string query = @"SELECT r.IdProducto, r.NumeroDims, r.CapacidadMem, r.Tamano, r.SoporteProcesador as IdSocket, 
                              pro.PrecioUnidad, pro.Imagen, pro.Nombre, pro.Stock, pro.IdMarca, pro.Descontinuado, pro.Eliminado, 
-                             mar.NombreMarca
+                             mar.NombreMarca, 
+                             sp.NombreSocket, sp.Descripcion 
                              FROM PlacaBase r
                              INNER JOIN Producto pro ON pro.IdProducto = r.IdProducto
-                             INNER JOIN Marca mar ON mar.IdMarca = pro.IdMarca
+                             INNER JOIN Marca mar ON mar.IdMarca = pro.IdMarca 
+                             INNER JOIN SocketProcesador sp ON sp.IdSocket = r.SoporteProcesador 
                              WHERE pro.Eliminado = 0";
             try
             {
@@ -182,7 +188,8 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             string queryString = @"UPDATE PlacaBase 
                                    SET NumeroDims = @NumeroDims, 
                                        CapacidadMem = @CapacidadMem, 
-                                       Tamano = @Tamano 
+                                       Tamano = @Tamano, 
+                                       SoporteProcesador = @SoporteProcesador 
                                    WHERE IdProducto = @IdProducto";
             try
             {
@@ -194,8 +201,8 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                     OperationsSql.AddWithValueString(parameter: "NumeroDims", placaBase.NumeroDims);
                     OperationsSql.AddWithValueString(parameter: "CapacidadMem", placaBase.CapacidadMem);
                     OperationsSql.AddWithValueString(parameter: "Tamano", placaBase.Tamano);
+                    OperationsSql.AddWithValueString(parameter: "SoporteProcesador", placaBase.SoporteProcesador.IdSocket);
                     OperationsSql.ExecuteBasicCommandWithTransaction();
-                    //UPDATE SOPORTE PROCESADORES
                     OperationsSql.ExecuteTransactionCommit();
                     estado = true;
                 }
@@ -255,7 +262,13 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 PrecioUnidad = (decimal)data["PrecioUnidad"],
                 Stock = (short)data["Stock"],
                 Eliminado = (bool)data["Eliminado"],
-                CapacidadMem = (int)data["Resolucion"],
+                CapacidadMem = (int)data["CapacidadMem"],
+                SoporteProcesador = new SocketProcesador()
+                {
+                    IdSocket = (int)data["IdSocket"],
+                    Descripcion = (string)data["Descripcion"],
+                    NombreSocket = (ESocketProcesador)Enum.Parse(typeof(ESocketProcesador), (string)data["NombreSocket"])
+                }
             };
         }
     }

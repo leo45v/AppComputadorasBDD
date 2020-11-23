@@ -13,11 +13,11 @@
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="0">
             <TextBlock HorizontalAlignment="Right" Text="Potencia" TextWrapping="Wrap" VerticalAlignment="Stretch" Height="17.96"/>
-            <TextBlock HorizontalAlignment="Right" Text="Certificacion" TextWrapping="Wrap" VerticalAlignment="Stretch" Height="17.96"/>
+            <TextBlock HorizontalAlignment="Right" Text="Certificacion" TextWrapping="Wrap" VerticalAlignment="Stretch" Height="21.96"/>
         </StackPanel>
         <StackPanel Grid.Column="1" Margin="5,0,0,0">
         <TextBox x:Name="txtPotencia" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="120"/>
-        <TextBox x:Name="txtCertificacion"  HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="120" RenderTransformOrigin="0.306,0.93"/>
+        <ComboBox x:Name="txtCertificacion"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="120" RenderTransformOrigin="0.306,0.93"/>
         </StackPanel>
     </Grid>
 </UserControl>

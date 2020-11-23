@@ -18,6 +18,7 @@ namespace WpfAppComputadoras.Components
         private readonly ViewMain mainView;
         public UCProductView uCProcesadorView;
         private readonly Producto producto;
+        public bool VistaMode = false;
         public UCItemProductView(ViewMain viewMain, Producto producto)
         {
             InitializeComponent();
@@ -32,6 +33,7 @@ namespace WpfAppComputadoras.Components
         private void BtnVer_Click(object sender, RoutedEventArgs e)
         {
             ETipoProducto tipo = ProductosBrl.GetType(producto.IdProducto);
+            VistaMode = true;
             CreatePageFromProduct(tipo, producto.IdProducto);
             if (!(uCProcesadorView is null))
             {
@@ -45,6 +47,7 @@ namespace WpfAppComputadoras.Components
         private void BtnEditar_Click(object sender, RoutedEventArgs e)
         {
             ETipoProducto tipo = ProductosBrl.GetType(producto.IdProducto);
+            VistaMode = false;
             CreatePageFromProduct(tipo, producto.IdProducto);
             if (!(uCProcesadorView is null))
             {
@@ -86,7 +89,7 @@ namespace WpfAppComputadoras.Components
         {
             if (tipo != ETipoProducto.None)
             {
-                uCProcesadorView = new UCProductView(mainView, idProducto, tipo);
+                uCProcesadorView = new UCProductView(this, mainView, idProducto, tipo);
             }
         }
     }

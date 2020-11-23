@@ -12,13 +12,13 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="1" Margin="5,0,0,0">
-            <TextBox x:Name="txtSoporteProcesador" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="120"/>
+            <ComboBox x:Name="txtSoporteProcesador" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Width="120"/>
             <TextBox x:Name="txtNumeroDims" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="120" RenderTransformOrigin="0.306,0.93"/>
             <TextBox x:Name="txtCapacidad" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="120"/>
             <TextBox x:Name="txtTamano" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="120"/>
         </StackPanel>
         <StackPanel Grid.Column="0">
-        <TextBlock HorizontalAlignment="Right" Text="Soporte Procesador" TextWrapping="Wrap" VerticalAlignment="Stretch" Height="17.96"/>
+        <TextBlock HorizontalAlignment="Right" Text="Soporte Procesador" TextWrapping="Wrap" VerticalAlignment="Stretch" Height="21.96"/>
         <TextBlock HorizontalAlignment="Right" Text="NumeroDims" TextWrapping="Wrap" VerticalAlignment="Stretch" Height="17.96"/>
         <TextBlock HorizontalAlignment="Right" Text="Capacidad Memoria" TextWrapping="Wrap" VerticalAlignment="Stretch" Height="17.96"/>
         <TextBlock HorizontalAlignment="Right" Text="Tamano" TextWrapping="Wrap" VerticalAlignment="Stretch" Height="17.96"/>

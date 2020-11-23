@@ -6,6 +6,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Transactions;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Operaciones;
+using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Extras;
 
 namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common
 {
@@ -80,11 +81,22 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common
             }
             return true;
         }
+        private static string GetSqlQuery()
+        {
+            string result = command.CommandText.ToString();
+            foreach (SqlParameter p in command.Parameters)
+            {
+                string isQuted = (p.Value is string) ? "'" : (p.Value is Guid) ? "'" : "";
+                result = result.Replace(p.ParameterName.ToString(), isQuted + p.Value.ToString() + isQuted);
+            }
+            return result;
+        }
         public static void ExecuteBasicCommandWithTransaction()
         {
             try
             {
                 command.ExecuteNonQuery();
+                SQLCopy.SqlQueryCopy += GetSqlQuery() + "\n\rGO\n\r";
             }
             catch (SqlException ex)
             {

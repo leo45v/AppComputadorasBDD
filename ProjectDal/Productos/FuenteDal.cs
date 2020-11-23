@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Enums;
 
 namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDal.Personas.Productos
 {
@@ -238,7 +239,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 IdProducto = (Guid)data["IdProducto"],
                 Descontinuado = (bool)data["Descontinuado"],
                 Potencia = (int)data["Potencia"],
-                Certificacion = (string)data["Certificacion"],
+                Certificacion = (ECertificacion)Enum.Parse(typeof(ECertificacion), (string)data["Certificacion"]),
                 Imagen = (string)data["Imagen"],
                 Marca = new Marca()
                 {

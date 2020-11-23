@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common;
 
 namespace WpfAppComputadoras.Administrator.Vistas
 {
@@ -9,17 +10,35 @@ namespace WpfAppComputadoras.Administrator.Vistas
     /// </summary>
     public partial class UCProcesadorView : UserControl
     {
-        private UCProductView mainView;
+        private readonly UCProductView mainView;
         public UCProcesadorView(UCProductView uCProductView)
         {
             InitializeComponent();
-            mainView = uCProductView;
+            ModoVista(uCProductView.VistaMode);
+            if (!(uCProductView.mainView.SocketsList is null))
+            {
+                cbSocket.ItemsSource = uCProductView.mainView.SocketsList;
+                cbSocket.DisplayMemberPath = "NombreSocket";
+                cbSocket.SelectedValuePath = "IdSocket";
+            }
+            this.mainView = uCProductView;
             txtConsumo.Text = uCProductView.procesador.Consumo.ToString();
             txtFrecuenciaBase.Text = uCProductView.procesador.FrecuenciaBase.ToString();
             txtFrecuenciaTurbo.Text = uCProductView.procesador.FrecuenciaTurbo.ToString();
             txtLitografia.Text = uCProductView.procesador.Litografia.ToString();
             txtNumeroHilos.Text = uCProductView.procesador.NumeroHilos.ToString();
             txtNumeroNucleos.Text = uCProductView.procesador.NumeroNucleos.ToString();
+            cbSocket.SelectedValue = uCProductView.procesador.Socket.IdSocket;
+        }
+        private void ModoVista(bool activo)
+        {
+            txtConsumo.IsEnabled = !activo;
+            txtFrecuenciaBase.IsEnabled = !activo;
+            txtFrecuenciaTurbo.IsEnabled = !activo;
+            txtLitografia.IsEnabled = !activo;
+            txtNumeroHilos.IsEnabled = !activo;
+            txtNumeroNucleos.IsEnabled = !activo;
+            cbSocket.IsEnabled = !activo;
         }
         private void Window_Initialized(object sender, EventArgs e)
         {
@@ -42,6 +61,15 @@ namespace WpfAppComputadoras.Administrator.Vistas
             txtNumeroHilos.PreviewTextInput += Prevent_PreviewTextInput;
             txtNumeroHilos.TextChanged += TxtNumeroHilos_TextChanged;
 
+            cbSocket.SelectionChanged += CbSocket_SelectionChanged;
+        }
+
+        private void CbSocket_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cbSocket.SelectedIndex != 0)
+            {
+                mainView.procesador.Socket = (SocketProcesador)cbSocket.SelectedItem;
+            }
         }
 
         private void TxtNumeroHilos_TextChanged(object s, TextChangedEventArgs e)

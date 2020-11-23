@@ -5,9 +5,10 @@ using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Enums;
 
 namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common
 {
-    public class Fuente : Producto
+    public class SocketProcesador
     {
-        public int Potencia { get; set; }
-        public ECertificacion Certificacion { get; set; }
+        public int IdSocket { get; set; }
+        public ESocketProcesador NombreSocket { get; set; }
+        public string Descripcion { get; set; }
     }
 }

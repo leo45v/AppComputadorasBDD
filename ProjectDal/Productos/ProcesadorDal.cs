@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Enums;
 
 namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDal.Personas.Productos
 {
@@ -10,9 +11,9 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
         {
             bool estado = false;
             string queryString = @"INSERT INTO Procesador
-                                   (IdProducto, FrecuenciaBase, FrecuenciaTurbo, NumeroNucleos, NumeroHilos, Consumo, Litografia) 
+                                   (IdProducto, FrecuenciaBase, FrecuenciaTurbo, NumeroNucleos, NumeroHilos, Consumo, Litografia, Socket) 
                                    VALUES
-                                   (@IdProducto, @FrecuenciaBase, @FrecuenciaTurbo, @NumeroNucleos, @NumeroHilos, @Consumo, @Litografia)";
+                                   (@IdProducto, @FrecuenciaBase, @FrecuenciaTurbo, @NumeroNucleos, @NumeroHilos, @Consumo, @Litografia, @Socket)";
             try
             {
                 OperationsSql.OpenConnection();
@@ -27,6 +28,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                     OperationsSql.AddWithValueString(parameter: "NumeroHilos", value: procesador.NumeroHilos);
                     OperationsSql.AddWithValueString(parameter: "Consumo", value: procesador.Consumo);
                     OperationsSql.AddWithValueString(parameter: "Litografia", value: procesador.Litografia);
+                    OperationsSql.AddWithValueString(parameter: "Socket", value: procesador.Socket.IdSocket);
                     OperationsSql.ExecuteBasicCommandWithTransaction();
                     OperationsSql.ExecuteTransactionCommit();
                     estado = true;
@@ -47,10 +49,12 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             Procesador procesador = null;
             string query = @"SELECT r.IdProducto, r.FrecuenciaBase, r.FrecuenciaTurbo, r.NumeroNucleos, r.NumeroHilos, r.Consumo, r.Litografia, 
                              pro.PrecioUnidad, pro.Imagen, pro.Nombre, pro.Stock, pro.IdMarca, pro.Descontinuado, pro.Eliminado, 
-                             mar.NombreMarca
+                             mar.NombreMarca, 
+                             sp.IdSocket, sp.NombreSocket, sp.Descripcion
                              FROM Procesador r
                              INNER JOIN Producto pro ON pro.IdProducto = r.IdProducto
-                             INNER JOIN Marca mar ON mar.IdMarca = pro.IdMarca
+                             INNER JOIN Marca mar ON mar.IdMarca = pro.IdMarca 
+                             INNER JOIN SocketProcesador sp ON sp.IdSocket = r.Socket 
                              WHERE pro.Eliminado = 0 AND pro.IdProducto = @IdProducto";
             try
             {
@@ -76,10 +80,12 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             List<Procesador> procesadors = null;
             string query = @"SELECT r.IdProducto, r.FrecuenciaBase, r.FrecuenciaTurbo, r.NumeroNucleos, r.NumeroHilos, r.Consumo, r.Litografia, 
                              pro.PrecioUnidad, pro.Imagen, pro.Nombre, pro.Stock, pro.IdMarca, pro.Descontinuado, pro.Eliminado, 
-                             mar.NombreMarca
+                             mar.NombreMarca, 
+                             sp.IdSocket, sp.NombreSocket, sp.Descripcion
                              FROM Procesador r
                              INNER JOIN Producto pro ON pro.IdProducto = r.IdProducto
-                             INNER JOIN Marca mar ON mar.IdMarca = pro.IdMarca
+                             INNER JOIN Marca mar ON mar.IdMarca = pro.IdMarca 
+                             INNER JOIN SocketProcesador sp ON sp.IdSocket = r.Socket 
                              WHERE pro.Eliminado = 0";
             try
             {
@@ -187,7 +193,8 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                                        NumeroNucleos = @NumeroNucleos, 
                                        NumeroHilos = @NumeroHilos,
                                        Consumo = @Consumo,
-                                       Litografia = @Litografia
+                                       Litografia = @Litografia, 
+                                       Socket = @Socket
                                    WHERE IdProducto = @IdProducto";
             try
             {
@@ -203,6 +210,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                     OperationsSql.AddWithValueString(parameter: "Consumo", procesador.Consumo);
                     OperationsSql.AddWithValueString(parameter: "Litografia", procesador.Litografia);
                     OperationsSql.AddWithValueString(parameter: "IdProducto", procesador.IdProducto);
+                    OperationsSql.AddWithValueString(parameter: "Socket", procesador.Socket.IdSocket);
                     OperationsSql.ExecuteBasicCommandWithTransaction();
                     OperationsSql.ExecuteTransactionCommit();
                     estado = true;
@@ -266,7 +274,13 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 Stock = (short)data["Stock"],
                 NumeroHilos = (int)data["NumeroHilos"],
                 NumeroNucleos = (int)data["NumeroNucleos"],
-                Eliminado = (bool)data["Eliminado"]
+                Eliminado = (bool)data["Eliminado"],
+                Socket = new SocketProcesador()
+                {
+                    IdSocket = (int)data["IdSocket"],
+                    Descripcion = (string)data["Descripcion"],
+                    NombreSocket = (ESocketProcesador)Enum.Parse(typeof(ESocketProcesador), (string)data["NombreSocket"])
+                }
             };
         }
     }
