@@ -87,7 +87,8 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common
             foreach (SqlParameter p in command.Parameters)
             {
                 string isQuted = (p.Value is string) ? "'" : (p.Value is Guid) ? "'" : "";
-                result = result.Replace(p.ParameterName.ToString(), isQuted + p.Value.ToString() + isQuted);
+                string value = (p.Value is bool) ? (Convert.ToInt32((bool)p.Value)).ToString() : p.Value.ToString();
+                result = result.Replace(p.ParameterName.ToString(), isQuted + value + isQuted);
             }
             return result;
         }
