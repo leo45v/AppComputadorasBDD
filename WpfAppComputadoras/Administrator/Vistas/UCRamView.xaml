@@ -5,21 +5,27 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WpfAppComputadoras.Administrator"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Initialized="UserControl_Initialized">
-    <Grid Background="#FF8BC981">
+             Initialized="UserControl_Initialized">
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="120"/>
+            <ColumnDefinition Width="10"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <StackPanel x:Name="txtLatencia" Grid.Column="1" Margin="5,0,0,0">
-        <TextBox x:Name="txtMemoria" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="120"/>
-        <TextBox x:Name="txtFrecuencia" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="120" RenderTransformOrigin="0.306,0.93"/>
-        <TextBox x:Name="txtLatencia1" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="120"/>
-        </StackPanel>
-        <StackPanel Grid.Column="0">
-        <TextBlock HorizontalAlignment="Right" Text="Memoria" TextWrapping="Wrap" VerticalAlignment="Stretch" Height="17.96"/>
-        <TextBlock HorizontalAlignment="Right" Text="Frecuencia" TextWrapping="Wrap" VerticalAlignment="Stretch" RenderTransformOrigin="0.611,-0.282" Height="17.96"/>
-        <TextBlock HorizontalAlignment="Right" Text="Latencia" TextWrapping="Wrap" VerticalAlignment="Stretch" RenderTransformOrigin="0.52,-0.272" Height="17.96"/>
-        </StackPanel>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <!--<StackPanel x:Name="txtLatencia" Grid.Column="1" Margin="5,0,0,0">-->
+        <TextBox x:Name="txtMemoria" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+        <TextBox x:Name="txtFrecuencia" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" RenderTransformOrigin="0.306,0.93"/>
+        <TextBox x:Name="txtLatencia1" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+        <!--</StackPanel>-->
+        <!--<StackPanel Grid.Column="0">-->
+        <TextBlock HorizontalAlignment="Right" Grid.Row="0" Grid.Column="0" Text="Memoria" TextWrapping="Wrap" VerticalAlignment="Center"/>
+        <TextBlock HorizontalAlignment="Right" Grid.Row="1" Grid.Column="0" Text="Frecuencia" TextWrapping="Wrap" VerticalAlignment="Center" />
+        <TextBlock HorizontalAlignment="Right" Grid.Row="2" Grid.Column="0" Text="Latencia" TextWrapping="Wrap" VerticalAlignment="Center" />
+        <!--</StackPanel>-->
     </Grid>
 </UserControl>

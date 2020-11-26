@@ -74,8 +74,8 @@ namespace WpfAppComputadoras.Administrator
                 UCProductView uCInsertProductView = new UCProductView(viewMain, (ETipoProducto)(cbTipoProducto.SelectedIndex - 1));
                 if (!(uCInsertProductView is null))
                 {
-                    uCInsertProductView.Height = 400;
-                    uCInsertProductView.Width = 640;
+                    //uCInsertProductView.Height = 400;
+                    //uCInsertProductView.Width = 640;
                     uCInsertProductView.ShowDialog();
                 }
             }

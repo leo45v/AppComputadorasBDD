@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Text;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Enums;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Extras;
+using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Operaciones;
 
 namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDal.Personas.Productos
 {
@@ -37,9 +38,10 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 if (!cascada) { OperationsSql.ExecuteTransactionCommit(); }
                 estado = true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                if (!cascada) { OperationsSql.ExecuteTransactionCancel(); }
+                LogError.SetError("Problemas al Insertar el Producto");
             }
             finally { if (!cascada) { OperationsSql.CloseConnection(); } }
             return estado;
@@ -73,7 +75,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             catch (Exception)
             {
-                throw;
+                LogError.SetError("Problemas al Obtener el Producto");
             }
             finally { OperationsSql.CloseConnection(); }
             return productos;
@@ -123,7 +125,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             catch (Exception)
             {
-                throw;
+                LogError.SetError("Problemas al Obtener los Productos");
             }
             finally { OperationsSql.CloseConnection(); }
             return productos;
@@ -156,9 +158,9 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 if (!cascada) { OperationsSql.ExecuteTransactionCommit(); }
                 estado = true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                LogError.SetError("Problemas al Actualizar el Producto");
             }
             finally { if (!cascada) { OperationsSql.CloseConnection(); } }
             return estado;
@@ -183,7 +185,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             catch (Exception)
             {
-                throw;
+                LogError.SetError("Problemas al Obtener la Cantidad de Productos");
             }
             finally { OperationsSql.CloseConnection(); }
             return cantidad;
@@ -224,7 +226,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             catch (Exception)
             {
-                throw;
+                LogError.SetError("Problemas al Obtener la Cantidad de Productos");
             }
             finally { OperationsSql.CloseConnection(); }
             return cantidad;
@@ -244,7 +246,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             catch (Exception)
             {
-                throw;
+                LogError.SetError("Problemas al Borrar el Producto");
             }
             finally
             {
@@ -282,42 +284,10 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             catch (Exception)
             {
-                throw;
+                LogError.SetError("Problemas al Obtener el tipo del Producto");
             }
             finally { OperationsSql.CloseConnection(); }
             return tipo;
-        }
-
-        public static List<Marca> GetMarcas()
-        {
-            List<Marca> marcas = null;
-            string query = @"SELECT IdMarca, NombreMarca
-                             FROM Marca";
-            try
-            {
-                OperationsSql.OpenConnection();
-                OperationsSql.CreateBasicCommandWithTransaction(query);
-                List<Dictionary<string, object>> data = OperationsSql.ExecuteReaderMany();
-                if (data != null)
-                {
-                    marcas = new List<Marca>();
-                    foreach (Dictionary<string, object> item in data)
-                    {
-                        marcas.Add(new Marca()
-                        {
-                            IdMarca = (byte)item["IdMarca"],
-                            NombreMarca = (string)item["NombreMarca"]
-                        });
-                    }
-                }
-                OperationsSql.ExecuteTransactionCommit();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            finally { OperationsSql.CloseConnection(); }
-            return marcas;
         }
         public static bool InsertarColores(Guid idProducto, int idColor)
         {
@@ -332,12 +302,14 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 OperationsSql.AddWithValueString("IdColor", idColor);
                 OperationsSql.ExecuteBasicCommandWithTransaction();
                 OperationsSql.RemoveValueParams();
+                if (!cascada) { OperationsSql.ExecuteTransactionCommit(); }
                 estado = true;
             }
             catch (Exception)
             {
-                //ALREADY EXIST -> 
+                LogError.SetError("Problemas al Insertar un Color para un Producto");
             }
+            finally { if (!cascada) { OperationsSql.CloseConnection(); } }
             return estado;
         }
         public static List<Colores> GetColores(Guid idProducto)
@@ -374,42 +346,9 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             catch (Exception)
             {
-                throw;
+                LogError.SetError("Problemas al Obtener los Colores del Producto");
             }
             finally { if (!cascada) { OperationsSql.CloseConnection(); } }
-            return colores;
-        }
-        public static List<Colores> GetColores()
-        {
-            List<Colores> colores = null;
-            string query = @"SELECT co.IdColor, co.ColorRgb, co.Nombre
-                             FROM Color co";
-            try
-            {
-                OperationsSql.OpenConnection();
-                OperationsSql.CreateBasicCommandWithTransaction(query);
-                List<Dictionary<string, object>> data = OperationsSql.ExecuteReaderMany();
-                if (data != null)
-                {
-                    colores = new List<Colores>();
-                    foreach (Dictionary<string, object> item in data)
-                    {
-                        string[] rgb = item["ColorRgb"].ToString().Split(",");
-                        colores.Add(new Colores()
-                        {
-                            IdColor = (short)item["IdColor"],
-                            Nombre = (string)item["Nombre"],
-                            ColorRGB = Color.FromArgb(255, int.Parse(rgb[0]), int.Parse(rgb[1]), int.Parse(rgb[2]))
-                        });
-                    }
-                }
-                OperationsSql.ExecuteTransactionCommit();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            finally { OperationsSql.CloseConnection(); }
             return colores;
         }
         public static bool DeleteColorProduct(Guid idProducto, int idColor)
@@ -428,68 +367,14 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 if (!cascada) { OperationsSql.ExecuteTransactionCommit(); }
                 estado = true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                LogError.SetError("Problemas al Borrar el Color de un Producto");
             }
             finally { if (!cascada) { OperationsSql.CloseConnection(); } }
             return estado;
         }
-        public static bool Insertar_Socket(SocketProcesador socketProcesador)
-        {
-            bool estado = false;
-            string query = @"INSERT INTO SocketProcesador (IdSocket, NombreSocket, Descripcion)
-                                                 Values(@IdSocket, @NombreSocket, @Descripcion)";
-            try
-            {
-                OperationsSql.OpenConnection();
-                OperationsSql.CreateBasicCommandWithTransaction(query);
-                OperationsSql.AddWithValueString("IdSocket", socketProcesador.IdSocket);
-                OperationsSql.AddWithValueString("NombreSocket", socketProcesador.NombreSocket);
-                OperationsSql.AddWithValueString("Descripcion", socketProcesador.Descripcion);
-                OperationsSql.ExecuteBasicCommandWithTransaction();
-                OperationsSql.ExecuteTransactionCommit();
-                estado = true;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            finally { OperationsSql.CloseConnection(); }
-            return estado;
-        }
-        public static List<SocketProcesador> Get_Sockets_From_Procesadores()
-        {
-            List<SocketProcesador> socketProcesadors = null;
-            string query = @"SELECT IdSocket, NombreSocket, Descripcion
-                             FROM SocketProcesador";
-            try
-            {
-                OperationsSql.OpenConnection();
-                OperationsSql.CreateBasicCommandWithTransaction(query);
-                List<Dictionary<string, object>> data = OperationsSql.ExecuteReaderMany();
-                if (data != null)
-                {
-                    socketProcesadors = new List<SocketProcesador>();
-                    foreach (Dictionary<string, object> item in data)
-                    {
-                        socketProcesadors.Add(new SocketProcesador()
-                        {
-                            IdSocket = (int)item["IdSocket"],
-                            NombreSocket = (ESocketProcesador)Enum.Parse(typeof(ESocketProcesador), (string)item["NombreSocket"]),
-                            Descripcion = (string)item["Descripcion"]
-                        });
-                    }
-                }
-                OperationsSql.ExecuteTransactionCommit();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            finally { OperationsSql.CloseConnection(); }
-            return socketProcesadors;
-        }
+
         //public static bool Delete(Guid idProducto)
         //{
         //    bool estado = false;

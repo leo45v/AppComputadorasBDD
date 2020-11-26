@@ -5,24 +5,31 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WpfAppComputadoras.Administrator"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Initialized="UserControl_Initialized">
-    <Grid Background="#FF7EB3BF" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+             Initialized="UserControl_Initialized">
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="120"/>
+            <ColumnDefinition Width="10"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.Column="1" Margin="5,0,0,0">
-            <TextBox x:Name="txtCapacidad" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-            <TextBox x:Name="txtEscritura" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.306,0.93"/>
-            <TextBox x:Name="txtLectura" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-            <TextBox x:Name="txtTipo" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        </StackPanel>
-        <StackPanel Grid.Column="0" Margin="5,0,0,0" >
-        <TextBlock HorizontalAlignment="Right" Text="Capacidad" TextWrapping="Wrap" VerticalAlignment="Stretch" Height="17.96"/>
-        <TextBlock HorizontalAlignment="Right" Text="Escritura" TextWrapping="Wrap" VerticalAlignment="Stretch" Height="17.96"/>
-        <TextBlock HorizontalAlignment="Right" Text="Lectura" TextWrapping="Wrap" VerticalAlignment="Stretch" Height="17.96"/>
-        <TextBlock HorizontalAlignment="Right" Text="Tipo" TextWrapping="Wrap" VerticalAlignment="Stretch" Height="17.96"/>
-        </StackPanel>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <!--<StackPanel Grid.Column="1" Margin="5,0,0,0">-->
+        <TextBox x:Name="txtCapacidad" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+        <TextBox x:Name="txtEscritura" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" RenderTransformOrigin="0.306,0.93"/>
+        <TextBox x:Name="txtLectura" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+        <TextBox x:Name="txtTipo" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+        <!--</StackPanel>-->
+        <!--<StackPanel Grid.Column="0" Margin="5,0,0,0" >-->
+        <TextBlock HorizontalAlignment="Right" Grid.Row="0" Grid.Column="0" Text="Capacidad" TextWrapping="Wrap" VerticalAlignment="Center" Height="17.96"/>
+        <TextBlock HorizontalAlignment="Right" Grid.Row="1" Grid.Column="0" Text="Escritura" TextWrapping="Wrap" VerticalAlignment="Center" Height="17.96"/>
+        <TextBlock HorizontalAlignment="Right" Grid.Row="2" Grid.Column="0" Text="Lectura" TextWrapping="Wrap" VerticalAlignment="Center" Height="17.96"/>
+        <TextBlock HorizontalAlignment="Right" Grid.Row="3" Grid.Column="0" Text="Tipo" TextWrapping="Wrap" VerticalAlignment="Center" Height="17.96"/>
+        <!--</StackPanel>-->
     </Grid>
 
 </UserControl>

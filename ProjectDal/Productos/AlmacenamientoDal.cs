@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Operaciones;
 
 namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDal.Personas.Productos
 {
@@ -17,7 +18,6 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 ProductosDal.cascada = true;
                 if (ProductosDal.Insertar(almacenamiento as Producto))
                 {
-                    ProductosDal.cascada = false;
                     OperationsSql.CreateBasicCommandWithTransaction(query);
                     OperationsSql.AddWithValueString("IdProducto", almacenamiento.IdProducto);
                     OperationsSql.AddWithValueString("Capacidad", almacenamiento.Capacidad);
@@ -29,12 +29,14 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 }
                 estado = true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                OperationsSql.ExecuteTransactionCancel();
+                LogError.SetError("Problemas al Insertar un Producto -> Almacenamiento", ex);
             }
             finally
             {
+                ProductosDal.cascada = false;
                 OperationsSql.CloseConnection();
             }
             return estado;
@@ -61,9 +63,9 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 }
                 OperationsSql.ExecuteTransactionCommit();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                LogError.SetError("Problemas al Obtener un Producto -> Almacenamiento", ex);
             }
             finally { OperationsSql.CloseConnection(); }
             return almacenamiento;
@@ -93,9 +95,9 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 }
                 OperationsSql.ExecuteTransactionCommit();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                LogError.SetError("Problemas al Obtener todos los Productos -> Almacenamiento", ex);
             }
             finally { OperationsSql.CloseConnection(); }
             return almacenamientos;
@@ -132,9 +134,9 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 }
                 OperationsSql.ExecuteTransactionCommit();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                LogError.SetError("Problemas al Obtener los Productos -> Almacenamiento", ex);
             }
             finally { OperationsSql.CloseConnection(); }
             return productos;
@@ -168,9 +170,9 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 }
                 OperationsSql.ExecuteTransactionCommit();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                LogError.SetError("Problemas al Obtener lista de Marcas -> Almacenamiento", ex);
             }
             finally { OperationsSql.CloseConnection(); }
             return listaMarcas;
@@ -203,7 +205,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             catch (Exception ex)
             {
-                throw ex;
+                LogError.SetError("Problemas al Actualizar el Producto -> Almacenamiento", ex);
             }
             finally { ProductosDal.cascada = false; OperationsSql.CloseConnection(); }
             return estado;
@@ -230,9 +232,9 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 }
                 OperationsSql.ExecuteTransactionCommit();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                LogError.SetError("Problemas al Obtener la cantidad de Productos -> Almacenamiento", ex);
             }
             finally { OperationsSql.CloseConnection(); }
             return cantidad;

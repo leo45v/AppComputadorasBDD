@@ -27,24 +27,36 @@ namespace WpfAppComputadoras.Administrator.Vistas
         private void UserControl_Initialized(object sender, EventArgs e)
         {
             txtFrecuencia.TextChanged += TxtFrecuencia_TextChanged;
+            txtFrecuencia.PreviewTextInput += TxtFrecuencia_PreviewTextInput;
             txtLatencia1.TextChanged += TxtLatencia1_TextChanged;
+            txtLatencia1.PreviewTextInput += TxtFrecuencia_PreviewTextInput;
             txtMemoria.TextChanged += TxtMemoria_TextChanged;
+            txtMemoria.PreviewTextInput += TxtFrecuencia_PreviewTextInput;
+        }
+
+        private void TxtFrecuencia_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            if (!(char.IsDigit(e.Text, e.Text.Length - 1) && ((TextBox)sender).Text.Length < 10))
+            { e.Handled = true; }
         }
 
         private void TxtMemoria_TextChanged(object sender, TextChangedEventArgs e)
         {
+            ((TextBox)sender).Text = ((TextBox)sender).Text.Trim();
             if (!String.IsNullOrWhiteSpace(((TextBox)sender).Text))
             { mainView.ram.Memoria = int.Parse(((TextBox)sender).Text); }
         }
 
         private void TxtLatencia1_TextChanged(object sender, TextChangedEventArgs e)
         {
+            ((TextBox)sender).Text = ((TextBox)sender).Text.Trim();
             if (!String.IsNullOrWhiteSpace(((TextBox)sender).Text))
             { mainView.ram.Latencia = int.Parse(((TextBox)sender).Text); }
         }
 
         private void TxtFrecuencia_TextChanged(object sender, TextChangedEventArgs e)
         {
+            ((TextBox)sender).Text = ((TextBox)sender).Text.Trim();
             if (!String.IsNullOrWhiteSpace(((TextBox)sender).Text))
             { mainView.ram.Frecuencia = int.Parse(((TextBox)sender).Text); }
         }

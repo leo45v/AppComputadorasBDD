@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Operaciones;
 
 namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDal.Personas.Productos
 {
@@ -17,7 +18,6 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 ProductosDal.cascada = true;
                 if (ProductosDal.Insertar(gabinete as Producto))
                 {
-                    ProductosDal.cascada = false;
                     foreach (Colores item in gabinete.Colores)
                     {
                         ProductosDal.InsertarColores(gabinete.IdProducto, item.IdColor);
@@ -34,10 +34,12 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             catch (Exception)
             {
-                throw;
+                OperationsSql.ExecuteTransactionCancel();
+                LogError.SetError("Problemas al Insertar un Producto -> Gabinete");
             }
             finally
             {
+                ProductosDal.cascada = false;
                 OperationsSql.CloseConnection();
             }
             return estado;
@@ -68,7 +70,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             catch (Exception)
             {
-                throw;
+                LogError.SetError("Problemas al Obtener un Producto -> Gabinete");
             }
             finally { OperationsSql.CloseConnection(); }
             return gabinete;
@@ -102,7 +104,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             catch (Exception)
             {
-                throw;
+                LogError.SetError("Problemas al Obtener los Productos -> Gabinete");
             }
             finally { OperationsSql.CloseConnection(); }
             return gabinetes;
@@ -141,7 +143,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             catch (Exception)
             {
-                throw;
+                LogError.SetError("Problemas al Obtener los Productos -> Gabinete");
             }
             finally { OperationsSql.CloseConnection(); }
             return productos;
@@ -177,7 +179,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             catch (Exception)
             {
-                throw;
+                LogError.SetError("Problemas al Obtener las Marcas de los Productos -> Gabinete");
             }
             finally { OperationsSql.CloseConnection(); }
             return listaMarcas;
@@ -225,9 +227,9 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 }
                 else { OperationsSql.ExecuteTransactionCancel(); }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                LogError.SetError("Problemas al Actualizar un Producto -> Gabinete");
             }
             finally { ProductosDal.cascada = false; OperationsSql.CloseConnection(); }
             return estado;
@@ -256,7 +258,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             catch (Exception)
             {
-                throw;
+                LogError.SetError("Problemas al Contar los Productos -> Gabinete");
             }
             finally { OperationsSql.CloseConnection(); }
             return cantidad;

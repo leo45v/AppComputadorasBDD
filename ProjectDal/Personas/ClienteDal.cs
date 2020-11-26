@@ -7,8 +7,9 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
 {
     public class ClienteDal
     {
-        public static void Insertar(Cliente cliente)
+        public static bool Insertar(Cliente cliente)
         {
+            bool estado = false;
             string queryString = @"INSERT INTO Cliente
                                    (IdPersona, Email) 
                                    VALUES
@@ -23,17 +24,20 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                     OperationsSql.AddWithValueString("Email", cliente.Email);
                     OperationsSql.ExecuteBasicCommandWithTransaction();
                     OperationsSql.ExecuteTransactionCommit();
+                    estado = true;
                 }
             }
             catch (Exception ex)
             {
-                throw ex;
+                OperationsSql.ExecuteTransactionCancel();
+                Operaciones.LogError.SetError("Error", ex);
             }
             finally
             {
                 PersonaDal.cascada = false;
                 OperationsSql.CloseConnection();
             }
+            return estado;
         }
         public static Cliente Get_Cliente_By_IdUsuario(Guid idUsuario)
         {
@@ -62,7 +66,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             catch (Exception ex)
             {
-                throw ex;
+                Operaciones.LogError.SetError("Error", ex);
             }
             finally
             {
@@ -99,7 +103,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             catch (Exception ex)
             {
-                throw ex;
+                Operaciones.LogError.SetError("Error", ex);
             }
             finally { OperationsSql.CloseConnection(); }
             return clientes;
@@ -126,7 +130,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             catch (Exception ex)
             {
-                throw ex;
+                Operaciones.LogError.SetError("Error", ex);
             }
             finally { PersonaDal.cascada = false; OperationsSql.CloseConnection(); }
             return estado;

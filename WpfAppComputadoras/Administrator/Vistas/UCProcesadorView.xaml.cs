@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common;
+using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectBrl;
 
 namespace WpfAppComputadoras.Administrator.Vistas
 {
@@ -66,7 +67,7 @@ namespace WpfAppComputadoras.Administrator.Vistas
 
         private void CbSocket_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (cbSocket.SelectedIndex != 0)
+            if (cbSocket.SelectedIndex >= 0)
             {
                 mainView.procesador.Socket = (SocketProcesador)cbSocket.SelectedItem;
             }
@@ -130,6 +131,18 @@ namespace WpfAppComputadoras.Administrator.Vistas
         {
             if (!(char.IsDigit(e.Text, e.Text.Length - 1) && ((TextBox)sender).Text.Length < 4))
             { e.Handled = true; }
+        }
+
+        private void Btn_RefreshAddSocket_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            this.mainView.mainView.SocketsList = ConfiguracionesBrl.Socket.GetAll();
+            if (!(this.mainView.mainView.SocketsList is null))
+            {
+                cbSocket.ItemsSource = this.mainView.mainView.SocketsList;
+                cbSocket.DisplayMemberPath = "NombreSocket";
+                cbSocket.SelectedValuePath = "IdSocket";
+            }
+            cbSocket.SelectedValue = this.mainView.procesador.Socket.IdSocket;
         }
     }
 }

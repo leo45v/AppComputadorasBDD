@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Enums;
+using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Operaciones;
 
 namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDal.Personas.Productos
 {
@@ -18,7 +19,6 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 ProductosDal.cascada = true;
                 if (ProductosDal.Insertar(fuente as Producto))
                 {
-                    ProductosDal.cascada = false;
                     OperationsSql.CreateBasicCommandWithTransaction(query);
                     OperationsSql.AddWithValueString("IdProducto", fuente.IdProducto);
                     OperationsSql.AddWithValueString("Potencia", fuente.Potencia);
@@ -30,10 +30,12 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             catch (Exception)
             {
-                throw;
+                OperationsSql.ExecuteTransactionCancel();
+                LogError.SetError("Problemas al Insertar un Producto -> Fuente");
             }
             finally
             {
+                    ProductosDal.cascada = false;
                 OperationsSql.CloseConnection();
             }
             return estado;
@@ -62,7 +64,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             catch (Exception)
             {
-                throw;
+                LogError.SetError("Problemas al Obtener un Producto -> Fuente");
             }
             finally { OperationsSql.CloseConnection(); }
             return fuente;
@@ -94,7 +96,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             catch (Exception)
             {
-                throw;
+                LogError.SetError("Problemas al Obtener todos los Productos -> Fuente");
             }
             finally { OperationsSql.CloseConnection(); }
             return fuentes;
@@ -133,7 +135,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             catch (Exception)
             {
-                throw;
+                LogError.SetError("Problemas al Obtener Algunos Productos -> Fuente");
             }
             finally { OperationsSql.CloseConnection(); }
             return productos;
@@ -169,7 +171,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             catch (Exception)
             {
-                throw;
+                LogError.SetError("Problemas al Obtener las Marcas -> Fuente");
             }
             finally { OperationsSql.CloseConnection(); }
             return listaMarcas;
@@ -196,9 +198,9 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 }
                 else { OperationsSql.ExecuteTransactionCancel(); }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                LogError.SetError("Problemas al Actualizar un Producto -> Fuente");
             }
             finally { ProductosDal.cascada = false; OperationsSql.CloseConnection(); }
             return estado;
@@ -227,7 +229,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             catch (Exception)
             {
-                throw;
+                LogError.SetError("Problemas al Obtener la cantidad de los Productos -> Fuente");
             }
             finally { OperationsSql.CloseConnection(); }
             return cantidad;

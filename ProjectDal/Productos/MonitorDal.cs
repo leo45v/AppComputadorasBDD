@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Operaciones;
+using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Pantalla;
 
 namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDal.Personas.Productos
 {
@@ -9,21 +11,20 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
         public static bool Insertar(Monitor monitor)
         {
             bool estado = false;
-            string query = @"INSERT INTO Monitor (IdProducto, Tamano, Frecuencia, Resolucion, Ratio)
-                                       Values(@IdProducto, @Tamano, @Frecuencia, @Resolucion, @Ratio)";
+            string query = @"INSERT INTO Monitor (IdProducto, Tamano, Frecuencia, IdResolucion, IdRatio)
+                                       Values(@IdProducto, @Tamano, @Frecuencia, @IdResolucion, @IdRatio)";
             try
             {
                 OperationsSql.OpenConnection();
                 ProductosDal.cascada = true;
                 if (ProductosDal.Insertar(monitor as Producto))
                 {
-                    ProductosDal.cascada = false;
                     OperationsSql.CreateBasicCommandWithTransaction(query);
                     OperationsSql.AddWithValueString("IdProducto", monitor.IdProducto);
                     OperationsSql.AddWithValueString("Tamano", monitor.Tamano);
                     OperationsSql.AddWithValueString("Frecuencia", monitor.Frecuencia);
-                    OperationsSql.AddWithValueString("Resolucion", monitor.Resolucion);
-                    OperationsSql.AddWithValueString("Ratio", monitor.Ratio);
+                    OperationsSql.AddWithValueString("IdResolucion", monitor.Resolucion.IdResolucion);
+                    OperationsSql.AddWithValueString("IdRatio", monitor.Ratio.IdRatio);
                     OperationsSql.ExecuteBasicCommandWithTransaction();
                     foreach (Colores item in monitor.Colores)
                     {
@@ -33,12 +34,14 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 }
                 estado = true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                OperationsSql.ExecuteTransactionCancel();
+                LogError.SetError("Problemas al Insertar un Producto -> Monitor", ex);
             }
             finally
             {
+                    ProductosDal.cascada = false;
                 OperationsSql.CloseConnection();
             }
             return estado;
@@ -46,12 +49,16 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
         public static Monitor Get(Guid idMonitor)
         {
             Monitor monitor = null;
-            string query = @"SELECT r.IdProducto, r.Tamano, r.Frecuencia, r.Resolucion, r.Ratio,  
+            string query = @"SELECT r.IdProducto, r.Tamano, r.Frecuencia,   
                              pro.PrecioUnidad, pro.Imagen, pro.Nombre, pro.Stock, pro.IdMarca, pro.Descontinuado, pro.Eliminado, 
                              mar.NombreMarca
+                             re.IdResolucion, re.NombreResolucion, 
+                             ra.IdRatio, ra.NombreRatio 
                              FROM Monitor r
                              INNER JOIN Producto pro ON pro.IdProducto = r.IdProducto
                              INNER JOIN Marca mar ON mar.IdMarca = pro.IdMarca
+                             INNER JOIN Resolucion re ON re.IdResolucion = r.IdResolucion 
+                             INNER JOIN Ratio ra ON ra.IdRatio = r.IdRatio  
                              WHERE pro.Eliminado = 0 AND pro.IdProducto = @IdProducto";
             try
             {
@@ -68,7 +75,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             catch (Exception)
             {
-                throw;
+                LogError.SetError("Problemas al Obtener un Producto -> Monitor");
             }
             finally { OperationsSql.CloseConnection(); }
             return monitor;
@@ -76,12 +83,16 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
         public static List<Monitor> GetAll()
         {
             List<Monitor> monitors = null;
-            string query = @"SELECT r.IdProducto, r.Tamano, r.Frecuencia, r.Resolucion, r.Ratio,  
+            string query = @"SELECT r.IdProducto, r.Tamano, r.Frecuencia, 
                              pro.PrecioUnidad, pro.Imagen, pro.Nombre, pro.Stock, pro.IdMarca, pro.Descontinuado, pro.Eliminado, 
-                             mar.NombreMarca
+                             mar.NombreMarca, 
+                             re.IdResolucion, re.NombreResolucion, 
+                             ra.IdRatio, ra.NombreRatio 
                              FROM Monitor r
                              INNER JOIN Producto pro ON pro.IdProducto = r.IdProducto
-                             INNER JOIN Marca mar ON mar.IdMarca = pro.IdMarca
+                             INNER JOIN Marca mar ON mar.IdMarca = pro.IdMarca 
+                             INNER JOIN Resolucion re ON re.IdResolucion = r.IdResolucion 
+                             INNER JOIN Ratio ra ON ra.IdRatio = r.IdRatio  
                              WHERE pro.Eliminado = 0";
             try
             {
@@ -102,7 +113,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             catch (Exception)
             {
-                throw;
+                LogError.SetError("Problemas al Obtener los Productos -> Monitor");
             }
             finally { OperationsSql.CloseConnection(); }
             return monitors;
@@ -141,7 +152,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             catch (Exception)
             {
-                throw;
+                LogError.SetError("Problemas al Obtener los Productos -> Monitor");
             }
             finally { OperationsSql.CloseConnection(); }
             return productos;
@@ -177,7 +188,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             catch (Exception)
             {
-                throw;
+                LogError.SetError("Problemas al Obtener la Marca de los Productos -> Monitor");
             }
             finally { OperationsSql.CloseConnection(); }
             return listaMarcas;
@@ -188,8 +199,8 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             string queryString = @"UPDATE Monitor 
                                    SET Tamano = @Tamano, 
                                        Frecuencia = @Frecuencia, 
-                                       Resolucion = @Resolucion, 
-                                       Ratio = @Ratio 
+                                       IdResolucion = @IdResolucion, 
+                                       IdRatio = @IdRatio 
                                    WHERE IdProducto = @IdProducto";
             try
             {
@@ -200,8 +211,8 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                     OperationsSql.CreateBasicCommandWithTransaction(queryString);
                     OperationsSql.AddWithValueString(parameter: "Tamano", monitor.Tamano);
                     OperationsSql.AddWithValueString(parameter: "Frecuencia", monitor.Frecuencia);
-                    OperationsSql.AddWithValueString(parameter: "Resolucion", monitor.Resolucion);
-                    OperationsSql.AddWithValueString(parameter: "Ratio", monitor.Ratio);
+                    OperationsSql.AddWithValueString(parameter: "IdResolucion", monitor.Resolucion.IdResolucion);
+                    OperationsSql.AddWithValueString(parameter: "IdRatio", monitor.Ratio.IdRatio);
                     OperationsSql.ExecuteBasicCommandWithTransaction();
                     //UPDATE COLORES -> monitor 
                     OperationsSql.ExecuteTransactionCommit();
@@ -209,9 +220,9 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 }
                 else { OperationsSql.ExecuteTransactionCancel(); }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                LogError.SetError("Problemas al Actualizar el Producto -> Monitor");
             }
             finally { ProductosDal.cascada = false; OperationsSql.CloseConnection(); }
             return estado;
@@ -240,7 +251,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             catch (Exception)
             {
-                throw;
+                LogError.SetError("Problemas al Obtener la Cantidad de los Productos -> Monitor");
             }
             finally { OperationsSql.CloseConnection(); }
             return cantidad;
@@ -263,8 +274,16 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 PrecioUnidad = (decimal)data["PrecioUnidad"],
                 Stock = (short)data["Stock"],
                 Eliminado = (bool)data["Eliminado"],
-                Resolucion = (string)data["Resolucion"],
-                Ratio = (string)data["Ratio"]
+                Resolucion = new Resolucion()
+                {
+                    IdResolucion = (byte)data["IdResolucion"],
+                    NombreResolucion = (string)data["NombreResolucion"]
+                },
+                Ratio = new Ratio()
+                {
+                    IdRatio = (byte)data["IdRatio"],
+                    NombreRatio = (string)data["NombreRatio"]
+                }
             };
         }
     }

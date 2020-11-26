@@ -5,25 +5,33 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WpfAppComputadoras.Administrator"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Initialized="UserControl_Initialized">
-    <Grid Background="#FF48B0A6">
+             Initialized="UserControl_Initialized">
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="120"/>
+            <ColumnDefinition Width="10"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.Column="1" Margin="5,0,0,0">
-            <TextBox x:Name="txtVram" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="120"/>
-            <TextBox x:Name="txtFrecuenciaBase" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="120" RenderTransformOrigin="0.306,0.93"/>
-            <TextBox x:Name="txtFrecuenciaTurbo" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="120"/>
-            <TextBox x:Name="txtTipoMemoria" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="120"/>
-            <TextBox x:Name="txtConsumo" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="120"/>
-        </StackPanel>
-        <StackPanel Grid.Column="0">
-            <TextBlock HorizontalAlignment="Right" Text="Vram" TextWrapping="Wrap" VerticalAlignment="Stretch" Height="17.96"/>
-            <TextBlock HorizontalAlignment="Right" Text="Frecuencia Base" TextWrapping="Wrap" VerticalAlignment="Stretch" Height="17.96"/>
-            <TextBlock HorizontalAlignment="Right" Text="Frecuencia Turbo" TextWrapping="Wrap" VerticalAlignment="Stretch" Height="17.96"/>
-            <TextBlock HorizontalAlignment="Right" Text="Tipo Memoria" TextWrapping="Wrap" VerticalAlignment="Stretch" Height="17.96"/>
-            <TextBlock HorizontalAlignment="Right" Text="Consumo" TextWrapping="Wrap" VerticalAlignment="Stretch" Height="17.96"/>
-        </StackPanel>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <!--<StackPanel Grid.Column="1" Margin="5,0,0,0">-->
+        <TextBox x:Name="txtVram" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+        <TextBox x:Name="txtFrecuenciaBase" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" RenderTransformOrigin="0.306,0.93"/>
+        <TextBox x:Name="txtFrecuenciaTurbo" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+        <TextBox x:Name="txtTipoMemoria" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+        <TextBox x:Name="txtConsumo" Grid.Row="4" Grid.Column="2" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+        <!--</StackPanel>-->
+        <!--<StackPanel Grid.Column="0">-->
+        <TextBlock HorizontalAlignment="Right" Grid.Row="0" Grid.Column="0" Text="Vram" TextWrapping="Wrap" VerticalAlignment="Center"/>
+        <TextBlock HorizontalAlignment="Right" Grid.Row="1" Grid.Column="0" Text="Frecuencia Base" TextWrapping="Wrap" VerticalAlignment="Center"/>
+        <TextBlock HorizontalAlignment="Right" Grid.Row="2" Grid.Column="0" Text="Frecuencia Turbo" TextWrapping="Wrap" VerticalAlignment="Center"/>
+        <TextBlock HorizontalAlignment="Right" Grid.Row="3" Grid.Column="0" Text="Tipo Memoria" TextWrapping="Wrap" VerticalAlignment="Center"/>
+        <TextBlock HorizontalAlignment="Right" Grid.Row="4" Grid.Column="0" Text="Consumo" TextWrapping="Wrap" VerticalAlignment="Center"/>
+        <!--</StackPanel>-->
     </Grid>
 </UserControl>

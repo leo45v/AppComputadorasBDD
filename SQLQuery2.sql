@@ -61,6 +61,7 @@ VALUES (0,'Ninguno', 'ERROR'),
        (108, 'LGA_1151_2017','Intel 8va Generación Año 2017'),
        (109, 'LGA_1151_2018','Intel 9na Generación Año 2018'),
        (110, 'LGA_1200_2020','Intel 10ma Generación Año 2020'),
+       (299, 'AM4', 'ZEN, ZEN+, ZEN2, ZEN 3'),
        (300, 'AM4_A320','AMD SOPORTE ZEN, ZEN+, ZEN 2 (ALGUNOS), No Overclock, Año 2017'),
        (301, 'AM4_B350','AMD SOPORTE ZEN, ZEN+, ZEN 2 (ALGUNOS), Año 2017'),
        (302, 'AM4_X370','AMD SOPORTE ZEN, ZEN+, ZEN 2 (ALGUNOS), Año 2017'),
@@ -83,3 +84,58 @@ GO
 
 ALTER TABLE TarjetaGrafica
 ADD Consumo INT NOT NULL DEFAULT 0;
+GO
+
+
+CREATE TABLE Ratio(
+	IdRatio TINYINT NOT NULL,
+	NombreRatio VARCHAR(20) NOT NULL,
+	PRIMARY KEY CLUSTERED ([IdRatio] ASC),
+)
+GO
+CREATE TABLE Resolucion(
+	IdResolucion TINYINT NOT NULL,
+	NombreResolucion VARCHAR(20) NOT NULL,
+	PRIMARY KEY CLUSTERED ([IdResolucion] ASC),
+)
+GO
+
+INSERT INTO Ratio (IdRatio, NombreRatio)
+VALUES (1, '4:3'),
+	   (2, '16:9'),
+	   (3, '16:10'),
+	   (4, '21:9'),
+	   (5, '47:20')
+GO
+
+INSERT INTO Resolucion(IdResolucion, NombreResolucion)
+VALUES (1, '1280x720'),
+	   (2, '1280x800'),
+	   (3, '1600x900'),
+	   (4, '1920x1080'),
+	   (5, '1920x1200'),
+	   (6, '2560x1440'),
+	   (7, '2560x1600'),
+	   (8, '3840x2160')
+GO
+
+
+EXEC sp_rename 'Monitor.Resolucion', 'IdResolucion', 'COLUMN';
+GO
+EXEC sp_rename 'Monitor.Ratio', 'IdRatio', 'COLUMN';
+GO
+
+ALTER TABLE Monitor ALTER COLUMN IdResolucion
+TINYINT NOT NULL;
+GO
+ALTER TABLE Monitor ADD 
+CONSTRAINT [FK_Monitor_Resolucion] FOREIGN KEY ([IdResolucion]) REFERENCES [dbo].[Resolucion] ([IdResolucion]) ON DELETE CASCADE ON UPDATE CASCADE
+GO
+ALTER TABLE Monitor ALTER COLUMN IdRatio
+TINYINT NOT NULL;
+GO
+ALTER TABLE Monitor ADD 
+CONSTRAINT [FK_Monitor_Ratio] FOREIGN KEY ([IdRatio]) REFERENCES [dbo].[Ratio] ([IdRatio]) ON DELETE CASCADE ON UPDATE CASCADE
+GO
+
+INSERT INTO SocketProcesador (

@@ -5,6 +5,7 @@ using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Enums;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectBrl;
 using WpfAnimatedGif;
+using WpfAppComputadoras.Administrator;
 using WpfAppComputadoras.Administrator.Vistas;
 using WpfAppComputadoras.Extra;
 
@@ -37,8 +38,8 @@ namespace WpfAppComputadoras.Components
             CreatePageFromProduct(tipo, producto.IdProducto);
             if (!(uCProcesadorView is null))
             {
-                uCProcesadorView.Height = 400;
-                uCProcesadorView.Width = 640;
+                //uCProcesadorView.Height = 400;
+                //uCProcesadorView.Width = 640;
                 uCProcesadorView.ModoVista();
                 uCProcesadorView.ShowDialog();
             }

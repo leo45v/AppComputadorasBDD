@@ -10,5 +10,12 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common
         public short IdColor { get; set; }
         public string Nombre { get; set; }
         public Color ColorRGB { get; set; }
+        public string Color_ToString
+        {
+            get
+            {
+                return ColorRGB.R + "," + ColorRGB.G + "," + ColorRGB.B;
+            }
+        }
     }
 }

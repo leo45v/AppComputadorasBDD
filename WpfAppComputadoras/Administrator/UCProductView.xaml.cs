@@ -12,9 +12,12 @@ using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Extras;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectBrl;
 using WpfAnimatedGif;
 using WpfAppComputadoras.Components;
+using WpfAppComputadoras.Administrator.Vistas;
 using WpfAppComputadoras.Extra;
+using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Pantalla;
+using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Operaciones;
 
-namespace WpfAppComputadoras.Administrator.Vistas
+namespace WpfAppComputadoras.Administrator
 {
     /// <summary>
     /// Interaction logic for UCProductView.xaml
@@ -38,12 +41,15 @@ namespace WpfAppComputadoras.Administrator.Vistas
             Marca = new Marca(),
             Descontinuado = false,
             Eliminado = false,
+            Colores = new List<Colores>()
         };
         public Monitor monitor = new Monitor()
         {
             Marca = new Marca(),
             Descontinuado = false,
             Eliminado = false,
+            Resolucion = new Resolucion(),
+            Ratio = new Ratio()
         };
         public PlacaBase placaBase = new PlacaBase()
         {
@@ -75,11 +81,12 @@ namespace WpfAppComputadoras.Administrator.Vistas
             Marca = new Marca(),
             Descontinuado = false,
             Eliminado = false,
-            Imagen = ""
+            Imagen = "",
+            PrecioUnidad = (decimal)0.0
         };
         private ETipoProducto tipoProducto;
 
-        private List<Marca> marcas;
+        //private List<Marca> marcas;
         public ViewMain mainView;
         private bool imagenChanged = false;
         public bool VistaMode = false;
@@ -226,8 +233,8 @@ namespace WpfAppComputadoras.Administrator.Vistas
         }
         public void LoadComboMarcas()
         {
-            marcas = mainView.MarcaList;
-            cbMarca.ItemsSource = marcas;
+            //marcas = mainView.MarcaList;
+            cbMarca.ItemsSource = this.mainView.MarcaList;
             cbMarca.DisplayMemberPath = "NombreMarca";
             cbMarca.SelectedValuePath = "IdMarca";
         }
@@ -247,7 +254,18 @@ namespace WpfAppComputadoras.Administrator.Vistas
         private void BtnAction_Click(object sender, RoutedEventArgs e)
         {
             bool estado = false;
-
+            //if (txtNombre.Text == "")
+            //{
+            //    return;
+            //}
+            //if (txtPrecioUnidad.Text == "")
+            //{
+            //    return;
+            //}
+            //if (txtStock.Text == "")
+            //{
+            //    return;
+            //}
             SQLCopy.SqlQueryCopy = "";
 
 
@@ -412,12 +430,15 @@ namespace WpfAppComputadoras.Administrator.Vistas
                     SQLCopy.SqlQueryCopy = "";
                 }
                 mainView.ConfigAdministradorInterface(mainView.rol.IdRol);
+                this.Close();
             }
             else
             {
-                MessageBox.Show("Error");
+                while (LogError.HayErrores)
+                {
+                    MessageBox.Show(LogError.GetError);
+                }
             }
-            this.Close();
         }
 
         private void UCProductView_Closed(object sender, EventArgs e)
@@ -450,7 +471,10 @@ namespace WpfAppComputadoras.Administrator.Vistas
 
         private void CbMarca_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            producto.Marca.IdMarca = (byte)cbMarca.SelectedValue;
+            if (cbMarca.SelectedIndex >= 0)
+            {
+                producto.Marca.IdMarca = (byte)cbMarca.SelectedValue;
+            }
         }
         private void TxtStock_TextChanged(object s, TextChangedEventArgs e)
         {
@@ -494,6 +518,32 @@ namespace WpfAppComputadoras.Administrator.Vistas
                 //imgProduct.Source = Methods.LoadImage(pathImagen[1]);
                 imagenChanged = true;
             }
+        }
+
+        private void Btn_Minimiza(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+            mainView.WindowState = WindowState.Normal;
+        }
+
+        private void Btn_Close(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void Mover_Ventana_Controller(object sender, MouseButtonEventArgs e)
+        {
+            this.DragMove();
+        }
+
+        private void Btn_RefreshAddMarca_Click(object sender, RoutedEventArgs e)
+        {
+            this.mainView.MarcaList = ConfiguracionesBrl.Marca.GetAll();
+            //marcas = mainView.MarcaList;
+            cbMarca.ItemsSource = this.mainView.MarcaList;
+            cbMarca.DisplayMemberPath = "NombreMarca";
+            cbMarca.SelectedValuePath = "IdMarca";
+            cbMarca.SelectedValue = producto.Marca.IdMarca;
         }
     }
 }

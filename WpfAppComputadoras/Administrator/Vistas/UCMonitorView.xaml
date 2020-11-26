@@ -4,26 +4,45 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WpfAppComputadoras.Administrator"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Initialized="UserControl_Initialized">
-    <Grid Background="#FFE286B0">
+             Initialized="UserControl_Initialized">
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="120"/>
+            <ColumnDefinition Width="10"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.Column="1" Margin="5,0,0,0">
-            <TextBox x:Name="txtTamano" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="120"/>
-            <TextBox x:Name="txtFrecuencia" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="120"/>
-            <TextBox x:Name="txtColor"  HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="120"/>
-            <ComboBox x:Name="cbResolucion" HorizontalAlignment="Stretch" Text="Resolucion" VerticalAlignment="Stretch" Width="120"/>
-            <ComboBox x:Name="cbRatio" HorizontalAlignment="Stretch" Text="Ratio"  VerticalAlignment="Stretch" Width="120"/>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <!--<StackPanel Grid.Column="1" Margin="5,0,0,0">-->
+        <TextBox x:Name="txtTamano" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+        <TextBox x:Name="txtFrecuencia" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+        <!--<TextBox x:Name="txtColor" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>-->
+        <StackPanel Grid.Row="3" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Horizontal">
+            <ComboBox x:Name="cbResolucion"  Text="Resolucion"  Width="120"/>
+            <Button Padding="0" Width="20" Height="20" Margin="10,0,0,0" Click="Btn_RefreshAddResolucion_Click">
+                <materialDesign:PackIcon Kind="SettingsRefresh"/>
+            </Button>
         </StackPanel>
-        <StackPanel Grid.Column="0">
-            <TextBlock HorizontalAlignment="Right" Text="Tamano" TextWrapping="Wrap" VerticalAlignment="Stretch" Height="17.96"/>
-            <TextBlock HorizontalAlignment="Right" Text="Frecuencia" TextWrapping="Wrap" VerticalAlignment="Stretch" Height="17.96"/>
-            <TextBlock HorizontalAlignment="Right" Text="Color" TextWrapping="Wrap" VerticalAlignment="Stretch" Height="17.96"/>
-            <TextBlock HorizontalAlignment="Right" Text="Resolucion" TextWrapping="Wrap" VerticalAlignment="Stretch" Height="21.96"/>
-            <TextBlock HorizontalAlignment="Right" Text="Ratio" TextWrapping="Wrap" VerticalAlignment="Stretch" Height="21.96"/>
+        <StackPanel Grid.Row="4" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Horizontal">
+            <ComboBox x:Name="cbRatio" Text="Ratio"  Width="120"/>
+            <Button Padding="0" Width="20" Height="20" Margin="10,0,0,0" Click="Btn_RefreshAddRatio_Click" >
+                <materialDesign:PackIcon Kind="SettingsRefresh"/>
+            </Button>
         </StackPanel>
+        <!--</StackPanel>-->
+        <!--<StackPanel Grid.Column="0">-->
+        <TextBlock HorizontalAlignment="Right" Grid.Row="0" Grid.Column="0" Text="Tamano" TextWrapping="Wrap" VerticalAlignment="Center"/>
+        <TextBlock HorizontalAlignment="Right" Grid.Row="1" Grid.Column="0" Text="Frecuencia" TextWrapping="Wrap" VerticalAlignment="Center"/>
+        <!--<TextBlock HorizontalAlignment="Right" Grid.Row="2" Grid.Column="0" Text="Color" TextWrapping="Wrap" VerticalAlignment="Center"/>-->
+        <TextBlock HorizontalAlignment="Right" Grid.Row="3" Grid.Column="0" Text="Resolucion" TextWrapping="Wrap" VerticalAlignment="Center"/>
+        <TextBlock HorizontalAlignment="Right" Grid.Row="4" Grid.Column="0" Text="Ratio" TextWrapping="Wrap" VerticalAlignment="Center"/>
+        <!--</StackPanel>-->
     </Grid>
 </UserControl>

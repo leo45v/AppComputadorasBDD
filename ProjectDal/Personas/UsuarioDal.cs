@@ -29,7 +29,8 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             catch (Exception ex)
             {
-                throw ex;
+                if (!cascada) { OperationsSql.ExecuteTransactionCancel(); }
+                Operaciones.LogError.SetError("Error", ex);
             }
             finally { if (!cascada) { OperationsSql.CloseConnection(); } }
             return estado;
@@ -60,9 +61,9 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 }
                 OperationsSql.ExecuteTransactionCommit();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                Operaciones.LogError.SetError("Error", ex);
             }
             finally
             {
@@ -90,9 +91,9 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 }
                 OperationsSql.ExecuteTransactionCommit();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                Operaciones.LogError.SetError("Error", ex);
             }
             finally
             {
@@ -121,9 +122,9 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 }
                 OperationsSql.ExecuteTransactionCommit();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                Operaciones.LogError.SetError("Error", ex);
             }
             finally { OperationsSql.CloseConnection(); }
             return idUsuario;
@@ -159,9 +160,9 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                     estado = true;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                Operaciones.LogError.SetError("Error", ex);
             }
             finally { if (!cascada) { OperationsSql.CloseConnection(); } }
             return estado;
@@ -190,8 +191,9 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 }
                 estado = true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Operaciones.LogError.SetError("Error", ex);
                 OperationsSql.ExecuteTransactionCancel();
             }
             finally { if (!cascada) { OperationsSql.CloseConnection(); } }
@@ -222,7 +224,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             catch (Exception ex)
             {
-                throw ex;
+                Operaciones.LogError.SetError("Error", ex);
             }
             finally { OperationsSql.CloseConnection(); }
             return estado;
@@ -253,7 +255,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             catch (Exception ex)
             {
-                throw ex;
+                Operaciones.LogError.SetError("Error", ex);
             }
             finally { OperationsSql.CloseConnection(); }
             return rol;

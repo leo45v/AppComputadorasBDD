@@ -8,7 +8,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common
     public class SocketProcesador
     {
         public int IdSocket { get; set; }
-        public ESocketProcesador NombreSocket { get; set; }
+        public string NombreSocket { get; set; }
         public string Descripcion { get; set; }
     }
 }

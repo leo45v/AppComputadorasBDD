@@ -4,6 +4,32 @@
              xmlns:local="clr-namespace:WpfAppComputadoras"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.pink.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.lightblue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <SolidColorBrush x:Key="MaterialDesignLightBackground" Color="#FFFAFAFA"/>
+            <SolidColorBrush x:Key="MaterialDesignLightForeground" Color="#DD000000"/>
+
+            <LinearGradientBrush x:Key="MaterialDesignDarkBackground">
+                <GradientStop Color="#FF612F5C" Offset="0"/>
+                <GradientStop Color="#FF281717" Offset="1"/>
+            </LinearGradientBrush>
+            <SolidColorBrush x:Key="MaterialDesignDarkForeground" Color="#FFFAFAFA"/>
+
+            <SolidColorBrush x:Key="MaterialDesignDarkSeparatorBackground" Color="#1F000000" />
+            <SolidColorBrush x:Key="MaterialDesignLightSeparatorBackground" Color="#1FFFFFFF" />
+
+            <LinearGradientBrush x:Key="SecondaryHueMidBrush">
+                <GradientStop Color="#FFFF3FB9" Offset="0"/>
+                <GradientStop Color="#FFB21378" Offset="1"/>
+            </LinearGradientBrush>
+            <SolidColorBrush x:Key="SecondaryHueMidForegroundBrush" Color="WhiteSmoke"/>
+
+
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -22,7 +22,11 @@ namespace WpfAppComputadoras.Extra
         }
         public static BitmapImage LoadImage(string path)
         {
-            string pathImg = String.IsNullOrWhiteSpace(path) ? Path.Combine(Directory.GetCurrentDirectory(), "assets/null.jpg") : Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "assets", path));
+            string pathImg = Path.Combine(Directory.GetCurrentDirectory(), "assets/null.jpg");
+            if (!String.IsNullOrWhiteSpace(path) && File.Exists(Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "assets", path))))
+            {
+                pathImg = Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "assets", path));
+            }
             var uri = new Uri(pathImg, UriKind.RelativeOrAbsolute);
             BitmapImage bi3 = new BitmapImage();
             bi3.BeginInit();

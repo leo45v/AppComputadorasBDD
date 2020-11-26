@@ -34,13 +34,20 @@ namespace WpfAppComputadoras.Administrator.Vistas
         private void UserControl_Initialized(object sender, EventArgs e)
         {
             txtPotencia.TextChanged += TxtPotencia_TextChanged;
+            txtPotencia.PreviewTextInput += TxtPotencia_PreviewTextInput;
 
             txtCertificacion.SelectionChanged += TxtCertificacion_SelectionChanged; ;
         }
 
+        private void TxtPotencia_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            if (!(char.IsDigit(e.Text, e.Text.Length - 1) && ((TextBox)sender).Text.Length < 10))
+            { e.Handled = true; }
+        }
+
         private void TxtCertificacion_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (txtCertificacion.SelectedIndex != 0)
+            if (txtCertificacion.SelectedIndex > 0)
             {
                 mainView.fuente.Certificacion = (ECertificacion)(txtCertificacion.SelectedIndex - 1);
             }
@@ -54,6 +61,7 @@ namespace WpfAppComputadoras.Administrator.Vistas
 
         private void TxtPotencia_TextChanged(object sender, TextChangedEventArgs e)
         {
+            ((TextBox)sender).Text = ((TextBox)sender).Text.Trim();
             if (!String.IsNullOrWhiteSpace(((TextBox)sender).Text))
             { mainView.fuente.Potencia = int.Parse(((TextBox)sender).Text); }
         }

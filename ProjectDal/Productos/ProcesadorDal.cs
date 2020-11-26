@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Enums;
+using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Operaciones;
 
 namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDal.Personas.Productos
 {
@@ -20,7 +21,6 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 ProductosDal.cascada = true;
                 if (ProductosDal.Insertar(procesador as Producto))
                 {
-                    ProductosDal.cascada = false;
                     OperationsSql.CreateBasicCommandWithTransaction(queryString);
                     OperationsSql.AddWithValueString(parameter: "FrecuenciaBase", value: procesador.FrecuenciaBase);
                     OperationsSql.AddWithValueString(parameter: "FrecuenciaTurbo", value: procesador.FrecuenciaTurbo);
@@ -34,12 +34,14 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                     estado = true;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                OperationsSql.ExecuteTransactionCancel();
+                LogError.SetError("Problemas al Insertar el Producto -> Procesador");
             }
             finally
             {
+                    ProductosDal.cascada = false;
                 OperationsSql.CloseConnection();
             }
             return estado;
@@ -70,7 +72,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             catch (Exception)
             {
-                throw;
+                LogError.SetError("Problemas al Obtener el Producto -> Procesador");
             }
             finally { OperationsSql.CloseConnection(); }
             return procesador;
@@ -104,7 +106,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             catch (Exception)
             {
-                throw;
+                LogError.SetError("Problemas al Obtener los Productos -> Procesador");
             }
             finally { OperationsSql.CloseConnection(); }
             return procesadors;
@@ -143,7 +145,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             catch (Exception)
             {
-                throw;
+                LogError.SetError("Problemas al Obtener los Productos -> Procesador");
             }
             finally { OperationsSql.CloseConnection(); }
             return productos;
@@ -179,7 +181,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             catch (Exception)
             {
-                throw;
+                LogError.SetError("Problemas al Obtener las Marcas de los Productos -> Procesador");
             }
             finally { OperationsSql.CloseConnection(); }
             return listaMarcas;
@@ -217,9 +219,9 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 }
                 else { OperationsSql.ExecuteTransactionCancel(); }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                LogError.SetError("Problemas al Actualizar el Producto -> Procesador");
             }
             finally { ProductosDal.cascada = false; OperationsSql.CloseConnection(); }
             return estado;
@@ -248,7 +250,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             catch (Exception)
             {
-                throw;
+                LogError.SetError("Problemas al Obtener la Cantidad de Productos -> Procesador");
             }
             finally { OperationsSql.CloseConnection(); }
             return cantidad;
@@ -279,7 +281,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 {
                     IdSocket = (int)data["IdSocket"],
                     Descripcion = (string)data["Descripcion"],
-                    NombreSocket = (ESocketProcesador)Enum.Parse(typeof(ESocketProcesador), (string)data["NombreSocket"])
+                    NombreSocket = (string)data["NombreSocket"]//(ESocketProcesador)Enum.Parse(typeof(ESocketProcesador), (string)data["NombreSocket"])
                 }
             };
         }

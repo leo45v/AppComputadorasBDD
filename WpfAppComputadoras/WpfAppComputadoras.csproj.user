@@ -37,7 +37,7 @@
     <Compile Update="Administrator\Vistas\UCTarjetaGraficaView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Administrator\Vistas\UCProductView.xaml.cs">
+    <Compile Update="Administrator\UCProductView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="ClienteView\UCTypeComputerView.xaml.cs">
@@ -84,7 +84,7 @@
     <Page Update="Administrator\Vistas\UCTarjetaGraficaView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Administrator\Vistas\UCProductView.xaml">
+    <Page Update="Administrator\UCProductView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="ClienteView\UCTypeComputerView.xaml">

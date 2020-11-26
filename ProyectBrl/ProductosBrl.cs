@@ -58,8 +58,6 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectBr
             get { return tarjetaGraficaBrl; }
             private set { tarjetaGraficaBrl = value; }
         }
-
-
         public static List<Producto> GetWithRange(int inicio, int cantidad)
         {
             return ProductosDal.GetWithRange(inicio, cantidad);
@@ -74,10 +72,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectBr
         }
         public static int Count
         {
-            get
-            {
-                return ProductosDal.CountAll();
-            }
+            get { return ProductosDal.CountAll(); }
         }
         public static int CountWithFilter(string productName, Marca marca, ETipoProducto tipoProduct)
         {
@@ -86,22 +81,6 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectBr
         public static ETipoProducto GetType(Guid idProducto)
         {
             return ProductosDal.GetType(idProducto);
-        }
-        public static List<Marca> GetMarcas()
-        {
-            return ProductosDal.GetMarcas();
-        }
-        public static List<Colores> GetColores()
-        {
-            return ProductosDal.GetColores();
-        }
-        public static List<SocketProcesador> Get_Sockets()
-        {
-            return ProductosDal.Get_Sockets_From_Procesadores();
-        }
-        public static bool Insert_Socket(SocketProcesador socketProcesador)
-        {
-            return ProductosDal.Insertar_Socket(socketProcesador);
         }
     }
 }

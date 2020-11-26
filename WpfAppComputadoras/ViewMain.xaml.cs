@@ -4,12 +4,16 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+
+using System.Threading;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Enums;
+using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Pantalla;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectBrl;
 using WpfAppComputadoras.Administrator;
 using WpfAppComputadoras.ClienteView;
 using WpfAppComputadoras.Extra;
+using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Operaciones;
 
 namespace WpfAppComputadoras
 {
@@ -28,22 +32,11 @@ namespace WpfAppComputadoras
         public string queryProductName = "";
         public Marca queryProductMarca = null;
         public ETipoProducto queryProductTipo = ETipoProducto.None;
-        public List<Marca> MarcaList
-        {
-            get;
-        }
-        public List<Colores> Colores
-        {
-            get; set;
-        }
-        private List<SocketProcesador> socketProcesadors;
-
-        public List<SocketProcesador> SocketsList
-        {
-            get { return socketProcesadors; }
-            set { socketProcesadors = value; }
-        }
-
+        public List<Marca> MarcaList { get; set; } = new List<Marca>();
+        public List<Colores> Colores { get; set; } = new List<Colores>();
+        public List<SocketProcesador> SocketsList { get; set; } = new List<SocketProcesador>();
+        public List<Resolucion> ListaResolucion { get; set; } = new List<Resolucion>();
+        public List<Ratio> ListaRatio { get; set; } = new List<Ratio>();
         public ViewMain(MainWindow main, Guid idUsuario)
         {
             InitializeComponent();
@@ -51,7 +44,9 @@ namespace WpfAppComputadoras
             MarcaList = main.ListaMarcas;
             Colores = main.ListaColores;
             rol = UsuarioBrl.GetRol(idUsuario);
-            socketProcesadors = ProductosBrl.Get_Sockets();
+            SocketsList = main.ListaSockets;
+            ListaResolucion = main.ListaResolucion;
+            ListaRatio = main.ListaRatio;
             if (rol.IdRol == ERol.Cliente)
             {
                 cliente = ClientsBrl.GetClienteByIdUsuario(idUsuario);
@@ -65,6 +60,7 @@ namespace WpfAppComputadoras
                 LoadInterfaceAdmin(admin.Usuario.Rol.IdRol);
                 txNombreView.Text = admin.Nombre + " " + admin.Apellido;
             }
+
             //ucProcesador.lblProduct.Content = "Procesadores";
             //ucProcesador.imgProduct.Source = LoadImage("assets/procesadores.jpg");
             //ucProcesador.imgProduct.Stretch = Stretch.Fill;
@@ -78,7 +74,6 @@ namespace WpfAppComputadoras
             get { return ProductosBrl.CountWithFilter(queryProductName, queryProductMarca, queryProductTipo); }
             private set { }
         }
-
         private void ConfigClienteInterface()
         {
             uCTypeComputerView = new UCTypeComputerView();
@@ -251,6 +246,17 @@ namespace WpfAppComputadoras
                 //});
                 gridAutomaitc.Children.Add(uCConfigClient);
             }
+        }
+
+        private void Btn_Minimizar(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            GC.SuppressFinalize(this);
+            mainWindow.CleanMemory();
         }
     }
 }

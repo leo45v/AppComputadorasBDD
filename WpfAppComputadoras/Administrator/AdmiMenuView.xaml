@@ -4,12 +4,18 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:WpfAppComputadoras.Administrator"
+             
+      Foreground="{DynamicResource MaterialDesignDarkForeground}"
+    Background="{DynamicResource MaterialDesignDarkBackground}" 
+    TextElement.FontWeight="Medium"
+    TextElement.FontSize="14"
+    FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             
       mc:Ignorable="d" 
       d:DesignHeight="613" d:DesignWidth="1180" Initialized="UserControl_Initialized">
     <Grid>
-        <Border Background="#FFFD9999">
 
-        </Border>
         <Grid  Width="1045" Height="40" Margin="-73,-328,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="205.6"/>
@@ -18,7 +24,7 @@
                 <ColumnDefinition Width="205.6"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Border Background="#D7D1ECFF" Grid.Column="0" Grid.ColumnSpan="5" />
+            <Border Background="#66000000" Grid.Column="0" Grid.ColumnSpan="5" />
             <GridSplitter Grid.Column="0" Width="2" HorizontalAlignment="Right" VerticalAlignment="Stretch" Background="Black" />
             <TextBlock Grid.Column="0" Text="Imagen" FontWeight="Bold" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" />
             <GridSplitter Grid.Column="1" Width="2" HorizontalAlignment="Right" VerticalAlignment="Stretch" Background="Black"/>
@@ -30,28 +36,48 @@
             <Grid Grid.Column="4">
             </Grid>
         </Grid>
-        <ScrollViewer Margin="31,163,104,75" Background="White">
+        <ScrollViewer Margin="31,163,104,75" >
             <StackPanel x:Name="lstProductos" >
             </StackPanel>
         </ScrollViewer>
 
         <!--<ListBox x:Name="lstProductos" Margin="31,163,104,35"/>-->
-        <Button Content="+" HorizontalAlignment="Left" Margin="36,39,0,0" VerticalAlignment="Top" Width="23" RenderTransformOrigin="0.87,1.202" Click="BtnInsertarProducto_Click"/>
-        <ComboBox x:Name="cbTipoProducto" Margin="63,39,0,0" VerticalAlignment="Top" Width="120" HorizontalAlignment="Left"/>
-        <TextBlock HorizontalAlignment="Left" Margin="193,44,0,0" Text="AGREGAR PRODUCTO" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="-0.081,-0.815" FontWeight="Bold" FontFamily="Arial Black" FontSize="14"/>
-        <Button Content="BUSCAR" HorizontalAlignment="Left" Margin="735,90,0,0" VerticalAlignment="Top" RenderTransformOrigin="-2.196,-0.2" Width="55" Click="Btn_Buscar_Click" Height="21.96"/>
-        <Button Content="LIMPIAR" HorizontalAlignment="Left" Margin="834,90,0,0" VerticalAlignment="Top" RenderTransformOrigin="-2.196,-0.2" Width="55" Height="21.96" Click="Btn_LimpiarBuscador_Click"/>
+        <StackPanel Orientation="Horizontal" Margin="36,39,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
+            <Button Click="BtnInsertarProducto_Click">
+                <materialDesign:PackIcon Kind="Add"/>
+            </Button>
+            <ComboBox Style="{DynamicResource MaterialDesignFloatingHintComboBox}"  x:Name="cbTipoProducto" Width="120" Margin="25,0,25,0" />
+            <TextBlock Text="AGREGAR PRODUCTO" TextWrapping="Wrap" FontWeight="Bold"  FontSize="14" VerticalAlignment="Center"/>
+        </StackPanel>
+
+        <Button HorizontalAlignment="Left" Margin="735,90,0,0" VerticalAlignment="Top"   Click="Btn_Buscar_Click" >
+            <StackPanel Orientation="Horizontal">
+                <materialDesign:PackIcon Kind="Search"/>
+                <TextBlock Text="BUSCAR"/>
+            </StackPanel>
+        </Button>
+        <Button HorizontalAlignment="Left" Margin="850,90,0,0" VerticalAlignment="Top"  Click="Btn_LimpiarBuscador_Click">
+            <materialDesign:PackIcon Kind="RestorePage"/>
+        </Button>
         <TextBox x:Name="txtSearch" HorizontalAlignment="Left" Margin="420,90,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="272" TextChanged="TxtSearch_Changed" Height="21.96"/>
         <ComboBox x:Name="cbMarca" HorizontalAlignment="Left" Width="170" VerticalAlignment="Top" Margin="31,90,0,0" />
         <ComboBox x:Name="cbTipo" HorizontalAlignment="Left" Width="170" VerticalAlignment="Top" Margin="225,90,0,0" />
 
         <StackPanel  Margin="50,550,50,10" Orientation="Horizontal" HorizontalAlignment="Center" >
-            <Button x:Name="btnFirst" Width="50" Content="&lt;&lt;"/>
-            <Button x:Name="btnPrevious" Width="50" Content="&lt;"/>
+            <Button x:Name="btnFirst" Width="50" >
+                <materialDesign:PackIcon Kind="FirstPage"/>
+            </Button>
+            <Button x:Name="btnPrevious" Width="50" >
+                <materialDesign:PackIcon Kind="NavigateBefore"/>
+            </Button>
             <StackPanel x:Name="stackPagina" Orientation="Horizontal">
             </StackPanel>
-            <Button x:Name="btnNext" Width="50" Content="&gt;"/>
-            <Button x:Name="btnLast" Width="50" Content="&gt;&gt;"/>
+            <Button x:Name="btnNext" Width="50">
+                <materialDesign:PackIcon Kind="NavigateNext"/>
+            </Button>
+            <Button x:Name="btnLast" Width="50">
+                <materialDesign:PackIcon Kind="LastPage"/>
+            </Button>
         </StackPanel>
         <!--<Button Content="CANCELAR" HorizontalAlignment="Left" Margin="707,312,0,0" VerticalAlignment="Top" Width="67"/>-->
     </Grid>

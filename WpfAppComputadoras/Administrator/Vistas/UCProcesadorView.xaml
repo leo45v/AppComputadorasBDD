@@ -4,30 +4,46 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WpfAppComputadoras.Administrator"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-         Initialized="Window_Initialized" Height="334" Width="260">
-    <Grid Background="#FF7E6363" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+         Initialized="Window_Initialized" >
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="120"/>
+            <ColumnDefinition Width="10"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.Column="0">
-            <TextBlock Height="17.96" HorizontalAlignment="Right" Text="Frecuencia Base" TextWrapping="Wrap" VerticalAlignment="Stretch"/>
-            <TextBlock Height="17.96" HorizontalAlignment="Right"  Text="Frecuencia Turbo" TextWrapping="Wrap" VerticalAlignment="Stretch"/>
-            <TextBlock Height="17.96" HorizontalAlignment="Right" Text="Numero Nucleos" TextWrapping="Wrap" VerticalAlignment="Stretch"/>
-            <TextBlock Height="17.96" HorizontalAlignment="Right" Text="Numero Hilos" TextWrapping="Wrap" VerticalAlignment="Stretch"/>
-            <TextBlock Height="17.96" HorizontalAlignment="Right" Text="Consumo" TextWrapping="Wrap" VerticalAlignment="Stretch"/>
-            <TextBlock Height="17.96" HorizontalAlignment="Right" Text="Litografia" TextWrapping="Wrap" VerticalAlignment="Stretch"/>
-            <TextBlock Height="21.96" HorizontalAlignment="Right" Text="Socket" TextWrapping="Wrap" VerticalAlignment="Stretch"/>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <!--<StackPanel Grid.Column="0">-->
+        <TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right" Text="Frecuencia Base" TextWrapping="Wrap" VerticalAlignment="Center"/>
+        <TextBlock Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right"  Text="Frecuencia Turbo" TextWrapping="Wrap" VerticalAlignment="Center"/>
+        <TextBlock Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right" Text="Numero Nucleos" TextWrapping="Wrap" VerticalAlignment="Center"/>
+        <TextBlock Grid.Column="0" Grid.Row="3" HorizontalAlignment="Right" Text="Numero Hilos" TextWrapping="Wrap" VerticalAlignment="Center"/>
+        <TextBlock Grid.Column="0" Grid.Row="4" HorizontalAlignment="Right" Text="Consumo" TextWrapping="Wrap" VerticalAlignment="Center"/>
+        <TextBlock Grid.Column="0" Grid.Row="5" HorizontalAlignment="Right" Text="Litografia" TextWrapping="Wrap" VerticalAlignment="Center"/>
+        <TextBlock Grid.Column="0" Grid.Row="6" HorizontalAlignment="Right" Text="Socket" TextWrapping="Wrap" VerticalAlignment="Center"/>
+        <!--</StackPanel>-->
+        <!--<StackPanel Grid.Column="1" Margin="5,0,0,0">-->
+        <TextBox x:Name="txtFrecuenciaBase" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+        <TextBox x:Name="txtFrecuenciaTurbo" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" RenderTransformOrigin="0.306,0.93"/>
+        <TextBox x:Name="txtNumeroNucleos" Grid.Column="2" Grid.Row="2" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+        <TextBox x:Name="txtNumeroHilos" Grid.Column="2" Grid.Row="3" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+        <TextBox x:Name="txtConsumo" Grid.Column="2" Grid.Row="4" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" RenderTransformOrigin="0.389,-0.253"/>
+        <TextBox x:Name="txtLitografia" Grid.Column="2" Grid.Row="5" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" RenderTransformOrigin="0.389,-0.253"/>
+        <StackPanel Grid.Column="2" Grid.Row="6" HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Horizontal">
+            <ComboBox x:Name="cbSocket" Width="120"/>
+            <Button Padding="0" Width="20" Height="20" Margin="10,0,0,0" Click="Btn_RefreshAddSocket_Click">
+                <materialDesign:PackIcon Kind="SettingsRefresh"/>
+            </Button>
         </StackPanel>
-        <StackPanel Grid.Column="1" Margin="5,0,0,0">
-            <TextBox x:Name="txtFrecuenciaBase" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-            <TextBox x:Name="txtFrecuenciaTurbo"  HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.306,0.93"/>
-            <TextBox x:Name="txtNumeroNucleos" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-            <TextBox x:Name="txtNumeroHilos" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-            <TextBox x:Name="txtConsumo" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.389,-0.253"/>
-            <TextBox x:Name="txtLitografia" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.389,-0.253"/>
-            <ComboBox x:Name="cbSocket" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.389,-0.253"/>
-        </StackPanel>
+        <!--</StackPanel>-->
     </Grid>
 </UserControl>

@@ -31,7 +31,8 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             catch (Exception ex)
             {
-                throw ex;
+                OperationsSql.ExecuteTransactionCancel();
+                Operaciones.LogError.SetError("Error", ex);
             }
             finally
             {
@@ -67,7 +68,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             catch (Exception ex)
             {
-                throw ex;
+                Operaciones.LogError.SetError("Error", ex);
             }
             finally
             {
