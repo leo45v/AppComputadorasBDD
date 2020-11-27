@@ -51,7 +51,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             Monitor monitor = null;
             string query = @"SELECT r.IdProducto, r.Tamano, r.Frecuencia,   
                              pro.PrecioUnidad, pro.Imagen, pro.Nombre, pro.Stock, pro.IdMarca, pro.Descontinuado, pro.Eliminado, 
-                             mar.NombreMarca
+                             mar.NombreMarca, 
                              re.IdResolucion, re.NombreResolucion, 
                              ra.IdRatio, ra.NombreRatio 
                              FROM Monitor r

@@ -35,7 +35,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             finally
             {
-                    ProductosDal.cascada = false;
+                ProductosDal.cascada = false;
                 OperationsSql.CloseConnection();
             }
             return estado;
@@ -241,7 +241,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 IdProducto = (Guid)data["IdProducto"],
                 Descontinuado = (bool)data["Descontinuado"],
                 Potencia = (int)data["Potencia"],
-                Certificacion = (ECertificacion)Enum.Parse(typeof(ECertificacion), (string)data["Certificacion"]),
+                Certificacion = (ECertificacion)(int)data["Certificacion"],//(ECertificacion)Enum.Parse(typeof(ECertificacion), (string)data["Certificacion"]),
                 Imagen = (string)data["Imagen"],
                 Marca = new Marca()
                 {

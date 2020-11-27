@@ -21,7 +21,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
         public TipoComputadora CambiarTipo
         {
             get { return tipoComputadora; }
-            set { tipoComputadora = value; this.requirements.Estudio = SetConfigurations; }
+            set { tipoComputadora = value; this.requirements.ComputadoraX = SetConfigurations; }
         }
         public ConfigurationBuildComputer(TipoComputadora tipoComputadora)
         {
@@ -30,7 +30,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
             this.tipoComputadora = tipoComputadora;
             if (type == TypeOfRequirements.Manual)
             {
-                this.requirements.Estudio = SetConfigurations;
+                this.requirements.ComputadoraX = SetConfigurations;
             }
             else
             {
@@ -44,7 +44,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
                 double coste = 0.0;
                 if (this.tipoComputadora == TipoComputadora.Estudio)
                 {
-                    coste = this.requirements.Estudio.Almacenamiento.PrecioUnidad.CostoReal;
+                    coste = this.requirements.ComputadoraX.Almacenamiento.PrecioUnidad.CostoReal;
                 }
                 return coste;
             }
@@ -52,7 +52,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
             {
                 if (this.tipoComputadora == TipoComputadora.Estudio)
                 {
-                    this.requirements.Estudio.Almacenamiento.PrecioUnidad.CostoReal = value;
+                    this.requirements.ComputadoraX.Almacenamiento.PrecioUnidad.CostoReal = value;
                 }
             }
         }
@@ -66,8 +66,8 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
                 {
                     tipoComputer.Almacenamiento.PrecioUnidad.max = 200;
                     tipoComputer.Almacenamiento.PrecioUnidad.min = 50;
-                    tipoComputer.Almacenamiento.Capacidad.max = 5E+6;
-                    tipoComputer.Almacenamiento.Capacidad.min = 1E+6;
+                    tipoComputer.Almacenamiento.Capacidad.max = 5000;
+                    tipoComputer.Almacenamiento.Capacidad.min = 1000;
 
                     tipoComputer.Fuente.PrecioUnidad.max = 250;
                     tipoComputer.Fuente.PrecioUnidad.min = 120;
@@ -116,8 +116,8 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
                 {
                     tipoComputer.Almacenamiento.PrecioUnidad.max = 100;
                     tipoComputer.Almacenamiento.PrecioUnidad.min = 40;
-                    tipoComputer.Almacenamiento.Capacidad.max = 2E+6;
-                    tipoComputer.Almacenamiento.Capacidad.min = 5E+5;
+                    tipoComputer.Almacenamiento.Capacidad.max = 2000;
+                    tipoComputer.Almacenamiento.Capacidad.min = 500;
 
                     tipoComputer.Fuente.PrecioUnidad.max = 120;
                     tipoComputer.Fuente.PrecioUnidad.min = 40;
@@ -166,8 +166,8 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
                 {
                     tipoComputer.Almacenamiento.PrecioUnidad.max = 700;
                     tipoComputer.Almacenamiento.PrecioUnidad.min = 300;
-                    tipoComputer.Almacenamiento.Capacidad.max = 10E+6;
-                    tipoComputer.Almacenamiento.Capacidad.min = 2E+6;
+                    tipoComputer.Almacenamiento.Capacidad.max = 10000;
+                    tipoComputer.Almacenamiento.Capacidad.min = 2000;
 
                     tipoComputer.Fuente.PrecioUnidad.max = 350;
                     tipoComputer.Fuente.PrecioUnidad.min = 150;
@@ -225,8 +225,8 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
                     {
                         Capacidad = new Requirements.TipoComputer.MinMax<double>()
                         {
-                            min = 1E+6,
-                            max = 2E+6
+                            min = 1000,
+                            max = 2000
                         },
                         PrecioUnidad = new Requirements.TipoComputer.MinMax<double>()
                         {
