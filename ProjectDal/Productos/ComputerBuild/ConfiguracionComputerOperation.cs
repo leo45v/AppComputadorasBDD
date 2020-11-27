@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Operaciones;
+using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDal.Personas.Productos;
 
 namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configuracion
 {
@@ -263,7 +264,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
                     foreach (Dictionary<string, object> item in data)
                     {
                         Gabinete gabinete = Gabinete.Dictionary_A_Gabinete(item);
-                        gabinete.Colores = GetColores(gabinete.IdProducto);
+                        gabinete.Colores = ProductosDal.GetColores(gabinete.IdProducto);
                         gabinetes.Add(gabinete);
                     }
                 }
@@ -351,40 +352,6 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
             }
             finally { OperationsSql.CloseConnection(); }
             return almacenamientos;
-        }
-        public static List<Colores> GetColores(Guid idProducto)
-        {
-            List<Colores> colores = null;
-            string query = @"SELECT co.IdColor, co.Nombre, co.ColorRgb
-                             FROM Color co 
-                             INNER JOIN ProductoColor pc ON pc.IdColor = co.IdColor 
-                             WHERE pc.IdProducto = @IdProducto";
-            try
-            {
-                OperationsSql.OpenConnection();
-                OperationsSql.CreateBasicCommandWithTransaction(query);
-                OperationsSql.AddWithValueString("IdProducto", idProducto);
-                List<Dictionary<string, object>> data = OperationsSql.ExecuteReaderMany();
-                if (data != null)
-                {
-                    colores = new List<Colores>();
-                    foreach (Dictionary<string, object> item in data)
-                    {
-                        string[] rgb = item["ColorRgb"].ToString().Split(",");
-                        colores.Add(new Colores()
-                        {
-                            IdColor = (short)item["IdColor"],
-                            Nombre = (string)item["Nombre"],
-                            ColorRGB = Color.FromArgb(255, int.Parse(rgb[0]), int.Parse(rgb[1]), int.Parse(rgb[2]))
-                        });
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                LogError.SetError("Problemas al Obtener los Colores del Producto");
-            }
-            return colores;
         }
     }
 }

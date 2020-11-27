@@ -21,7 +21,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 configXD.presupuesto = value;
             }
         }
-        private static ConfiguracionComputerOperation configXD = new ConfiguracionComputerOperation(presupuesto);
+        private static readonly ConfiguracionComputerOperation configXD = new ConfiguracionComputerOperation(presupuesto);
 
         private static List<Procesador> ProcesadoresRecomendados(Requirements.TipoComputer tipoComputer)
         {

@@ -43,6 +43,8 @@ namespace WpfAppComputadoras.ClienteView
         }
         private void BuscarComputadora()
         {
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+
             List<Computadora> computadoras = ComputadoraBuildBrl.GetComputersBuild(getParametros.Requisitos.ComputadoraX);
             //List<Computadora> computadorasSinPantalla = computadoras.Select(x => { x.Monitor = null; return x; }).ToList();
             //List<Computadora> nuevito = computadorasSinPantalla.Where(x => x.CostoTotal <= presupuesto && x.TarjetaGrafica.PrecioUnidad > 400).OrderByDescending(x => x.CostoTotal).ToList();
@@ -53,6 +55,12 @@ namespace WpfAppComputadoras.ClienteView
             Computadora filtadoPorMinPrecioGrafica = buenbasGraficas.First();
             Computadora masCercanaAlPresupuesto = listaRenovada.Last();
             Dispatcher.Invoke(() => bdWaiting.IsOpen = false);
+            watch.Stop();
+            var elapsedMs = watch.ElapsedMilliseconds;
+            int elapsedSeg = (int)(elapsedMs / 1000);
+            elapsedMs -= (elapsedSeg * 1000);
+            MessageBox.Show(String.Format("Tiempo Demorado en armar {0}s {1}ms", elapsedSeg, elapsedMs));
+
             MessageBox.Show(PrintComputer(masBarata));
             MessageBox.Show(PrintComputer(filtadoPorMinPrecioGrafica));
             MessageBox.Show(PrintComputer(masCercanaAlPresupuesto));
