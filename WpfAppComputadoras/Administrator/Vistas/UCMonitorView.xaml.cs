@@ -25,8 +25,8 @@ namespace WpfAppComputadoras.Administrator.Vistas
 
             mainView = uCProductView;
             txtFrecuencia.Text = uCProductView.monitor.Frecuencia.ToString();
-            cbRatio.SelectedValue = uCProductView.monitor.Ratio.NombreRatio;
-            cbResolucion.SelectedValue = uCProductView.monitor.Resolucion.NombreResolucion;
+            cbRatio.SelectedValue = uCProductView.monitor.Ratio.IdRatio;
+            cbResolucion.SelectedValue = uCProductView.monitor.Resolucion.IdResolucion;
             txtTamano.Text = uCProductView.monitor.Tamano.ToString();
             //txtColor.Text = uCProductView.monitor.Tamano.ToString();
         }
@@ -92,7 +92,7 @@ namespace WpfAppComputadoras.Administrator.Vistas
             cbResolucion.ItemsSource = this.mainView.mainView.ListaResolucion;
             cbResolucion.DisplayMemberPath = "NombreResolucion";
             cbResolucion.SelectedValuePath = "IdResolucion";
-            cbResolucion.SelectedValue = this.mainView.monitor.Resolucion.NombreResolucion;
+            cbResolucion.SelectedValue = this.mainView.monitor.Resolucion.IdResolucion;
         }
 
         private void Btn_RefreshAddRatio_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -101,7 +101,7 @@ namespace WpfAppComputadoras.Administrator.Vistas
             cbRatio.ItemsSource = this.mainView.mainView.ListaRatio;
             cbRatio.DisplayMemberPath = "NombreRatio";
             cbRatio.SelectedValuePath = "IdRatio";
-            cbRatio.SelectedValue = this.mainView.monitor.Ratio.NombreRatio;
+            cbRatio.SelectedValue = this.mainView.monitor.Ratio.IdRatio;
         }
     }
 }

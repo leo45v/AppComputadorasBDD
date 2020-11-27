@@ -138,3 +138,13 @@ ALTER TABLE Monitor ADD
 CONSTRAINT [FK_Monitor_Ratio] FOREIGN KEY ([IdRatio]) REFERENCES [dbo].[Ratio] ([IdRatio]) ON DELETE CASCADE ON UPDATE CASCADE
 GO
 
+<<<<<<< HEAD
+=======
+
+
+
+-- AGREGAR 2020-27-11
+
+ALTER TABLE Fuente ALTER COLUMN Certificacion INT NOT NULL;
+GO
+>>>>>>> 520a3f56e4093ba5eba19de2a0cd2caa81eeb15a

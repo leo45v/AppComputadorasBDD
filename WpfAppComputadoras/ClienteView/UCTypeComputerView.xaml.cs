@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Threading;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -13,6 +15,7 @@ using System.Windows.Shapes;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configuracion;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Enums;
+using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectBrl.ComputadoraBuild;
 
 namespace WpfAppComputadoras.ClienteView
 {
@@ -27,69 +30,75 @@ namespace WpfAppComputadoras.ClienteView
         public UCTypeComputerView()
         {
             InitializeComponent();
-            presupuesto = 500;//-> procesador buscamos el 50% del presupuesto o en su defecto el mas barato segun caracteristicas....
-
-            ConfiguracionComputerOperation configXD = new ConfiguracionComputerOperation(presupuesto);
-            ConfigurationBuildComputer getParametros = new ConfigurationBuildComputer(TipoComputadora.Estudio);
-            List<Computadora> computadoras = new List<Computadora>();
-
-            List<Procesador> procesadors = configXD.ProcesadoresRecomendados(getParametros.Requisitos.Estudio.Procesador);
-            if (procesadors is null)
-            {
-                getParametros.Requisitos.Estudio.Procesador.PrecioUnidad.max *= 1.20;//AUMENTAMOS EL MAXIMO en un 20%
-                procesadors = configXD.ProcesadoresRecomendados(getParametros.Requisitos.Estudio.Procesador);
-            }
-            foreach (var procesador in procesadors)
-            {
-                List<PlacaBase> placaBases = configXD.PlacaBaseRecomendados(getParametros.Requisitos.Estudio.PlacaBase, procesador);
-                if (placaBases is null)
-                {
-                    getParametros.Requisitos.Estudio.Procesador.PrecioUnidad.max *= 1.20;//AUMENTAMOS EL MAXIMO en un 20%
-                    placaBases = configXD.PlacaBaseRecomendados(getParametros.Requisitos.Estudio.PlacaBase, procesador);
-                }
-                foreach (var placaBase in placaBases)
-                {
-                    Computadora nueva = new Computadora()
-                    {
-                        Procesador = procesador,
-                        PlacaBase = placaBase,
-                    };
-                    double nuevoPresupuesto = nueva.CostoTotal();
-                    //-> BUSCAR -> Rams (LISTA PUEDE SER 1 o 2 SEGUN EL PRESUPUESTO QUE QUEDE ),
-                    //-> BUSCAR -> Monitor 
-                    //-> BUSCAR -> Gabinete
-                    //-> BUSCAR -> TARJETA DE VIDEO -> SEGUN EL PRESUPUESTO QUE QUEDE SOLO SE BUSCARA EN GAMING, TRABAJODISEÑO y ESTUDIO SI ALCANZA
-                    //-> BUSCAR -> FUENTE EN BASE AL CONSUMO DE PROCESADOR + GRAFICA -> 
-
-                    computadoras.Add(nueva);
-                }
-            }
-
-            //-> FILTRAR LAS COMPUTADORAS ARMADAS QUE NO EXCEDAN EL RANGO DE PRECIO 
-            //-> SI SOBREPASA SE BORRA-> SE ORDENA POR PRECIO MAS BAJO
-            //-> MOSTRAR EL PRIMERO SI EXISTEN MAS DE DOS, DAR OPCION A VER EL SIGUIENTE 
-            //-> MOSTRAR SUS CARACTERISTICAS -> 
-
-            MessageBox.Show(String.Format("MAX: {0}\n\rMIN: {1}",
-                getParametros.Requisitos.Estudio.CostoMaximo,
-                getParametros.Requisitos.Estudio.CostoMinimo), "ESTUDIO");
-
+        }
+        ConfigurationBuildComputer getParametros = new ConfigurationBuildComputer(TipoComputadora.Estudio);
+        private void Btn_Siguiente(object sender, RoutedEventArgs e)
+        {
+            presupuesto = 2000;
+            ComputadoraBuildBrl.Presupuesto = presupuesto;
             getParametros.CambiarTipo = TipoComputadora.Gaming;
-            MessageBox.Show(String.Format("MAX: {0}\n\rMIN: {1}",
-                getParametros.Requisitos.Estudio.CostoMaximo,
-                getParametros.Requisitos.Estudio.CostoMinimo), "GAMING");
+            bdWaiting.IsOpen = true;
+            Thread nuevoHiloProcesos = new Thread(BuscarComputadora);
+            nuevoHiloProcesos.Start();
+        }
+        private void BuscarComputadora()
+        {
+            var watch = System.Diagnostics.Stopwatch.StartNew();
 
-            getParametros.CambiarTipo = TipoComputadora.Oficina;
-            MessageBox.Show(String.Format("MAX: {0}\n\rMIN: {1}",
-                getParametros.Requisitos.Estudio.CostoMaximo,
-                getParametros.Requisitos.Estudio.CostoMinimo), "OFICINA");
+            List<Computadora> computadoras = ComputadoraBuildBrl.GetComputersBuild(getParametros.Requisitos.ComputadoraX);
+            //List<Computadora> computadorasSinPantalla = computadoras.Select(x => { x.Monitor = null; return x; }).ToList();
+            //List<Computadora> nuevito = computadorasSinPantalla.Where(x => x.CostoTotal <= presupuesto && x.TarjetaGrafica.PrecioUnidad > 400).OrderByDescending(x => x.CostoTotal).ToList();
 
-            getParametros.CambiarTipo = TipoComputadora.TrabajoDiseno;
-            MessageBox.Show(String.Format("MAX: {0}\n\rMIN: {1}",
-                getParametros.Requisitos.Estudio.CostoMaximo,
-                getParametros.Requisitos.Estudio.CostoMinimo), "TRABAJO DISEÑO");
+            List<Computadora> listaRenovada = computadoras.Where(x => x.CostoTotal <= presupuesto).OrderBy(x => x.CostoTotal).ToList();
+            Computadora masBarata = listaRenovada.First();
+            List<Computadora> buenbasGraficas = listaRenovada.Where(x => x.TarjetaGrafica.PrecioUnidad > 450).OrderByDescending(x => x.TarjetaGrafica.PrecioUnidad).ToList();
+            Computadora filtadoPorMinPrecioGrafica = buenbasGraficas.First();
+            Computadora masCercanaAlPresupuesto = listaRenovada.Last();
+            Dispatcher.Invoke(() => bdWaiting.IsOpen = false);
+            watch.Stop();
+            var elapsedMs = watch.ElapsedMilliseconds;
+            int elapsedSeg = (int)(elapsedMs / 1000);
+            elapsedMs -= (elapsedSeg * 1000);
+            MessageBox.Show(String.Format("Tiempo Demorado en armar {0}s {1}ms", elapsedSeg, elapsedMs));
 
+            MessageBox.Show(PrintComputer(masBarata));
+            MessageBox.Show(PrintComputer(filtadoPorMinPrecioGrafica));
+            MessageBox.Show(PrintComputer(masCercanaAlPresupuesto));
+            //foreach (var computer in listaRenovada)
+            //{
+            //    MessageBox.Show(PrintComputer(computer));
+            //}
+            MessageBox.Show(String.Format("Posibles Computadoras: {0}", listaRenovada.Count));
         }
 
+        private string PrintComputer(Computadora computer)
+        {
+            string x = "";
+            x += String.Format("PROCESADOR: {0}\n\r   FrecuenciaBase: {1}Mhz   FrecuenciaTurbo: {2}Mhz    Marca: {3}\n\rCosto: {4}$\n\r\n\r",
+                computer.Procesador.Nombre, computer.Procesador.FrecuenciaBase, computer.Procesador.FrecuenciaTurbo, computer.Procesador.Marca.NombreMarca, computer.Procesador.PrecioUnidad);
+            x += String.Format("PlacaBase: {0}\n\r   NumeroDims: {1}  Marca: {2}    \n\rCosto: {3}$\n\r\n\r",
+               computer.PlacaBase.Nombre, computer.PlacaBase.NumeroDims, computer.PlacaBase.Marca.NombreMarca, computer.PlacaBase.PrecioUnidad);
+            x += String.Format("Ram: {0}\n\r   Frecuencia: {1}Mhz   Capacidad: {2}GB Cantidad: {3}\n\r  Costo: {4}$\n\r\n\r",
+               computer.Rams[0].Nombre, computer.Rams[0].Frecuencia, computer.Rams[0].Memoria, computer.Rams.Count, computer.Rams[0].PrecioUnidad * computer.Rams.Count);
+            x += String.Format("Fuente: {0}\n\r   Certificacion: {1}   Potencia: {2}W     Marca: {3}\n\r  Costo: {4}$\n\r\n\r",
+               computer.Fuente.Nombre, computer.Fuente.Certificacion, computer.Fuente.Potencia, computer.Fuente.Marca.NombreMarca, computer.Fuente.PrecioUnidad);
+            x += String.Format("Monitor: {0}\n\r   Frecuencia: {1}   Tamaño: {2}\"     Marca: {3}\n\r  Costo: {4}$\n\r\n\r",
+              computer.Monitor.Nombre, computer.Monitor.Frecuencia, computer.Monitor.Tamano, computer.Monitor.Marca.NombreMarca, computer.Monitor.PrecioUnidad);
+            x += String.Format("Gabinete: {0}\n\r   Marca: {1} \n\r  Costo: {2}$\n\r\n\r",
+             computer.Gabinete.Nombre, computer.Gabinete.Marca.NombreMarca, computer.Gabinete.PrecioUnidad);
+            x += String.Format("Almacenamientos: {0}\n\r Capacidad: {1}   Marca: {2} \n\r  Cantidad: {3}\n\r\n\r",
+             computer.Almacenamientos[0].Nombre, computer.Almacenamientos[0].Capacidad, computer.Almacenamientos[0].Marca.NombreMarca, computer.Almacenamientos.Count);
+            if (computer.TarjetaGrafica is null)
+            {
+                x += "SIN TARJETA GRAFICA \n\r\n\r";
+            }
+            else
+            {
+                x += String.Format("Tarjeta de Video: {0}\n\r   Marca: {1}   VRam: {3}  \n\r  Costo: {3}$\n\r\n\r",
+             computer.TarjetaGrafica.Nombre, computer.TarjetaGrafica.Marca.NombreMarca, computer.TarjetaGrafica.Vram, computer.TarjetaGrafica.PrecioUnidad);
+            }
+            x += string.Format("TOTAL COSTO: {0}", computer.CostoTotal);
+            return x;
+        }
     }
 }

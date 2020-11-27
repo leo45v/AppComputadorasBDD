@@ -11,6 +11,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
         public TipoComputer Oficina { get; set; }
         public TipoComputer TrabajoDiseno { get; set; }
         public TipoComputer Gaming { get; set; }
+        public TipoComputer ComputadoraX { get; set; }
         public class TipoComputer
         {
             public AlmacenamientoR Almacenamiento { get; set; }

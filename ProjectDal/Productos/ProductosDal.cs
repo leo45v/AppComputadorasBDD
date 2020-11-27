@@ -103,7 +103,16 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             if (tipoProduct != ETipoProducto.None)
             {
                 query += @" AND pt.Tipo = @TipoProducto ";
-                OperationsSql.AddWithValueString("TipoProducto", tipoProduct.ToString());
+                string tipox = tipoProduct.ToString();
+                if (tipox == "PlacaBase")
+                {
+                    tipox = "Mother Board";
+                }
+                else if (tipox == "TarjetaGrafica")
+                {
+                    tipox = "Trajeta Grafica";
+                }
+                OperationsSql.AddWithValueString("TipoProducto", tipox);
             }
             query += @" ORDER BY pro.Nombre ASC
                              OFFSET " + inicio + @" ROWS
@@ -210,7 +219,16 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             if (tipoProduct != ETipoProducto.None)
             {
                 query += @" AND pt.Tipo = @TipoProducto ";
-                OperationsSql.AddWithValueString("TipoProducto", tipoProduct.ToString());
+                string tipox = tipoProduct.ToString();
+                if (tipox == "PlacaBase")
+                {
+                    tipox = "Mother Board";
+                }
+                else if (tipox == "TarjetaGrafica")
+                {
+                    tipox = "Trajeta Grafica";
+                }
+                OperationsSql.AddWithValueString("TipoProducto", tipox);
             }
             try
             {
