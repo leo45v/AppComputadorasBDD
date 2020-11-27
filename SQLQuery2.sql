@@ -138,4 +138,3 @@ ALTER TABLE Monitor ADD
 CONSTRAINT [FK_Monitor_Ratio] FOREIGN KEY ([IdRatio]) REFERENCES [dbo].[Ratio] ([IdRatio]) ON DELETE CASCADE ON UPDATE CASCADE
 GO
 
-INSERT INTO SocketProcesador (
