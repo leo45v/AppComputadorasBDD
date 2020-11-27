@@ -26,10 +26,10 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                     OperationsSql.AddWithValueString("IdResolucion", monitor.Resolucion.IdResolucion);
                     OperationsSql.AddWithValueString("IdRatio", monitor.Ratio.IdRatio);
                     OperationsSql.ExecuteBasicCommandWithTransaction();
-                    foreach (Colores item in monitor.Colores)
-                    {
-                        ProductosDal.InsertarColores(monitor.IdProducto, item.IdColor);
-                    }
+                    //foreach (Colores item in monitor.Colores)
+                    //{
+                    //    ProductosDal.InsertarColores(monitor.IdProducto, item.IdColor);
+                    //}
                     OperationsSql.ExecuteTransactionCommit();
                 }
                 estado = true;

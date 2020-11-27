@@ -4,26 +4,44 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WpfAppComputadoras.ClienteView"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Initialized="UserControl_Initialized">
     <Grid Background="#FF5EA449">
         <TextBlock HorizontalAlignment="Center" Margin="0,33,0,0" Text="CONFIGURE LOS DATOS QUE DESEA MODIFICAR" TextWrapping="Wrap" VerticalAlignment="Top" Width="548" FontSize="20" FontFamily="Arial Black"/>
-        <TextBox x:Name="txtNombre" HorizontalAlignment="Left" Margin="52,97,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="126" Height="21"/>
-        <TextBox x:Name="txtApellido" HorizontalAlignment="Left" Margin="52,139,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="126" Height="19"/>
-        <DatePicker x:Name="txtFechaNacimiento" HorizontalAlignment="Left" Margin="52,187,0,0" Text="TextBox" VerticalAlignment="Top" Width="126" Height="25"/>
-        <ComboBox x:Name="txtSexo" HorizontalAlignment="Left" Margin="52,236,0,0" Text="TextBox" VerticalAlignment="Top" Width="126" Height="21"/>
-        <TextBox x:Name="txtNombreUsuario" HorizontalAlignment="Left" Margin="52,282,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="126" Height="19"/>
-        <TextBox x:Name="txtContrasenia" HorizontalAlignment="Left" Margin="52,327,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="126" Height="19"/>
+        <TextBox x:Name="txtNombre" HorizontalAlignment="Left" Margin="52,97,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="126"/>
+        <TextBox x:Name="txtApellido" HorizontalAlignment="Left" Margin="52,139,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="126"/>
+        <DatePicker x:Name="txtFechaNacimiento" HorizontalAlignment="Left" Margin="52,187,0,0" Text="TextBox" VerticalAlignment="Top" Width="126"/>
+        <ComboBox x:Name="txtSexo" HorizontalAlignment="Left" Margin="52,236,0,0" Text="TextBox" VerticalAlignment="Top" Width="126"/>
+        <TextBox x:Name="txtNombreUsuario" HorizontalAlignment="Left" Margin="52,282,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="126"/>
+        <TextBox x:Name="txtContrasenia" HorizontalAlignment="Left" Margin="52,327,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="126"/>
         <TextBlock HorizontalAlignment="Left" Margin="192,100,0,0" Text="Nombre" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="192,139,0,0" Text="Apellido" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="192,187,0,0" Text="Fecha Nacimiento" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="192,236,0,0" Text="Sexo" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="192,282,0,0" Text="Nombre Usuario" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="192,327,0,0" Text="Contrasenia" TextWrapping="Wrap" VerticalAlignment="Top"/>
-        <Button x:Name="btnEliminarCuenta" Content="ELIMINAR CUENTA" HorizontalAlignment="Left" Margin="296,313,0,0" VerticalAlignment="Top" Height="30" Width="117" Click="BtnEliminar_Click"/>
-        <Button x:Name="btnEditar" Content="EDITAR CUENTA" HorizontalAlignment="Left" Margin="296,175,0,0" VerticalAlignment="Top" Height="30" Width="117" Click="BtnEditar_Click"/>
-        <Button x:Name="btnModificar" Content="+" HorizontalAlignment="Left" Margin="296,77,0,0" VerticalAlignment="Top" Height="30" Width="37" FontSize="20" Click="BtnModificar_Click"/>
-        <Button x:Name="bthAtras" Content="Atras" HorizontalAlignment="Left" Margin="509,313,0,0" VerticalAlignment="Top" Height="30" Width="117"/>
+        <Button x:Name="btnEliminarCuenta" HorizontalAlignment="Left" Margin="296,313,0,0" VerticalAlignment="Top"  Click="BtnEliminar_Click">
+            <StackPanel Orientation="Horizontal">
+                <materialDesign:PackIcon Kind="Delete" Margin="0,1,0,0"/>
+                <TextBlock Text="ELIMINAR CUENTA"/>
+            </StackPanel>
+        </Button>
+        <Button x:Name="btnEditar" HorizontalAlignment="Left" Margin="296,175,0,0" VerticalAlignment="Top" Click="BtnEditar_Click">
+            <StackPanel Orientation="Horizontal">
+                <materialDesign:PackIcon Kind="Verified"/>
+                <TextBlock Text="EDITAR CUENTA"/>
+            </StackPanel>
+        </Button>
+        <Button x:Name="btnModificar" HorizontalAlignment="Left" Margin="296,77,0,0" Padding="0" VerticalAlignment="Top" FontSize="20" Width="32" Height="32" Click="BtnModificar_Click">
+            <materialDesign:PackIcon x:Name="iconModificar" Kind="Edit"/>
+        </Button>
+        <Button x:Name="bthAtras" HorizontalAlignment="Left" Margin="509,313,0,0" VerticalAlignment="Top" Height="30" Width="117">
+            <StackPanel Orientation="Horizontal">
+                <materialDesign:PackIcon Kind="KeyboardReturn" VerticalAlignment="Center" Margin="0,2,0,0"/>
+                <TextBlock Text="Atras"/>
+            </StackPanel>
+        </Button>
         <Grid x:Name="cointainerClients" Margin="453,92,40,155">
         </Grid>
     </Grid>

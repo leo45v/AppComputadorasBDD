@@ -95,6 +95,13 @@ namespace WpfAppComputadoras.ClienteView
             txtNombre.IsEnabled = !activo;
             txtNombreUsuario.IsEnabled = !activo;
             txtSexo.IsEnabled = !activo;
+            if (!activo) {
+                iconModificar.Kind = MaterialDesignThemes.Wpf.PackIconKind.EditOff;
+            }
+            else
+            {
+                iconModificar.Kind = MaterialDesignThemes.Wpf.PackIconKind.Edit;
+            }
         }
         private void BtnModificar_Click(object sender, RoutedEventArgs e)
         {
