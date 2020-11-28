@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="ClienteView\PC-GAMER.jpg" />
     <None Remove="Components\null.jpg" />
     <None Remove="Components\Punto.png" />
   </ItemGroup>
@@ -25,6 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="ClienteView\PC-GAMER.jpg" />
     <Resource Include="Components\null.jpg" />
     <Resource Include="Components\Punto.png" />
   </ItemGroup>
