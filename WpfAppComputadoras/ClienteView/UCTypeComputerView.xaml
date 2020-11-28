@@ -8,23 +8,20 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
+
         <Border>
             <Border.Background>
                 <ImageBrush ImageSource="/ClienteView/PC-GAMER.jpg"/>
             </Border.Background>
-            <TextBlock TextWrapping="Wrap"/>
+            <TextBlock TextWrapping="Wrap">
+                <TextBlock.Background>
+                    <ImageBrush ImageSource="/ClienteView/pc.png"/>
+                </TextBlock.Background>
+            </TextBlock>
+
         </Border>
-        <TextBlock HorizontalAlignment="Center" Text="SELECCIONE UN TIPO DE COMPUTADORA" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="32" FontFamily="Arial Black" Width="800" Background="#FF898979" FontStyle="Normal" FontWeight="Bold" Height="40"/>
-        <TextBlock HorizontalAlignment="Left" Margin="52,80,0,0" Text="ESTUDIOS" TextWrapping="Wrap" VerticalAlignment="Top" Width="168" FontSize="28" FontFamily="Arial Black" Foreground="#FF2DEA35" RenderTransformOrigin="0.135,0.58" FontWeight="Bold"/>
-        <TextBlock HorizontalAlignment="Left" Margin="240,60,0,0" Text="TRABAJO" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="28" FontFamily="Arial Black" Foreground="#FF39E250" RenderTransformOrigin="0.897,0.489"/>
-        <TextBlock HorizontalAlignment="Left" Margin="405,80,0,0" Text="GAMING" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="28" FontFamily="Arial Black" RenderTransformOrigin="0.587,0.616" Foreground="#FF35D83C">
 
-            <TextBlock.Background>
-                <ImageBrush/>
-            </TextBlock.Background>
-        </TextBlock>
-
-        <Button Content="SIGUIENTE" HorizontalAlignment="Left" Margin="620,366,0,0" VerticalAlignment="Top" FontSize="22" Click="Btn_Siguiente" BorderBrush="#FFECA2BB">
+        <Button Content="SIGUIENTE" HorizontalAlignment="Left" Margin="651,397,0,0" VerticalAlignment="Top" FontSize="22" Click="Btn_Siguiente" BorderBrush="#FFECA2BB" RenderTransformOrigin="0.691,0.671">
             <Button.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="Black"/>
@@ -32,46 +29,45 @@
                 </LinearGradientBrush>
             </Button.Background>
         </Button>
-        <RadioButton x:Name="BtnEstudios" Content="" HorizontalAlignment="Left" Margin="80,120,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.523,-1.444" Background="#FFA44163">
-            <RadioButton.Foreground>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="Black"/>
-                    <GradientStop Color="#FFBB6060" Offset="1"/>
-                </LinearGradientBrush>
-            </RadioButton.Foreground>
-        </RadioButton>
-        <RadioButton x:Name="btnTrabajo" Content="" HorizontalAlignment="Left" Margin="293,100,0,0" VerticalAlignment="Top" Height="17" RenderTransformOrigin="-2.068,3.971">
-            <RadioButton.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="Black"/>
-                    <GradientStop Color="#FFCFCFCF" Offset="1"/>
-                </LinearGradientBrush>
-            </RadioButton.Background>
-            <RadioButton.Foreground>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="Black"/>
-                    <GradientStop Color="#FFE2B6B6" Offset="1"/>
-                </LinearGradientBrush>
-            </RadioButton.Foreground>
-            <RadioButton.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform ScaleY="-1"/>
-                    <SkewTransform/>
-                    <RotateTransform/>
-                    <TranslateTransform Y="-118.014"/>
-                </TransformGroup>
-            </RadioButton.RenderTransform>
-        </RadioButton>
         <RadioButton x:Name="btnGaming" Content="" HorizontalAlignment="Left" Margin="449,117,0,0" VerticalAlignment="Top"/>
 
-        <materialDesign:DialogHost IsOpen="False" x:Name="bdWaiting" Margin="588,82,22,200">
+        <materialDesign:DialogHost IsOpen="False" x:Name="bdWaiting" Margin="295,141,315,141">
             <materialDesign:DialogHost.DialogContent>
                 <StackPanel>
                     <TextBlock Text="Procesando..." HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="50" />
                 </StackPanel>
             </materialDesign:DialogHost.DialogContent>
-            <TextBlock HorizontalAlignment="Left" Margin="-444,85,0,0" Text="INSERTE PRESUPUESTO" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="22" FontWeight="Bold" FontFamily="Arial Black" Background="#FFAFE836"/>
         </materialDesign:DialogHost>
-        <TextBox x:Name="txtPresupuesto" HorizontalAlignment="Left" Margin="214,0,0,0" Text="$$$$$$$$$$$" TextWrapping="Wrap" VerticalAlignment="Center" Width="180" RenderTransformOrigin="0.962,1.422" Height="38" Foreground="#FF7E4545" SelectionTextBrush="#FFC5AFAF"/>
+        <TextBlock HorizontalAlignment="Left" Margin="0,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="-0.421,-3.87" Height="42" Width="548" Visibility="Visible">
+            <TextBlock.Background>
+                <ImageBrush Stretch="UniformToFill" ImageSource="/ClienteView/generatedtext.jpg"/>
+            </TextBlock.Background>
+
+        </TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="21,82,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="44" Width="189">
+            <TextBlock.Background>
+                <ImageBrush ImageSource="/ClienteView/genddeDDratedtext(1).jpg"/>
+            </TextBlock.Background>
+        </TextBlock>
+
+        <TextBlock HorizontalAlignment="Left" Margin="21,166,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="39" Width="189">
+            <TextBlock.Background>
+                <ImageBrush ImageSource="/ClienteView/generatedtext(1).jpg"/>
+            </TextBlock.Background>
+        </TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="21,248,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="189" Height="36">
+            <TextBlock.Background>
+                <ImageBrush ImageSource="/ClienteView/generatedtext(2).jpg"/>
+            </TextBlock.Background>
+        </TextBlock>
+        <RadioButton x:Name="btnEstudio" Content="" HorizontalAlignment="Left" Margin="186,90,0,0" VerticalAlignment="Top" Background="#FFE808AB"/>
+        <RadioButton x:Name="btnTrabajo" Content="" HorizontalAlignment="Left" Margin="186,172,0,0" VerticalAlignment="Top"/>
+        <RadioButton Content="" HorizontalAlignment="Left" Margin="186,257,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Margin="32,369,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Background="#FF6EB85E"/>
+        <TextBlock HorizontalAlignment="Left" Margin="-4,308,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="42" Width="231">
+            <TextBlock.Background>
+                <ImageBrush ImageSource="/ClienteView/generatedtext(3).jpg"/>
+            </TextBlock.Background>
+        </TextBlock>
     </Grid>
 </UserControl>
