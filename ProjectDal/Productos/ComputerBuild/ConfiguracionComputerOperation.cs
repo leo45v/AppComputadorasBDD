@@ -17,7 +17,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
         public List<PlacaBase> PlacaBaseRecomendados(Requirements.TipoComputer.PlacaBaseR placaBaseR, Procesador procesador)
         {
             List<PlacaBase> placaBases = null;
-            double restante = (presupuesto - (double)procesador.PrecioUnidad);
+            decimal restante = ((decimal)presupuesto - procesador.PrecioUnidad);
             if (placaBaseR.PrecioUnidad.max >= restante)//20% de lo que resta
             {
                 //placaBaseR.PrecioUnidad.max = restante * 0.2;

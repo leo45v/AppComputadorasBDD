@@ -29,7 +29,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             List<Procesador> procesadors = configXD.ProcesadoresRecomendados(tipoComputer.Procesador);
             while (procesadors is null)
             {
-                tipoComputer.Procesador.PrecioUnidad.max *= 1.20;//AUMENTAMOS EL MAXIMO en un 20%
+                tipoComputer.Procesador.PrecioUnidad.max *= (decimal)1.20;//AUMENTAMOS EL MAXIMO en un 20%
                 procesadors = configXD.ProcesadoresRecomendados(tipoComputer.Procesador);
             }
             return procesadors;
@@ -39,7 +39,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             List<PlacaBase> placaBases = configXD.PlacaBaseRecomendados(tipoComputer.PlacaBase, procesador);
             while (placaBases is null)
             {
-                tipoComputer.PlacaBase.PrecioUnidad.max *= 1.1;//AUMENTAMOS EL MAXIMO en un 20%
+                tipoComputer.PlacaBase.PrecioUnidad.max *= (decimal)1.1;//AUMENTAMOS EL MAXIMO en un 20%
                 placaBases = configXD.PlacaBaseRecomendados(tipoComputer.PlacaBase, procesador);
             }
             return placaBases;
@@ -49,7 +49,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             List<Ram> rams = configXD.RamsRecomendados(tipoComputer.Ram);
             while (rams is null)
             {
-                tipoComputer.Ram.PrecioUnidad.max *= 1.1;//10% extra
+                tipoComputer.Ram.PrecioUnidad.max *=(decimal) 1.1;//10% extra
                 rams = configXD.RamsRecomendados(tipoComputer.Ram);
             }
             return rams;
@@ -59,7 +59,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             List<Almacenamiento> almacenamientos = configXD.AlmacenamientoRecomendados(tipoComputer.Almacenamiento);
             while (almacenamientos is null)
             {
-                tipoComputer.Almacenamiento.PrecioUnidad.max *= 1.1;//10% extra
+                tipoComputer.Almacenamiento.PrecioUnidad.max *= (decimal)1.1;//10% extra
                 almacenamientos = configXD.AlmacenamientoRecomendados(tipoComputer.Almacenamiento);
             }
             return almacenamientos;
@@ -69,7 +69,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             List<Monitor> monitores = configXD.MonitorRecomendados(tipoComputer.Monitor);
             while (monitores is null)
             {
-                tipoComputer.Monitor.PrecioUnidad.max *= 1.10;//10% extra
+                tipoComputer.Monitor.PrecioUnidad.max *= (decimal)1.10;//10% extra
                 monitores = configXD.MonitorRecomendados(tipoComputer.Monitor);
             }
             return monitores;
@@ -79,7 +79,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             List<Gabinete> gabinetes = configXD.GabinetesRecomendados(tipoComputer.Gabinete);
             while (gabinetes is null)
             {
-                tipoComputer.Gabinete.PrecioUnidad.max *= 1.10;//10% extra
+                tipoComputer.Gabinete.PrecioUnidad.max *= (decimal)1.10;//10% extra
                 gabinetes = configXD.GabinetesRecomendados(tipoComputer.Gabinete);
             }
             return gabinetes;
@@ -90,10 +90,10 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             List<Fuente> fuentes = configXD.FuenteRecomendados(tipoComputer.Fuente);
             while (fuentes is null)
             {
-                tipoComputer.Fuente.PrecioUnidad.max *= 1.1;//10% extra
+                tipoComputer.Fuente.PrecioUnidad.max *= (decimal)1.1;//10% extra
                 fuentes = configXD.FuenteRecomendados(tipoComputer.Fuente);
             }
-            fuentes = fuentes.Where(x => (double)x.PrecioUnidad >= tipoComputer.Fuente.PrecioUnidad.min).ToList();
+            fuentes = fuentes.Where(x => x.PrecioUnidad >= tipoComputer.Fuente.PrecioUnidad.min).ToList();
             if (tipoComputer.TarjetaGrafica.PrecioUnidad.min == 0)
             {
                 foreach (var fuentesita in fuentes)
@@ -148,7 +148,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             {
                 while (graficas is null)
                 {
-                    tipoComputer.TarjetaGrafica.PrecioUnidad.max *= 1.1;//10% extra
+                    tipoComputer.TarjetaGrafica.PrecioUnidad.max *= (decimal)1.1;//10% extra
                     graficas = configXD.TarjetaGraficaRecomendados(tipoComputer.TarjetaGrafica);
                 }
             }
@@ -210,17 +210,17 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                     }
                     return x;
                 }).Where(x => !(x is null)).ToList();
-            List<Monitor> monitores = MonitoresRecomendados(tipoComputer).Where(x => (double)x.PrecioUnidad >= tipoComputer.Monitor.PrecioUnidad.min).OrderBy(x => x.PrecioUnidad).ToList();
-            List<Gabinete> gabinetes = GabinetesRecomendados(tipoComputer).Where(x => (double)x.PrecioUnidad >= tipoComputer.Gabinete.PrecioUnidad.min).OrderBy(x => x.PrecioUnidad).ToList();
+            List<Monitor> monitores = MonitoresRecomendados(tipoComputer).Where(x => x.PrecioUnidad >= tipoComputer.Monitor.PrecioUnidad.min).OrderBy(x => x.PrecioUnidad).ToList();
+            List<Gabinete> gabinetes = GabinetesRecomendados(tipoComputer).Where(x => x.PrecioUnidad >= tipoComputer.Gabinete.PrecioUnidad.min).OrderBy(x => x.PrecioUnidad).ToList();
             List<Grafica> graficas = GraficasRecomendados(tipoComputer);
             if (!(graficas is null))
             {
-                graficas = graficas.Where(x => (double)x.PrecioUnidad >= tipoComputer.TarjetaGrafica.PrecioUnidad.min).OrderBy(x => x.PrecioUnidad).ToList();
+                graficas = graficas.Where(x => x.PrecioUnidad >= tipoComputer.TarjetaGrafica.PrecioUnidad.min).OrderBy(x => x.PrecioUnidad).ToList();
             }
             List<Computadora> fuentesGraficasProceMotherRam = FuentesRecomendados(tipoComputer, graficas, auxProcesadorPlacaBase, almacenamientoConcat)
 
                 .Where(x => x.ConsumoEstimado <= x.Fuente.Potencia
-                && x.CostoTotal < presupuesto).OrderBy(x => x.CostoTotal)
+                && x.CostoTotal < (decimal)presupuesto).OrderBy(x => x.CostoTotal)
                 .ToList();
             auxProcesadorPlacaBase = null;
             List<Computadora> nuevita = new List<Computadora>();
@@ -230,8 +230,8 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 {
                     foreach (var gabi in gabinetes)
                     {
-                        double costeParcial = nuevaFuenteGraficaProMbRam.CostoTotal + (double)moni.PrecioUnidad + (double)gabi.PrecioUnidad;
-                        if (costeParcial <= presupuesto && costeParcial >= tipoComputer.CostoMinimo)
+                        decimal costeParcial = nuevaFuenteGraficaProMbRam.CostoTotal + moni.PrecioUnidad + gabi.PrecioUnidad;
+                        if (costeParcial <= (decimal)presupuesto && costeParcial >= tipoComputer.CostoMinimo)
                         {
                             Computadora nuevitaC = new Computadora()
                             {
