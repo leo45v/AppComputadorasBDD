@@ -324,6 +324,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
             INNER JOIN Marca mar ON mar.IdMarca = pro.IdMarca 
             WHERE pro.PrecioUnidad <= @CostoMax 
             AND r.Capacidad <= @CapacidadMax  
+            AND ( r.Tipo LIKE '%' + @TipoMin + '%' OR r.Tipo LIKE '%' + @TipoMax + '%' )
             AND pro.Eliminado = 0 
             AND pro.Stock > 0
             ORDER BY pro.PrecioUnidad ASC ";
@@ -333,6 +334,8 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
                 OperationsSql.CreateBasicCommandWithTransaction(query);
                 OperationsSql.AddWithValueString("CostoMax", almacenamientoR.PrecioUnidad.max);
                 OperationsSql.AddWithValueString("CapacidadMax", almacenamientoR.Capacidad.max);
+                OperationsSql.AddWithValueString("TipoMin", almacenamientoR.Tipo.min.ToString());
+                OperationsSql.AddWithValueString("TipoMax", almacenamientoR.Tipo.max.ToString());
                 List<Dictionary<string, object>> data = OperationsSql.ExecuteReaderMany();
                 if (data != null)
                 {

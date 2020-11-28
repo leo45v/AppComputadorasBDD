@@ -69,6 +69,8 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
 
                     tipoComputer.Almacenamiento.Capacidad.max = 4000;
                     tipoComputer.Almacenamiento.Capacidad.min = 1000;
+                    tipoComputer.Almacenamiento.Tipo.min = ETipoDisco.HDD;
+                    tipoComputer.Almacenamiento.Tipo.max = ETipoDisco.SSD;
 
                     tipoComputer.Fuente.PrecioUnidad.max = 250;
                     tipoComputer.Fuente.PrecioUnidad.min = 120;
@@ -119,6 +121,8 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
                     tipoComputer.Almacenamiento.PrecioUnidad.min = 40;
                     tipoComputer.Almacenamiento.Capacidad.max = 1000;
                     tipoComputer.Almacenamiento.Capacidad.min = 500;
+                    tipoComputer.Almacenamiento.Tipo.min = ETipoDisco.HDD;
+                    tipoComputer.Almacenamiento.Tipo.max = ETipoDisco.HDD;
 
                     tipoComputer.Fuente.PrecioUnidad.max = 120;
                     tipoComputer.Fuente.PrecioUnidad.min = 40;
@@ -169,6 +173,8 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
                     tipoComputer.Almacenamiento.PrecioUnidad.min = 300;
                     tipoComputer.Almacenamiento.Capacidad.max = 10000;
                     tipoComputer.Almacenamiento.Capacidad.min = 4000;
+                    tipoComputer.Almacenamiento.Tipo.min = ETipoDisco.SSD;
+                    tipoComputer.Almacenamiento.Tipo.max = ETipoDisco.SSD;
 
                     tipoComputer.Fuente.PrecioUnidad.max = 350;
                     tipoComputer.Fuente.PrecioUnidad.min = 150;
@@ -233,6 +239,11 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
                         {
                             min = 50,
                             max = 100
+                        },
+                        Tipo = new Requirements.TipoComputer.MinMax<ETipoDisco>()
+                        {
+                            min = ETipoDisco.HDD,
+                            max = ETipoDisco.SSD
                         }
                     },
                     Fuente = new Requirements.TipoComputer.FuenteR()

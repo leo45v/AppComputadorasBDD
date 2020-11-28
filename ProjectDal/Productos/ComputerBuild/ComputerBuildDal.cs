@@ -84,7 +84,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             return gabinetes;
         }
-        private static List<Computadora> FuentesRecomendados(Requirements.TipoComputer tipoComputer, List<Grafica> graficas)
+        private static List<Computadora> FuentesRecomendados(Requirements.TipoComputer tipoComputer, List<Grafica> graficas, List<Computadora> placaProceRam, List<List<Almacenamiento>> almacenamientos)
         {
             List<Computadora> compis = new List<Computadora>();
             List<Fuente> fuentes = configXD.FuenteRecomendados(tipoComputer.Fuente);
@@ -93,6 +93,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 tipoComputer.Fuente.PrecioUnidad.max *= 1.1;//10% extra
                 fuentes = configXD.FuenteRecomendados(tipoComputer.Fuente);
             }
+            fuentes = fuentes.Where(x => (double)x.PrecioUnidad >= tipoComputer.Fuente.PrecioUnidad.min).ToList();
             if (tipoComputer.TarjetaGrafica.PrecioUnidad.min == 0)
             {
                 foreach (var fuentesita in fuentes)
@@ -108,13 +109,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             {
                 foreach (var nuevaGrafica in graficas)
                 {
-                    List<Fuente> fuentesExtra = configXD.FuenteRecomendados(tipoComputer.Fuente);
-                    while (fuentesExtra is null)
-                    {
-                        tipoComputer.Fuente.PrecioUnidad.max *= 1.1;//10% extra
-                        fuentes = configXD.FuenteRecomendados(tipoComputer.Fuente);
-                    }
-                    foreach (var fuentesita in fuentesExtra)
+                    foreach (var fuentesita in fuentes)
                     {
                         compis.Add(new Computadora()
                         {
@@ -125,7 +120,26 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                     }
                 }
             }
-            return compis;
+            List<Computadora> computadorita = new List<Computadora>();
+            foreach (var placaPorceRamX in placaProceRam)
+            {
+                foreach (var graficaFuente in compis)
+                {
+                    foreach (var almacenamientoX in almacenamientos)
+                    {
+                        computadorita.Add(new Computadora()
+                        {
+                            Fuente = graficaFuente.Fuente,
+                            PlacaBase = placaPorceRamX.PlacaBase,
+                            Procesador = placaPorceRamX.Procesador,
+                            Rams = placaPorceRamX.Rams,
+                            TarjetaGrafica = graficaFuente.TarjetaGrafica,
+                            Almacenamientos = almacenamientoX
+                        });
+                    }
+                }
+            }
+            return computadorita;
         }
         private static List<Grafica> GraficasRecomendados(Requirements.TipoComputer tipoComputer)
         {
@@ -151,7 +165,6 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 {
 
                     List<Ram> rams = RamsRecomdadas(tipoComputer);
-                    //List<List<Ram>> ramsConact = new List<List<Ram>>();
                     foreach (var ramNew in rams)
                     {
                         double cantidadRams = 1;
@@ -169,94 +182,156 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                         {
                             nuevasRams.Add(ramNew);
                         }
-                        //ramsConact.Add(nuevasRams);
                         auxProcesadorPlacaBase.Add(new Computadora()
                         {
                             Procesador = procesador,
                             PlacaBase = placaBase,
                             Rams = nuevasRams
                         });
+                        nuevasRams = null;
                     }
+                    rams = null;
                 }
+                plaquitasList = null;
             }
+            auxProcesadorPlacaBase = auxProcesadorPlacaBase.Where(x => (double)x.CantidadMemoriaRam >= tipoComputer.Ram.Capacidad.min).OrderByDescending(x => x.CantidadMemoriaRam).ToList();
+            List<Almacenamiento> almacenamientos = AlmacenamientoRecomendados(tipoComputer).OrderByDescending(x => x.PrecioUnidad).ToList();
+            List<List<Almacenamiento>> almacenamientoConcat = CombinarAlmacenamiento(almacenamientos, tipoComputer.Almacenamiento.Capacidad.min, tipoComputer.Almacenamiento.Capacidad.max)
+                .Select(x =>
+                {
+                    var f = 0;
+                    foreach (var item in x)
+                    {
+                        f += item.Capacidad;
+                    }
+                    if (f < tipoComputer.Almacenamiento.Capacidad.min)
+                    {
+                        x = null;
+                    }
+                    return x;
+                }).Where(x => !(x is null)).ToList();
+            List<Monitor> monitores = MonitoresRecomendados(tipoComputer).Where(x => (double)x.PrecioUnidad >= tipoComputer.Monitor.PrecioUnidad.min).OrderBy(x => x.PrecioUnidad).ToList();
+            List<Gabinete> gabinetes = GabinetesRecomendados(tipoComputer).Where(x => (double)x.PrecioUnidad >= tipoComputer.Gabinete.PrecioUnidad.min).OrderBy(x => x.PrecioUnidad).ToList();
+            List<Grafica> graficas = GraficasRecomendados(tipoComputer);
+            if (!(graficas is null))
+            {
+                graficas = graficas.Where(x => (double)x.PrecioUnidad >= tipoComputer.TarjetaGrafica.PrecioUnidad.min).OrderBy(x => x.PrecioUnidad).ToList();
+            }
+            List<Computadora> fuentesGraficasProceMotherRam = FuentesRecomendados(tipoComputer, graficas, auxProcesadorPlacaBase, almacenamientoConcat)
 
-            List<Almacenamiento> almacenamientos = AlmacenamientoRecomendados(tipoComputer);
-            List<List<Almacenamiento>> almacenamientoConcat = new List<List<Almacenamiento>>();
-            foreach (var nuevoAlmacenamiento in almacenamientos)
-            {
-                double verificarCapacidad = tipoComputer.Almacenamiento.Capacidad.min;
-                double verificarCapacidadMax = tipoComputer.Almacenamiento.Capacidad.max;
-                double capacidadEntre2 = nuevoAlmacenamiento.Capacidad;
-                List<Almacenamiento> nuevitoAlmacenamiento = new List<Almacenamiento>();
-                nuevitoAlmacenamiento.Add(nuevoAlmacenamiento);
-                while (verificarCapacidad > capacidadEntre2)
-                {
-                    foreach (var nuevo2AL in almacenamientos)
-                    {
-                        double aux = capacidadEntre2 + nuevo2AL.Capacidad;
-                        if (verificarCapacidad <= aux && aux <= verificarCapacidadMax)
-                        {
-                            capacidadEntre2 += nuevo2AL.Capacidad;
-                            nuevitoAlmacenamiento.Add(nuevo2AL);
-                        }
-                    }
-                }
-                almacenamientoConcat.Add(nuevitoAlmacenamiento);
-            }
-            List<Monitor> monitores = MonitoresRecomendados(tipoComputer);
-            List<Gabinete> gabinetes = GabinetesRecomendados(tipoComputer);
+                .Where(x => x.ConsumoEstimado <= x.Fuente.Potencia
+                && x.CostoTotal < presupuesto).OrderBy(x => x.CostoTotal)
+                .ToList();
+            auxProcesadorPlacaBase = null;
             List<Computadora> nuevita = new List<Computadora>();
-            foreach (var procePlaca in auxProcesadorPlacaBase)//JUNTAR TODO->
+            foreach (var nuevaFuenteGraficaProMbRam in fuentesGraficasProceMotherRam)
             {
-                foreach (var alma in almacenamientoConcat)
+                foreach (var moni in monitores)
                 {
-                    foreach (var moni in monitores)
+                    foreach (var gabi in gabinetes)
                     {
-                        foreach (var gabi in gabinetes)
+                        double costeParcial = nuevaFuenteGraficaProMbRam.CostoTotal + (double)moni.PrecioUnidad + (double)gabi.PrecioUnidad;
+                        if (costeParcial <= presupuesto && costeParcial >= tipoComputer.CostoMinimo)
                         {
                             Computadora nuevitaC = new Computadora()
                             {
-                                Almacenamientos = alma,
+                                Almacenamientos = nuevaFuenteGraficaProMbRam.Almacenamientos,
                                 Gabinete = gabi,
                                 Monitor = moni,
-                                Rams = procePlaca.Rams,
-                                Procesador = procePlaca.Procesador,
-                                PlacaBase = procePlaca.PlacaBase
+                                Rams = nuevaFuenteGraficaProMbRam.Rams,
+                                Procesador = nuevaFuenteGraficaProMbRam.Procesador,
+                                PlacaBase = nuevaFuenteGraficaProMbRam.PlacaBase,
+                                Fuente = nuevaFuenteGraficaProMbRam.Fuente,
+                                TarjetaGrafica = nuevaFuenteGraficaProMbRam.TarjetaGrafica
                             };
                             nuevita.Add(nuevitaC);
+                            nuevitaC = null;
                         }
                     }
                 }
             }
-            List<Grafica> graficas = GraficasRecomendados(tipoComputer);
-            List<Computadora> compusFinales = new List<Computadora>();
-            List<Computadora> fuentesGraficas = FuentesRecomendados(tipoComputer, graficas);
-            nuevita = nuevita.Where(x => x.CostoTotal <= presupuesto && x.CostoTotal >= tipoComputer.CostoMinimo).ToList();
-            nuevita = nuevita.Where(x => (double)x.CantidadMemoriaRam >= tipoComputer.Ram.Capacidad.min).OrderByDescending(x => x.CantidadMemoriaRam).ToList();
-            double cantidadesCOUNT = 0;
-            foreach (var compu in nuevita)
+            almacenamientos = null;
+            almacenamientoConcat = null;
+            monitores = null;
+            gabinetes = null;
+            graficas = null;
+            fuentesGraficasProceMotherRam = null;
+            procesadors = null;
+            procesadors = null;
+            GC.Collect();
+            nuevita = nuevita
+                .OrderBy(x => x.CostoTotal)
+                .ToList();
+
+            return nuevita;
+        }
+
+        private static List<List<Almacenamiento>> CombinarAlmacenamiento(List<Almacenamiento> almacenamientos, double capacidadMin, double capacidadMax)
+        {
+            List<List<Almacenamiento>> almacenamientos1 = new List<List<Almacenamiento>>();
+            List<Almacenamiento> almacenamientos2 = new List<Almacenamiento>();
+            foreach (var item in almacenamientos)
             {
-                foreach (var nuevaFuente in fuentesGraficas)
+                // MIN -> 1tb MAX -> 1.5tb
+                // ACTUAL -> 1tb
+                int capacidadTotal = item.Capacidad;
+                almacenamientos2.Add(item);
+                if (capacidadTotal < capacidadMin || capacidadTotal < capacidadMax)
                 {
-                    compusFinales.Add(new Computadora()
+                    foreach (var item1 in almacenamientos)
                     {
-                        Almacenamientos = compu.Almacenamientos,
-                        Fuente = nuevaFuente.Fuente,
-                        Gabinete = compu.Gabinete,
-                        Monitor = compu.Monitor,
-                        PlacaBase = compu.PlacaBase,
-                        Procesador = compu.Procesador,
-                        Rams = compu.Rams,
-                        TarjetaGrafica = nuevaFuente.TarjetaGrafica
-                    });
-
-
+                        // +1tb
+                        capacidadTotal += item1.Capacidad;
+                        almacenamientos2.Add(item1);
+                        if (capacidadTotal < capacidadMin || capacidadTotal < capacidadMax)
+                        {
+                            foreach (var item2 in almacenamientos)
+                            {
+                                capacidadTotal += item2.Capacidad;
+                                almacenamientos2.Add(item2);
+                                if (capacidadTotal < capacidadMin && capacidadTotal < capacidadMax)
+                                {
+                                    foreach (var item3 in almacenamientos)
+                                    {
+                                        capacidadTotal += item3.Capacidad;
+                                        if (capacidadTotal >= capacidadMin && capacidadTotal <= capacidadMax)
+                                        {
+                                            almacenamientos2.Add(item3);
+                                            almacenamientos1.Add(almacenamientos2);
+                                            almacenamientos2 = new List<Almacenamiento>();
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    if (item2.Capacidad <= capacidadMax)
+                                    {
+                                        almacenamientos1.Add(almacenamientos2);
+                                    }
+                                    almacenamientos2 = new List<Almacenamiento>();
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (item1.Capacidad <= capacidadMax)
+                            {
+                                almacenamientos1.Add(almacenamientos2);
+                            }
+                            almacenamientos2 = new List<Almacenamiento>();
+                        }
+                    }
                 }
-                cantidadesCOUNT++;
+                else
+                {
+                    if (item.Capacidad <= capacidadMax)
+                    {
+                        almacenamientos1.Add(almacenamientos2);
+                    }
+                    almacenamientos2 = new List<Almacenamiento>();
+                }
             }
-            compusFinales = compusFinales.Where(x =>
-            x.ConsumoEstimado <= x.Fuente.Potencia).OrderBy(x => x.CostoTotal).ToList();
-            return compusFinales;
+            return almacenamientos1;
         }
     }
 }

@@ -19,10 +19,23 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
             get
             {
                 int consumo = 0;
-                consumo += Almacenamientos.Count * 5;
+                if (!(Almacenamientos is null))
+                {
+                    consumo += Almacenamientos.Count * 5;
+                }
+                else
+                {
+                    consumo += 4 * 5;
+                }
                 consumo += 50;//PLACA BASE
-                consumo += Procesador.Consumo;
-                consumo += Rams.Count * 5;
+                if (!(Procesador is null))
+                {
+                    consumo += Procesador.Consumo;
+                }
+                if (!(Rams is null))
+                {
+                    consumo += Rams.Count * 5;
+                }
                 if (!(TarjetaGrafica is null))
                 {
                     consumo += TarjetaGrafica.Consumo;

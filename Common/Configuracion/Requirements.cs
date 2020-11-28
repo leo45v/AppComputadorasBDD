@@ -7,10 +7,6 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
 {
     public class Requirements
     {
-        public TipoComputer Estudio { get; set; }
-        public TipoComputer Oficina { get; set; }
-        public TipoComputer TrabajoDiseno { get; set; }
-        public TipoComputer Gaming { get; set; }
         public TipoComputer ComputadoraX { get; set; }
         public class TipoComputer
         {
@@ -77,6 +73,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
             {
                 public MinMax<double> Capacidad { get; set; }
                 public MinMax<double> PrecioUnidad { get; set; }
+                public MinMax<ETipoDisco> Tipo { get; set; }
             }
             public class FuenteR
             {
