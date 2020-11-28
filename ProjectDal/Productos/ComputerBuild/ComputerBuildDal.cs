@@ -48,7 +48,9 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
         {
             List<Ram> rams = configXD.RamsRecomendados(tipoComputer.Ram);
             while (rams is null)
+
             {
+                
                 tipoComputer.Ram.PrecioUnidad.max *=(decimal) 1.1;//10% extra
                 rams = configXD.RamsRecomendados(tipoComputer.Ram);
             }
@@ -68,7 +70,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
         {
             List<Monitor> monitores = configXD.MonitorRecomendados(tipoComputer.Monitor);
             while (monitores is null)
-            {
+            {   
                 tipoComputer.Monitor.PrecioUnidad.max *= (decimal)1.10;//10% extra
                 monitores = configXD.MonitorRecomendados(tipoComputer.Monitor);
             }
