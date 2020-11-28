@@ -100,8 +100,6 @@ namespace WpfAppComputadoras.ClienteView
         {
             var watch = System.Diagnostics.Stopwatch.StartNew();
             List<Computadora> computadoras = ComputadoraBuildBrl.GetComputersBuild(getParametros.Requisitos.ComputadoraX);
-            //List<Computadora> computadorasSinPantalla = computadoras.Select(x => { x.Monitor = null; return x; }).ToList();
-            //List<Computadora> nuevito = computadorasSinPantalla.Where(x => x.CostoTotal <= presupuesto && x.TarjetaGrafica.PrecioUnidad > 400).OrderByDescending(x => x.CostoTotal).ToList();
             Computadora filtradoPorPotencia = null;
             if (computadoras.Count > 0)
             {
@@ -114,17 +112,6 @@ namespace WpfAppComputadoras.ClienteView
                 else if (tipoComputadora == TipoComputadora.TrabajoDiseno)
                 {
                     computadoras = computadoras
-                    //.Select(x =>
-                    //{
-                    //    var f = x.Almacenamientos.Where(y => y.Tipo.Contains("SSD")).ToList();
-                    //    if (f.Count > 0)
-                    //    {
-                    //        x.Almacenamientos = f;
-                    //    }
-                    //    else { x.Almacenamientos = null; }
-                    //    return x;
-                    //})
-                    //.Where(x => !(x.Almacenamientos is null))
                     .ToList();
                 }
                 else if (tipoComputadora == TipoComputadora.Oficina)
