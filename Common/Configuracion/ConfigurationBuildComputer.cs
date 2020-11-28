@@ -230,7 +230,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
                 {
                     Almacenamiento = new Requirements.TipoComputer.AlmacenamientoR()
                     {
-                        Capacidad = new Requirements.TipoComputer.MinMax<double>()
+                        Capacidad = new Requirements.TipoComputer.MinMax<int>()
                         {
                             min = 500,
                             max = 1000
@@ -253,7 +253,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
                             min = ECertificacion.None,
                             max = ECertificacion.Bronze_80Plus
                         },
-                        Potencia = new Requirements.TipoComputer.MinMax<double>()
+                        Potencia = new Requirements.TipoComputer.MinMax<int>()
                         {
                             min = 200,
                             max = 450
@@ -274,7 +274,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
                     },
                     Monitor = new Requirements.TipoComputer.MonitorR()
                     {
-                        Frecuencia = new Requirements.TipoComputer.MinMax<double>()
+                        Frecuencia = new Requirements.TipoComputer.MinMax<int>()
                         {
                             min = 60,
                             max = 60
@@ -287,7 +287,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
                     },
                     PlacaBase = new Requirements.TipoComputer.PlacaBaseR()
                     {
-                        NumeroDims = new Requirements.TipoComputer.MinMax<double>()
+                        NumeroDims = new Requirements.TipoComputer.MinMax<int>()
                         {
                             min = 2,
                             max = 4
@@ -300,22 +300,22 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
                     },
                     Procesador = new Requirements.TipoComputer.ProcesadorR()
                     {
-                        Consumo = new Requirements.TipoComputer.MinMax<double>()
+                        Consumo = new Requirements.TipoComputer.MinMax<int>()
                         {
                             min = 50,
                             max = 120
                         },
-                        FrecuenciaBase = new Requirements.TipoComputer.MinMax<double>()
+                        FrecuenciaBase = new Requirements.TipoComputer.MinMax<int>()
                         {
                             min = 1800,
                             max = 3200
                         },
-                        NumeroNucleos = new Requirements.TipoComputer.MinMax<double>()
+                        NumeroNucleos = new Requirements.TipoComputer.MinMax<int>()
                         {
                             min = 4,
                             max = 6
                         },
-                        NumeroHilo = new Requirements.TipoComputer.MinMax<double>()
+                        NumeroHilo = new Requirements.TipoComputer.MinMax<int>()
                         {
                             min = 4,
                             max = 8
@@ -328,17 +328,17 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
                     },
                     Ram = new Requirements.TipoComputer.RamR()
                     {
-                        Capacidad = new Requirements.TipoComputer.MinMax<double>()
+                        Capacidad = new Requirements.TipoComputer.MinMax<int>()
                         {
                             min = 8,
                             max = 12
                         },
-                        Frecuencia = new Requirements.TipoComputer.MinMax<double>()
+                        Frecuencia = new Requirements.TipoComputer.MinMax<int>()
                         {
                             min = 2133,
                             max = 2666
                         },
-                        Cantidad = new Requirements.TipoComputer.MinMax<double>()
+                        Cantidad = new Requirements.TipoComputer.MinMax<int>()
                         {
                             min = 1,
                             max = 2
@@ -351,7 +351,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
                     },
                     TarjetaGrafica = new Requirements.TipoComputer.TarjetaGraficaR()
                     {
-                        Vram = new Requirements.TipoComputer.MinMax<double>()
+                        Vram = new Requirements.TipoComputer.MinMax<int>()
                         {
                             min = 1,
                             max = 4
