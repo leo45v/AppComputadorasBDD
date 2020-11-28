@@ -37,11 +37,11 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
                 //RECUPERAR DEL JSON
             }
         }
-        public double AlmacenamientoCoste
+        public decimal AlmacenamientoCoste
         {
             get
             {
-                double coste = 0.0;
+                decimal coste = (decimal)0.0;
                 if (this.tipoComputadora == TipoComputadora.Estudio)
                 {
                     coste = this.requirements.ComputadoraX.Almacenamiento.PrecioUnidad.CostoReal;
@@ -235,7 +235,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
                             min = 500,
                             max = 1000
                         },
-                        PrecioUnidad = new Requirements.TipoComputer.MinMax<double>()
+                        PrecioUnidad = new Requirements.TipoComputer.MinMax<decimal>()
                         {
                             min = 50,
                             max = 100
@@ -258,7 +258,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
                             min = 200,
                             max = 450
                         },
-                        PrecioUnidad = new Requirements.TipoComputer.MinMax<double>()
+                        PrecioUnidad = new Requirements.TipoComputer.MinMax<decimal>()
                         {
                             min = 50,
                             max = 120
@@ -266,7 +266,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
                     },
                     Gabinete = new Requirements.TipoComputer.GabineteR()
                     {
-                        PrecioUnidad = new Requirements.TipoComputer.MinMax<double>()
+                        PrecioUnidad = new Requirements.TipoComputer.MinMax<decimal>()
                         {
                             min = 40,
                             max = 100
@@ -279,7 +279,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
                             min = 60,
                             max = 60
                         },
-                        PrecioUnidad = new Requirements.TipoComputer.MinMax<double>()
+                        PrecioUnidad = new Requirements.TipoComputer.MinMax<decimal>()
                         {
                             min = 70,
                             max = 120
@@ -292,7 +292,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
                             min = 2,
                             max = 4
                         },
-                        PrecioUnidad = new Requirements.TipoComputer.MinMax<double>()
+                        PrecioUnidad = new Requirements.TipoComputer.MinMax<decimal>()
                         {
                             min = 50,
                             max = 150
@@ -320,7 +320,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
                             min = 4,
                             max = 8
                         },
-                        PrecioUnidad = new Requirements.TipoComputer.MinMax<double>()
+                        PrecioUnidad = new Requirements.TipoComputer.MinMax<decimal>()
                         {
                             min = 80,
                             max = 150
@@ -343,7 +343,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
                             min = 1,
                             max = 2
                         },
-                        PrecioUnidad = new Requirements.TipoComputer.MinMax<double>()
+                        PrecioUnidad = new Requirements.TipoComputer.MinMax<decimal>()
                         {
                             min = 40,
                             max = 80
@@ -356,7 +356,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
                             min = 1,
                             max = 4
                         },
-                        PrecioUnidad = new Requirements.TipoComputer.MinMax<double>()
+                        PrecioUnidad = new Requirements.TipoComputer.MinMax<decimal>()
                         {
                             min = 0,
                             max = 180

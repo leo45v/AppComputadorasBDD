@@ -18,11 +18,11 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
             public TarjetaGraficaR TarjetaGrafica { get; set; }
             public MonitorR Monitor { get; set; }
             public GabineteR Gabinete { get; set; }
-            public double CostoMaximo
+            public decimal CostoMaximo
             {
                 get
                 {
-                    double totalCosto = 0.0;
+                    decimal totalCosto = (decimal)0.0;
                     totalCosto += Fuente.PrecioUnidad.max;
                     totalCosto += PlacaBase.PrecioUnidad.max;
                     totalCosto += Procesador.PrecioUnidad.max;
@@ -33,11 +33,11 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
                     return totalCosto;
                 }
             }
-            public double CostoMinimo
+            public decimal CostoMinimo
             {
                 get
                 {
-                    double totalCosto = 0.0;
+                    decimal totalCosto = (decimal)0.0;
                     totalCosto += Fuente.PrecioUnidad.min;
                     totalCosto += PlacaBase.PrecioUnidad.min;
                     totalCosto += Procesador.PrecioUnidad.min;
@@ -48,11 +48,11 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
                     return totalCosto;
                 }
             }
-            public double Costo
+            public decimal Costo
             {
                 get
                 {
-                    double totalCosto = 0.0;
+                    decimal totalCosto = (decimal)0.0;
                     totalCosto += Fuente.PrecioUnidad.CostoReal;
                     totalCosto += PlacaBase.PrecioUnidad.CostoReal;
                     totalCosto += Procesador.PrecioUnidad.CostoReal;
@@ -72,18 +72,18 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
             public class AlmacenamientoR
             {
                 public MinMax<double> Capacidad { get; set; }
-                public MinMax<double> PrecioUnidad { get; set; }
+                public MinMax<decimal> PrecioUnidad { get; set; }
                 public MinMax<ETipoDisco> Tipo { get; set; }
             }
             public class FuenteR
             {
                 public MinMax<ECertificacion> Certificacion { get; set; }
                 public MinMax<double> Potencia { get; set; }
-                public MinMax<double> PrecioUnidad { get; set; }
+                public MinMax<decimal> PrecioUnidad { get; set; }
             }
             public class PlacaBaseR
             {
-                public MinMax<double> PrecioUnidad { get; set; }
+                public MinMax<decimal> PrecioUnidad { get; set; }
                 public MinMax<double> NumeroDims { get; set; }
             }
             public class ProcesadorR
@@ -92,28 +92,28 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
                 public MinMax<double> NumeroHilo { get; set; }
                 public MinMax<double> Consumo { get; set; }
                 public MinMax<double> FrecuenciaBase { get; set; }
-                public MinMax<double> PrecioUnidad { get; set; }
+                public MinMax<decimal> PrecioUnidad { get; set; }
             }
             public class RamR
             {
                 public MinMax<double> Cantidad { get; set; }
                 public MinMax<double> Capacidad { get; set; }
                 public MinMax<double> Frecuencia { get; set; }
-                public MinMax<double> PrecioUnidad { get; set; }
+                public MinMax<decimal> PrecioUnidad { get; set; }
             }
             public class TarjetaGraficaR
             {
                 public MinMax<double> Vram { get; set; }
-                public MinMax<double> PrecioUnidad { get; set; }
+                public MinMax<decimal> PrecioUnidad { get; set; }
             }
             public class MonitorR
             {
                 public MinMax<double> Frecuencia { get; set; }
-                public MinMax<double> PrecioUnidad { get; set; }
+                public MinMax<decimal> PrecioUnidad { get; set; }
             }
             public class GabineteR
             {
-                public MinMax<double> PrecioUnidad { get; set; }
+                public MinMax<decimal> PrecioUnidad { get; set; }
             }
         }
 
