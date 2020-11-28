@@ -68,7 +68,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
                     tipoComputer.Almacenamiento.PrecioUnidad.min = 50;
 
                     tipoComputer.Almacenamiento.Capacidad.max = 4000;
-                    tipoComputer.Almacenamiento.Capacidad.min = 1000;
+                    tipoComputer.Almacenamiento.Capacidad.min = 2000;
                     tipoComputer.Almacenamiento.Tipo.min = ETipoDisco.HDD;
                     tipoComputer.Almacenamiento.Tipo.max = ETipoDisco.SSD;
 
@@ -77,33 +77,33 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
                     tipoComputer.Fuente.Certificacion.max = ECertificacion.Platinum_80Plus;
                     tipoComputer.Fuente.Certificacion.min = ECertificacion.Bronze_80Plus;
 
-                    tipoComputer.Gabinete.PrecioUnidad.max = 150;
-                    tipoComputer.Gabinete.PrecioUnidad.min = 50;
+                    tipoComputer.Gabinete.PrecioUnidad.max = 180;
+                    tipoComputer.Gabinete.PrecioUnidad.min = 120;
 
-                    tipoComputer.Monitor.PrecioUnidad.max = 500;
+                    tipoComputer.Monitor.PrecioUnidad.max = 700;
                     tipoComputer.Monitor.PrecioUnidad.min = 250;
                     tipoComputer.Monitor.Frecuencia.max = 144;
                     tipoComputer.Monitor.Frecuencia.min = 60;
 
-                    tipoComputer.PlacaBase.PrecioUnidad.max = 350;
+                    tipoComputer.PlacaBase.PrecioUnidad.max = 450;
                     tipoComputer.PlacaBase.PrecioUnidad.min = 150;
                     tipoComputer.PlacaBase.NumeroDims.max = 4;
                     tipoComputer.PlacaBase.NumeroDims.min = 4;
 
-                    tipoComputer.Procesador.PrecioUnidad.max = 550;
-                    tipoComputer.Procesador.PrecioUnidad.min = 200;
-                    tipoComputer.Procesador.Consumo.max = 300;
+                    tipoComputer.Procesador.PrecioUnidad.max = 900;
+                    tipoComputer.Procesador.PrecioUnidad.min = 220;
+                    tipoComputer.Procesador.Consumo.max = 450;
                     tipoComputer.Procesador.Consumo.min = 120;
                     tipoComputer.Procesador.FrecuenciaBase.max = 5000;
                     tipoComputer.Procesador.FrecuenciaBase.min = 3500;
                     tipoComputer.Procesador.NumeroNucleos.max = 12;
                     tipoComputer.Procesador.NumeroNucleos.min = 6;
-                    tipoComputer.Procesador.NumeroHilo.max = 12;
-                    tipoComputer.Procesador.NumeroHilo.min = 24;
+                    tipoComputer.Procesador.NumeroHilo.max = 24;
+                    tipoComputer.Procesador.NumeroHilo.min = 6;
 
-                    tipoComputer.Ram.PrecioUnidad.max = 180;
+                    tipoComputer.Ram.PrecioUnidad.max = 190;
                     tipoComputer.Ram.PrecioUnidad.min = 70;
-                    tipoComputer.Ram.Capacidad.max = 32;
+                    tipoComputer.Ram.Capacidad.max = 64;
                     tipoComputer.Ram.Capacidad.min = 16;
                     tipoComputer.Ram.Frecuencia.max = 4200;
                     tipoComputer.Ram.Frecuencia.min = 2133;
@@ -111,9 +111,9 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
                     tipoComputer.Ram.Cantidad.min = 2;
 
                     tipoComputer.TarjetaGrafica.PrecioUnidad.max = 1500;
-                    tipoComputer.TarjetaGrafica.PrecioUnidad.min = 350;
+                    tipoComputer.TarjetaGrafica.PrecioUnidad.min = 100;
                     tipoComputer.TarjetaGrafica.Vram.max = 24;
-                    tipoComputer.TarjetaGrafica.Vram.min = 8;
+                    tipoComputer.TarjetaGrafica.Vram.min = 4;
                 }
                 else if (this.tipoComputadora == TipoComputadora.Oficina)
                 {

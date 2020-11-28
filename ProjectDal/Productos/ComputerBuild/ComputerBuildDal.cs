@@ -49,7 +49,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             List<Ram> rams = configXD.RamsRecomendados(tipoComputer.Ram);
             while (rams is null)
             {
-                tipoComputer.Ram.PrecioUnidad.max *=(decimal) 1.1;//10% extra
+                tipoComputer.Ram.PrecioUnidad.max *= (decimal)1.1;//10% extra
                 rams = configXD.RamsRecomendados(tipoComputer.Ram);
             }
             return rams;
@@ -217,11 +217,28 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             {
                 graficas = graficas.Where(x => x.PrecioUnidad >= tipoComputer.TarjetaGrafica.PrecioUnidad.min).OrderBy(x => x.PrecioUnidad).ToList();
             }
-            List<Computadora> fuentesGraficasProceMotherRam = FuentesRecomendados(tipoComputer, graficas, auxProcesadorPlacaBase, almacenamientoConcat)
 
+
+
+            List<Computadora> fuentesGraficasProceMotherRam = FuentesRecomendados(tipoComputer, graficas, auxProcesadorPlacaBase, almacenamientoConcat)
                 .Where(x => x.ConsumoEstimado <= x.Fuente.Potencia
                 && x.CostoTotal < (decimal)presupuesto).OrderBy(x => x.CostoTotal)
                 .ToList();
+            if (fuentesGraficasProceMotherRam.Count > 0)
+            {
+                decimal minByPresupuesto = (decimal)presupuesto;
+                decimal precioAlto = fuentesGraficasProceMotherRam.Last().CostoTotal;
+                decimal precioBajo = fuentesGraficasProceMotherRam.First().CostoTotal;
+
+                if ((1 - (precioBajo / precioAlto)) < (decimal)0.3)
+                {
+                    fuentesGraficasProceMotherRam = fuentesGraficasProceMotherRam.Where(x => x.CostoTotal <= precioBajo + (precioBajo * (decimal)0.3)).ToList();
+                }
+                else 
+                {
+                    fuentesGraficasProceMotherRam = fuentesGraficasProceMotherRam.Where(x => x.CostoTotal >= precioAlto - (precioAlto * (decimal)0.3)).ToList();
+                }
+            }
             auxProcesadorPlacaBase = null;
             List<Computadora> nuevita = new List<Computadora>();
             foreach (var nuevaFuenteGraficaProMbRam in fuentesGraficasProceMotherRam)
