@@ -22,7 +22,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 configXD.presupuesto = value;
             }
         }
-        private static readonly decimal increaseSearch =  new Decimal(1.10);
+        private static readonly decimal increaseSearch = new Decimal(1.10);
         private static readonly ConfiguracionComputerOperation configXD = new ConfiguracionComputerOperation(presupuesto);
 
         private static List<Procesador> ProcesadoresRecomendados(Requirements.TipoComputer tipoComputer)
@@ -38,11 +38,11 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
         private static List<PlacaBase> PlacasBasesRecomendadas(Requirements.TipoComputer tipoComputer, Procesador procesador)
         {
             List<PlacaBase> placaBases = configXD.PlacaBaseRecomendados(tipoComputer.PlacaBase, procesador);
-            while (placaBases is null)
-            {
-                tipoComputer.PlacaBase.PrecioUnidad.max *= increaseSearch;//AUMENTAMOS EL MAXIMO en un 20%
-                placaBases = configXD.PlacaBaseRecomendados(tipoComputer.PlacaBase, procesador);
-            }
+            //while (placaBases is null)
+            //{
+            //    tipoComputer.PlacaBase.PrecioUnidad.max *= increaseSearch;//AUMENTAMOS EL MAXIMO en un 20%
+            //    placaBases = configXD.PlacaBaseRecomendados(tipoComputer.PlacaBase, procesador);
+            //}
             return placaBases;
         }
         private static List<Ram> RamsRecomdadas(Requirements.TipoComputer tipoComputer)
@@ -162,6 +162,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             foreach (var procesador in procesadors)
             {
                 List<PlacaBase> plaquitasList = PlacasBasesRecomendadas(tipoComputer, procesador);
+                if(!(plaquitasList is null)) { 
                 foreach (var placaBase in plaquitasList)
                 {
 
@@ -192,6 +193,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                         nuevasRams = null;
                     }
                     rams = null;
+                }
                 }
                 plaquitasList = null;
             }
@@ -237,7 +239,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 {
                     fuentesGraficasProceMotherRam = fuentesGraficasProceMotherRam.Where(x => x.CostoTotal <= precioBajo + (precioBajo * partialFraction)).ToList();
                 }
-                else 
+                else
                 {
                     fuentesGraficasProceMotherRam = fuentesGraficasProceMotherRam.Where(x => x.CostoTotal >= precioAlto - (precioAlto * partialFraction)).ToList();
                 }
