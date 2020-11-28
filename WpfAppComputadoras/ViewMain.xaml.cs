@@ -214,6 +214,11 @@ namespace WpfAppComputadoras
         }
         public void UIReservaComputer(Computadora computadora)
         {
+            if (computadora is null)
+            {
+                MessageBox.Show("No Se Consiguio Armar con el Presupuesto Dado");
+                return;
+            }
             this.computadoraCalculada = computadora;
             computerBuildView = new ComputerBuildView(this, this.computadoraCalculada);
             ViewModeMain = computerBuildView;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configuracion;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Enums;
@@ -83,15 +84,9 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             return gabinetes;
         }
-        private static List<Computadora> FuentesRecomendados(Requirements.TipoComputer tipoComputer, double potenciaActual, List<Grafica> graficas)
+        private static List<Computadora> FuentesRecomendados(Requirements.TipoComputer tipoComputer, List<Grafica> graficas)
         {
             List<Computadora> compis = new List<Computadora>();
-            double potenciaActuali = tipoComputer.Fuente.Potencia.min;
-            if (potenciaActual > potenciaActuali)
-            {
-                potenciaActuali = potenciaActual;
-            }
-            tipoComputer.Fuente.Potencia.min = potenciaActuali;
             List<Fuente> fuentes = configXD.FuenteRecomendados(tipoComputer.Fuente);
             while (fuentes is null)
             {
@@ -113,11 +108,6 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             {
                 foreach (var nuevaGrafica in graficas)
                 {
-                    if ((potenciaActual + nuevaGrafica.Consumo) > potenciaActuali)
-                    {
-                        potenciaActuali = potenciaActual + nuevaGrafica.Consumo;
-                    }
-                    tipoComputer.Fuente.Potencia.min = potenciaActuali;
                     List<Fuente> fuentesExtra = configXD.FuenteRecomendados(tipoComputer.Fuente);
                     while (fuentesExtra is null)
                     {
@@ -159,32 +149,37 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 List<PlacaBase> plaquitasList = PlacasBasesRecomendadas(tipoComputer, procesador);
                 foreach (var placaBase in plaquitasList)
                 {
-                    auxProcesadorPlacaBase.Add(new Computadora()
+
+                    List<Ram> rams = RamsRecomdadas(tipoComputer);
+                    //List<List<Ram>> ramsConact = new List<List<Ram>>();
+                    foreach (var ramNew in rams)
                     {
-                        Procesador = procesador,
-                        PlacaBase = placaBase
-                    });
-                }
-            }
-            List<Ram> rams = RamsRecomdadas(tipoComputer);
-            List<List<Ram>> ramsConact = new List<List<Ram>>();
-            foreach (var ramNew in rams)
-            {
-                double cantidadRams = tipoComputer.Ram.Cantidad.min;
-                if (((double)ramNew.PrecioUnidad * 2.0) <= tipoComputer.Ram.PrecioUnidad.max)
-                {
-                    if ((ramNew.Memoria * 2) <= tipoComputer.Ram.Capacidad.max)
-                    {
-                        cantidadRams++;
+                        double cantidadRams = 1;
+                        double cantidadRamxMax = placaBase.NumeroDims;
+                        while ((ramNew.Memoria * cantidadRams) <= tipoComputer.Ram.Capacidad.max && cantidadRams < cantidadRamxMax)
+                        {
+                            cantidadRams++;
+                        }
+                        if (cantidadRams == 3)
+                        {
+                            cantidadRams++;
+                        }
+                        List<Ram> nuevasRams = new List<Ram>();
+                        for (int i = 0; i < cantidadRams; i++)
+                        {
+                            nuevasRams.Add(ramNew);
+                        }
+                        //ramsConact.Add(nuevasRams);
+                        auxProcesadorPlacaBase.Add(new Computadora()
+                        {
+                            Procesador = procesador,
+                            PlacaBase = placaBase,
+                            Rams = nuevasRams
+                        });
                     }
                 }
-                List<Ram> nuevasRams = new List<Ram>();
-                for (int i = 0; i < cantidadRams; i++)
-                {
-                    nuevasRams.Add(ramNew);
-                }
-                ramsConact.Add(nuevasRams);
             }
+
             List<Almacenamiento> almacenamientos = AlmacenamientoRecomendados(tipoComputer);
             List<List<Almacenamiento>> almacenamientoConcat = new List<List<Almacenamiento>>();
             foreach (var nuevoAlmacenamiento in almacenamientos)
@@ -213,48 +208,34 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             List<Computadora> nuevita = new List<Computadora>();
             foreach (var procePlaca in auxProcesadorPlacaBase)//JUNTAR TODO->
             {
-                foreach (var ramsita in ramsConact)
+                foreach (var alma in almacenamientoConcat)
                 {
-                    foreach (var alma in almacenamientoConcat)
+                    foreach (var moni in monitores)
                     {
-                        foreach (var moni in monitores)
+                        foreach (var gabi in gabinetes)
                         {
-                            foreach (var gabi in gabinetes)
+                            Computadora nuevitaC = new Computadora()
                             {
-                                Computadora nuevitaC = new Computadora()
-                                {
-                                    Almacenamientos = alma,
-                                    Gabinete = gabi,
-                                    Monitor = moni,
-                                    Rams = ramsita,
-                                    Procesador = procePlaca.Procesador,
-                                    PlacaBase = procePlaca.PlacaBase
-                                };
-                                nuevita.Add(nuevitaC);
-                            }
+                                Almacenamientos = alma,
+                                Gabinete = gabi,
+                                Monitor = moni,
+                                Rams = procePlaca.Rams,
+                                Procesador = procePlaca.Procesador,
+                                PlacaBase = procePlaca.PlacaBase
+                            };
+                            nuevita.Add(nuevitaC);
                         }
                     }
                 }
             }
+            List<Grafica> graficas = GraficasRecomendados(tipoComputer);
             List<Computadora> compusFinales = new List<Computadora>();
+            List<Computadora> fuentesGraficas = FuentesRecomendados(tipoComputer, graficas);
+            nuevita = nuevita.Where(x => x.CostoTotal <= presupuesto && x.CostoTotal >= tipoComputer.CostoMinimo).ToList();
+            nuevita = nuevita.Where(x => (double)x.CantidadMemoriaRam >= tipoComputer.Ram.Capacidad.min).OrderByDescending(x => x.CantidadMemoriaRam).ToList();
+            double cantidadesCOUNT = 0;
             foreach (var compu in nuevita)
             {
-                double presupuestoGrafica = presupuesto - compu.CostoTotal;
-                if (tipoComputer.TarjetaGrafica.PrecioUnidad.max < presupuestoGrafica)
-                {
-                    tipoComputer.TarjetaGrafica.PrecioUnidad.max = presupuestoGrafica;//10% extra
-                }
-                if (presupuestoGrafica <= 0)
-                {
-                    tipoComputer.TarjetaGrafica.PrecioUnidad.max = 0;
-                }
-                List<Grafica> graficas = null;
-                if (tipoComputer.TarjetaGrafica.PrecioUnidad.max > 0)
-                {
-                    graficas = GraficasRecomendados(tipoComputer);
-                }
-                double potenciaActual = compu.Procesador.Consumo + (24.0 * compu.Rams.Count);//-> SUmar tarjeta grafica
-                List<Computadora> fuentesGraficas = FuentesRecomendados(tipoComputer, potenciaActual, graficas);
                 foreach (var nuevaFuente in fuentesGraficas)
                 {
                     compusFinales.Add(new Computadora()
@@ -268,8 +249,13 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                         Rams = compu.Rams,
                         TarjetaGrafica = nuevaFuente.TarjetaGrafica
                     });
+
+
                 }
+                cantidadesCOUNT++;
             }
+            compusFinales = compusFinales.Where(x =>
+            x.ConsumoEstimado <= x.Fuente.Potencia).OrderBy(x => x.CostoTotal).ToList();
             return compusFinales;
         }
     }

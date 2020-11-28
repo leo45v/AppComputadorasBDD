@@ -60,14 +60,14 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
         public List<Procesador> ProcesadoresRecomendados(Requirements.TipoComputer.ProcesadorR procesadorR)
         {
             List<Procesador> procesadors = null;
-            if (procesadorR.PrecioUnidad.max >= presupuesto * 0.5)
-            {
-                procesadorR.PrecioUnidad.max = presupuesto * 0.5;
-            }
-            if (procesadorR.PrecioUnidad.min >= presupuesto * 0.5)
-            {
-                procesadorR.PrecioUnidad.max = presupuesto * 0.25;
-            }
+            //if (procesadorR.PrecioUnidad.max >= presupuesto * 0.5)
+            //{
+            //    procesadorR.PrecioUnidad.max = presupuesto * 0.5;
+            //}
+            //if (procesadorR.PrecioUnidad.min >= presupuesto * 0.5)
+            //{
+            //    procesadorR.PrecioUnidad.max = presupuesto * 0.25;
+            //}
 
             string query = @"SELECT r.IdProducto, r.FrecuenciaBase, r.FrecuenciaTurbo, r.NumeroNucleos, r.NumeroHilos, r.Consumo, r.Litografia, 
             pro.PrecioUnidad, pro.Imagen, pro.Nombre, pro.Stock, pro.IdMarca, pro.Descontinuado, pro.Eliminado, 
@@ -127,7 +127,6 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
             INNER JOIN Producto pro ON pro.IdProducto = r.IdProducto
             INNER JOIN Marca mar ON mar.IdMarca = pro.IdMarca 
             WHERE pro.PrecioUnidad <= @CostoMax 
-            AND r.Memoria >= @CapacidadMin 
             AND r.Frecuencia >= @FrecuenciaMin  
             AND pro.Eliminado = 0 
             AND pro.Stock > 0
@@ -137,7 +136,6 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
                 OperationsSql.OpenConnection();
                 OperationsSql.CreateBasicCommandWithTransaction(query);
                 OperationsSql.AddWithValueString("CostoMax", ramR.PrecioUnidad.max);
-                OperationsSql.AddWithValueString("CapacidadMin", ramR.Capacidad.min);
                 OperationsSql.AddWithValueString("FrecuenciaMin", ramR.Frecuencia.min);
                 List<Dictionary<string, object>> data = OperationsSql.ExecuteReaderMany();
                 if (data != null)

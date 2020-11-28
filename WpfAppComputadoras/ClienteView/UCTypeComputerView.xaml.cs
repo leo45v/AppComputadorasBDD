@@ -28,20 +28,73 @@ namespace WpfAppComputadoras.ClienteView
         public TipoComputadora tipoComputadora;
         public object parametros;
         public ViewMain mainView;
+        ConfigurationBuildComputer getParametros = new ConfigurationBuildComputer(TipoComputadora.Estudio);
+
         public UCTypeComputerView(ViewMain viewMain)
         {
             InitializeComponent();
             this.mainView = viewMain;
+
+            //MessageBox.Show(String.Format("MAX: {0}\n\rMIN: {1}",
+            //    getParametros.Requisitos.ComputadoraX.CostoMaximo,
+            //    getParametros.Requisitos.ComputadoraX.CostoMinimo), "ESTUDIO");
+
+            //getParametros.CambiarTipo = TipoComputadora.Gaming;
+            //MessageBox.Show(String.Format("MAX: {0}\n\rMIN: {1}",
+            //    getParametros.Requisitos.ComputadoraX.CostoMaximo,
+            //    getParametros.Requisitos.ComputadoraX.CostoMinimo), "GAMING");
+
+            //getParametros.CambiarTipo = TipoComputadora.Oficina;
+            //MessageBox.Show(String.Format("MAX: {0}\n\rMIN: {1}",
+            //    getParametros.Requisitos.ComputadoraX.CostoMaximo,
+            //    getParametros.Requisitos.ComputadoraX.CostoMinimo), "OFICINA");
+
+            //getParametros.CambiarTipo = TipoComputadora.TrabajoDiseno;
+            //MessageBox.Show(String.Format("MAX: {0}\n\rMIN: {1}",
+            //    getParametros.Requisitos.ComputadoraX.CostoMaximo,
+            //    getParametros.Requisitos.ComputadoraX.CostoMinimo), "TRABAJO DISEÑO");
+
         }
-        ConfigurationBuildComputer getParametros = new ConfigurationBuildComputer(TipoComputadora.Estudio);
         private void Btn_Siguiente(object sender, RoutedEventArgs e)
         {
-            presupuesto = 2000;
-            ComputadoraBuildBrl.Presupuesto = presupuesto;
-            getParametros.CambiarTipo = TipoComputadora.Gaming;
-            bdWaiting.IsOpen = true;
-            Thread nuevoHiloProcesos = new Thread(BuscarComputadora);
-            nuevoHiloProcesos.Start();
+            if (String.IsNullOrWhiteSpace(txtPresupuesto.Text))
+            {
+                MessageBox.Show("Ingrese un Presupuesto");
+                return;
+            }
+            if (btnGaming.IsChecked.Value)
+            {
+                getParametros.CambiarTipo = TipoComputadora.Gaming;
+                tipoComputadora = TipoComputadora.Gaming;
+            }
+            else if (btnOficina.IsChecked.Value)
+            {
+                getParametros.CambiarTipo = TipoComputadora.Oficina;
+                tipoComputadora = TipoComputadora.Oficina;
+            }
+            else if (btnTrabajo.IsChecked.Value)
+            {
+                getParametros.CambiarTipo = TipoComputadora.TrabajoDiseno;
+                tipoComputadora = TipoComputadora.TrabajoDiseno;
+            }
+            else if (BtnEstudios.IsChecked.Value)
+            {
+                getParametros.CambiarTipo = TipoComputadora.Estudio;
+                tipoComputadora = TipoComputadora.Estudio;
+            }
+            else { MessageBox.Show("Seleccione un Tipo de Computadora"); return; }
+            if (double.TryParse(txtPresupuesto.Text, out presupuesto))
+            {
+                ComputadoraBuildBrl.Presupuesto = presupuesto;
+                bdWaiting.IsOpen = true;
+                Thread nuevoHiloProcesos = new Thread(BuscarComputadora);
+                nuevoHiloProcesos.Start();
+            }
+            else
+            {
+                MessageBox.Show("Ingrese un Presupuesto correcto");
+            }
+
         }
         private void BuscarComputadora()
         {
@@ -50,40 +103,74 @@ namespace WpfAppComputadoras.ClienteView
             List<Computadora> computadoras = ComputadoraBuildBrl.GetComputersBuild(getParametros.Requisitos.ComputadoraX);
             //List<Computadora> computadorasSinPantalla = computadoras.Select(x => { x.Monitor = null; return x; }).ToList();
             //List<Computadora> nuevito = computadorasSinPantalla.Where(x => x.CostoTotal <= presupuesto && x.TarjetaGrafica.PrecioUnidad > 400).OrderByDescending(x => x.CostoTotal).ToList();
-
-            List<Computadora> listaRenovada = computadoras.Where(x => x.CostoTotal <= presupuesto).OrderBy(x => x.CostoTotal).ToList();
-            Computadora masBarata = listaRenovada.First();
-            List<Computadora> evitarFuentesMayoresA = listaRenovada
-                .Where(x => x.Fuente.Potencia <= (x.ConsumoEstimado + 200))
-                .Select(x =>
+            Computadora filtradoPorPotencia = null;
+            if (!(computadoras is null))
+            {
+                List<Computadora> listaRenovada = computadoras;//.Where(x => x.CostoTotal <= presupuesto).ToList();
+                if (listaRenovada.Count > 0)
                 {
-                    var f = x.Almacenamientos.Where(y => y.Tipo.Contains("SSD")).ToList();
-                    if (f.Count > 0)
+                    List<Computadora> evitarFuentesMayoresA = null;
+                    if (tipoComputadora == TipoComputadora.Gaming)
                     {
-                        x.Almacenamientos = f;
+                        evitarFuentesMayoresA = listaRenovada
+                        .Select(x =>
+                        {
+                            var f = x.Almacenamientos.Where(y => y.Tipo.Contains("SSD") || y.Tipo.Contains("HDD")).ToList();
+                            if (f.Count > 0)
+                            {
+                                x.Almacenamientos = f;
+                            }
+                            else { x.Almacenamientos = null; }
+                            return x;
+                        })
+                        .Where(x => !(x.Almacenamientos is null))
+                         .Where(x => x.CostoTotal <= presupuesto)
+                        .OrderBy(x => x.TarjetaGrafica.PrecioUnidad)
+                        .ToList();
                     }
-                    else { x.Almacenamientos = null; }
-                    return x;
-                })
-                .Where(x => !(x.Almacenamientos is null))
-                .OrderBy(x => x.TarjetaGrafica.PrecioUnidad)
-                .ToList();
-            Computadora filtradoPorPotencia = evitarFuentesMayoresA.Last();
-            Computadora masCercanaAlPresupuesto = listaRenovada.Last();
+                    else if (tipoComputadora == TipoComputadora.TrabajoDiseno)
+                    {
+                        evitarFuentesMayoresA = listaRenovada
+                        .Select(x =>
+                        {
+                            var f = x.Almacenamientos.Where(y => y.Tipo.Contains("SSD")).ToList();
+                            if (f.Count > 0)
+                            {
+                                x.Almacenamientos = f;
+                            }
+                            else { x.Almacenamientos = null; }
+                            return x;
+                        })
+                        .Where(x => !(x.Almacenamientos is null))
+                        .Where(x => x.CostoTotal <= presupuesto)
+                        .ToList();
+                    }
+                    else if (tipoComputadora == TipoComputadora.Oficina)
+                    {
+                        evitarFuentesMayoresA = listaRenovada
+                            .Where(x => x.TarjetaGrafica is null)
+                             .Where(x => x.CostoTotal <= presupuesto)
+                            .ToList();
+                    }
+                    else
+                    {
+                        evitarFuentesMayoresA = listaRenovada
+                            .Where(x => (!(x.TarjetaGrafica is null) && x.TarjetaGrafica.PrecioUnidad > 20))
+                             .Where(x => x.CostoTotal <= presupuesto)
+                            .ToList();
+                    }
+                    if (evitarFuentesMayoresA.Count > 0)
+                    {
+                        filtradoPorPotencia = evitarFuentesMayoresA.Last();
+                    }
+                }
+            }
             watch.Stop();
             var elapsedMs = watch.ElapsedMilliseconds;
             int elapsedSeg = (int)(elapsedMs / 1000);
             elapsedMs -= (elapsedSeg * 1000);
-            //MessageBox.Show(String.Format("Tiempo Demorado en armar {0}s {1}ms", elapsedSeg, elapsedMs));
-
             Application.Current.Dispatcher.Invoke(new Action(CloseWaiting));
             Application.Current.Dispatcher.Invoke(new Action<Computadora>(mainView.UIReservaComputer), filtradoPorPotencia);
-
-            //MessageBox.Show(PrintComputer(masBarata));
-            //MessageBox.Show(PrintComputer(filtadoPorMinPrecioGrafica));
-            //MessageBox.Show(PrintComputer(masCercanaAlPresupuesto));
-
-            //MessageBox.Show(String.Format("Posibles Computadoras: {0}", listaRenovada.Count));
         }
 
         private void CloseWaiting()
@@ -118,6 +205,26 @@ namespace WpfAppComputadoras.ClienteView
             }
             x += string.Format("TOTAL COSTO: {0}", computer.CostoTotal);
             return x;
+        }
+
+        private void Click_Estudio(object sender, MouseButtonEventArgs e)
+        {
+            BtnEstudios.IsChecked = true;
+        }
+
+        private void Click_TrabajoDiseno(object sender, MouseButtonEventArgs e)
+        {
+            btnTrabajo.IsChecked = true;
+        }
+
+        private void Click_Gaming(object sender, MouseButtonEventArgs e)
+        {
+            btnGaming.IsChecked = true;
+        }
+
+        private void Click_Oficina(object sender, MouseButtonEventArgs e)
+        {
+            btnOficina.IsChecked = true;
         }
     }
 }

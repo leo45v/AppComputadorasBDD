@@ -66,7 +66,8 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
                 {
                     tipoComputer.Almacenamiento.PrecioUnidad.max = 200;
                     tipoComputer.Almacenamiento.PrecioUnidad.min = 50;
-                    tipoComputer.Almacenamiento.Capacidad.max = 5000;
+
+                    tipoComputer.Almacenamiento.Capacidad.max = 4000;
                     tipoComputer.Almacenamiento.Capacidad.min = 1000;
 
                     tipoComputer.Fuente.PrecioUnidad.max = 250;
@@ -98,12 +99,12 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
                     tipoComputer.Procesador.NumeroHilo.max = 12;
                     tipoComputer.Procesador.NumeroHilo.min = 24;
 
-                    tipoComputer.Ram.PrecioUnidad.max = 120;
+                    tipoComputer.Ram.PrecioUnidad.max = 180;
                     tipoComputer.Ram.PrecioUnidad.min = 70;
                     tipoComputer.Ram.Capacidad.max = 32;
                     tipoComputer.Ram.Capacidad.min = 16;
                     tipoComputer.Ram.Frecuencia.max = 4200;
-                    tipoComputer.Ram.Frecuencia.min = 3200;
+                    tipoComputer.Ram.Frecuencia.min = 2133;
                     tipoComputer.Ram.Cantidad.max = 4;
                     tipoComputer.Ram.Cantidad.min = 2;
 
@@ -116,7 +117,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
                 {
                     tipoComputer.Almacenamiento.PrecioUnidad.max = 100;
                     tipoComputer.Almacenamiento.PrecioUnidad.min = 40;
-                    tipoComputer.Almacenamiento.Capacidad.max = 2000;
+                    tipoComputer.Almacenamiento.Capacidad.max = 1000;
                     tipoComputer.Almacenamiento.Capacidad.min = 500;
 
                     tipoComputer.Fuente.PrecioUnidad.max = 120;
@@ -124,7 +125,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
                     tipoComputer.Fuente.Certificacion.max = ECertificacion.Bronze_80Plus;
                     tipoComputer.Fuente.Certificacion.min = ECertificacion.None;
 
-                    tipoComputer.Gabinete.PrecioUnidad.max = 70;
+                    tipoComputer.Gabinete.PrecioUnidad.max = 80;
                     tipoComputer.Gabinete.PrecioUnidad.min = 30;
 
                     tipoComputer.Monitor.PrecioUnidad.max = 150;
@@ -153,11 +154,11 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
                     tipoComputer.Ram.Capacidad.max = 8;
                     tipoComputer.Ram.Capacidad.min = 4;
                     tipoComputer.Ram.Frecuencia.max = 2666;
-                    tipoComputer.Ram.Frecuencia.min = 2100;
+                    tipoComputer.Ram.Frecuencia.min = 2133;
                     tipoComputer.Ram.Cantidad.max = 2;
                     tipoComputer.Ram.Cantidad.min = 1;
 
-                    tipoComputer.TarjetaGrafica.PrecioUnidad.max = 110;
+                    tipoComputer.TarjetaGrafica.PrecioUnidad.max = 150;
                     tipoComputer.TarjetaGrafica.PrecioUnidad.min = 0;
                     tipoComputer.TarjetaGrafica.Vram.max = 1;
                     tipoComputer.TarjetaGrafica.Vram.min = 0;
@@ -167,7 +168,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
                     tipoComputer.Almacenamiento.PrecioUnidad.max = 700;
                     tipoComputer.Almacenamiento.PrecioUnidad.min = 300;
                     tipoComputer.Almacenamiento.Capacidad.max = 10000;
-                    tipoComputer.Almacenamiento.Capacidad.min = 2000;
+                    tipoComputer.Almacenamiento.Capacidad.min = 4000;
 
                     tipoComputer.Fuente.PrecioUnidad.max = 350;
                     tipoComputer.Fuente.PrecioUnidad.min = 150;
@@ -203,7 +204,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
                     tipoComputer.Ram.Capacidad.max = 128;
                     tipoComputer.Ram.Capacidad.min = 32;
                     tipoComputer.Ram.Frecuencia.max = 5000;
-                    tipoComputer.Ram.Frecuencia.min = 4200;
+                    tipoComputer.Ram.Frecuencia.min = 2133;
                     tipoComputer.Ram.Cantidad.max = 8;
                     tipoComputer.Ram.Cantidad.min = 4;
 
@@ -225,8 +226,8 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
                     {
                         Capacidad = new Requirements.TipoComputer.MinMax<double>()
                         {
-                            min = 1000,
-                            max = 2000
+                            min = 500,
+                            max = 1000
                         },
                         PrecioUnidad = new Requirements.TipoComputer.MinMax<double>()
                         {
@@ -256,7 +257,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
                     {
                         PrecioUnidad = new Requirements.TipoComputer.MinMax<double>()
                         {
-                            min = 50,
+                            min = 40,
                             max = 100
                         }
                     },
@@ -323,7 +324,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
                         },
                         Frecuencia = new Requirements.TipoComputer.MinMax<double>()
                         {
-                            min = 2100,
+                            min = 2133,
                             max = 2666
                         },
                         Cantidad = new Requirements.TipoComputer.MinMax<double>()
@@ -347,7 +348,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
                         PrecioUnidad = new Requirements.TipoComputer.MinMax<double>()
                         {
                             min = 0,
-                            max = 150
+                            max = 180
                         }
                     }
                 };

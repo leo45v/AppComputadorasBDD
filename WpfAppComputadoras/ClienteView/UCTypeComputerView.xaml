@@ -4,74 +4,71 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WpfAppComputadoras.ClienteView"
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             TextElement.Foreground="{DynamicResource MaterialDesignDarkForeground}"
+            Foreground="{DynamicResource MaterialDesignDarkForeground}"
+            Background="{DynamicResource MaterialDesignDarkBackground}" 
+            TextElement.FontWeight="Medium"
+            TextElement.FontSize="14"
+            FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
+            xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Border>
+        <!--<Border>
             <Border.Background>
                 <ImageBrush ImageSource="/ClienteView/PC-GAMER.jpg"/>
             </Border.Background>
             <TextBlock TextWrapping="Wrap"/>
-        </Border>
-        <TextBlock HorizontalAlignment="Center" Text="SELECCIONE UN TIPO DE COMPUTADORA" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="32" FontFamily="Arial Black" Width="800" Background="#FF898979" FontStyle="Normal" FontWeight="Bold" Height="40"/>
-        <TextBlock HorizontalAlignment="Left" Margin="52,80,0,0" Text="ESTUDIOS" TextWrapping="Wrap" VerticalAlignment="Top" Width="168" FontSize="28" FontFamily="Arial Black" Foreground="#FF2DEA35" RenderTransformOrigin="0.135,0.58" FontWeight="Bold"/>
-        <TextBlock HorizontalAlignment="Left" Margin="240,60,0,0" Text="TRABAJO" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="28" FontFamily="Arial Black" Foreground="#FF39E250" RenderTransformOrigin="0.897,0.489"/>
-        <TextBlock HorizontalAlignment="Left" Margin="405,80,0,0" Text="GAMING" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="28" FontFamily="Arial Black" RenderTransformOrigin="0.587,0.616" Foreground="#FF35D83C">
+        </Border>-->
+        <TextBlock HorizontalAlignment="Center" Text="SELECCIONE UN TIPO DE COMPUTADORA" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="32" FontFamily="Arial Black" FontStyle="Normal" FontWeight="Bold" />
 
-            <TextBlock.Background>
-                <ImageBrush/>
-            </TextBlock.Background>
-        </TextBlock>
+        <StackPanel  Margin="10,101,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock MouseLeftButtonUp="Click_Estudio"  HorizontalAlignment="Left" Text="ESTUDIOS" TextWrapping="Wrap" VerticalAlignment="Top" Width="168" FontSize="20" FontFamily="Arial Black" Foreground="#FF2DEA35" RenderTransformOrigin="0.135,0.58" FontWeight="Bold"/>
+            <TextBlock Height="15"/>
+            <RadioButton x:Name="BtnEstudios" GroupName="gComputer" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{DynamicResource MaterialDesignActionAccentToggleButton}"
+                        Content="{materialDesign:PackIcon Kind=Circle}"
+                    materialDesign:ToggleButtonAssist.OnContent="{materialDesign:PackIcon Kind=CheckBold}" />
+        </StackPanel>
+        <StackPanel  Margin="190,71,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock MouseLeftButtonUp="Click_TrabajoDiseno"  HorizontalAlignment="Left" Text="TRABAJO &amp; DISEÑO" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="20" FontFamily="Arial Black" Foreground="#FF39E250" RenderTransformOrigin="0.897,0.489"/>
+            <TextBlock Height="15"/>
+            <RadioButton x:Name="btnTrabajo" GroupName="gComputer" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{DynamicResource MaterialDesignActionAccentToggleButton}"
+                         Content="{materialDesign:PackIcon Kind=Circle}"
+                    materialDesign:ToggleButtonAssist.OnContent="{materialDesign:PackIcon Kind=CheckBold}" />
+        </StackPanel>
+        <StackPanel  Margin="490,71,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock MouseLeftButtonUp="Click_Gaming"  HorizontalAlignment="Left" Text="GAMING" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="20" FontFamily="Arial Black"  Foreground="#FF35D83C"/>
+            <TextBlock Height="30"/>
+            <RadioButton x:Name="btnGaming" GroupName="gComputer" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{DynamicResource MaterialDesignActionAccentToggleButton}"
+                         Content="{materialDesign:PackIcon Kind=Circle}"
+                    materialDesign:ToggleButtonAssist.OnContent="{materialDesign:PackIcon Kind=CheckBold}" />
+        </StackPanel>
+        <StackPanel  Margin="670,101,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock MouseLeftButtonUp="Click_Oficina"  HorizontalAlignment="Left" Text="OFICINA" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="20" FontFamily="Arial Black" Foreground="#FF35D83C"/>
+            <TextBlock Height="15"/>
+            <RadioButton x:Name="btnOficina" GroupName="gComputer" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{DynamicResource MaterialDesignActionAccentToggleButton}"
+                         Content="{materialDesign:PackIcon Kind=Circle}"
+                    materialDesign:ToggleButtonAssist.OnContent="{materialDesign:PackIcon Kind=CheckBold}" />
+        </StackPanel>
 
-        <Button Content="SIGUIENTE" HorizontalAlignment="Left" Margin="620,366,0,0" VerticalAlignment="Top" FontSize="22" Click="Btn_Siguiente" BorderBrush="#FFECA2BB">
-            <Button.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="Black"/>
-                    <GradientStop Color="#FFE8E2E2" Offset="1"/>
-                </LinearGradientBrush>
-            </Button.Background>
+        <Button HorizontalAlignment="Center" Margin="620,366,0,0" VerticalAlignment="Stretch" FontSize="22" Click="Btn_Siguiente" >
+            <StackPanel Orientation="Horizontal">
+                <materialDesign:PackIcon Kind="Gear" VerticalAlignment="Center"/>
+                <TextBlock Text="Generar"/>
+            </StackPanel>
         </Button>
-        <RadioButton x:Name="BtnEstudios" Content="" HorizontalAlignment="Left" Margin="80,120,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.523,-1.444" Background="#FFA44163">
-            <RadioButton.Foreground>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="Black"/>
-                    <GradientStop Color="#FFBB6060" Offset="1"/>
-                </LinearGradientBrush>
-            </RadioButton.Foreground>
-        </RadioButton>
-        <RadioButton x:Name="btnTrabajo" Content="" HorizontalAlignment="Left" Margin="293,100,0,0" VerticalAlignment="Top" Height="17" RenderTransformOrigin="-2.068,3.971">
-            <RadioButton.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="Black"/>
-                    <GradientStop Color="#FFCFCFCF" Offset="1"/>
-                </LinearGradientBrush>
-            </RadioButton.Background>
-            <RadioButton.Foreground>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="Black"/>
-                    <GradientStop Color="#FFE2B6B6" Offset="1"/>
-                </LinearGradientBrush>
-            </RadioButton.Foreground>
-            <RadioButton.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform ScaleY="-1"/>
-                    <SkewTransform/>
-                    <RotateTransform/>
-                    <TranslateTransform Y="-118.014"/>
-                </TransformGroup>
-            </RadioButton.RenderTransform>
-        </RadioButton>
-        <RadioButton x:Name="btnGaming" Content="" HorizontalAlignment="Left" Margin="449,117,0,0" VerticalAlignment="Top"/>
 
-        <materialDesign:DialogHost IsOpen="False" x:Name="bdWaiting" Margin="588,82,22,200">
+        <materialDesign:DialogHost IsOpen="False" x:Name="bdWaiting">
             <materialDesign:DialogHost.DialogContent>
                 <StackPanel>
                     <TextBlock Text="Procesando..." HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="50" />
                 </StackPanel>
             </materialDesign:DialogHost.DialogContent>
-            <TextBlock HorizontalAlignment="Left" Margin="-444,85,0,0" Text="INSERTE PRESUPUESTO" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="22" FontWeight="Bold" FontFamily="Arial Black" Background="#FFAFE836"/>
         </materialDesign:DialogHost>
-        <TextBox x:Name="txtPresupuesto" HorizontalAlignment="Left" Margin="214,0,0,0" Text="$$$$$$$$$$$" TextWrapping="Wrap" VerticalAlignment="Center" Width="180" RenderTransformOrigin="0.962,1.422" Height="38" Foreground="#FF7E4545" SelectionTextBrush="#FFC5AFAF"/>
+        <StackPanel Orientation="Horizontal" Margin="250,150,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" >
+            <TextBox x:Name="txtPresupuesto" Text="" TextWrapping="Wrap" Width="208" />
+            <TextBlock Text="$" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </StackPanel>
+        <TextBlock HorizontalAlignment="Left" Margin="50,287,0,0" Text="INSERTE PRESUPUESTO" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="22" FontWeight="Bold" FontFamily="Arial Black" />
     </Grid>
 </UserControl>

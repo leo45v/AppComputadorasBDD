@@ -24,9 +24,11 @@
             <RowDefinition/>
             <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="1" Grid.Column="1" x:Name="containerComputer" Orientation="Vertical">
+        <ScrollViewer Grid.Row="1" Grid.Column="1" >
+            <StackPanel x:Name="containerComputer" Orientation="Vertical">
 
-        </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
         <Grid x:Name="containerSpec" Grid.Row="1" Grid.Column="2">
 
         </Grid>
