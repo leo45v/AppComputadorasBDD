@@ -24,7 +24,7 @@ namespace WpfAppComputadoras.ClienteView
     /// </summary>
     public partial class UCTypeComputerView : UserControl
     {
-        public double presupuesto;
+        public decimal presupuesto;
         public TipoComputadora tipoComputadora;
         public object parametros;
         public ViewMain mainView;
@@ -83,7 +83,7 @@ namespace WpfAppComputadoras.ClienteView
                 tipoComputadora = TipoComputadora.Estudio;
             }
             else { MessageBox.Show("Seleccione un Tipo de Computadora"); return; }
-            if (double.TryParse(txtPresupuesto.Text, out presupuesto))
+            if (decimal.TryParse(txtPresupuesto.Text, out presupuesto))
             {
                 ComputadoraBuildBrl.Presupuesto = presupuesto;
                 bdWaiting.IsOpen = true;
