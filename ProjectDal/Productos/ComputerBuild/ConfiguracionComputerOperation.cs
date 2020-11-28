@@ -9,8 +9,8 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
 {
     public class ConfiguracionComputerOperation
     {
-        public double presupuesto;
-        public ConfiguracionComputerOperation(double presupuesto)
+        public decimal presupuesto;
+        public ConfiguracionComputerOperation(decimal presupuesto)
         {
             this.presupuesto = presupuesto;
         }

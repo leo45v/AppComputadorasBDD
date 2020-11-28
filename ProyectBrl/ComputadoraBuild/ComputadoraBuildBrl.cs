@@ -8,7 +8,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectBr
 {
     public class ComputadoraBuildBrl
     {
-        public static double Presupuesto
+        public static decimal Presupuesto
         {
             get
             {
