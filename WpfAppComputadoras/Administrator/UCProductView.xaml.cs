@@ -125,11 +125,11 @@ namespace WpfAppComputadoras.Administrator
             if (noVista) { btnAction.Visibility = Visibility.Visible; btnLoadImg.Visibility = Visibility.Visible; }
             else { btnAction.Visibility = Visibility.Hidden; btnLoadImg.Visibility = Visibility.Hidden; }
         }
-        public UCProductView(UCItemProductView mainV, ViewMain viewMain, Guid idProducto, ETipoProducto tipoProducto)
+        public UCProductView(bool vistaMode, ViewMain viewMain, Guid idProducto, ETipoProducto tipoProducto)//UCItemProductView mainV
         {
             InitializeComponent();
             mainView = viewMain;
-            this.VistaMode = mainV.VistaMode;
+            this.VistaMode = vistaMode; //mainV.VistaMode;
             LoadComboMarcas();
             btnAction.Content = "Actualizar";
             containerTipo.Children.Clear();

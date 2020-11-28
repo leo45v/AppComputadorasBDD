@@ -40,10 +40,19 @@
     <Compile Update="Administrator\UCProductView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="ClienteView\ComputerBuildView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="ClienteView\UCTypeComputerView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Components\UCComputerSpec.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Components\UCItemProductView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Components\UCProductViewClient.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="RegistroWindow.xaml.cs">
@@ -87,10 +96,19 @@
     <Page Update="Administrator\UCProductView.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="ClienteView\ComputerBuildView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="ClienteView\UCTypeComputerView.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Components\UCComputerSpec.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Components\UCItemProductView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Components\UCProductViewClient.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="MainWindow.xaml">

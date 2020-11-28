@@ -90,8 +90,12 @@ namespace WpfAppComputadoras.Components
         {
             if (tipo != ETipoProducto.None)
             {
-                uCProcesadorView = new UCProductView(this, mainView, idProducto, tipo);
+                uCProcesadorView = new UCProductView(VistaMode, mainView, idProducto, tipo);
             }
+        }
+        public void OcultarEvents()
+        {
+            productConfig.Visibility = Visibility.Hidden;
         }
     }
 }

@@ -75,14 +75,17 @@ namespace WpfAppComputadoras.ClienteView
             {
                 mainView.btnConfigurar.IsEnabled = true;
                 mainView.gridAutomaitc.Children.Clear();
-                mainView.gridAutomaitc.Children.Add(mainView.uCTypeComputerView);
+                mainView.gridAutomaitc.Children.Add(mainView.ViewModeMainANTERIOR);
+                mainView.ViewModeMain = mainView.ViewModeMainANTERIOR;
+                mainView.ViewModeMainANTERIOR = mainView.uCConfigClient;
             }
             else if (tipoRol.IdRol == ERol.Administrador)
             {
                 mainView.btnConfigurar.IsEnabled = true;
                 mainView.gridAutomaitc.Children.Clear();
-                mainView.gridAutomaitc.Children.Add(mainView.admiMenuView);
-                //mainView.ConfigAdministradorInterface(ERol.Administrador);
+                mainView.gridAutomaitc.Children.Add(mainView.ViewModeMainANTERIOR);
+                mainView.ViewModeMain = mainView.ViewModeMainANTERIOR;
+                mainView.ViewModeMainANTERIOR = mainView.uCConfigClient;
             }
         }
 
@@ -95,7 +98,8 @@ namespace WpfAppComputadoras.ClienteView
             txtNombre.IsEnabled = !activo;
             txtNombreUsuario.IsEnabled = !activo;
             txtSexo.IsEnabled = !activo;
-            if (!activo) {
+            if (!activo)
+            {
                 iconModificar.Kind = MaterialDesignThemes.Wpf.PackIconKind.EditOff;
             }
             else

@@ -14,6 +14,19 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
         public Procesador Procesador { get; set; }
         public List<Ram> Rams { get; set; }
         public Grafica TarjetaGrafica { get; set; }
+        public int ConsumoEstimado
+        {
+            get
+            {
+                int consumo = 0;
+                consumo += Almacenamientos.Count * 5;
+                consumo += 50;//PLACA BASE
+                consumo += Procesador.Consumo;
+                consumo += Rams.Count * 5;
+                consumo += TarjetaGrafica.Consumo;
+                return consumo;
+            }
+        }
         public double CostoTotal
         {
             get

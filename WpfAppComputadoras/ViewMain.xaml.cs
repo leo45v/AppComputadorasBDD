@@ -14,6 +14,7 @@ using WpfAppComputadoras.Administrator;
 using WpfAppComputadoras.ClienteView;
 using WpfAppComputadoras.Extra;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Operaciones;
+using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configuracion;
 
 namespace WpfAppComputadoras
 {
@@ -29,6 +30,15 @@ namespace WpfAppComputadoras
         private Administrador admin;
         public AdmiMenuView admiMenuView;
         public UCTypeComputerView uCTypeComputerView;
+        public ComputerBuildView computerBuildView;
+        public UCConfigClient uCConfigClient;
+
+
+        public UIElement ViewModeMain;
+        public UIElement ViewModeMainANTERIOR;
+
+        public Computadora computadoraCalculada = null;
+
         public string queryProductName = "";
         public Marca queryProductMarca = null;
         public ETipoProducto queryProductTipo = ETipoProducto.None;
@@ -49,6 +59,8 @@ namespace WpfAppComputadoras
             ListaRatio = main.ListaRatio;
             if (rol.IdRol == ERol.Cliente)
             {
+                btnViewClients.Visibility = Visibility.Collapsed;
+                panelClient.Visibility = Visibility.Visible;
                 cliente = ClientsBrl.GetClienteByIdUsuario(idUsuario);
                 ConfigClienteInterface();
                 txNombreView.Text = cliente.Nombre + " " + cliente.Apellido;
@@ -56,6 +68,8 @@ namespace WpfAppComputadoras
             }
             else if (rol.IdRol == ERol.Administrador)
             {
+                panelClient.Visibility = Visibility.Collapsed;
+                btnViewClients.Visibility = Visibility.Visible;
                 admin = AdministradorBrl.GetAdministradorByIdUsuario(idUsuario);
                 LoadInterfaceAdmin(admin.Usuario.Rol.IdRol);
                 txNombreView.Text = admin.Nombre + " " + admin.Apellido;
@@ -76,7 +90,8 @@ namespace WpfAppComputadoras
         }
         private void ConfigClienteInterface()
         {
-            uCTypeComputerView = new UCTypeComputerView();
+            uCTypeComputerView = new UCTypeComputerView(this);
+            ViewModeMain = uCTypeComputerView;
             gridAutomaitc.Children.Clear();
             gridAutomaitc.Children.Add(uCTypeComputerView);
         }
@@ -93,6 +108,7 @@ namespace WpfAppComputadoras
             admiMenuView.btnLast.Click += BtnLast_Click;
             admiMenuView.btnPrevious.Click += BtnPrevious_Click;
             admiMenuView.btnNext.Click += BtnNext_Click;
+            ViewModeMain = admiMenuView;
         }
 
         private void BtnNext_Click(object sender, RoutedEventArgs e)
@@ -196,7 +212,15 @@ namespace WpfAppComputadoras
                 }
             }
         }
-
+        public void UIReservaComputer(Computadora computadora)
+        {
+            this.computadoraCalculada = computadora;
+            computerBuildView = new ComputerBuildView(this, this.computadoraCalculada);
+            ViewModeMain = computerBuildView;
+            gridAutomaitc.Children.Clear();
+            gridAutomaitc.Children.Add(computerBuildView);
+            btnArmadoAnterior.IsEnabled = true;
+        }
         private void Btn_Click(object sender, RoutedEventArgs e)
         {
             int aux = int.Parse(((Button)sender).Content.ToString()) - 1;
@@ -226,25 +250,29 @@ namespace WpfAppComputadoras
             {
                 btnConfigurar.IsEnabled = false;
                 gridAutomaitc.Children.Clear();
-                UCConfigClient uCConfigClient = new UCConfigClient(this, cliente);
+                uCConfigClient = new UCConfigClient(this, cliente);
                 //uCConfigClient.bthAtras.Click += ((s, e) =>
                 //{
                 //    btnConfigurar.IsEnabled = true;
                 //    ConfigClienteInterface();
                 //});
                 gridAutomaitc.Children.Add(uCConfigClient);
+                ViewModeMainANTERIOR = ViewModeMain;
+                ViewModeMain = uCConfigClient;
             }
             else if (ERol.Administrador == rol.IdRol)
             {
                 btnConfigurar.IsEnabled = false;
                 gridAutomaitc.Children.Clear();
-                UCConfigClient uCConfigClient = new UCConfigClient(this, admin);
+                uCConfigClient = new UCConfigClient(this, admin);
                 //uCConfigClient.bthAtras.Click += ((s, e) =>
                 //{
                 //    btnConfigurar.IsEnabled = true;
                 //    ConfigClienteInterface(rol.IdRol);
                 //});
                 gridAutomaitc.Children.Add(uCConfigClient);
+                ViewModeMainANTERIOR = ViewModeMain;
+                ViewModeMain = uCConfigClient;
             }
         }
 
@@ -257,6 +285,22 @@ namespace WpfAppComputadoras
         {
             GC.SuppressFinalize(this);
             mainWindow.CleanMemory();
+        }
+
+        private void Btn_VerArmadoAnterior_Click(object sender, RoutedEventArgs e)
+        {
+            if (ViewModeMain != computerBuildView)
+            {
+                btnConfigurar.IsEnabled = true;
+                gridAutomaitc.Children.Clear();
+                gridAutomaitc.Children.Add(computerBuildView);
+                ViewModeMainANTERIOR = ViewModeMain;
+                ViewModeMain = computerBuildView;
+            }
+            else
+            {
+                MessageBox.Show("YA ESTAS AK");
+            }
         }
     }
 }

@@ -27,9 +27,11 @@ namespace WpfAppComputadoras.ClienteView
         public double presupuesto;
         public TipoComputadora tipoComputadora;
         public object parametros;
-        public UCTypeComputerView()
+        public ViewMain mainView;
+        public UCTypeComputerView(ViewMain viewMain)
         {
             InitializeComponent();
+            this.mainView = viewMain;
         }
         ConfigurationBuildComputer getParametros = new ConfigurationBuildComputer(TipoComputadora.Estudio);
         private void Btn_Siguiente(object sender, RoutedEventArgs e)
@@ -51,26 +53,43 @@ namespace WpfAppComputadoras.ClienteView
 
             List<Computadora> listaRenovada = computadoras.Where(x => x.CostoTotal <= presupuesto).OrderBy(x => x.CostoTotal).ToList();
             Computadora masBarata = listaRenovada.First();
-            List<Computadora> buenbasGraficas = listaRenovada.Where(x => x.TarjetaGrafica.PrecioUnidad > 450).OrderByDescending(x => x.TarjetaGrafica.PrecioUnidad).ToList();
-            Computadora filtadoPorMinPrecioGrafica = buenbasGraficas.First();
+            List<Computadora> evitarFuentesMayoresA = listaRenovada
+                .Where(x => x.Fuente.Potencia <= (x.ConsumoEstimado + 200))
+                .Select(x =>
+                {
+                    var f = x.Almacenamientos.Where(y => y.Tipo.Contains("SSD")).ToList();
+                    if (f.Count > 0)
+                    {
+                        x.Almacenamientos = f;
+                    }
+                    else { x.Almacenamientos = null; }
+                    return x;
+                })
+                .Where(x => !(x.Almacenamientos is null))
+                .OrderBy(x => x.TarjetaGrafica.PrecioUnidad)
+                .ToList();
+            Computadora filtradoPorPotencia = evitarFuentesMayoresA.Last();
             Computadora masCercanaAlPresupuesto = listaRenovada.Last();
-            Dispatcher.Invoke(() => bdWaiting.IsOpen = false);
             watch.Stop();
             var elapsedMs = watch.ElapsedMilliseconds;
             int elapsedSeg = (int)(elapsedMs / 1000);
             elapsedMs -= (elapsedSeg * 1000);
-            MessageBox.Show(String.Format("Tiempo Demorado en armar {0}s {1}ms", elapsedSeg, elapsedMs));
+            //MessageBox.Show(String.Format("Tiempo Demorado en armar {0}s {1}ms", elapsedSeg, elapsedMs));
 
-            MessageBox.Show(PrintComputer(masBarata));
-            MessageBox.Show(PrintComputer(filtadoPorMinPrecioGrafica));
-            MessageBox.Show(PrintComputer(masCercanaAlPresupuesto));
-            //foreach (var computer in listaRenovada)
-            //{
-            //    MessageBox.Show(PrintComputer(computer));
-            //}
-            MessageBox.Show(String.Format("Posibles Computadoras: {0}", listaRenovada.Count));
+            Application.Current.Dispatcher.Invoke(new Action(CloseWaiting));
+            Application.Current.Dispatcher.Invoke(new Action<Computadora>(mainView.UIReservaComputer), filtradoPorPotencia);
+
+            //MessageBox.Show(PrintComputer(masBarata));
+            //MessageBox.Show(PrintComputer(filtadoPorMinPrecioGrafica));
+            //MessageBox.Show(PrintComputer(masCercanaAlPresupuesto));
+
+            //MessageBox.Show(String.Format("Posibles Computadoras: {0}", listaRenovada.Count));
         }
 
+        private void CloseWaiting()
+        {
+            bdWaiting.IsOpen = false;
+        }
         private string PrintComputer(Computadora computer)
         {
             string x = "";
