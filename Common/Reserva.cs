@@ -8,11 +8,13 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common
     public class Reserva
     {
 
-        public int IdReserva { get; set; }
+        public long IdReserva { get; set; } = 0;
 
-        public DateTime FechaReserva { get; set; }
-        public Persona Persona { get; set; }
-
+        public DateTime FechaReserva { get; set; } = DateTime.Now;
+        public Cliente Cliente { get; set; } = new Cliente();
+        public List<Producto> Productos { get; set; } = new List<Producto>();
+        public bool Recogido { get; set; } = false;
+        public bool Eliminado { get; set; } = false;
 
     }
 }

@@ -28,13 +28,13 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
         private static List<Procesador> ProcesadoresRecomendados(Requirements.TipoComputer tipoComputer)
         {
             List<Procesador> procesadors = configXD.ProcesadoresRecomendados(tipoComputer.Procesador);
-            decimal aux = tipoComputer.Procesador.PrecioUnidad.max;
-            while (procesadors is null && tipoComputer.Procesador.PrecioUnidad.max < presupuesto)
-            {
-                tipoComputer.Procesador.PrecioUnidad.max *= increaseSearch;//AUMENTAMOS EL MAXIMO en un 20%
-                procesadors = configXD.ProcesadoresRecomendados(tipoComputer.Procesador);
-            }
-            tipoComputer.Procesador.PrecioUnidad.max = aux;
+            //decimal aux = tipoComputer.Procesador.PrecioUnidad.max;
+            //while (procesadors is null && tipoComputer.Procesador.PrecioUnidad.max < presupuesto)
+            //{
+            //    tipoComputer.Procesador.PrecioUnidad.max *= increaseSearch;//AUMENTAMOS EL MAXIMO en un 20%
+            //    procesadors = configXD.ProcesadoresRecomendados(tipoComputer.Procesador);
+            //}
+            //tipoComputer.Procesador.PrecioUnidad.max = aux;
             if (procesadors is null)
             {
                 return new List<Procesador>();
@@ -44,13 +44,13 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
         private static List<PlacaBase> PlacasBasesRecomendadas(Requirements.TipoComputer tipoComputer, Procesador procesador)
         {
             List<PlacaBase> placaBases = configXD.PlacaBaseRecomendados(tipoComputer.PlacaBase, procesador);
-            decimal aux = tipoComputer.PlacaBase.PrecioUnidad.max;
-            while (placaBases is null && tipoComputer.PlacaBase.PrecioUnidad.max < presupuesto)
-            {
-                tipoComputer.PlacaBase.PrecioUnidad.max *= increaseSearch;//AUMENTAMOS EL MAXIMO en un 20%
-                placaBases = configXD.PlacaBaseRecomendados(tipoComputer.PlacaBase, procesador);
-            }
-            tipoComputer.PlacaBase.PrecioUnidad.max = aux;
+            //decimal aux = tipoComputer.PlacaBase.PrecioUnidad.max;
+            //while (placaBases is null && tipoComputer.PlacaBase.PrecioUnidad.max < presupuesto)
+            //{
+            //    tipoComputer.PlacaBase.PrecioUnidad.max *= increaseSearch;//AUMENTAMOS EL MAXIMO en un 20%
+            //    placaBases = configXD.PlacaBaseRecomendados(tipoComputer.PlacaBase, procesador);
+            //}
+            //tipoComputer.PlacaBase.PrecioUnidad.max = aux;
             if (placaBases is null)
             {
                 return new List<PlacaBase>();
@@ -60,13 +60,13 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
         private static List<Ram> RamsRecomdadas(Requirements.TipoComputer tipoComputer)
         {
             List<Ram> rams = configXD.RamsRecomendados(tipoComputer.Ram);
-            decimal aux = tipoComputer.Ram.PrecioUnidad.max;
-            while (rams is null && tipoComputer.Ram.PrecioUnidad.max < presupuesto)
-            {
-                tipoComputer.Ram.PrecioUnidad.max *= increaseSearch;//10% extra
-                rams = configXD.RamsRecomendados(tipoComputer.Ram);
-            }
-            tipoComputer.Ram.PrecioUnidad.max = aux;
+            //decimal aux = tipoComputer.Ram.PrecioUnidad.max;
+            //while (rams is null && tipoComputer.Ram.PrecioUnidad.max < presupuesto)
+            //{
+            //    tipoComputer.Ram.PrecioUnidad.max *= increaseSearch;//10% extra
+            //    rams = configXD.RamsRecomendados(tipoComputer.Ram);
+            //}
+            //tipoComputer.Ram.PrecioUnidad.max = aux;
             if (rams is null)
             {
                 return new List<Ram>();
@@ -76,13 +76,13 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
         private static List<Almacenamiento> AlmacenamientoRecomendados(Requirements.TipoComputer tipoComputer)
         {
             List<Almacenamiento> almacenamientos = configXD.AlmacenamientoRecomendados(tipoComputer.Almacenamiento);
-            decimal aux = tipoComputer.Almacenamiento.PrecioUnidad.max;
-            while (almacenamientos is null && tipoComputer.Almacenamiento.PrecioUnidad.max < presupuesto)
-            {
-                tipoComputer.Almacenamiento.PrecioUnidad.max *= increaseSearch;//10% extra
-                almacenamientos = configXD.AlmacenamientoRecomendados(tipoComputer.Almacenamiento);
-            }
-            tipoComputer.Almacenamiento.PrecioUnidad.max = aux;
+            //decimal aux = tipoComputer.Almacenamiento.PrecioUnidad.max;
+            //while (almacenamientos is null && tipoComputer.Almacenamiento.PrecioUnidad.max < presupuesto)
+            //{
+            //    tipoComputer.Almacenamiento.PrecioUnidad.max *= increaseSearch;//10% extra
+            //    almacenamientos = configXD.AlmacenamientoRecomendados(tipoComputer.Almacenamiento);
+            //}
+            //tipoComputer.Almacenamiento.PrecioUnidad.max = aux;
             if (almacenamientos is null)
             {
                 return new List<Almacenamiento>();
@@ -92,13 +92,13 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
         private static List<Monitor> MonitoresRecomendados(Requirements.TipoComputer tipoComputer)
         {
             List<Monitor> monitores = configXD.MonitorRecomendados(tipoComputer.Monitor);
-            decimal aux = tipoComputer.Monitor.PrecioUnidad.max;
-            while (monitores is null && tipoComputer.Monitor.PrecioUnidad.max < presupuesto)
-            {
-                tipoComputer.Monitor.PrecioUnidad.max *= increaseSearch;//10% extra
-                monitores = configXD.MonitorRecomendados(tipoComputer.Monitor);
-            }
-            tipoComputer.Monitor.PrecioUnidad.max = aux;
+            //decimal aux = tipoComputer.Monitor.PrecioUnidad.max;
+            //while (monitores is null && tipoComputer.Monitor.PrecioUnidad.max < presupuesto)
+            //{
+            //    tipoComputer.Monitor.PrecioUnidad.max *= increaseSearch;//10% extra
+            //    monitores = configXD.MonitorRecomendados(tipoComputer.Monitor);
+            //}
+            //tipoComputer.Monitor.PrecioUnidad.max = aux;
             if (monitores is null)
             {
                 return new List<Monitor>();
@@ -108,13 +108,13 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
         private static List<Gabinete> GabinetesRecomendados(Requirements.TipoComputer tipoComputer)
         {
             List<Gabinete> gabinetes = configXD.GabinetesRecomendados(tipoComputer.Gabinete);
-            decimal aux = tipoComputer.Gabinete.PrecioUnidad.max;
-            while (gabinetes is null && tipoComputer.Gabinete.PrecioUnidad.max < presupuesto)
-            {
-                tipoComputer.Gabinete.PrecioUnidad.max *= increaseSearch;//10% extra
-                gabinetes = configXD.GabinetesRecomendados(tipoComputer.Gabinete);
-            }
-            tipoComputer.Gabinete.PrecioUnidad.max = aux;
+            //decimal aux = tipoComputer.Gabinete.PrecioUnidad.max;
+            //while (gabinetes is null && tipoComputer.Gabinete.PrecioUnidad.max < presupuesto)
+            //{
+            //    tipoComputer.Gabinete.PrecioUnidad.max *= increaseSearch;//10% extra
+            //    gabinetes = configXD.GabinetesRecomendados(tipoComputer.Gabinete);
+            //}
+            //tipoComputer.Gabinete.PrecioUnidad.max = aux;
             if (gabinetes is null)
             {
                 return new List<Gabinete>();
@@ -126,13 +126,13 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             List<Computadora> compis = new List<Computadora>();
             List<Fuente> fuentes = configXD.FuenteRecomendados(tipoComputer.Fuente);
             List<Computadora> computadorita = new List<Computadora>();
-            decimal aux = tipoComputer.Gabinete.PrecioUnidad.max;
-            while (fuentes is null && tipoComputer.Fuente.PrecioUnidad.max < presupuesto)
-            {
-                tipoComputer.Fuente.PrecioUnidad.max *= increaseSearch;//10% extra
-                fuentes = configXD.FuenteRecomendados(tipoComputer.Fuente);
-            }
-            tipoComputer.Fuente.PrecioUnidad.max = aux;
+            //decimal aux = tipoComputer.Gabinete.PrecioUnidad.max;
+            //while (fuentes is null && tipoComputer.Fuente.PrecioUnidad.max < presupuesto)
+            //{
+            //    tipoComputer.Fuente.PrecioUnidad.max *= increaseSearch;//10% extra
+            //    fuentes = configXD.FuenteRecomendados(tipoComputer.Fuente);
+            //}
+            //tipoComputer.Fuente.PrecioUnidad.max = aux;
             if (!(fuentes is null))
             {
                 fuentes = fuentes.Where(x => x.PrecioUnidad >= tipoComputer.Fuente.PrecioUnidad.min).ToList();
@@ -187,16 +187,16 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
         private static List<Grafica> GraficasRecomendados(Requirements.TipoComputer tipoComputer)
         {
             List<Grafica> graficas = configXD.TarjetaGraficaRecomendados(tipoComputer.TarjetaGrafica);
-            decimal aux = tipoComputer.TarjetaGrafica.PrecioUnidad.max;
-            if (tipoComputer.TarjetaGrafica.PrecioUnidad.min != 0)
-            {
-                while (graficas is null && tipoComputer.TarjetaGrafica.PrecioUnidad.max < presupuesto)
-                {
-                    tipoComputer.TarjetaGrafica.PrecioUnidad.max *= increaseSearch;//10% extra
-                    graficas = configXD.TarjetaGraficaRecomendados(tipoComputer.TarjetaGrafica);
-                }
-                tipoComputer.TarjetaGrafica.PrecioUnidad.max = aux;
-            }
+            //decimal aux = tipoComputer.TarjetaGrafica.PrecioUnidad.max;
+            //if (tipoComputer.TarjetaGrafica.PrecioUnidad.min != 0)
+            //{
+            //while (graficas is null && tipoComputer.TarjetaGrafica.PrecioUnidad.max < presupuesto)
+            //{
+            //    tipoComputer.TarjetaGrafica.PrecioUnidad.max *= increaseSearch;//10% extra
+            //    graficas = configXD.TarjetaGraficaRecomendados(tipoComputer.TarjetaGrafica);
+            //}
+            //tipoComputer.TarjetaGrafica.PrecioUnidad.max = aux;
+            //}
             if (graficas is null)
             {
                 return new List<Grafica>();

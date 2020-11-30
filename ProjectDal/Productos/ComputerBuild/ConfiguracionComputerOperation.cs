@@ -89,16 +89,11 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
             {
                 OperationsSql.OpenConnection();
                 OperationsSql.CreateBasicCommandWithTransaction(query);
-                OperationsSql.AddWithValueString("CostoMin", procesadorR.PrecioUnidad.min);
                 OperationsSql.AddWithValueString("CostoMax", procesadorR.PrecioUnidad.max);
-                OperationsSql.AddWithValueString("ConsumoMin", procesadorR.Consumo.min);
                 OperationsSql.AddWithValueString("ConsumoMax", procesadorR.Consumo.max);
                 OperationsSql.AddWithValueString("FrecuenciaBaseMin", procesadorR.FrecuenciaBase.min);
-                OperationsSql.AddWithValueString("FrecuenciaBaseMax", procesadorR.FrecuenciaBase.max);
                 OperationsSql.AddWithValueString("NumeroHiloMin", procesadorR.NumeroHilo.min);
-                OperationsSql.AddWithValueString("NumeroHiloMax", procesadorR.NumeroHilo.max);
                 OperationsSql.AddWithValueString("NumeroNucleosMin", procesadorR.NumeroNucleos.min);
-                OperationsSql.AddWithValueString("NumeroNucleosMax", procesadorR.NumeroNucleos.max);
                 List<Dictionary<string, object>> data = OperationsSql.ExecuteReaderMany();
                 if (data != null)
                 {

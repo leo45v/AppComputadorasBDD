@@ -142,3 +142,174 @@ GO
 
 ALTER TABLE Fuente ALTER COLUMN Certificacion INT NOT NULL;
 GO
+
+
+
+
+-- AGREGAR 2020-29-11
+
+
+CREATE TABLE Auditoria_StockProducto
+(
+	IdAuditoria BIGINT IDENTITY(1,1) NOT NULL,
+	IdProducto uniqueidentifier NOT NULL,
+	StockAnterior SMALLINT NOT NULL,
+	StockNuevo SMALLINT NOT NULL,
+	Accion NVARCHAR(150) NOT NULL,
+	IdPersona uniqueidentifier NULL,
+	IdReserva BIGINT NULL,
+	Fecha DATETIME NOT NULL DEFAULT GETDATE(),
+    CONSTRAINT [KEY_AUDITORIA] PRIMARY KEY CLUSTERED ([IdAuditoria] ASC)
+)
+GO
+
+
+CREATE TRIGGER ActualizarStock_PorCliente
+ON DetalleReserva
+AFTER INSERT
+AS
+BEGIN
+	DECLARE @IdPersona uniqueidentifier;
+	DECLARE @StockNuevo SMALLINT;
+	DECLARE @StockAnterior SMALLINT;
+	DECLARE @IdProducto uniqueidentifier;
+	DECLARE @IdReserva BIGINT;
+	SET @IdPersona = (SELECT IdPersona FROM Reserva WHERE IdReserva = (SELECT IdReserva FROM inserted));
+	SET @StockAnterior = (SELECT Stock FROM Producto WHERE IdProducto = (SELECT IdProducto FROM inserted));
+	SET @IdProducto = (SELECT IdProducto FROM inserted);
+	SET @StockNuevo = @StockAnterior - (SELECT Cantidad FROM inserted);
+	SET @IdReserva = (SELECT IdReserva FROM inserted);
+
+	INSERT INTO Auditoria_StockProducto(IdProducto, StockAnterior, StockNuevo, Accion, IdPersona, Fecha, IdReserva)
+	VALUES (@IdProducto, @StockAnterior, @StockNuevo, 'RESERVA DEL PRODUCTO REDUCE(STOCK)', @IdPersona, GETDATE(), @IdReserva);
+END
+GO
+
+
+ALTER TABLE Reserva ADD Eliminado BIT DEFAULT 0;
+GO
+
+ALTER TRIGGER ActualizarStock_ReservaEliminada
+ON Reserva
+AFTER UPDATE
+AS
+BEGIN
+	DECLARE @Estado BIT;
+	DECLARE @IdReserva BIGINT;
+	DECLARE @IdPersona uniqueidentifier;
+	IF UPDATE(Eliminado)
+	BEGIN
+		SET @Estado = (SELECT Eliminado FROM inserted);
+		
+		IF @Estado = 1 --SE EELIMINO
+		BEGIN
+			SET @IdReserva = (SELECT IdReserva FROM inserted);
+			SET @IdPersona = (SELECT IdPersona FROM Reserva WHERE IdReserva = @IdReserva);
+
+
+			INSERT INTO Auditoria_StockProducto(IdProducto, StockAnterior, StockNuevo, Accion, IdPersona, Fecha, IdReserva)
+			SELECT dr.IdProducto as 'IdProducto',
+			pro.Stock as 'StockAnterior', 
+			(pro.Stock + dr.Cantidad) as 'StockNuevo', 
+			'RESERVA DEL PRODUCTO ELIMINADO(STOCK RESTORE)' as 'Accion', 
+			@IdPersona as 'IdPersona', 
+			GETDATE() as 'Fecha', @IdReserva as 'IdReserva'
+			FROM DetalleReserva dr
+			INNER JOIN Producto pro ON pro.IdProducto = dr.IdProducto
+			WHERE dr.IdReserva = @IdReserva;
+
+			--RESTAURAMOS SU STOCK
+			UPDATE Producto
+			SET Stock = dr.Cantidad + pro.Stock
+			FROM DetalleReserva dr 
+			INNER JOIN Producto pro ON pro.IdProducto = dr.IdProducto
+			WHERE dr.IdReserva = @IdReserva;
+
+		END
+	END
+END
+GO
+
+
+ALTER TRIGGER ActualizarStock_Producto 
+ON Producto
+AFTER UPDATE
+AS
+BEGIN
+	IF UPDATE(Stock)
+	BEGIN
+		INSERT INTO Auditoria_StockProducto(IdProducto, StockAnterior, StockNuevo, Accion, Fecha)
+		SELECT i.IdProducto as 'IdProducto', d.Stock as 'StockAnterior', i.Stock as 'StockNuevo', 'STOCK ACTUALIZADO', GETDATE()
+		FROM inserted i 
+		INNER JOIN deleted d ON d.IdProducto = i.IdProducto;
+	END
+END
+GO
+
+
+ALTER TABLE Reserva ADD Recogido BIT NOT NULL DEFAULT 0;
+GO
+
+
+
+CREATE TRIGGER ActualizarStock_Al_BorrarProductoReserva
+ON DetalleReserva
+AFTER DELETE
+AS
+BEGIN
+	DECLARE @IdPersona uniqueidentifier;
+	DECLARE @IdReserva BIGINT;
+	SET @IdPersona = (SELECT IdPersona FROM Reserva WHERE IdReserva = (SELECT IdReserva FROM deleted));
+	SET @IdReserva = (SELECT IdReserva FROM deleted);
+
+	INSERT INTO Auditoria_StockProducto(IdProducto, StockAnterior, StockNuevo, Accion, IdPersona, Fecha, IdReserva)
+	SELECT dr.IdProducto as 'IdProducto',
+			pro.Stock as 'StockAnterior', 
+			(pro.Stock + dr.Cantidad) as 'StockNuevo', 
+			'PRODUCTO ELIMINADO DE LA RESERVA -> ELIMINADO(STOCK RESTORE)' as 'Accion', 
+			@IdPersona as 'IdPersona', 
+			GETDATE() as 'Fecha', @IdReserva as 'IdReserva'
+			FROM deleted dr
+			INNER JOIN Producto pro ON pro.IdProducto = dr.IdProducto;
+
+	UPDATE Producto
+		SET Stock = dr.Cantidad + pro.Stock
+		FROM deleted dr 
+		INNER JOIN Producto pro ON pro.IdProducto = dr.IdProducto;
+
+
+END
+GO
+
+CREATE TRIGGER ActualizarStock_Al_ActualizarProductoReserva_Cantidad
+ON DetalleReserva
+AFTER UPDATE
+AS
+BEGIN
+	IF UPDATE(Cantidad)
+	BEGIN
+		DECLARE @IdPersona uniqueidentifier;
+		DECLARE @IdReserva BIGINT;
+		SET @IdPersona = (SELECT IdPersona FROM Reserva WHERE IdReserva = (SELECT IdReserva FROM deleted));
+		SET @IdReserva = (SELECT IdReserva FROM deleted);
+
+		INSERT INTO Auditoria_StockProducto(IdProducto, StockAnterior, StockNuevo, Accion, IdPersona, Fecha, IdReserva)
+		SELECT dr.IdProducto as 'IdProducto',
+				pro.Stock as 'StockAnterior', 
+				(pro.Stock + (dr.Cantidad - i.Cantidad)) as 'StockNuevo', 
+				'PRODUCTO ACTUALIZADO CANTIDAD DE LA RESERVA -> UPDATE(STOCK)' as 'Accion', 
+				@IdPersona as 'IdPersona', 
+				GETDATE() as 'Fecha', @IdReserva as 'IdReserva'
+				FROM deleted dr
+				INNER JOIN Producto pro ON pro.IdProducto = dr.IdProducto
+				INNER JOIN inserted i ON i.IdProducto = dr.IdProducto;
+
+		UPDATE Producto
+			SET Stock = pro.Stock + (dr.Cantidad - i.Cantidad) 
+			FROM deleted dr 
+			INNER JOIN Producto pro ON pro.IdProducto = dr.IdProducto
+			INNER JOIN inserted i ON i.IdProducto = dr.IdProducto;
+
+	END
+END
+GO

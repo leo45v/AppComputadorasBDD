@@ -12,5 +12,10 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common
         public bool Eliminado { get; set; }
         public Usuario Usuario { get; set; }
         public DateTime FechaNacimiento { get; set; }
+
+        public override string ToString()
+        {
+            return Nombre + " " + Apellido;
+        }
     }
 }

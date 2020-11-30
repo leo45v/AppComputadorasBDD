@@ -7,6 +7,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
 {
     public class ClienteDal
     {
+        public static bool cascada = false;
         public static bool Insertar(Cliente cliente)
         {
             bool estado = false;
@@ -39,6 +40,42 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             return estado;
         }
+        public static Cliente Get_Cliente_By_IdCliente(Guid idCliente)
+        {
+            Cliente cliente = null;
+            string queryString = @"SELECT pe.IdPersona, pe.Nombre, pe.Apellido, pe.Sexo, pe.Eliminado, 
+                                   cli.Email, 
+                                   usr.IdUsuario, usr.NombreUsuario, usr.Contrasenia, usr.Eliminado as Deleted, usr.IdRol, 
+                                   Rol.NombreRol
+                                   FROM Persona pe
+                                   INNER JOIN Cliente cli ON cli.IdPersona = pe.IdPersona 
+                                   INNER JOIN Usuario usr ON usr.IdUsuario = pe.IdUsuario 
+                                   INNER JOIN Rol ON Rol.IdRol = usr.IdROl
+                                   WHERE pe.IdPersona = @IdPersona";
+            try
+            {
+                OperationsSql.OpenConnection();
+                OperationsSql.CreateBasicCommandWithTransaction(queryString);
+                OperationsSql.AddWithValueString("IdPersona", idCliente);
+                OperationsSql.ExecuteBasicCommandWithTransaction();
+                Dictionary<string, object> data = OperationsSql.ExecuteReader();
+                if (data != null)
+                {
+                    cliente = ObjectData_To_Client(data);
+                }
+                if (!cascada) { OperationsSql.ExecuteTransactionCommit(); }
+            }
+            catch (Exception ex)
+            {
+                Operaciones.LogError.SetError("Error", ex);
+                if (!cascada) { OperationsSql.ExecuteTransactionCancel(); }
+            }
+            finally
+            {
+                if (!cascada) { OperationsSql.CloseConnection(); }
+            }
+            return cliente;
+        }
         public static Cliente Get_Cliente_By_IdUsuario(Guid idUsuario)
         {
             Cliente cliente = null;
@@ -62,15 +99,16 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 {
                     cliente = ObjectData_To_Client(data);
                 }
-                OperationsSql.ExecuteTransactionCommit();
+                if (!cascada) { OperationsSql.ExecuteTransactionCommit(); }
             }
             catch (Exception ex)
             {
                 Operaciones.LogError.SetError("Error", ex);
+                if (!cascada) { OperationsSql.ExecuteTransactionCancel(); }
             }
             finally
             {
-                OperationsSql.CloseConnection();
+                if (!cascada) { OperationsSql.CloseConnection(); }
             }
             return cliente;
         }

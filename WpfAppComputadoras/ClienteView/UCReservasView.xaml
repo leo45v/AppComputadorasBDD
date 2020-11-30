@@ -1,0 +1,68 @@
+﻿<UserControl x:Class="WpfAppComputadoras.ClienteView.UCReservasView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfAppComputadoras.ClienteView"
+             xmlns:Components="clr-namespace:WpfAppComputadoras.Components"
+             
+            TextElement.Foreground="{DynamicResource MaterialDesignDarkForeground}"
+            Foreground="{DynamicResource MaterialDesignDarkForeground}"
+            Background="{DynamicResource MaterialDesignDarkBackground}" 
+            TextElement.FontWeight="Medium"
+            TextElement.FontSize="14"
+            FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
+            xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="613" d:DesignWidth="1180">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="250"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel  Grid.Row="0" Orientation="Horizontal">
+            <ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Disabled" Margin="20,0,20,0" Width="1000">
+                <StackPanel x:Name="containerReservas" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                </StackPanel>
+            </ScrollViewer>
+            <StackPanel Orientation="Vertical">
+                <TextBlock Height="50"/>
+                <Button Margin="10,0,0,0" Click="Btn_ActualizarReservas_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Refresh" Width="20" Height="20" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,5,0"/>
+                        <TextBlock Text="Actualizar"/>
+                    </StackPanel>
+                </Button>
+                <TextBlock Height="100"/>
+                <Button FontSize="18" Margin="10,0,0,0" Click="Btn_Atras_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="KeyboardReturn" Width="20" Height="20" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,5,0"/>
+                        <TextBlock Text="Atras"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+
+        </StackPanel>
+        <StackPanel Grid.Row="2" Orientation="Horizontal">
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" Margin="50,0,50,20" Width="820">
+                <StackPanel x:Name="containerViewReserva" Orientation="Vertical">
+
+                </StackPanel>
+            </ScrollViewer>
+            <StackPanel x:Name="containerPriceView">
+                <StackPanel>
+                    <TextBlock Height="80"/>
+                    <TextBlock Text="COSTO TOTAL: " VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32"/>
+                    <TextBlock Height="50"/>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right" >
+                        <TextBlock x:Name="txtContoTotal" Text="488.00" FontSize="48" Foreground="#FF4DFF0B"/>
+                        <TextBlock Text="$" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="48" Foreground="#FF4DFF0B"/>
+                    </StackPanel>
+                </StackPanel>
+                <TextBlock Height="80"/>
+            </StackPanel>
+        </StackPanel>
+        
+    </Grid>
+</UserControl>

@@ -26,13 +26,14 @@ namespace WpfAppComputadoras
     {
         private readonly MainWindow mainWindow;
         public Rol rol = new Rol();
-        private Cliente cliente;
-        private Administrador admin;
+        public Cliente cliente;
+        public Administrador admin;
         public AdmiMenuView admiMenuView;
         public UCTypeComputerView uCTypeComputerView;
         public ComputerBuildView computerBuildView;
         public UCConfigClient uCConfigClient;
 
+        public UCReservasView uCReservasView;
 
         public UIElement ViewModeMain;
         public UIElement ViewModeMainANTERIOR;
@@ -304,7 +305,44 @@ namespace WpfAppComputadoras
             }
             else
             {
-                MessageBox.Show("YA ESTAS AK");
+                //MessageBox.Show("YA ESTAS AK");
+            }
+        }
+
+        private void Btn_VerReservas_Click(object sender, RoutedEventArgs e)
+        {
+            btnConfigurar.IsEnabled = true;
+            LoadReservasUI();
+        }
+
+        public void LoadReservasUI()
+        {
+            if (uCReservasView is null)
+            {
+                uCReservasView = new UCReservasView(this, cliente);
+            }
+            //uCReservasView.UpdateReservas();
+            gridAutomaitc.Children.Clear();
+            gridAutomaitc.Children.Add(uCReservasView);
+            ViewModeMainANTERIOR = ViewModeMain;
+            ViewModeMain = uCReservasView;
+        }
+
+        private void Btn_Inicio_Click(object sender, RoutedEventArgs e)
+        {
+            gridAutomaitc.Children.Clear();
+            btnConfigurar.IsEnabled = true;
+            if (rol.IdRol == ERol.Administrador)
+            {
+                gridAutomaitc.Children.Add(admiMenuView);
+                ViewModeMainANTERIOR = ViewModeMain;
+                ViewModeMain = admiMenuView;
+            }
+            else if (rol.IdRol == ERol.Cliente)
+            {
+                gridAutomaitc.Children.Add(uCTypeComputerView);
+                ViewModeMainANTERIOR = ViewModeMain;
+                ViewModeMain = uCTypeComputerView;
             }
         }
     }

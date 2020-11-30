@@ -71,7 +71,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
         public static byte GetLastId()
         {
             byte newId = 0;
-            string query = @"SELECT Max(IdColor) as LastId 
+            string query = @"SELECT ISNULL(Max(IdColor),0) as LastId 
                              FROM Color";
             try
             {

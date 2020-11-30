@@ -7,9 +7,8 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common
     public class DetalleReserva
     {
 
-        public int Cantidad { get; set; }
+        public long Cantidad { get; set; }
         public Reserva Reserva { get; set; }
-
         public Producto Producto { get; set; }
     }
 }

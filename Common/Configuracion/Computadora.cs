@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 
@@ -14,6 +15,49 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
         public Procesador Procesador { get; set; }
         public List<Ram> Rams { get; set; }
         public Grafica TarjetaGrafica { get; set; }
+        public void DeleteComponent(Guid idProducto)
+        {
+            if (!(this.Fuente is null) && this.Fuente.IdProducto == idProducto)
+            {
+                this.Fuente = null;
+            }
+            else if (!(this.Gabinete is null) && this.Gabinete.IdProducto == idProducto)
+            {
+                this.Gabinete = null;
+            }
+            else if (!(this.Monitor is null) && this.Monitor.IdProducto == idProducto)
+            {
+                this.Monitor = null;
+            }
+            else if (!(this.PlacaBase is null) && this.PlacaBase.IdProducto == idProducto)
+            {
+                this.PlacaBase = null;
+            }
+            else if (!(this.Procesador is null) && this.Procesador.IdProducto == idProducto)
+            {
+                this.Procesador = null;
+            }
+            else if (!(this.TarjetaGrafica is null) && this.TarjetaGrafica.IdProducto == idProducto)
+            {
+                this.TarjetaGrafica = null;
+            }
+            else if (!(this.Almacenamientos is null))
+            {
+                this.Almacenamientos = this.Almacenamientos.Where(x => x.IdProducto != idProducto).ToList();
+                if (this.Almacenamientos.Count == 0)
+                {
+                    this.Almacenamientos = null;
+                }
+            }
+            else if (!(this.Rams is null))
+            {
+                this.Rams = this.Rams.Where(x => x.IdProducto != idProducto).ToList();
+                if (this.Rams.Count == 0)
+                {
+                    this.Rams = null;
+                }
+            }
+        }
         public int ConsumoEstimado
         {
             get

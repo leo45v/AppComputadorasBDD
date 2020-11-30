@@ -98,7 +98,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
         public static byte GetLastId()
         {
             byte newId = 0;
-            string query = @"SELECT Max(IdRatio) as LastId 
+            string query = @"SELECT ISNULL(Max(IdRatio),0) as LastId 
                              FROM Ratio";
             try
             {

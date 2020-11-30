@@ -19,7 +19,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
 
         public static bool Insertar(Producto producto)
         {
-            bool estado = true;
+            bool estado = false;
             string queryString = @"INSERT INTO Producto(IdProducto, PrecioUnidad, Imagen, Nombre, Stock, IdMarca, Descontinuado, Eliminado) 
                                                  VALUES(@IdProducto, @PrecioUnidad, @Imagen, @Nombre, @Stock, @IdMarca, @Descontinuado, @Eliminado)";
             try
@@ -272,6 +272,36 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             return estado;
         }
+        public static Producto Get(Guid idProducto)
+        {
+            Producto producto = null;
+            string query = @"SELECT pro.IdProducto, pro.Eliminado, 
+                             pro.PrecioUnidad, pro.Imagen, pro.Nombre, pro.Stock, pro.IdMarca, pro.Descontinuado,
+                             mar.NombreMarca
+                             FROM Producto pro 
+                             INNER JOIN Marca mar ON mar.IdMarca = pro.IdMarca 
+                             WHERE pro.Eliminado = 0 AND pro.IdProducto = @IdProducto";
+            try
+            {
+                OperationsSql.OpenConnection();
+                OperationsSql.CreateBasicCommandWithTransaction(query);
+                OperationsSql.AddWithValueString("IdProducto", idProducto);
+                Dictionary<string, object> data = OperationsSql.ExecuteReader();
+                if (data != null)
+                {
+                    producto = Dictionary_A_Producto(data);
+                }
+                if (!cascada) { OperationsSql.ExecuteTransactionCommit(); }
+                OperationsSql.RemoveValueParams();
+            }
+            catch (Exception)
+            {
+                LogError.SetError("Problemas al Obtener el tipo del Producto");
+                if (!cascada) { OperationsSql.ExecuteTransactionCancel(); }
+            }
+            finally { if (!cascada) { OperationsSql.CloseConnection(); } }
+            return producto;
+        }
         public static ETipoProducto GetType(Guid idProducto)
         {
             ETipoProducto tipo = ETipoProducto.None;
@@ -391,6 +421,57 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             finally { if (!cascada) { OperationsSql.CloseConnection(); } }
             return estado;
+        }
+        public static bool ModificarStock(Guid idProducto, int nuevoStock)
+        {
+            bool estado = false;
+            string queryString = @"UPDATE Producto
+                                   SET Stock = @Stock
+                                   WHERE IdProducto = @IdProducto AND Eliminado = 0";
+            try
+            {
+                OperationsSql.OpenConnection();
+                OperationsSql.CreateBasicCommandWithTransaction(queryString);
+                OperationsSql.AddWithValueString("IdProducto", idProducto);
+                OperationsSql.AddWithValueString("Stock", nuevoStock);
+                OperationsSql.ExecuteBasicCommandWithTransaction();
+                OperationsSql.RemoveValueParams();
+                if (!cascada) { OperationsSql.ExecuteTransactionCommit(); }
+                estado = true;
+            }
+            catch (Exception)
+            {
+                LogError.SetError("Problemas al Borrar el Color de un Producto");
+            }
+            finally { if (!cascada) { OperationsSql.CloseConnection(); } }
+            return estado;
+        }
+        public static int GetStock(Guid idProducto)
+        {
+            int stock = 0;
+            string query = @"SELECT pro.Stock
+                             FROM Producto pro 
+                             WHERE pro.IdProducto = @IdProducto";
+            try
+            {
+                OperationsSql.OpenConnection();
+                OperationsSql.CreateBasicCommandWithTransaction(query);
+                OperationsSql.AddWithValueString("IdProducto", idProducto);
+                Dictionary<string, object> data = OperationsSql.ExecuteReader();
+                if (data != null)
+                {
+                    stock = (short)data["Stock"];
+                }
+                OperationsSql.RemoveValueParams();
+                if (!cascada) { OperationsSql.ExecuteTransactionCommit(); }
+            }
+            catch (Exception ex)
+            {
+                if (!cascada) { OperationsSql.ExecuteTransactionCancel(); }
+                LogError.SetError("Problemas al Obtener el tipo del Producto", ex);
+            }
+            finally { if (!cascada) { OperationsSql.CloseConnection(); } }
+            return stock;
         }
 
         //public static bool Delete(Guid idProducto)

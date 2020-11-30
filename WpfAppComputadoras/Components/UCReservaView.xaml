@@ -1,0 +1,52 @@
+﻿<UserControl x:Class="WpfAppComputadoras.Components.UCReservaView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfAppComputadoras.Components"
+             TextElement.Foreground="{DynamicResource MaterialDesignDarkForeground}"
+            Foreground="{DynamicResource MaterialDesignDarkForeground}"
+            TextElement.FontWeight="Medium"
+            TextElement.FontSize="14"
+            FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
+            xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" d:Height="205" d:Width="280">
+    <materialDesign:Card Margin="10">
+        <materialDesign:Card.Background>
+            <LinearGradientBrush>
+                <GradientStop Color="#FF10758B" Offset="0.003"/>
+                <GradientStop Color="#FF3B25C9" Offset="1"/>
+            </LinearGradientBrush>
+        </materialDesign:Card.Background>
+        <Grid Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="52"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <StackPanel Width="120" Margin="0,10,0,10">
+                    <Image Source="/ClienteView/pc.png" Stretch="Uniform" />
+                </StackPanel>
+                <Button Background="#FFCD0000" BorderBrush="#FFCD0000" materialDesign:ShadowAssist.ShadowDepth="Depth3" HorizontalAlignment="Right" VerticalAlignment="Top" Padding="0" Height="40" Width="40" Margin="0,5,5,0" Click="Btn_DeleteReserva_Click">
+                    <materialDesign:PackIcon Kind="DeleteClock" Width="30" Height="30"/>
+                </Button>
+            </Grid>
+            <TextBlock x:Name="txtNombreCliente" Text="NOMBRE DEL CLIENTE" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <StackPanel Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock Text="FECHA RESERVA:" VerticalAlignment="Stretch"/>
+                <TextBlock Width="20"/>
+                <TextBlock x:Name="txtFechaReserva" Text="20-11-2020  24:00:00"/>
+            </StackPanel>
+            <StackPanel Grid.Row="3" Margin="0,10,0,10" VerticalAlignment="Center">
+                <Button x:Name="btnVerDetalle" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FF058545" BorderBrush="#FF058545" Click="Btn_VerDetalle_Click" >
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Show" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <TextBlock Text=" Ver Detalle"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </Grid>
+    </materialDesign:Card>
+</UserControl>
