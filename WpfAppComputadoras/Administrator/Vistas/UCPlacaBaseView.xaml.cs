@@ -25,7 +25,6 @@ namespace WpfAppComputadoras.Administrator.Vistas
                 txtSoporteProcesador.DisplayMemberPath = "NombreSocket";
                 txtSoporteProcesador.SelectedValuePath = "IdSocket";
             }
-            //int indexp = uCProductView.mainView.SocketsList.FindIndex(x => x.IdSocket == uCProductView.placaBase.SoporteProcesador.IdSocket);
             txtSoporteProcesador.SelectedValue = uCProductView.placaBase.SoporteProcesador.IdSocket;
             txtTamano.Text = uCProductView.placaBase.Tamano;
         }

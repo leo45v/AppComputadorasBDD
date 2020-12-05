@@ -41,7 +41,6 @@
             </StackPanel>
         </ScrollViewer>
 
-        <!--<ListBox x:Name="lstProductos" Margin="31,163,104,35"/>-->
         <StackPanel Orientation="Horizontal" Margin="36,39,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
             <Button Click="BtnInsertarProducto_Click">
                 <materialDesign:PackIcon Kind="Add"/>
@@ -79,6 +78,5 @@
                 <materialDesign:PackIcon Kind="LastPage"/>
             </Button>
         </StackPanel>
-        <!--<Button Content="CANCELAR" HorizontalAlignment="Left" Margin="707,312,0,0" VerticalAlignment="Top" Width="67"/>-->
     </Grid>
 </UserControl>

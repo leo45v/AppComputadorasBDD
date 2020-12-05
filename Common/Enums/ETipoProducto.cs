@@ -14,6 +14,6 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Enums
         PlacaBase = 4, //Mother Board
         Procesador = 5,
         Ram = 6,
-        TarjetaGrafica = 7//Trajeta Grafica
+        TarjetaGrafica = 7 //Trajeta Grafica
     }
 }

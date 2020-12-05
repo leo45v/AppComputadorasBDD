@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Enums;
+using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Listas;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Operaciones;
 
 namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDal.Personas.Productos
@@ -58,7 +59,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 Dictionary<string, object> data = OperationsSql.ExecuteReader();
                 if (data != null)
                 {
-                    fuente = Dictionary_A_Fuente(data);
+                    fuente = Fuente.Dictionary_A_Fuente(data);
                 }
                 OperationsSql.ExecuteTransactionCommit();
             }
@@ -89,7 +90,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                     fuentes = new List<Fuente>();
                     foreach (Dictionary<string, object> item in data)
                     {
-                        fuentes.Add(Dictionary_A_Fuente(item));
+                        fuentes.Add(Fuente.Dictionary_A_Fuente(item));
                     }
                 }
                 OperationsSql.ExecuteTransactionCommit();
@@ -101,9 +102,9 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             finally { OperationsSql.CloseConnection(); }
             return fuentes;
         }
-        public static List<Producto> GetWithRange(int start, int cant, int? idMarca, double? minPrice, double? maxPrice)
+        public static ListaProductos GetWithRange(int start, int cant, int? idMarca, double? minPrice, double? maxPrice)
         {
-            List<Producto> productos = null;
+            ListaProductos productos = null;
             string query = @"SELECT r.IdProducto, 
                              pro.PrecioUnidad, pro.Imagen, pro.Nombre, pro.Stock, pro.IdMarca, pro.Descontinuado, pro.Eliminado, 
                              mar.NombreMarca
@@ -125,10 +126,10 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 List<Dictionary<string, object>> data = OperationsSql.ExecuteReaderMany();
                 if (data != null)
                 {
-                    productos = new List<Producto>();
+                    productos = new ListaProductos();
                     foreach (Dictionary<string, object> item in data)
                     {
-                        productos.Add(ProductosDal.Dictionary_A_Producto(item));
+                        productos.Add(Producto.Dictionary_A_Producto(item));
                     }
                 }
                 OperationsSql.ExecuteTransactionCommit();
@@ -233,26 +234,6 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             finally { OperationsSql.CloseConnection(); }
             return cantidad;
-        }
-        private static Fuente Dictionary_A_Fuente(Dictionary<string, object> data)
-        {
-            return new Fuente()
-            {
-                IdProducto = (Guid)data["IdProducto"],
-                Descontinuado = (bool)data["Descontinuado"],
-                Potencia = (int)data["Potencia"],
-                Certificacion = (ECertificacion)(int)data["Certificacion"],//(ECertificacion)Enum.Parse(typeof(ECertificacion), (string)data["Certificacion"]),
-                Imagen = (string)data["Imagen"],
-                Marca = new Marca()
-                {
-                    IdMarca = (byte)data["IdMarca"],
-                    NombreMarca = (string)data["NombreMarca"]
-                },
-                Nombre = (string)data["Nombre"],
-                PrecioUnidad = (decimal)data["PrecioUnidad"],
-                Stock = (short)data["Stock"],
-                Eliminado = (bool)data["Eliminado"]
-            };
         }
     }
 }

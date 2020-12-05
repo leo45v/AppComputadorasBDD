@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Enums;
+using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Listas;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectBrl.Productos;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDal.Personas.Productos;
 
@@ -58,11 +59,11 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectBr
             get { return tarjetaGraficaBrl; }
             private set { tarjetaGraficaBrl = value; }
         }
-        public static List<Producto> GetWithRange(int inicio, int cantidad)
+        public static ListaProductos GetWithRange(int inicio, int cantidad)
         {
             return ProductosDal.GetWithRange(inicio, cantidad);
         }
-        public static List<Producto> GetWithRangeWithFillter(int start, int cant, string productName, Marca marca, ETipoProducto tipoProduct)
+        public static ListaProductos GetWithRangeWithFillter(int start, int cant, string productName, Marca marca, ETipoProducto tipoProduct)
         {
             return ProductosDal.GetWithRangeWithFillter(start, cant, productName, marca, tipoProduct);
         }

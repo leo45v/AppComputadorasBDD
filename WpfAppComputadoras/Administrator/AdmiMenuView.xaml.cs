@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Enums;
+using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Listas;
 using WpfAppComputadoras.Administrator.Vistas;
 using WpfAppComputadoras.Components;
 
@@ -21,7 +22,7 @@ namespace WpfAppComputadoras.Administrator
             viewMain = viewMainObj;
             InitializeComponent();
         }
-        public void CargarProductos(List<Producto> productos)
+        public void CargarProductos(ListaProductos productos)
         {
             lstProductos.Children.Clear();
             if (!(productos is null))
@@ -36,10 +37,9 @@ namespace WpfAppComputadoras.Administrator
                 }
             }
         }
-
         private void UserControl_Initialized(object sender, EventArgs e)
         {
-            cbTipoProducto.Items.Add("Tipo Producto");//0
+            cbTipoProducto.Items.Add("Tipo Producto");
             cbTipoProducto.Items.Add("Almacenamiento");
             cbTipoProducto.Items.Add("Fuente");
             cbTipoProducto.Items.Add("Gabinete");
@@ -47,7 +47,7 @@ namespace WpfAppComputadoras.Administrator
             cbTipoProducto.Items.Add("PlacaBase");
             cbTipoProducto.Items.Add("Procesador");
             cbTipoProducto.Items.Add("Ram");
-            cbTipoProducto.Items.Add("Tarjeta Grafica");//8
+            cbTipoProducto.Items.Add("Tarjeta Grafica");
             cbTipoProducto.SelectedIndex = 0;
 
 
@@ -58,15 +58,12 @@ namespace WpfAppComputadoras.Administrator
             cbMarca.DisplayMemberPath = "NombreMarca";
             cbMarca.SelectedValuePath = "IdMarca";
             cbMarca.SelectedIndex = 0;
-            //cbMarca.SelectedIndex = cbMarca.Items.Count - 1;
-            //cbMarca.Items.MoveCurrentToFirst();
 
             cbTipoProducto.Items.Cast<object>().ToList().ForEach(i =>
                 cbTipo.Items.Add(i)
             );
             cbTipo.SelectedIndex = 0;
         }
-
         private void BtnInsertarProducto_Click(object sender, RoutedEventArgs e)
         {
             if (cbTipoProducto.SelectedIndex > 0)
@@ -74,13 +71,10 @@ namespace WpfAppComputadoras.Administrator
                 UCProductView uCInsertProductView = new UCProductView(viewMain, (ETipoProducto)(cbTipoProducto.SelectedIndex - 1));
                 if (!(uCInsertProductView is null))
                 {
-                    //uCInsertProductView.Height = 400;
-                    //uCInsertProductView.Width = 640;
                     uCInsertProductView.ShowDialog();
                 }
             }
         }
-
         private void TxtSearch_Changed(object sender, TextChangedEventArgs e)
         {
             if (String.IsNullOrWhiteSpace(txtSearch.Text))
@@ -92,7 +86,6 @@ namespace WpfAppComputadoras.Administrator
                 viewMain.queryProductName = txtSearch.Text;
             }
         }
-
         private void Btn_Buscar_Click(object sender, RoutedEventArgs e)
         {
             Marca marcaSelect = (Marca)cbMarca.SelectedItem;
@@ -108,7 +101,6 @@ namespace WpfAppComputadoras.Administrator
             viewMain.pagSelect = 0;
             viewMain.ConfigAdministradorInterface(viewMain.rol.IdRol);
         }
-
         private void Btn_LimpiarBuscador_Click(object sender, RoutedEventArgs e)
         {
             txtSearch.Clear();

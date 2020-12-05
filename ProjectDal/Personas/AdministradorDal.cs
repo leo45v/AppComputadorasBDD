@@ -11,7 +11,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
         {
             bool estado = false;
             string queryString = @"INSERT INTO Administrador 
-                                   (IdPersona, FechaContrato, FechaNacimiento)
+                                   (IdPersona, FechaContrato)
                                    VALUES
                                    (@IdPersona, @FechaContrato, @FechaNacimiento)";
             try
@@ -23,7 +23,6 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                     OperationsSql.CreateBasicCommandWithTransaction(queryString);
                     OperationsSql.AddWithValueString("IdPersona", administrador.IdPersona);
                     OperationsSql.AddWithValueString("FechaContrato", administrador.FechaContrato);
-                    OperationsSql.AddWithValueString("FechaNacimiento", administrador.FechaNacimiento);
                     OperationsSql.ExecuteBasicCommandWithTransaction();
                     OperationsSql.ExecuteTransactionCommit();
                     estado = true;
@@ -62,7 +61,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 Dictionary<string, object> data = OperationsSql.ExecuteReader();
                 if (data != null)
                 {
-                    administrador = ObjectData_To_Administrador(data);
+                    administrador = Administrador.ObjectData_To_Administrador(data);
                 }
                 OperationsSql.ExecuteTransactionCommit();
             }
@@ -80,29 +79,33 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
         {
             return PersonaDal.ActivarDesactivar(idAdministrador, desactivado);
         }
-        private static Administrador ObjectData_To_Administrador(Dictionary<string, object> data)
+        public static bool Update(Administrador administrador)
         {
-            return new Administrador()
+            bool estado = false;
+            string queryString = @"UPDATE Administrador 
+                                   SET FechaContrato = @FechaContrato
+                                   WHERE IdPersona = @IdPersona";
+            try
             {
-                IdPersona = (Guid)data["IdPersona"],
-                Nombre = (string)data["Nombre"],
-                Apellido = (string)data["Apellido"],
-                Sexo = (byte)data["Sexo"],
-                Eliminado = (bool)data["Eliminado"],
-                FechaContrato = (DateTime)data["FechaContrato"],
-                Usuario = new Usuario()
+                OperationsSql.OpenConnection();
+                OperationsSql.AddWithValueString("IdPersona", administrador.IdPersona);
+                PersonaDal.cascada = true;
+                if (PersonaDal.Update(administrador as Persona))
                 {
-                    IdUsuario = (Guid)data["IdUsuario"],
-                    Contrasenia = (string)data["Contrasenia"],
-                    NombreUsuario = (string)data["NombreUsuario"],
-                    Eliminado = (bool)data["Deleted"],
-                    Rol = new Rol()
-                    {
-                        IdRol = (ERol)(byte)data["IdRol"],
-                        NombreRol = (string)data["NombreRol"],
-                    }
+                    OperationsSql.CreateBasicCommandWithTransaction(queryString);
+                    OperationsSql.AddWithValueString("FechaContrato", administrador.FechaContrato);
+                    OperationsSql.ExecuteBasicCommandWithTransaction();
+                    OperationsSql.ExecuteTransactionCommit();
                 }
-            };
+                estado = true;
+            }
+            catch (Exception ex)
+            {
+                Operaciones.LogError.SetError("Error", ex);
+            }
+            finally { PersonaDal.cascada = false; OperationsSql.CloseConnection(); }
+            return estado;
         }
+        
     }
 }

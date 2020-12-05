@@ -24,6 +24,7 @@ namespace WpfAppComputadoras.Administrator
     /// </summary>
     public partial class UCProductView : Window
     {
+        #region PROPIEDADES
         public Almacenamiento almacenamiento = new Almacenamiento()
         {
             Marca = new Marca(),
@@ -84,12 +85,13 @@ namespace WpfAppComputadoras.Administrator
             Imagen = "",
             PrecioUnidad = (decimal)0.0
         };
-        private ETipoProducto tipoProducto;
 
-        //private List<Marca> marcas;
+        private ETipoProducto tipoProducto;
         public ViewMain mainView;
         private bool imagenChanged = false;
         public bool VistaMode = false;
+        #endregion
+
         public UCProductView(ViewMain viewMain, ETipoProducto tipoProducto)
         {
             InitializeComponent();
@@ -103,33 +105,11 @@ namespace WpfAppComputadoras.Administrator
             ImageBehavior.SetAnimatedSource(imgProduct, Methods.LoadImage(""));
             lblTitle.Text = "INGRESE LOS DATOS PARA INSERTAR EL " + tipoProducto.ToString().ToUpper();
         }
-        public void ModoVista()
-        {
-            Modo("vista");
-            lblTitle.Text = "DATOS DEL " + tipoProducto.ToString().ToUpper();
-
-        }
-        private void Modo(string tipo)
-        {
-            bool noVista = true;
-            if (tipo == "vista")
-            {
-                noVista = false;
-            }
-            cbMarca.IsEnabled = noVista;
-            txtNombre.IsEnabled = noVista;
-            txtPrecioUnidad.IsEnabled = noVista;
-            txtStock.IsEnabled = noVista;
-            btnAction.IsEnabled = noVista;
-            btnLoadImg.IsEnabled = noVista;
-            if (noVista) { btnAction.Visibility = Visibility.Visible; btnLoadImg.Visibility = Visibility.Visible; }
-            else { btnAction.Visibility = Visibility.Hidden; btnLoadImg.Visibility = Visibility.Hidden; }
-        }
         public UCProductView(bool vistaMode, ViewMain viewMain, Guid idProducto, ETipoProducto tipoProducto)//UCItemProductView mainV
         {
             InitializeComponent();
             mainView = viewMain;
-            this.VistaMode = vistaMode; //mainV.VistaMode;
+            this.VistaMode = vistaMode;
             LoadComboMarcas();
             btnAction.Content = "Actualizar";
             containerTipo.Children.Clear();
@@ -137,6 +117,9 @@ namespace WpfAppComputadoras.Administrator
             LoadInterface(idProducto);
             lblTitle.Text = "MODIFIQUE LOS DATOS PARA EL " + tipoProducto.ToString().ToUpper();
         }
+
+
+        #region UI_LOAD_METODO
         public void LoadInterface(Guid idProducto)
         {
             bool modoInsert = false;
@@ -231,9 +214,34 @@ namespace WpfAppComputadoras.Administrator
                 LlenarCampos(producto);
             }
         }
+        #endregion
+
+
+        #region METODOS
+        public void ModoVista()
+        {
+            Modo("vista");
+            lblTitle.Text = "DATOS DEL " + tipoProducto.ToString().ToUpper();
+
+        }
+        private void Modo(string tipo)
+        {
+            bool noVista = true;
+            if (tipo == "vista")
+            {
+                noVista = false;
+            }
+            cbMarca.IsEnabled = noVista;
+            txtNombre.IsEnabled = noVista;
+            txtPrecioUnidad.IsEnabled = noVista;
+            txtStock.IsEnabled = noVista;
+            btnAction.IsEnabled = noVista;
+            btnLoadImg.IsEnabled = noVista;
+            if (noVista) { btnAction.Visibility = Visibility.Visible; btnLoadImg.Visibility = Visibility.Visible; }
+            else { btnAction.Visibility = Visibility.Hidden; btnLoadImg.Visibility = Visibility.Hidden; }
+        }
         public void LoadComboMarcas()
         {
-            //marcas = mainView.MarcaList;
             cbMarca.ItemsSource = this.mainView.MarcaList;
             cbMarca.DisplayMemberPath = "NombreMarca";
             cbMarca.SelectedValuePath = "IdMarca";
@@ -254,20 +262,6 @@ namespace WpfAppComputadoras.Administrator
         private void BtnAction_Click(object sender, RoutedEventArgs e)
         {
             bool estado = false;
-            //if (txtNombre.Text == "")
-            //{
-            //    return;
-            //}
-            //if (txtPrecioUnidad.Text == "")
-            //{
-            //    return;
-            //}
-            //if (txtStock.Text == "")
-            //{
-            //    return;
-            //}
-            SQLCopy.SqlQueryCopy = "";
-
 
             if (btnAction.Content.ToString() == "Insertar")
             {
@@ -422,12 +416,6 @@ namespace WpfAppComputadoras.Administrator
                 else if (btnAction.Content.ToString() == "Insertar")
                 {
                     MessageBox.Show("El " + tipoProducto.ToString() + " se Inserto con exito!!", "", MessageBoxButton.OK, MessageBoxImage.Information);
-
-
-
-                    SQLCopy.WriteIntoFile();
-                    //MessageBox.Show(SQLCopy.SqlQueryCopy, "CONSULTA COPIAR");
-                    SQLCopy.SqlQueryCopy = "";
                 }
                 mainView.ConfigAdministradorInterface(mainView.rol.IdRol);
                 this.Close();
@@ -440,7 +428,6 @@ namespace WpfAppComputadoras.Administrator
                 }
             }
         }
-
         private void UCProductView_Closed(object sender, EventArgs e)
         {
             if (imagenChanged)
@@ -448,7 +435,6 @@ namespace WpfAppComputadoras.Administrator
                 Archivo.Borrar_Imagen(producto.Imagen);
             }
         }
-
         private void Window_Initialized(object sender, EventArgs e)
         {
             txtPrecioUnidad.PreviewTextInput += Prevent_PreviewTextInputDecimal;
@@ -462,13 +448,11 @@ namespace WpfAppComputadoras.Administrator
             txtNombre.TextChanged += TxtNombre_TextChanged;
             Modo("normal");
         }
-
         private void TxtNombre_TextChanged(object s, TextChangedEventArgs e)
         {
             if (!String.IsNullOrWhiteSpace(((TextBox)s).Text))
             { producto.Nombre = ((TextBox)s).Text; }
         }
-
         private void CbMarca_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (cbMarca.SelectedIndex >= 0)
@@ -515,7 +499,6 @@ namespace WpfAppComputadoras.Administrator
             {
                 producto.Imagen = pathImagen[0];
                 ImageBehavior.SetAnimatedSource(imgProduct, Methods.LoadImage(pathImagen[1]));
-                //imgProduct.Source = Methods.LoadImage(pathImagen[1]);
                 imagenChanged = true;
             }
         }
@@ -539,11 +522,11 @@ namespace WpfAppComputadoras.Administrator
         private void Btn_RefreshAddMarca_Click(object sender, RoutedEventArgs e)
         {
             this.mainView.MarcaList = ConfiguracionesBrl.Marca.GetAll();
-            //marcas = mainView.MarcaList;
             cbMarca.ItemsSource = this.mainView.MarcaList;
             cbMarca.DisplayMemberPath = "NombreMarca";
             cbMarca.SelectedValuePath = "IdMarca";
             cbMarca.SelectedValue = producto.Marca.IdMarca;
         }
+        #endregion
     }
 }

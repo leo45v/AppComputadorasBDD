@@ -15,13 +15,11 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Extras
             bool estado = false;
             try
             {
-                //archivo.Contenido = File.ReadAllBytes(archivo.PathUri);
                 archivo.Nombre = archivo.PathUri.Substring(archivo.PathUri.LastIndexOf("\\") + 1);
                 if (!File.Exists(Path.Combine(pathDirectory, archivo.Nombre)))
                 {
                     File.Copy(archivo.PathUri, Path.Combine(pathDirectory, archivo.Nombre), true);
                 }
-                //File.WriteAllBytes(Path.Combine(pathDirectory, archivo.Nombre), archivo.Contenido);
                 estado = true;
             }
             catch (Exception)

@@ -63,7 +63,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 Dictionary<string, object> data = OperationsSql.ExecuteReader();
                 if (data != null)
                 {
-                    persona = ObjectData_To_Persona(data);
+                    persona = Persona.ObjectData_To_Persona(data);
                 }
                 OperationsSql.ExecuteTransactionCommit();
             }
@@ -94,7 +94,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                     personas = new List<Persona>();
                     foreach (Dictionary<string, object> item in data)
                     {
-                        personas.Add(ObjectData_To_Persona(item));
+                        personas.Add(Persona.ObjectData_To_Persona(item));
                     }
                 }
                 OperationsSql.ExecuteTransactionCommit();
@@ -189,29 +189,6 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             finally { UsuarioDal.cascada = false; OperationsSql.CloseConnection(); }
             return estado;
-        }
-        private static Persona ObjectData_To_Persona(Dictionary<string, object> data)
-        {
-            return new Persona()
-            {
-                IdPersona = (Guid)data["IdPersona"],
-                Nombre = (string)data["Nombre"],
-                Apellido = (string)data["Apellido"],
-                Sexo = (byte)data["Sexo"],
-                Eliminado = (bool)data["Eliminado"],
-                Usuario = new Usuario()
-                {
-                    IdUsuario = (Guid)data["IdUsuario"],
-                    Contrasenia = (string)data["Contrasenia"],
-                    NombreUsuario = (string)data["NombreUsuario"],
-                    Eliminado = (bool)data["Deleted"],
-                    Rol = new Rol()
-                    {
-                        IdRol = (ERol)(byte)data["IdRol"],
-                        NombreRol = (string)data["NombreRol"],
-                    }
-                }
-            };
         }
     }
 }

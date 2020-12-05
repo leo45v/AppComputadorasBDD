@@ -61,7 +61,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 Dictionary<string, object> data = OperationsSql.ExecuteReader();
                 if (data != null)
                 {
-                    cliente = ObjectData_To_Client(data);
+                    cliente = Cliente.ObjectData_To_Client(data);
                 }
                 if (!cascada) { OperationsSql.ExecuteTransactionCommit(); }
             }
@@ -97,7 +97,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 Dictionary<string, object> data = OperationsSql.ExecuteReader();
                 if (data != null)
                 {
-                    cliente = ObjectData_To_Client(data);
+                    cliente = Cliente.ObjectData_To_Client(data);
                 }
                 if (!cascada) { OperationsSql.ExecuteTransactionCommit(); }
             }
@@ -134,7 +134,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                     clientes = new List<Cliente>();
                     foreach (Dictionary<string, object> item in data)
                     {
-                        clientes.Add(ObjectData_To_Client(item));
+                        clientes.Add(Cliente.ObjectData_To_Client(item));
                     }
                 }
                 OperationsSql.ExecuteTransactionCommit();
@@ -176,30 +176,6 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
         public static bool ActivarDesactivar(Guid idCliente, bool desactivado)
         {
             return PersonaDal.ActivarDesactivar(idCliente, desactivado);
-        }
-        private static Cliente ObjectData_To_Client(Dictionary<string, object> data)
-        {
-            return new Cliente()
-            {
-                IdPersona = (Guid)data["IdPersona"],
-                Nombre = (string)data["Nombre"],
-                Apellido = (string)data["Apellido"],
-                Sexo = (byte)data["Sexo"],
-                Eliminado = (bool)data["Eliminado"],
-                Email = (string)data["Email"],
-                Usuario = new Usuario()
-                {
-                    IdUsuario = (Guid)data["IdUsuario"],
-                    Contrasenia = (string)data["Contrasenia"],
-                    NombreUsuario = (string)data["NombreUsuario"],
-                    Eliminado = (bool)data["Deleted"],
-                    Rol = new Rol()
-                    {
-                        IdRol = (ERol)(byte)data["IdRol"],
-                        NombreRol = (string)data["NombreRol"],
-                    }
-                },
-            };
         }
     }
 }

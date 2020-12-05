@@ -33,7 +33,7 @@
                 </StackPanel>
                 <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal"  HorizontalAlignment="Left" VerticalAlignment="Stretch">
                     <StackPanel Width="100" Height="30" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{DynamicResource SecondaryHueMidBrush}">
-                        <Image x:Name="imgProduct" Height="28" Source="/assets/Procesador.jpg" VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="Uniform" StretchDirection="Both" Margin="0,1,0,0"/>
+                        <Image x:Name="imgProduct" Height="28" VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="Uniform" StretchDirection="Both" Margin="0,1,0,0"/>
                     </StackPanel>
                     <TextBlock Width="25"/>
                     <TextBlock Text="Nombre: " VerticalAlignment="Center" HorizontalAlignment="Stretch" FontWeight="Bold" FontSize="18"/>

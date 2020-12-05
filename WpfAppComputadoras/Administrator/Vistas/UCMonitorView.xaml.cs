@@ -28,7 +28,6 @@ namespace WpfAppComputadoras.Administrator.Vistas
             cbRatio.SelectedValue = uCProductView.monitor.Ratio.IdRatio;
             cbResolucion.SelectedValue = uCProductView.monitor.Resolucion.IdResolucion;
             txtTamano.Text = uCProductView.monitor.Tamano.ToString();
-            //txtColor.Text = uCProductView.monitor.Tamano.ToString();
         }
         private void ModoVista(bool activo)
         {
@@ -36,7 +35,6 @@ namespace WpfAppComputadoras.Administrator.Vistas
             cbRatio.IsEnabled = !activo;
             cbResolucion.IsEnabled = !activo;
             txtTamano.IsEnabled = !activo;
-            //txtColor.IsEnabled = !activo;
         }
         private void UserControl_Initialized(object sender, EventArgs e)
         {

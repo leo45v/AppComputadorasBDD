@@ -19,9 +19,6 @@
     <Compile Update="Administrator\Vistas\UCGabineteView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Administrator\UCInsertProductView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="Administrator\Vistas\UCMonitorView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -79,9 +76,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Administrator\Vistas\UCGabineteView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Administrator\UCInsertProductView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Administrator\Vistas\UCMonitorView.xaml">

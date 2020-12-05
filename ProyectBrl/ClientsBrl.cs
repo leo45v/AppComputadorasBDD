@@ -7,9 +7,9 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectBr
 {
     public class ClientsBrl
     {
-        public static void Insertar(Cliente cliente)
+        public static bool Insertar(Cliente cliente)
         {
-            ClienteDal.Insertar(cliente);
+           return ClienteDal.Insertar(cliente);
         }
         public static Cliente GetClienteByIdUsuario(Guid idUsuario)
         {

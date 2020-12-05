@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Listas;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Operaciones;
 
 namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDal.Personas.Productos
@@ -57,7 +58,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 Dictionary<string, object> data = OperationsSql.ExecuteReader();
                 if (data != null)
                 {
-                    ram = Dictionary_A_Ram(data);
+                    ram = Ram.Dictionary_A_Ram(data);
                 }
                 OperationsSql.ExecuteTransactionCommit();
             }
@@ -88,7 +89,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                     rams = new List<Ram>();
                     foreach (Dictionary<string, object> item in data)
                     {
-                        rams.Add(Dictionary_A_Ram(item));
+                        rams.Add(Ram.Dictionary_A_Ram(item));
                     }
                 }
                 OperationsSql.ExecuteTransactionCommit();
@@ -100,9 +101,9 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             finally { OperationsSql.CloseConnection(); }
             return rams;
         }
-        public static List<Producto> GetWithRange(int start, int cant, int? idMarca, double? minPrice, double? maxPrice)
+        public static ListaProductos GetWithRange(int start, int cant, int? idMarca, double? minPrice, double? maxPrice)
         {
-            List<Producto> rams = null;
+            ListaProductos rams = null;
             string query = @"SELECT r.IdProducto, 
                              pro.PrecioUnidad, pro.Imagen, pro.Nombre, pro.Stock, pro.IdMarca, pro.Descontinuado, pro.Eliminado 
                              mar.NombreMarca
@@ -126,10 +127,10 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 List<Dictionary<string, object>> data = OperationsSql.ExecuteReaderMany();
                 if (data != null)
                 {
-                    rams = new List<Producto>();
+                    rams = new ListaProductos();
                     foreach (Dictionary<string, object> item in data)
                     {
-                        rams.Add(ProductosDal.Dictionary_A_Producto(item));
+                        rams.Add(Producto.Dictionary_A_Producto(item));
                     }
                 }
                 OperationsSql.ExecuteTransactionCommit();
@@ -241,27 +242,6 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             finally { OperationsSql.CloseConnection(); }
             return cantidad;
-        }
-        private static Ram Dictionary_A_Ram(Dictionary<string, object> data)
-        {
-            return new Ram()
-            {
-                IdProducto = (Guid)data["IdProducto"],
-                Descontinuado = (bool)data["Descontinuado"],
-                Frecuencia = (int)data["Frecuencia"],
-                Imagen = (string)data["Imagen"],
-                Latencia = (int)data["Latencia"],
-                Marca = new Marca()
-                {
-                    IdMarca = (byte)data["IdMarca"],
-                    NombreMarca = (string)data["NombreMarca"]
-                },
-                Memoria = (int)data["Memoria"],
-                Nombre = (string)data["Nombre"],
-                PrecioUnidad = (decimal)data["PrecioUnidad"],
-                Stock = (short)data["Stock"],
-                Eliminado = (bool)data["Eliminado"]
-            };
         }
     }
 

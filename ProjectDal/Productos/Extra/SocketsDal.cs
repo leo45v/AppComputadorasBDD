@@ -51,7 +51,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                         socketProcesadors.Add(new SocketProcesador()
                         {
                             IdSocket = (int)item["IdSocket"],
-                            NombreSocket = (string)item["NombreSocket"],//(ESocketProcesador)Enum.Parse(typeof(ESocketProcesador), (string)item["NombreSocket"]),
+                            NombreSocket = (string)item["NombreSocket"],
                             Descripcion = (string)item["Descripcion"]
                         });
                     }

@@ -14,7 +14,7 @@ namespace WpfAppComputadoras.Administrator.Vistas
         {
             InitializeComponent();
             txtCertificacion.Items.Add("Tipo Certificacion");
-            txtCertificacion.Items.Add(ECertificacion.None.ToString());//0
+            txtCertificacion.Items.Add(ECertificacion.None.ToString());
             txtCertificacion.Items.Add(ECertificacion.White_80Plus.ToString());
             txtCertificacion.Items.Add(ECertificacion.Bronze_80Plus.ToString());
             txtCertificacion.Items.Add(ECertificacion.Silver_80Plus.ToString());
@@ -36,15 +36,13 @@ namespace WpfAppComputadoras.Administrator.Vistas
             txtPotencia.TextChanged += TxtPotencia_TextChanged;
             txtPotencia.PreviewTextInput += TxtPotencia_PreviewTextInput;
 
-            txtCertificacion.SelectionChanged += TxtCertificacion_SelectionChanged; ;
+            txtCertificacion.SelectionChanged += TxtCertificacion_SelectionChanged;
         }
-
         private void TxtPotencia_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
         {
             if (!(char.IsDigit(e.Text, e.Text.Length - 1) && ((TextBox)sender).Text.Length < 10))
             { e.Handled = true; }
         }
-
         private void TxtCertificacion_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (txtCertificacion.SelectedIndex > 0)
@@ -52,13 +50,6 @@ namespace WpfAppComputadoras.Administrator.Vistas
                 mainView.fuente.Certificacion = (ECertificacion)(txtCertificacion.SelectedIndex - 1);
             }
         }
-
-        private void TxtCertificacion_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            //if (!String.IsNullOrWhiteSpace(((TextBox)sender).Text))
-            //{ mainView.fuente.Certificacion = (ECertificacion)((TextBox)sender).Text; }
-        }
-
         private void TxtPotencia_TextChanged(object sender, TextChangedEventArgs e)
         {
             ((TextBox)sender).Text = ((TextBox)sender).Text.Trim();

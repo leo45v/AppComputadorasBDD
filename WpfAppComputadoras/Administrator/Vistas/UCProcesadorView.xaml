@@ -22,7 +22,6 @@
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <!--<StackPanel Grid.Column="0">-->
         <TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right" Text="Frecuencia Base" TextWrapping="Wrap" VerticalAlignment="Center"/>
         <TextBlock Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right"  Text="Frecuencia Turbo" TextWrapping="Wrap" VerticalAlignment="Center"/>
         <TextBlock Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right" Text="Numero Nucleos" TextWrapping="Wrap" VerticalAlignment="Center"/>
@@ -30,8 +29,6 @@
         <TextBlock Grid.Column="0" Grid.Row="4" HorizontalAlignment="Right" Text="Consumo" TextWrapping="Wrap" VerticalAlignment="Center"/>
         <TextBlock Grid.Column="0" Grid.Row="5" HorizontalAlignment="Right" Text="Litografia" TextWrapping="Wrap" VerticalAlignment="Center"/>
         <TextBlock Grid.Column="0" Grid.Row="6" HorizontalAlignment="Right" Text="Socket" TextWrapping="Wrap" VerticalAlignment="Center"/>
-        <!--</StackPanel>-->
-        <!--<StackPanel Grid.Column="1" Margin="5,0,0,0">-->
         <TextBox x:Name="txtFrecuenciaBase" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
         <TextBox x:Name="txtFrecuenciaTurbo" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" RenderTransformOrigin="0.306,0.93"/>
         <TextBox x:Name="txtNumeroNucleos" Grid.Column="2" Grid.Row="2" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
@@ -44,6 +41,5 @@
                 <materialDesign:PackIcon Kind="SettingsRefresh"/>
             </Button>
         </StackPanel>
-        <!--</StackPanel>-->
     </Grid>
 </UserControl>

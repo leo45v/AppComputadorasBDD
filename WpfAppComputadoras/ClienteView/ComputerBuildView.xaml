@@ -40,7 +40,7 @@
                 </StackPanel>
             </Button>
             <TextBlock Height="100"/>
-            <StackPanel>
+            <StackPanel x:Name="containerCosto">
                 <TextBlock Text="COSTO TOTAL: " VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="48"/>
                 <TextBlock Height="50"/>
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right" >
@@ -49,7 +49,7 @@
                 </StackPanel>
             </StackPanel>
             <TextBlock Height="80"/>
-            <Button FontSize="48" VerticalAlignment="Center" HorizontalAlignment="Center" Height="100" Click="Btn_Reservar_Click">
+            <Button x:Name="btnReserva" FontSize="48" VerticalAlignment="Center" HorizontalAlignment="Center" Height="100" Click="Btn_Reservar_Click">
                 <StackPanel Orientation="Horizontal">
                     <materialDesign:PackIcon Kind="CartAdd" Width="48" Height="48" VerticalAlignment="Center"/>
                     <TextBlock Text="Reservar"/>

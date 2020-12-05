@@ -22,187 +22,22 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 configXD.presupuesto = value;
             }
         }
-        private static readonly decimal increaseSearch = new Decimal(1.10);
         private static readonly ConfiguracionComputerOperation configXD = new ConfiguracionComputerOperation(presupuesto);
 
-        private static List<Procesador> ProcesadoresRecomendados(Requirements.TipoComputer tipoComputer)
+     
+        public static Computadora ObtenerComputadoraRecomendada(Requirements.TipoComputer tipoComputer)
         {
-            List<Procesador> procesadors = configXD.ProcesadoresRecomendados(tipoComputer.Procesador);
-            //decimal aux = tipoComputer.Procesador.PrecioUnidad.max;
-            //while (procesadors is null && tipoComputer.Procesador.PrecioUnidad.max < presupuesto)
-            //{
-            //    tipoComputer.Procesador.PrecioUnidad.max *= increaseSearch;//AUMENTAMOS EL MAXIMO en un 20%
-            //    procesadors = configXD.ProcesadoresRecomendados(tipoComputer.Procesador);
-            //}
-            //tipoComputer.Procesador.PrecioUnidad.max = aux;
-            if (procesadors is null)
+            List<Computadora> computadoras = GetComputersBuild(tipoComputer);
+            Computadora computadora = new Computadora();
+            if (computadoras.Count > 0)
             {
-                return new List<Procesador>();
+                computadora = computadoras.Last();
             }
-            return procesadors;
+            computadoras.Clear();
+            GC.Collect();
+            return computadora;
         }
-        private static List<PlacaBase> PlacasBasesRecomendadas(Requirements.TipoComputer tipoComputer, Procesador procesador)
-        {
-            List<PlacaBase> placaBases = configXD.PlacaBaseRecomendados(tipoComputer.PlacaBase, procesador);
-            //decimal aux = tipoComputer.PlacaBase.PrecioUnidad.max;
-            //while (placaBases is null && tipoComputer.PlacaBase.PrecioUnidad.max < presupuesto)
-            //{
-            //    tipoComputer.PlacaBase.PrecioUnidad.max *= increaseSearch;//AUMENTAMOS EL MAXIMO en un 20%
-            //    placaBases = configXD.PlacaBaseRecomendados(tipoComputer.PlacaBase, procesador);
-            //}
-            //tipoComputer.PlacaBase.PrecioUnidad.max = aux;
-            if (placaBases is null)
-            {
-                return new List<PlacaBase>();
-            }
-            return placaBases;
-        }
-        private static List<Ram> RamsRecomdadas(Requirements.TipoComputer tipoComputer)
-        {
-            List<Ram> rams = configXD.RamsRecomendados(tipoComputer.Ram);
-            //decimal aux = tipoComputer.Ram.PrecioUnidad.max;
-            //while (rams is null && tipoComputer.Ram.PrecioUnidad.max < presupuesto)
-            //{
-            //    tipoComputer.Ram.PrecioUnidad.max *= increaseSearch;//10% extra
-            //    rams = configXD.RamsRecomendados(tipoComputer.Ram);
-            //}
-            //tipoComputer.Ram.PrecioUnidad.max = aux;
-            if (rams is null)
-            {
-                return new List<Ram>();
-            }
-            return rams;
-        }
-        private static List<Almacenamiento> AlmacenamientoRecomendados(Requirements.TipoComputer tipoComputer)
-        {
-            List<Almacenamiento> almacenamientos = configXD.AlmacenamientoRecomendados(tipoComputer.Almacenamiento);
-            //decimal aux = tipoComputer.Almacenamiento.PrecioUnidad.max;
-            //while (almacenamientos is null && tipoComputer.Almacenamiento.PrecioUnidad.max < presupuesto)
-            //{
-            //    tipoComputer.Almacenamiento.PrecioUnidad.max *= increaseSearch;//10% extra
-            //    almacenamientos = configXD.AlmacenamientoRecomendados(tipoComputer.Almacenamiento);
-            //}
-            //tipoComputer.Almacenamiento.PrecioUnidad.max = aux;
-            if (almacenamientos is null)
-            {
-                return new List<Almacenamiento>();
-            }
-            return almacenamientos;
-        }
-        private static List<Monitor> MonitoresRecomendados(Requirements.TipoComputer tipoComputer)
-        {
-            List<Monitor> monitores = configXD.MonitorRecomendados(tipoComputer.Monitor);
-            //decimal aux = tipoComputer.Monitor.PrecioUnidad.max;
-            //while (monitores is null && tipoComputer.Monitor.PrecioUnidad.max < presupuesto)
-            //{
-            //    tipoComputer.Monitor.PrecioUnidad.max *= increaseSearch;//10% extra
-            //    monitores = configXD.MonitorRecomendados(tipoComputer.Monitor);
-            //}
-            //tipoComputer.Monitor.PrecioUnidad.max = aux;
-            if (monitores is null)
-            {
-                return new List<Monitor>();
-            }
-            return monitores;
-        }
-        private static List<Gabinete> GabinetesRecomendados(Requirements.TipoComputer tipoComputer)
-        {
-            List<Gabinete> gabinetes = configXD.GabinetesRecomendados(tipoComputer.Gabinete);
-            //decimal aux = tipoComputer.Gabinete.PrecioUnidad.max;
-            //while (gabinetes is null && tipoComputer.Gabinete.PrecioUnidad.max < presupuesto)
-            //{
-            //    tipoComputer.Gabinete.PrecioUnidad.max *= increaseSearch;//10% extra
-            //    gabinetes = configXD.GabinetesRecomendados(tipoComputer.Gabinete);
-            //}
-            //tipoComputer.Gabinete.PrecioUnidad.max = aux;
-            if (gabinetes is null)
-            {
-                return new List<Gabinete>();
-            }
-            return gabinetes;
-        }
-        private static List<Computadora> FuentesRecomendados(Requirements.TipoComputer tipoComputer, List<Grafica> graficas, List<Computadora> placaProceRam, List<List<Almacenamiento>> almacenamientos)
-        {
-            List<Computadora> compis = new List<Computadora>();
-            List<Fuente> fuentes = configXD.FuenteRecomendados(tipoComputer.Fuente);
-            List<Computadora> computadorita = new List<Computadora>();
-            //decimal aux = tipoComputer.Gabinete.PrecioUnidad.max;
-            //while (fuentes is null && tipoComputer.Fuente.PrecioUnidad.max < presupuesto)
-            //{
-            //    tipoComputer.Fuente.PrecioUnidad.max *= increaseSearch;//10% extra
-            //    fuentes = configXD.FuenteRecomendados(tipoComputer.Fuente);
-            //}
-            //tipoComputer.Fuente.PrecioUnidad.max = aux;
-            if (!(fuentes is null))
-            {
-                fuentes = fuentes.Where(x => x.PrecioUnidad >= tipoComputer.Fuente.PrecioUnidad.min).ToList();
-                if (tipoComputer.TarjetaGrafica.PrecioUnidad.min == 0)
-                {
-                    foreach (var fuentesita in fuentes)
-                    {
-                        compis.Add(new Computadora()
-                        {
-                            Fuente = fuentesita,
-                            TarjetaGrafica = null
-                        });
-                    }
-                }
-                if (!(graficas is null))
-                {
-                    foreach (var nuevaGrafica in graficas)
-                    {
-                        foreach (var fuentesita in fuentes)
-                        {
-                            compis.Add(new Computadora()
-                            {
-                                Fuente = fuentesita,
-                                TarjetaGrafica = nuevaGrafica
 
-                            });
-                        }
-                    }
-                }
-
-                foreach (var placaPorceRamX in placaProceRam)
-                {
-                    foreach (var graficaFuente in compis)
-                    {
-                        foreach (var almacenamientoX in almacenamientos)
-                        {
-                            computadorita.Add(new Computadora()
-                            {
-                                Fuente = graficaFuente.Fuente,
-                                PlacaBase = placaPorceRamX.PlacaBase,
-                                Procesador = placaPorceRamX.Procesador,
-                                Rams = placaPorceRamX.Rams,
-                                TarjetaGrafica = graficaFuente.TarjetaGrafica,
-                                Almacenamientos = almacenamientoX
-                            });
-                        }
-                    }
-                }
-            }
-            return computadorita;
-        }
-        private static List<Grafica> GraficasRecomendados(Requirements.TipoComputer tipoComputer)
-        {
-            List<Grafica> graficas = configXD.TarjetaGraficaRecomendados(tipoComputer.TarjetaGrafica);
-            //decimal aux = tipoComputer.TarjetaGrafica.PrecioUnidad.max;
-            //if (tipoComputer.TarjetaGrafica.PrecioUnidad.min != 0)
-            //{
-            //while (graficas is null && tipoComputer.TarjetaGrafica.PrecioUnidad.max < presupuesto)
-            //{
-            //    tipoComputer.TarjetaGrafica.PrecioUnidad.max *= increaseSearch;//10% extra
-            //    graficas = configXD.TarjetaGraficaRecomendados(tipoComputer.TarjetaGrafica);
-            //}
-            //tipoComputer.TarjetaGrafica.PrecioUnidad.max = aux;
-            //}
-            if (graficas is null)
-            {
-                return new List<Grafica>();
-            }
-            return graficas;
-        }
         public static List<Computadora> GetComputersBuild(Requirements.TipoComputer tipoComputer)
         {
             List<Procesador> procesadors = ProcesadoresRecomendados(tipoComputer);
@@ -217,7 +52,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                     {
                         double cantidadRams = 1;
                         double cantidadRamxMax = placaBase.NumeroDims;
-                        while ((ramNew.Memoria * cantidadRams) <= tipoComputer.Ram.Capacidad.max && cantidadRams < cantidadRamxMax)
+                        while ((ramNew.Memoria * cantidadRams) <= tipoComputer.Ram.Capacidad.Max && cantidadRams < cantidadRamxMax)
                         {
                             cantidadRams++;
                         }
@@ -242,9 +77,9 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 }
                 plaquitasList = null;
             }
-            auxProcesadorPlacaBase = auxProcesadorPlacaBase.Where(x => (double)x.CantidadMemoriaRam >= tipoComputer.Ram.Capacidad.min).OrderByDescending(x => x.CantidadMemoriaRam).ToList();
+            auxProcesadorPlacaBase = auxProcesadorPlacaBase.Where(x => (double)x.CantidadMemoriaRam >= tipoComputer.Ram.Capacidad.Min).OrderByDescending(x => x.CantidadMemoriaRam).ToList();
             List<Almacenamiento> almacenamientos = AlmacenamientoRecomendados(tipoComputer).OrderByDescending(x => x.PrecioUnidad).ToList();
-            List<List<Almacenamiento>> almacenamientoConcat = CombinarAlmacenamiento(almacenamientos, tipoComputer.Almacenamiento.Capacidad.min, tipoComputer.Almacenamiento.Capacidad.max)
+            List<List<Almacenamiento>> almacenamientoConcat = CombinarAlmacenamiento(almacenamientos, tipoComputer.Almacenamiento.Capacidad.Min, tipoComputer.Almacenamiento.Capacidad.Max)
                 .Select(x =>
                 {
                     var f = 0;
@@ -252,18 +87,18 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                     {
                         f += item.Capacidad;
                     }
-                    if (f < tipoComputer.Almacenamiento.Capacidad.min)
+                    if (f < tipoComputer.Almacenamiento.Capacidad.Min)
                     {
                         x = null;
                     }
                     return x;
                 }).Where(x => !(x is null)).ToList();
-            List<Monitor> monitores = MonitoresRecomendados(tipoComputer).Where(x => x.PrecioUnidad >= tipoComputer.Monitor.PrecioUnidad.min).OrderBy(x => x.PrecioUnidad).ToList();
-            List<Gabinete> gabinetes = GabinetesRecomendados(tipoComputer).Where(x => x.PrecioUnidad >= tipoComputer.Gabinete.PrecioUnidad.min).OrderBy(x => x.PrecioUnidad).ToList();
+            List<Monitor> monitores = MonitoresRecomendados(tipoComputer).Where(x => x.PrecioUnidad >= tipoComputer.Monitor.PrecioUnidad.Min).OrderBy(x => x.PrecioUnidad).ToList();
+            List<Gabinete> gabinetes = GabinetesRecomendados(tipoComputer).Where(x => x.PrecioUnidad >= tipoComputer.Gabinete.PrecioUnidad.Min).OrderBy(x => x.PrecioUnidad).ToList();
             List<Grafica> graficas = GraficasRecomendados(tipoComputer);
             if (graficas.Count > 0)
             {
-                graficas = graficas.Where(x => x.PrecioUnidad >= tipoComputer.TarjetaGrafica.PrecioUnidad.min).OrderBy(x => x.PrecioUnidad).ToList();
+                graficas = graficas.Where(x => x.PrecioUnidad >= tipoComputer.TarjetaGrafica.PrecioUnidad.Min).OrderBy(x => x.PrecioUnidad).ToList();
             }
 
 
@@ -332,7 +167,126 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
 
             return nuevita;
         }
+        private static List<Procesador> ProcesadoresRecomendados(Requirements.TipoComputer tipoComputer)
+        {
+            List<Procesador> procesadors = configXD.ProcesadoresRecomendados(tipoComputer.Procesador);
+            if (procesadors is null)
+            {
+                return new List<Procesador>();
+            }
+            return procesadors;
+        }
+        private static List<PlacaBase> PlacasBasesRecomendadas(Requirements.TipoComputer tipoComputer, Procesador procesador)
+        {
+            List<PlacaBase> placaBases = configXD.PlacaBaseRecomendados(tipoComputer.PlacaBase, procesador);
+            if (placaBases is null)
+            {
+                return new List<PlacaBase>();
+            }
+            return placaBases;
+        }
+        private static List<Ram> RamsRecomdadas(Requirements.TipoComputer tipoComputer)
+        {
+            List<Ram> rams = configXD.RamsRecomendados(tipoComputer.Ram);
+            if (rams is null)
+            {
+                return new List<Ram>();
+            }
+            return rams;
+        }
+        private static List<Grafica> GraficasRecomendados(Requirements.TipoComputer tipoComputer)
+        {
+            List<Grafica> graficas = configXD.TarjetaGraficaRecomendados(tipoComputer.TarjetaGrafica);
+            if (graficas is null)
+            {
+                return new List<Grafica>();
+            }
+            return graficas;
+        }
+        private static List<Almacenamiento> AlmacenamientoRecomendados(Requirements.TipoComputer tipoComputer)
+        {
+            List<Almacenamiento> almacenamientos = configXD.AlmacenamientoRecomendados(tipoComputer.Almacenamiento);
+            if (almacenamientos is null)
+            {
+                return new List<Almacenamiento>();
+            }
+            return almacenamientos;
+        }
+        private static List<Monitor> MonitoresRecomendados(Requirements.TipoComputer tipoComputer)
+        {
+            List<Monitor> monitores = configXD.MonitorRecomendados(tipoComputer.Monitor);
+            if (monitores is null)
+            {
+                return new List<Monitor>();
+            }
+            return monitores;
+        }
+        private static List<Gabinete> GabinetesRecomendados(Requirements.TipoComputer tipoComputer)
+        {
+            List<Gabinete> gabinetes = configXD.GabinetesRecomendados(tipoComputer.Gabinete);
+            if (gabinetes is null)
+            {
+                return new List<Gabinete>();
+            }
+            return gabinetes;
+        }
+        private static List<Computadora> FuentesRecomendados(Requirements.TipoComputer tipoComputer, List<Grafica> graficas, List<Computadora> placaProceRam, List<List<Almacenamiento>> almacenamientos)
+        {
+            List<Computadora> compis = new List<Computadora>();
+            List<Fuente> fuentes = configXD.FuenteRecomendados(tipoComputer.Fuente);
+            List<Computadora> computadorita = new List<Computadora>();
+            if (!(fuentes is null))
+            {
+                fuentes = fuentes.Where(x => x.PrecioUnidad >= tipoComputer.Fuente.PrecioUnidad.Min).ToList();
+                if (tipoComputer.TarjetaGrafica.PrecioUnidad.Min == 0)
+                {
+                    foreach (var fuentesita in fuentes)
+                    {
+                        compis.Add(new Computadora()
+                        {
+                            Fuente = fuentesita,
+                            TarjetaGrafica = null
+                        });
+                    }
+                }
+                if (!(graficas is null))
+                {
+                    foreach (var nuevaGrafica in graficas)
+                    {
+                        foreach (var fuentesita in fuentes)
+                        {
+                            compis.Add(new Computadora()
+                            {
+                                Fuente = fuentesita,
+                                TarjetaGrafica = nuevaGrafica
 
+                            });
+                        }
+                    }
+                }
+
+                foreach (var placaPorceRamX in placaProceRam)
+                {
+                    foreach (var graficaFuente in compis)
+                    {
+                        foreach (var almacenamientoX in almacenamientos)
+                        {
+                            computadorita.Add(new Computadora()
+                            {
+                                Fuente = graficaFuente.Fuente,
+                                PlacaBase = placaPorceRamX.PlacaBase,
+                                Procesador = placaPorceRamX.Procesador,
+                                Rams = placaPorceRamX.Rams,
+                                TarjetaGrafica = graficaFuente.TarjetaGrafica,
+                                Almacenamientos = almacenamientoX
+                            });
+                        }
+                    }
+                }
+            }
+            return computadorita;
+        }
+        
         private static List<List<Almacenamiento>> CombinarAlmacenamiento(List<Almacenamiento> almacenamientos, double capacidadMin, double capacidadMax)
         {
             List<List<Almacenamiento>> almacenamientos1 = new List<List<Almacenamiento>>();

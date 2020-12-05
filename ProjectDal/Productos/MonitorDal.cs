@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Listas;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Operaciones;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Pantalla;
 
@@ -26,10 +27,6 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                     OperationsSql.AddWithValueString("IdResolucion", monitor.Resolucion.IdResolucion);
                     OperationsSql.AddWithValueString("IdRatio", monitor.Ratio.IdRatio);
                     OperationsSql.ExecuteBasicCommandWithTransaction();
-                    //foreach (Colores item in monitor.Colores)
-                    //{
-                    //    ProductosDal.InsertarColores(monitor.IdProducto, item.IdColor);
-                    //}
                     OperationsSql.ExecuteTransactionCommit();
                 }
                 estado = true;
@@ -68,7 +65,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 Dictionary<string, object> data = OperationsSql.ExecuteReader();
                 if (data != null)
                 {
-                    monitor = Dictionary_A_Monitor(data);
+                    monitor = Monitor.Dictionary_A_Monitor(data);
                     monitor.Colores = ProductosDal.GetColores(idMonitor);
                 }
                 OperationsSql.ExecuteTransactionCommit();
@@ -104,7 +101,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                     monitors = new List<Monitor>();
                     foreach (Dictionary<string, object> item in data)
                     {
-                        Monitor monitor = Dictionary_A_Monitor(item);
+                        Monitor monitor = Monitor.Dictionary_A_Monitor(item);
                         monitor.Colores = ProductosDal.GetColores(monitor.IdProducto);
                         monitors.Add(monitor);
                     }
@@ -118,9 +115,9 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             finally { OperationsSql.CloseConnection(); }
             return monitors;
         }
-        public static List<Producto> GetWithRange(int start, int cant, int? idMarca, double? minPrice, double? maxPrice)
+        public static ListaProductos GetWithRange(int start, int cant, int? idMarca, double? minPrice, double? maxPrice)
         {
-            List<Producto> productos = null;
+            ListaProductos productos = null;
             string query = @"SELECT r.IdProducto, 
                              pro.PrecioUnidad, pro.Imagen, pro.Nombre, pro.Stock, pro.IdMarca, pro.Descontinuado, pro.Eliminado, 
                              mar.NombreMarca
@@ -142,10 +139,10 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 List<Dictionary<string, object>> data = OperationsSql.ExecuteReaderMany();
                 if (data != null)
                 {
-                    productos = new List<Producto>();
+                    productos = new ListaProductos();
                     foreach (Dictionary<string, object> item in data)
                     {
-                        productos.Add(ProductosDal.Dictionary_A_Producto(item));
+                        productos.Add(Producto.Dictionary_A_Producto(item));
                     }
                 }
                 OperationsSql.ExecuteTransactionCommit();
@@ -214,7 +211,6 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                     OperationsSql.AddWithValueString(parameter: "IdResolucion", monitor.Resolucion.IdResolucion);
                     OperationsSql.AddWithValueString(parameter: "IdRatio", monitor.Ratio.IdRatio);
                     OperationsSql.ExecuteBasicCommandWithTransaction();
-                    //UPDATE COLORES -> monitor 
                     OperationsSql.ExecuteTransactionCommit();
                     estado = true;
                 }
@@ -255,36 +251,6 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             finally { OperationsSql.CloseConnection(); }
             return cantidad;
-        }
-        private static Monitor Dictionary_A_Monitor(Dictionary<string, object> data)
-        {
-            return new Monitor()
-            {
-                IdProducto = (Guid)data["IdProducto"],
-                Descontinuado = (bool)data["Descontinuado"],
-                Tamano = (int)data["Tamano"],
-                Frecuencia = (int)data["Frecuencia"],
-                Imagen = (string)data["Imagen"],
-                Marca = new Marca()
-                {
-                    IdMarca = (byte)data["IdMarca"],
-                    NombreMarca = (string)data["NombreMarca"]
-                },
-                Nombre = (string)data["Nombre"],
-                PrecioUnidad = (decimal)data["PrecioUnidad"],
-                Stock = (short)data["Stock"],
-                Eliminado = (bool)data["Eliminado"],
-                Resolucion = new Resolucion()
-                {
-                    IdResolucion = (byte)data["IdResolucion"],
-                    NombreResolucion = (string)data["NombreResolucion"]
-                },
-                Ratio = new Ratio()
-                {
-                    IdRatio = (byte)data["IdRatio"],
-                    NombreRatio = (string)data["NombreRatio"]
-                }
-            };
         }
     }
 }

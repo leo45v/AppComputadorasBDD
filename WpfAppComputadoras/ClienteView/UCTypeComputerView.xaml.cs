@@ -24,37 +24,27 @@ namespace WpfAppComputadoras.ClienteView
     /// </summary>
     public partial class UCTypeComputerView : UserControl
     {
+
+        #region PROPIEDADES
         public decimal presupuesto;
         public TipoComputadora tipoComputadora;
         public object parametros;
         public ViewMain mainView;
-        ConfigurationBuildComputer getParametros = new ConfigurationBuildComputer(TipoComputadora.Estudio);
+        private readonly ConfigurationBuildComputer requisitosComputadora;
+        #endregion
+
 
         public UCTypeComputerView(ViewMain viewMain)
         {
             InitializeComponent();
+            requisitosComputadora = new ConfigurationBuildComputer();
             this.mainView = viewMain;
-
-            //MessageBox.Show(String.Format("MAX: {0}\n\rMIN: {1}",
-            //    getParametros.Requisitos.ComputadoraX.CostoMaximo,
-            //    getParametros.Requisitos.ComputadoraX.CostoMinimo), "ESTUDIO");
-
-            //getParametros.CambiarTipo = TipoComputadora.Gaming;
-            //MessageBox.Show(String.Format("MAX: {0}\n\rMIN: {1}",
-            //    getParametros.Requisitos.ComputadoraX.CostoMaximo,
-            //    getParametros.Requisitos.ComputadoraX.CostoMinimo), "GAMING");
-
-            //getParametros.CambiarTipo = TipoComputadora.Oficina;
-            //MessageBox.Show(String.Format("MAX: {0}\n\rMIN: {1}",
-            //    getParametros.Requisitos.ComputadoraX.CostoMaximo,
-            //    getParametros.Requisitos.ComputadoraX.CostoMinimo), "OFICINA");
-
-            //getParametros.CambiarTipo = TipoComputadora.TrabajoDiseno;
-            //MessageBox.Show(String.Format("MAX: {0}\n\rMIN: {1}",
-            //    getParametros.Requisitos.ComputadoraX.CostoMaximo,
-            //    getParametros.Requisitos.ComputadoraX.CostoMinimo), "TRABAJO DISEÑO");
-
         }
+
+
+        #region METODOS
+
+       
         private void Btn_Siguiente(object sender, RoutedEventArgs e)
         {
             if (String.IsNullOrWhiteSpace(txtPresupuesto.Text))
@@ -62,27 +52,16 @@ namespace WpfAppComputadoras.ClienteView
                 MessageBox.Show("Ingrese un Presupuesto");
                 return;
             }
-            if (btnGaming.IsChecked.Value)
+
+            tipoComputadora = ObtenerTipoComputadora;
+
+            if (tipoComputadora == TipoComputadora.Ninguno)
             {
-                getParametros.CambiarTipo = TipoComputadora.Gaming;
-                tipoComputadora = TipoComputadora.Gaming;
+                MessageBox.Show("Seleccione un Tipo de Computadora");
+                return;
             }
-            else if (btnOficina.IsChecked.Value)
-            {
-                getParametros.CambiarTipo = TipoComputadora.Oficina;
-                tipoComputadora = TipoComputadora.Oficina;
-            }
-            else if (btnTrabajo.IsChecked.Value)
-            {
-                getParametros.CambiarTipo = TipoComputadora.TrabajoDiseno;
-                tipoComputadora = TipoComputadora.TrabajoDiseno;
-            }
-            else if (BtnEstudios.IsChecked.Value)
-            {
-                getParametros.CambiarTipo = TipoComputadora.Estudio;
-                tipoComputadora = TipoComputadora.Estudio;
-            }
-            else { MessageBox.Show("Seleccione un Tipo de Computadora"); return; }
+
+            requisitosComputadora.CambiarTipoComputadora = tipoComputadora;
             if (decimal.TryParse(txtPresupuesto.Text, out presupuesto))
             {
                 ComputadoraBuildBrl.Presupuesto = presupuesto;
@@ -94,87 +73,43 @@ namespace WpfAppComputadoras.ClienteView
             {
                 MessageBox.Show("Ingrese un Presupuesto correcto");
             }
-
         }
         private void BuscarComputadora()
         {
-            var watch = System.Diagnostics.Stopwatch.StartNew();
-            List<Computadora> computadoras = ComputadoraBuildBrl.GetComputersBuild(getParametros.Requisitos.ComputadoraX);
-            Computadora filtradoPorPotencia = null;
-            if (computadoras.Count > 0)
-            {
-                if (tipoComputadora == TipoComputadora.Gaming)
-                {
-                    computadoras = computadoras
-                    .OrderBy(x => x.TarjetaGrafica.PrecioUnidad)
-                    .ToList();
-                }
-                else if (tipoComputadora == TipoComputadora.TrabajoDiseno)
-                {
-                    computadoras = computadoras
-                    .ToList();
-                }
-                else if (tipoComputadora == TipoComputadora.Oficina)
-                {
-                    computadoras = computadoras
-                        .Where(x => x.TarjetaGrafica is null)
-                        .ToList();
-                }
-                else
-                {
-                    computadoras = computadoras
-                        .Where(x => (x.TarjetaGrafica is null || (!(x.TarjetaGrafica is null) && x.TarjetaGrafica.PrecioUnidad > 20)))
-                        .ToList();
-                }
-                if (computadoras.Count > 0)
-                {
-                    filtradoPorPotencia = computadoras.Last();
-                }
-            }
-            watch.Stop();
-            var elapsedMs = watch.ElapsedMilliseconds;
-            int elapsedSeg = (int)(elapsedMs / 1000);
-            elapsedMs -= (elapsedSeg * 1000);
+            Computadora computadora = ComputadoraBuildBrl.ObtenerComputadoraRecomendada(requisitosComputadora.Requisitos.ComputadoraX);
             Application.Current.Dispatcher.Invoke(new Action(CloseWaiting));
-            Application.Current.Dispatcher.Invoke(new Action<Computadora>(mainView.UIReservaComputer), filtradoPorPotencia);
-            computadoras = null;
+            Application.Current.Dispatcher.Invoke(new Action<Computadora>(mainView.UIReservaComputer), computadora);
+            computadora = null;
             GC.Collect();
-            //MessageBox.Show(String.Format("TIEMPO: 00:{0}.{0}", elapsedSeg, elapsedMs));
         }
-
         private void CloseWaiting()
         {
             bdWaiting.IsOpen = false;
         }
-        private string PrintComputer(Computadora computer)
+        private TipoComputadora ObtenerTipoComputadora
         {
-            string x = "";
-            x += String.Format("PROCESADOR: {0}\n\r   FrecuenciaBase: {1}Mhz   FrecuenciaTurbo: {2}Mhz    Marca: {3}\n\rCosto: {4}$\n\r\n\r",
-                computer.Procesador.Nombre, computer.Procesador.FrecuenciaBase, computer.Procesador.FrecuenciaTurbo, computer.Procesador.Marca.NombreMarca, computer.Procesador.PrecioUnidad);
-            x += String.Format("PlacaBase: {0}\n\r   NumeroDims: {1}  Marca: {2}    \n\rCosto: {3}$\n\r\n\r",
-               computer.PlacaBase.Nombre, computer.PlacaBase.NumeroDims, computer.PlacaBase.Marca.NombreMarca, computer.PlacaBase.PrecioUnidad);
-            x += String.Format("Ram: {0}\n\r   Frecuencia: {1}Mhz   Capacidad: {2}GB Cantidad: {3}\n\r  Costo: {4}$\n\r\n\r",
-               computer.Rams[0].Nombre, computer.Rams[0].Frecuencia, computer.Rams[0].Memoria, computer.Rams.Count, computer.Rams[0].PrecioUnidad * computer.Rams.Count);
-            x += String.Format("Fuente: {0}\n\r   Certificacion: {1}   Potencia: {2}W     Marca: {3}\n\r  Costo: {4}$\n\r\n\r",
-               computer.Fuente.Nombre, computer.Fuente.Certificacion, computer.Fuente.Potencia, computer.Fuente.Marca.NombreMarca, computer.Fuente.PrecioUnidad);
-            x += String.Format("Monitor: {0}\n\r   Frecuencia: {1}   Tamaño: {2}\"     Marca: {3}\n\r  Costo: {4}$\n\r\n\r",
-              computer.Monitor.Nombre, computer.Monitor.Frecuencia, computer.Monitor.Tamano, computer.Monitor.Marca.NombreMarca, computer.Monitor.PrecioUnidad);
-            x += String.Format("Gabinete: {0}\n\r   Marca: {1} \n\r  Costo: {2}$\n\r\n\r",
-             computer.Gabinete.Nombre, computer.Gabinete.Marca.NombreMarca, computer.Gabinete.PrecioUnidad);
-            x += String.Format("Almacenamientos: {0}\n\r Capacidad: {1}   Marca: {2} \n\r  Cantidad: {3}\n\r\n\r",
-             computer.Almacenamientos[0].Nombre, computer.Almacenamientos[0].Capacidad, computer.Almacenamientos[0].Marca.NombreMarca, computer.Almacenamientos.Count);
-            if (computer.TarjetaGrafica is null)
+            get
             {
-                x += "SIN TARJETA GRAFICA \n\r\n\r";
+                if (btnGaming.IsChecked.Value)
+                {
+                    return TipoComputadora.Gaming;
+                }
+                else if (btnOficina.IsChecked.Value)
+                {
+                    return TipoComputadora.Oficina;
+                }
+                else if (btnTrabajo.IsChecked.Value)
+                {
+                    return TipoComputadora.TrabajoDiseno;
+                }
+                else if (BtnEstudios.IsChecked.Value)
+                {
+                    return TipoComputadora.Estudio;
+                }
+                return TipoComputadora.Ninguno;
             }
-            else
-            {
-                x += String.Format("Tarjeta de Video: {0}\n\r   Marca: {1}   VRam: {3}  \n\r  Costo: {3}$\n\r\n\r",
-             computer.TarjetaGrafica.Nombre, computer.TarjetaGrafica.Marca.NombreMarca, computer.TarjetaGrafica.Vram, computer.TarjetaGrafica.PrecioUnidad);
-            }
-            x += string.Format("TOTAL COSTO: {0}", computer.CostoTotal);
-            return x;
         }
+        #endregion
 
         private void Click_Estudio(object sender, MouseButtonEventArgs e)
         {

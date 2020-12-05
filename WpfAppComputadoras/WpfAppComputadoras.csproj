@@ -7,26 +7,21 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="ClienteView\222.jpg" />
-    <None Remove="ClienteView\genddeDDratedtext%281%29.jpg" />
-    <None Remove="ClienteView\geneDDratedtext%281%29.jpg" />
-    <None Remove="ClienteView\generatedtext%281%29.jpg" />
-    <None Remove="ClienteView\generatedtext%282%29.jpg" />
-    <None Remove="ClienteView\generatedtext%283%29.jpg" />
-    <None Remove="ClienteView\generatedtext.jpg" />
-    <None Remove="ClienteView\generatedtRext.jpg" />
-    <None Remove="ClienteView\PC-GAMER.jpg" />
-    <None Remove="ClienteView\pc.png" />
-    <None Remove="Components\null.jpg" />
-    <None Remove="Components\Punto.png" />
+    <None Remove="assets\null.jpg" />
+    <None Remove="assets\222.jpg" />
+    <None Remove="assets\genddeDDratedtext(1).jpg" />
+    <None Remove="assets\geneDDratedtext(1).jpg" />
+    <None Remove="assets\generatedtext(1).jpg" />
+    <None Remove="assets\generatedtext(2).jpg" />
+    <None Remove="assets\generatedtext(3).jpg" />
+    <None Remove="assets\generatedtext.jpg" />
+    <None Remove="assets\generatedtRext.jpg" />
+    <None Remove="assets\pc.png" />
+    <None Remove="assets\PC-GAMER.jpg" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ProyectBrl\ProyectBrl.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="assets\Requisitos\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,18 +30,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="ClienteView\222.jpg" />
-    <Resource Include="ClienteView\genddeDDratedtext(1).jpg" />
-    <Resource Include="ClienteView\geneDDratedtext(1).jpg" />
-    <Resource Include="ClienteView\generatedtext(1).jpg" />
-    <Resource Include="ClienteView\generatedtext(2).jpg" />
-    <Resource Include="ClienteView\generatedtext(3).jpg" />
-    <Resource Include="ClienteView\generatedtext.jpg" />
-    <Resource Include="ClienteView\generatedtRext.jpg" />
-    <Resource Include="ClienteView\PC-GAMER.jpg" />
-    <Resource Include="ClienteView\pc.png" />
-    <Resource Include="Components\null.jpg" />
-    <Resource Include="Components\Punto.png" />
+    <Resource Include="assets\null.jpg" />
+    <Resource Include="assets\222.jpg" />
+    <Resource Include="assets\genddeDDratedtext(1).jpg" />
+    <Resource Include="assets\geneDDratedtext(1).jpg" />
+    <Resource Include="assets\generatedtext(1).jpg" />
+    <Resource Include="assets\generatedtext(2).jpg" />
+    <Resource Include="assets\generatedtext(3).jpg" />
+    <Resource Include="assets\generatedtext.jpg" />
+    <Resource Include="assets\generatedtRext.jpg" />
+    <Resource Include="assets\pc.png" />
+    <Resource Include="assets\PC-GAMER.jpg" />
   </ItemGroup>
 
 </Project>

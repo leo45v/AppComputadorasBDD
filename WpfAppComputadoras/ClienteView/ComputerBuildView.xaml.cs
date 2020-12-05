@@ -12,6 +12,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configuracion;
+using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Listas;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectBrl.Reservas;
 using WpfAppComputadoras.Components;
 
@@ -22,9 +23,12 @@ namespace WpfAppComputadoras.ClienteView
     /// </summary>
     public partial class ComputerBuildView : UserControl
     {
+        #region PROPIEDADES
         private ViewMain mainView;
         public Computadora computadora;
-        //private List<UIElement> componentes = new List<UIElement>();
+        #endregion
+
+
         public ComputerBuildView(ViewMain viewMain, Computadora computadora)
         {
             InitializeComponent();
@@ -33,6 +37,9 @@ namespace WpfAppComputadoras.ClienteView
             UpdateUI(computadora);
         }
 
+
+
+        #region METODOS
         private void Btn_VolverArmar_Click(object sender, RoutedEventArgs e)
         {
             mainView.gridAutomaitc.Children.Clear();
@@ -40,48 +47,12 @@ namespace WpfAppComputadoras.ClienteView
             mainView.ViewModeMainANTERIOR = mainView.ViewModeMain;
             mainView.ViewModeMain = mainView.uCTypeComputerView;
         }
-
         private void Btn_Reservar_Click(object sender, RoutedEventArgs e)
         {
-            List<Producto> productos = new List<Producto>();
-            if (!(computadora.Fuente is null))
-            {
-                productos.Add(computadora.Fuente);
-            }
-            if (!(computadora.Procesador is null))
-            {
-                productos.Add(computadora.Procesador);
-            }
-            if (!(computadora.TarjetaGrafica is null))
-            {
-                productos.Add(computadora.TarjetaGrafica);
-            }
-            if (!(computadora.Gabinete is null))
-            {
-                productos.Add(computadora.Gabinete);
-            }
-            if (!(computadora.Monitor is null))
-            {
-                productos.Add(computadora.Monitor);
-            }
-            if (!(computadora.PlacaBase is null))
-            {
-                productos.Add(computadora.PlacaBase);
-            }
-            if (!(computadora.Almacenamientos is null))
-            {
-                foreach (var item in computadora.Almacenamientos)
-                {
-                    productos.Add(item);
-                }
-            }
-            if (!(computadora.Rams is null))
-            {
-                foreach (var item in computadora.Rams)
-                {
-                    productos.Add(item);
-                }
-            }
+            ListaProductos productos = new ListaProductos();
+
+            productos.InsertarComputadora(computadora);
+
             Reserva nuevaReserva = new Reserva()
             {
                 Cliente = mainView.cliente,
@@ -93,13 +64,20 @@ namespace WpfAppComputadoras.ClienteView
                 this.UpdateUI(computadora);
                 MessageBox.Show("Reserva Exitosa");
             }
+            else
+            {
+                MessageBox.Show(ReservasBrl.Errores[0]);
+            }
         }
-
         public void UpdateUI(Computadora computadora)
         {
             containerComputer.Children.Clear();
+            containerCosto.Visibility = Visibility.Hidden;
+            btnReserva.IsEnabled = false;
             if (!(computadora is null))
             {
+                containerCosto.Visibility = Visibility.Visible;
+                btnReserva.IsEnabled = true;
                 UCProductViewClient uCProcesador = new UCProductViewClient(mainView, this, computadora.Procesador);
                 containerComputer.Children.Add(uCProcesador);
                 UCProductViewClient uCPlacaBase = new UCProductViewClient(mainView, this, computadora.PlacaBase);
@@ -126,16 +104,13 @@ namespace WpfAppComputadoras.ClienteView
                     containerComputer.Children.Add(uCTarjetaGrafica);
                 }
                 txtContoTotal.Text = computadora.CostoTotal.ToString("#.##");
-                //UCComputerSpec uCComputerSpec = new UCComputerSpec(viewMain, computadora);
-                //containerSpec.Children.Add(uCComputerSpec);
             }
         }
-
         public void QuitarComponente(UCProductViewClient uCProductViewClient, Guid idProducto)
         {
-            //componentes.Remove(uCProductViewClient);
             containerComputer.Children.Remove(uCProductViewClient);
             computadora.DeleteComponent(idProducto);
         }
+        #endregion
     }
 }

@@ -22,9 +22,15 @@ namespace WpfAppComputadoras.Components
     /// </summary>
     public partial class UCReservaView : UserControl
     {
+
+        #region PROPIEDADES
         public ViewMain mainView;
         public UCReservasView parent;
         public Reserva reserva;
+        #endregion
+
+
+        #region CONSTRUCTOR
         public UCReservaView()
         {
             InitializeComponent();
@@ -46,7 +52,11 @@ namespace WpfAppComputadoras.Components
                 txtNombreCliente.Visibility = Visibility.Collapsed;
             }
         }
+        #endregion
 
+
+
+        #region METODOS
         private void Btn_DeleteReserva_Click(object sender, RoutedEventArgs e)
         {
             ReservasBrl.Delete(reserva.IdReserva);
@@ -62,5 +72,6 @@ namespace WpfAppComputadoras.Components
         {
             this.reserva = reserva;
         }
+        #endregion
     }
 }

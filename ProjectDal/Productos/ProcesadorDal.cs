@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Enums;
+using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Listas;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Operaciones;
 
 namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDal.Personas.Productos
@@ -66,7 +67,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 Dictionary<string, object> data = OperationsSql.ExecuteReader();
                 if (data != null)
                 {
-                    procesador = Dictionary_A_Procesador(data);
+                    procesador = Procesador.Dictionary_A_Procesador(data);
                 }
                 OperationsSql.ExecuteTransactionCommit();
             }
@@ -99,7 +100,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                     procesadors = new List<Procesador>();
                     foreach (Dictionary<string, object> item in data)
                     {
-                        procesadors.Add(Dictionary_A_Procesador(item));
+                        procesadors.Add(Procesador.Dictionary_A_Procesador(item));
                     }
                 }
                 OperationsSql.ExecuteTransactionCommit();
@@ -111,9 +112,9 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             finally { OperationsSql.CloseConnection(); }
             return procesadors;
         }
-        public static List<Producto> GetWithRange(int start, int cant, int? idMarca, double? minPrice, double? maxPrice)
+        public static ListaProductos GetWithRange(int start, int cant, int? idMarca, double? minPrice, double? maxPrice)
         {
-            List<Producto> productos = null;
+            ListaProductos productos = null;
             string query = @"SELECT r.IdProducto, 
                              pro.PrecioUnidad, pro.Imagen, pro.Nombre, pro.Stock, pro.IdMarca, pro.Descontinuado, pro.Eliminado, 
                              mar.NombreMarca
@@ -135,10 +136,10 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 List<Dictionary<string, object>> data = OperationsSql.ExecuteReaderMany();
                 if (data != null)
                 {
-                    productos = new List<Producto>();
+                    productos = new ListaProductos();
                     foreach (Dictionary<string, object> item in data)
                     {
-                        productos.Add(ProductosDal.Dictionary_A_Producto(item));
+                        productos.Add(Producto.Dictionary_A_Producto(item));
                     }
                 }
                 OperationsSql.ExecuteTransactionCommit();
@@ -254,36 +255,6 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             finally { OperationsSql.CloseConnection(); }
             return cantidad;
-        }
-        private static Procesador Dictionary_A_Procesador(Dictionary<string, object> data)
-        {
-            return new Procesador()
-            {
-                IdProducto = (Guid)data["IdProducto"],
-                Descontinuado = (bool)data["Descontinuado"],
-                FrecuenciaBase = (int)data["FrecuenciaBase"],
-                Consumo = (int)data["Consumo"],
-                Imagen = (string)data["Imagen"],
-                FrecuenciaTurbo = (int)data["FrecuenciaTurbo"],
-                Marca = new Marca()
-                {
-                    IdMarca = (byte)data["IdMarca"],
-                    NombreMarca = (string)data["NombreMarca"]
-                },
-                Litografia = (int)data["Litografia"],
-                Nombre = (string)data["Nombre"],
-                PrecioUnidad = (decimal)data["PrecioUnidad"],
-                Stock = (short)data["Stock"],
-                NumeroHilos = (int)data["NumeroHilos"],
-                NumeroNucleos = (int)data["NumeroNucleos"],
-                Eliminado = (bool)data["Eliminado"],
-                Socket = new SocketProcesador()
-                {
-                    IdSocket = (int)data["IdSocket"],
-                    Descripcion = (string)data["Descripcion"],
-                    NombreSocket = (string)data["NombreSocket"]//(ESocketProcesador)Enum.Parse(typeof(ESocketProcesador), (string)data["NombreSocket"])
-                }
-            };
         }
     }
 }

@@ -12,18 +12,23 @@ namespace WpfAppComputadoras.ClienteView
     /// </summary>
     public partial class UCConfigClient : UserControl
     {
+        #region PROPIEDADES
         public Cliente cliente;
         private Administrador admin;
         private ViewMain mainView;
         private bool modoVista = false;
         private Rol tipoRol;
-        public UCConfigClient(ViewMain viewMain, Cliente clienteView)
+        #endregion
+
+
+        #region CONSTRUCTOR
+        public UCConfigClient(ViewMain viewMain, Cliente assets)
         {
             InitializeComponent();
-            cliente = clienteView;
+            cliente = assets;
             mainView = viewMain;
-            LoadCliente(clienteView);
-            tipoRol = clienteView.Usuario.Rol;
+            LoadCliente(assets);
+            tipoRol = assets.Usuario.Rol;
         }
         public UCConfigClient(ViewMain viewMain, Administrador adminView)
         {
@@ -34,6 +39,11 @@ namespace WpfAppComputadoras.ClienteView
             tipoRol = adminView.Usuario.Rol;
             //admiMenuView --> RELOAD
         }
+        #endregion
+
+
+
+        #region UI_ADMINISTRADOR_METODOS
         public void LoadAdministrador(Administrador admin)
         {
             txtApellido.Text = admin.Apellido;
@@ -43,7 +53,42 @@ namespace WpfAppComputadoras.ClienteView
             txtNombreUsuario.Text = admin.Usuario.NombreUsuario;
             txtSexo.SelectedIndex = admin.Sexo + 1;
         }
+        private void Editar_Administrador()
+        {
+            admin.Nombre = txtNombre.Text;
+            admin.Apellido = txtApellido.Text;
+            admin.Usuario.Contrasenia = txtContrasenia.Text;
+            admin.Usuario.NombreUsuario = txtNombreUsuario.Text;
+            admin.FechaNacimiento = txtFechaNacimiento.SelectedDate.Value;
+            admin.Sexo = (byte)(txtSexo.SelectedIndex - 1);
+            if (AdministradorBrl.Update(admin))
+            {
+                mainView.txNombreView.Text = admin.ToString();
+                ViewMode(true);
+                MessageBox.Show("Moficicacion Exitosa");
+            }
+        }
+        private void UI_AtrtasAdmin()
+        {
+            mainView.btnConfigurar.IsEnabled = true;
+            mainView.gridAutomaitc.Children.Clear();
+            mainView.gridAutomaitc.Children.Add(mainView.ViewModeMainANTERIOR);
+            mainView.ViewModeMain = mainView.ViewModeMainANTERIOR;
+            mainView.ViewModeMainANTERIOR = mainView.uCConfigClient;
+        }
+        private void BorrarCuenta_Admin()
+        {
+            if (AdministradorBrl.Delete(admin.IdPersona))
+            {
+                MessageBox.Show("Se elimino la cuenta");
+                mainView.Close();
+            }
+        }
+        #endregion
 
+
+
+        #region UI_CLIENTE_METODOS
         public void LoadCliente(Cliente cli)
         {
             txtApellido.Text = cli.Apellido;
@@ -54,7 +99,44 @@ namespace WpfAppComputadoras.ClienteView
             txtSexo.SelectedIndex = cli.Sexo + 1;
             //FALTA EMAIL 
         }
+        private void UI_AtrasCliente()
+        {
+            mainView.btnConfigurar.IsEnabled = true;
+            mainView.gridAutomaitc.Children.Clear();
+            mainView.gridAutomaitc.Children.Add(mainView.ViewModeMainANTERIOR);
+            mainView.ViewModeMain = mainView.ViewModeMainANTERIOR;
+            mainView.ViewModeMainANTERIOR = mainView.uCConfigClient;
+        }
+        private void Editar_Cliente()
+        {
+            cliente.Nombre = txtNombre.Text;
+            cliente.Apellido = txtApellido.Text;
+            cliente.Usuario.Contrasenia = txtContrasenia.Text;
+            cliente.Usuario.NombreUsuario = txtNombreUsuario.Text;
+            cliente.FechaNacimiento = txtFechaNacimiento.SelectedDate.Value;
+            cliente.Sexo = (byte)(txtSexo.SelectedIndex - 1);
+            if (ClientsBrl.Update(cliente))
+            {
+                mainView.txNombreView.Text = cliente.ToString();
+                ViewMode(true);
+                MessageBox.Show("Moficicacion Exitosa");
+            }
+        }
+        private void BorrarCuenta_Cliente()
+        {
+            if (ClientsBrl.Delete(cliente.IdPersona))
+            {
+                MessageBox.Show("Se elimino la cuenta");
+                mainView.Close();
+            }
+        }
+        #endregion
 
+
+
+
+
+        #region METODOS
         private void UserControl_Initialized(object sender, EventArgs e)
         {
             txtSexo.Items.Clear();
@@ -66,29 +148,18 @@ namespace WpfAppComputadoras.ClienteView
             txtApellido.IsEnabled = false;
             ViewMode(true);
             bthAtras.Click += BthAtras_Click;
-
         }
-
         private void BthAtras_Click(object sender, RoutedEventArgs e)
         {
             if (tipoRol.IdRol == ERol.Cliente)
             {
-                mainView.btnConfigurar.IsEnabled = true;
-                mainView.gridAutomaitc.Children.Clear();
-                mainView.gridAutomaitc.Children.Add(mainView.ViewModeMainANTERIOR);
-                mainView.ViewModeMain = mainView.ViewModeMainANTERIOR;
-                mainView.ViewModeMainANTERIOR = mainView.uCConfigClient;
+                UI_AtrasCliente();
             }
             else if (tipoRol.IdRol == ERol.Administrador)
             {
-                mainView.btnConfigurar.IsEnabled = true;
-                mainView.gridAutomaitc.Children.Clear();
-                mainView.gridAutomaitc.Children.Add(mainView.ViewModeMainANTERIOR);
-                mainView.ViewModeMain = mainView.ViewModeMainANTERIOR;
-                mainView.ViewModeMainANTERIOR = mainView.uCConfigClient;
+                UI_AtrtasAdmin();
             }
         }
-
         public void ViewMode(bool activo)
         {
             modoVista = activo;
@@ -113,20 +184,15 @@ namespace WpfAppComputadoras.ClienteView
         }
         private void BtnEditar_Click(object sender, RoutedEventArgs e)
         {
-            cliente.Nombre = txtNombre.Text;
-            cliente.Apellido = txtApellido.Text;
-            cliente.Usuario.Contrasenia = txtContrasenia.Text;
-            cliente.Usuario.NombreUsuario = txtNombreUsuario.Text;
-            cliente.FechaNacimiento = txtFechaNacimiento.SelectedDate.Value;
-            cliente.Sexo = (byte)(txtSexo.SelectedIndex - 1);
-            if (ClientsBrl.Update(cliente))
+            if (tipoRol.IdRol == ERol.Cliente)
             {
-                mainView.txNombreView.Text = cliente.Nombre + " " + cliente.Apellido;
-                ViewMode(true);
-                MessageBox.Show("Moficicacion Exitosa");
+                Editar_Cliente();
+            }
+            else if (tipoRol.IdRol == ERol.Administrador)
+            {
+                Editar_Administrador();
             }
         }
-
         private void BtnEliminar_Click(object sender, RoutedEventArgs e)
         {
             MessageBoxResult resultMsj = MessageBox.Show("Estas seguro de querer \"Eliminar\" tu cuenta?", "", MessageBoxButton.YesNo, MessageBoxImage.Question);
@@ -134,21 +200,14 @@ namespace WpfAppComputadoras.ClienteView
             {
                 if (tipoRol.IdRol == ERol.Cliente)
                 {
-                    if (ClientsBrl.Delete(cliente.IdPersona))
-                    {
-                        MessageBox.Show("Se elimino la cuenta");
-                        mainView.Close();
-                    }
+                    BorrarCuenta_Cliente();
                 }
                 else if (tipoRol.IdRol == ERol.Administrador)
                 {
-                    if (AdministradorBrl.Delete(admin.IdPersona))
-                    {
-                        MessageBox.Show("Se elimino la cuenta");
-                        mainView.Close();
-                    }
+                    BorrarCuenta_Admin();
                 }
             }
         }
+        #endregion
     }
 }

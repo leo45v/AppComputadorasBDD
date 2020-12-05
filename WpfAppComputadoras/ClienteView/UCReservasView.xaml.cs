@@ -15,6 +15,7 @@ using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Enums;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectBrl.Reservas;
 using WpfAppComputadoras.Components;
+using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Listas;
 
 namespace WpfAppComputadoras.ClienteView
 {
@@ -23,11 +24,18 @@ namespace WpfAppComputadoras.ClienteView
     /// </summary>
     public partial class UCReservasView : UserControl
     {
+
+        #region PROPIEDADES
         public ViewMain mainView;
         public Cliente cliente;
         public Reserva reservaActualInView;
         public List<Reserva> reservas;
         public UCReservaView uCReservaViewActual;
+        private Button ActualSelect;
+        #endregion
+
+
+        #region CONSTRUCTOR
         public UCReservasView()
         {
             InitializeComponent();
@@ -39,6 +47,10 @@ namespace WpfAppComputadoras.ClienteView
             this.cliente = cliente;
             UpdateReservas();
         }
+        #endregion
+
+
+        #region METODOS
         public void UpdateReservas()
         {
             containerPriceView.Visibility = Visibility.Hidden;
@@ -57,7 +69,6 @@ namespace WpfAppComputadoras.ClienteView
         {
             containerReservas.Children.Remove(uCReservaView);
         }
-
         public void DeleteProductReserva(UCProductViewClient uCProductViewClient, Guid idProducto)
         {
             int index = reservas.IndexOf(this.reservaActualInView);
@@ -66,7 +77,7 @@ namespace WpfAppComputadoras.ClienteView
             if (reservas[index] != null)
             {
                 bool noInsertado = false;
-                List<Producto> listita = new List<Producto>();
+                ListaProductos listita = new ListaProductos();
                 foreach (var item in reservas[index].Productos)
                 {
                     if (item.IdProducto == idProducto && !noInsertado)
@@ -90,15 +101,9 @@ namespace WpfAppComputadoras.ClienteView
         {
             if (reserva != null && reserva.Productos != null)
             {
-                decimal costoTotal = new Decimal(0.0);
-                foreach (var item in reserva.Productos)
-                {
-                    costoTotal += item.PrecioUnidad;
-                }
-                txtContoTotal.Text = costoTotal.ToString("#.00");
+                txtContoTotal.Text = reserva.Productos.CostoTotal.ToString("#.00");
             }
         }
-        Button ActualSelect;
         public void MostrarDetalleReserva(UCReservaView uCReservaView, Reserva reserva)
         {
             containerPriceView.Visibility = Visibility.Visible;
@@ -132,10 +137,9 @@ namespace WpfAppComputadoras.ClienteView
                     containerViewReserva.Children.Add(uCProductViewClient);
                     costoTotal += item.PrecioUnidad;
                 }
-                txtContoTotal.Text = costoTotal.ToString("#.00");
+                txtContoTotal.Text = reserva.Productos.CostoTotal.ToString("#.00");
             }
         }
-
         private void Btn_Atras_Click(object sender, RoutedEventArgs e)
         {
             mainView.btnConfigurar.IsEnabled = true;
@@ -151,12 +155,12 @@ namespace WpfAppComputadoras.ClienteView
             }
             mainView.ViewModeMainANTERIOR = this;
         }
-
         private void Btn_ActualizarReservas_Click(object sender, RoutedEventArgs e)
         {
             mainView.uCReservasView.UpdateReservas();
             mainView.LoadReservasUI();
             containerViewReserva.Children.Clear();
         }
+        #endregion
     }
 }

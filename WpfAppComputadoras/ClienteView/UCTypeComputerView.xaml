@@ -16,25 +16,25 @@
     <Grid Background="#FF2E318E">
         <Border Opacity="0.1">
             <Border.Background>
-                    <ImageBrush ImageSource="/ClienteView/pc.png"/>
+                    <ImageBrush ImageSource="/assets/pc.png"/>
             </Border.Background>
         </Border>
         <!--<Border>
             <Border.Background>
-                <ImageBrush ImageSource="/ClienteView/PC-GAMER.jpg"/>
+                <ImageBrush ImageSource="/assets/PC-GAMER.jpg"/>
             </Border.Background>
             <TextBlock TextWrapping="Wrap"/>
         </Border>-->
         <TextBlock HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="32" FontFamily="Arial Black" FontStyle="Normal" FontWeight="Bold" Height="50" Width="706" Margin="0,2,0,0">
             <TextBlock.Background>
-                <ImageBrush Stretch="UniformToFill" ImageSource="/ClienteView/generatedtext.jpg"/>
+                <ImageBrush Stretch="UniformToFill" ImageSource="/assets/generatedtext.jpg"/>
             </TextBlock.Background>
         </TextBlock>
 
         <StackPanel  Margin="45,101,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
             <TextBlock MouseLeftButtonUp="Click_Estudio"  HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="255" FontSize="20" FontFamily="Arial Black" Foreground="#FF2DEA35" RenderTransformOrigin="0.135,0.58" FontWeight="Bold" Height="44">
                 <TextBlock.Background>
-                    <ImageBrush ImageSource="/ClienteView/genddeDDratedtext(1).jpg" Stretch="UniformToFill" ViewportUnits="RelativeToBoundingBox" ViewboxUnits="RelativeToBoundingBox" TileMode="None" AlignmentX="Left" AlignmentY="Center"/>
+                    <ImageBrush ImageSource="/assets/genddeDDratedtext(1).jpg" Stretch="UniformToFill" ViewportUnits="RelativeToBoundingBox" ViewboxUnits="RelativeToBoundingBox" TileMode="None" AlignmentX="Left" AlignmentY="Center"/>
                 </TextBlock.Background>
             </TextBlock>
             <TextBlock Height="15"/>
@@ -52,7 +52,7 @@
         <StackPanel  Margin="350,71,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
             <TextBlock MouseLeftButtonUp="Click_TrabajoDiseno"  HorizontalAlignment="Left" Text="" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="20" FontFamily="Arial Black" Foreground="#FF39E250" RenderTransformOrigin="0.897,0.489" Width="265" Height="44">
                 <TextBlock.Background>
-                    <ImageBrush ImageSource="/ClienteView/generatedtext(1).jpg" AlignmentX="Left" Stretch="UniformToFill"/>
+                    <ImageBrush ImageSource="/assets/generatedtext(1).jpg" AlignmentX="Left" Stretch="UniformToFill"/>
                 </TextBlock.Background>
             </TextBlock>
             <TextBlock Height="15"/>
@@ -70,7 +70,7 @@
         <StackPanel  Margin="680,71,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
             <TextBlock MouseLeftButtonUp="Click_Gaming"  HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="20" FontFamily="Arial Black"  Foreground="#FF35D83C" Height="44" Width="215">
                 <TextBlock.Background>
-                    <ImageBrush ImageSource="/ClienteView/generatedtext(2).jpg" AlignmentX="Left" Stretch="UniformToFill"/>
+                    <ImageBrush ImageSource="/assets/generatedtext(2).jpg" AlignmentX="Left" Stretch="UniformToFill"/>
                 </TextBlock.Background>
             </TextBlock>
             <TextBlock Height="30"/>

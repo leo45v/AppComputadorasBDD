@@ -10,6 +10,10 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
     public class ConfiguracionComputerOperation
     {
         public decimal presupuesto;
+        public ConfiguracionComputerOperation()
+        {
+            this.presupuesto = new Decimal(0.0);
+        }
         public ConfiguracionComputerOperation(decimal presupuesto)
         {
             this.presupuesto = presupuesto;
@@ -17,11 +21,6 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
         public List<PlacaBase> PlacaBaseRecomendados(Requirements.TipoComputer.PlacaBaseR placaBaseR, Procesador procesador)
         {
             List<PlacaBase> placaBases = null;
-            decimal restante = ((decimal)presupuesto - procesador.PrecioUnidad);
-            if (placaBaseR.PrecioUnidad.max >= restante)//20% de lo que resta
-            {
-                //placaBaseR.PrecioUnidad.max = restante * 0.2;
-            }
             string query = @"SELECT r.IdProducto, r.NumeroDims, r.CapacidadMem, r.Tamano, r.SoporteProcesador as IdSocket, 
             pro.PrecioUnidad, pro.Imagen, pro.Nombre, pro.Stock, pro.IdMarca, pro.Descontinuado, pro.Eliminado, 
             mar.NombreMarca, 
@@ -37,8 +36,8 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
             {
                 OperationsSql.OpenConnection();
                 OperationsSql.CreateBasicCommandWithTransaction(query);
-                OperationsSql.AddWithValueString("CostoMax", placaBaseR.PrecioUnidad.max);
-                OperationsSql.AddWithValueString("NumeroDimsMin", placaBaseR.NumeroDims.min);
+                OperationsSql.AddWithValueString("CostoMax", placaBaseR.PrecioUnidad.Max);
+                OperationsSql.AddWithValueString("NumeroDimsMin", placaBaseR.NumeroDims.Min);
                 OperationsSql.AddWithValueString("SoporteProcesador", procesador.Socket.IdSocket);
                 List<Dictionary<string, object>> data = OperationsSql.ExecuteReaderMany();
                 if (data != null)
@@ -60,15 +59,6 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
         public List<Procesador> ProcesadoresRecomendados(Requirements.TipoComputer.ProcesadorR procesadorR)
         {
             List<Procesador> procesadors = null;
-            //if (procesadorR.PrecioUnidad.max >= presupuesto * 0.5)
-            //{
-            //    procesadorR.PrecioUnidad.max = presupuesto * 0.5;
-            //}
-            //if (procesadorR.PrecioUnidad.min >= presupuesto * 0.5)
-            //{
-            //    procesadorR.PrecioUnidad.max = presupuesto * 0.25;
-            //}
-
             string query = @"SELECT r.IdProducto, r.FrecuenciaBase, r.FrecuenciaTurbo, r.NumeroNucleos, r.NumeroHilos, r.Consumo, r.Litografia, 
             pro.PrecioUnidad, pro.Imagen, pro.Nombre, pro.Stock, pro.IdMarca, pro.Descontinuado, pro.Eliminado, 
             mar.NombreMarca, 
@@ -89,11 +79,11 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
             {
                 OperationsSql.OpenConnection();
                 OperationsSql.CreateBasicCommandWithTransaction(query);
-                OperationsSql.AddWithValueString("CostoMax", procesadorR.PrecioUnidad.max);
-                OperationsSql.AddWithValueString("ConsumoMax", procesadorR.Consumo.max);
-                OperationsSql.AddWithValueString("FrecuenciaBaseMin", procesadorR.FrecuenciaBase.min);
-                OperationsSql.AddWithValueString("NumeroHiloMin", procesadorR.NumeroHilo.min);
-                OperationsSql.AddWithValueString("NumeroNucleosMin", procesadorR.NumeroNucleos.min);
+                OperationsSql.AddWithValueString("CostoMax", procesadorR.PrecioUnidad.Max);
+                OperationsSql.AddWithValueString("ConsumoMax", procesadorR.Consumo.Max);
+                OperationsSql.AddWithValueString("FrecuenciaBaseMin", procesadorR.FrecuenciaBase.Min);
+                OperationsSql.AddWithValueString("NumeroHiloMin", procesadorR.NumeroHilo.Min);
+                OperationsSql.AddWithValueString("NumeroNucleosMin", procesadorR.NumeroNucleos.Min);
                 List<Dictionary<string, object>> data = OperationsSql.ExecuteReaderMany();
                 if (data != null)
                 {
@@ -130,8 +120,8 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
             {
                 OperationsSql.OpenConnection();
                 OperationsSql.CreateBasicCommandWithTransaction(query);
-                OperationsSql.AddWithValueString("CostoMax", ramR.PrecioUnidad.max);
-                OperationsSql.AddWithValueString("FrecuenciaMin", ramR.Frecuencia.min);
+                OperationsSql.AddWithValueString("CostoMax", ramR.PrecioUnidad.Max);
+                OperationsSql.AddWithValueString("FrecuenciaMin", ramR.Frecuencia.Min);
                 List<Dictionary<string, object>> data = OperationsSql.ExecuteReaderMany();
                 if (data != null)
                 {
@@ -169,9 +159,9 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
             {
                 OperationsSql.OpenConnection();
                 OperationsSql.CreateBasicCommandWithTransaction(query);
-                OperationsSql.AddWithValueString("CostoMax", fuenteR.PrecioUnidad.max);
-                OperationsSql.AddWithValueString("PotenciaMin", fuenteR.Potencia.min);
-                OperationsSql.AddWithValueString("CertificacionMin", (int)fuenteR.Certificacion.min);
+                OperationsSql.AddWithValueString("CostoMax", fuenteR.PrecioUnidad.Max);
+                OperationsSql.AddWithValueString("PotenciaMin", fuenteR.Potencia.Min);
+                OperationsSql.AddWithValueString("CertificacionMin", (int)fuenteR.Certificacion.Min);
                 List<Dictionary<string, object>> data = OperationsSql.ExecuteReaderMany();
                 if (data != null)
                 {
@@ -212,8 +202,8 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
             {
                 OperationsSql.OpenConnection();
                 OperationsSql.CreateBasicCommandWithTransaction(query);
-                OperationsSql.AddWithValueString("CostoMax", monitorR.PrecioUnidad.max);
-                OperationsSql.AddWithValueString("FrecuenciaMin", monitorR.Frecuencia.min);
+                OperationsSql.AddWithValueString("CostoMax", monitorR.PrecioUnidad.Max);
+                OperationsSql.AddWithValueString("FrecuenciaMin", monitorR.Frecuencia.Min);
                 List<Dictionary<string, object>> data = OperationsSql.ExecuteReaderMany();
                 if (data != null)
                 {
@@ -249,7 +239,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
             {
                 OperationsSql.OpenConnection();
                 OperationsSql.CreateBasicCommandWithTransaction(query);
-                OperationsSql.AddWithValueString("CostoMax", gabineteR.PrecioUnidad.max);
+                OperationsSql.AddWithValueString("CostoMax", gabineteR.PrecioUnidad.Max);
                 List<Dictionary<string, object>> data = OperationsSql.ExecuteReaderMany();
                 if (data != null)
                 {
@@ -288,8 +278,8 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
             {
                 OperationsSql.OpenConnection();
                 OperationsSql.CreateBasicCommandWithTransaction(query);
-                OperationsSql.AddWithValueString("CostoMax", tarjetaGraficaR.PrecioUnidad.max);
-                OperationsSql.AddWithValueString("VramMin", tarjetaGraficaR.Vram.min);
+                OperationsSql.AddWithValueString("CostoMax", tarjetaGraficaR.PrecioUnidad.Max);
+                OperationsSql.AddWithValueString("VramMin", tarjetaGraficaR.Vram.Min);
                 List<Dictionary<string, object>> data = OperationsSql.ExecuteReaderMany();
                 if (data != null)
                 {
@@ -327,10 +317,10 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
             {
                 OperationsSql.OpenConnection();
                 OperationsSql.CreateBasicCommandWithTransaction(query);
-                OperationsSql.AddWithValueString("CostoMax", almacenamientoR.PrecioUnidad.max);
-                OperationsSql.AddWithValueString("CapacidadMax", almacenamientoR.Capacidad.max);
-                OperationsSql.AddWithValueString("TipoMin", almacenamientoR.Tipo.min.ToString());
-                OperationsSql.AddWithValueString("TipoMax", almacenamientoR.Tipo.max.ToString());
+                OperationsSql.AddWithValueString("CostoMax", almacenamientoR.PrecioUnidad.Max);
+                OperationsSql.AddWithValueString("CapacidadMax", almacenamientoR.Capacidad.Max);
+                OperationsSql.AddWithValueString("TipoMin", almacenamientoR.Tipo.Min.ToString());
+                OperationsSql.AddWithValueString("TipoMax", almacenamientoR.Tipo.Max.ToString());
                 List<Dictionary<string, object>> data = OperationsSql.ExecuteReaderMany();
                 if (data != null)
                 {

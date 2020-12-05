@@ -16,10 +16,13 @@ namespace WpfAppComputadoras.Components
     /// </summary>
     public partial class UCItemProductView : UserControl
     {
+        #region PROPIEDADES
         private readonly ViewMain mainView;
         public UCProductView uCProcesadorView;
         private readonly Producto producto;
         public bool VistaMode = false;
+        #endregion
+
         public UCItemProductView(ViewMain viewMain, Producto producto)
         {
             InitializeComponent();
@@ -31,6 +34,7 @@ namespace WpfAppComputadoras.Components
             btnVer.Click += BtnVer_Click;
         }
 
+        #region METODOS
         private void BtnVer_Click(object sender, RoutedEventArgs e)
         {
             ETipoProducto tipo = ProductosBrl.GetType(producto.IdProducto);
@@ -38,8 +42,6 @@ namespace WpfAppComputadoras.Components
             CreatePageFromProduct(tipo, producto.IdProducto);
             if (!(uCProcesadorView is null))
             {
-                //uCProcesadorView.Height = 400;
-                //uCProcesadorView.Width = 640;
                 uCProcesadorView.ModoVista();
                 uCProcesadorView.ShowDialog();
             }
@@ -63,7 +65,6 @@ namespace WpfAppComputadoras.Components
             {
                 if (ProductosBrl.Delete(producto.IdProducto))
                 {
-                    MessageBox.Show("Producto Eliminado", "Eliminado", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                     int auxPag = mainView.pagSelect;
                     if (auxPag >= mainView.buttonCant)
                     {
@@ -81,7 +82,6 @@ namespace WpfAppComputadoras.Components
         public void LoadProduct(Producto producto)
         {
             ImageBehavior.SetAnimatedSource(imgProducto, Methods.LoadImage(producto.Imagen));
-            //imgProducto.Source = Methods.LoadImage(producto.Imagen);
             nombreProducto.Text = producto.Nombre;
             marcaProducto.Text = producto.Marca.NombreMarca;
             tipoProducto.Text = ProductosBrl.GetType(producto.IdProducto).ToString();
@@ -97,5 +97,7 @@ namespace WpfAppComputadoras.Components
         {
             productConfig.Visibility = Visibility.Hidden;
         }
+        #endregion
+
     }
 }

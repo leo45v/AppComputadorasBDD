@@ -7,18 +7,35 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Extras
 {
     public class SQLCopy
     {
-        public static string SqlQueryCopy { get; set; }
-        public static void Clear()
+        public string SqlQueryCopy { get; set; }
+        private readonly string pathDirectory;
+        public SQLCopy()
+        {
+            this.SqlQueryCopy = "";
+            this.pathDirectory = @"D:\SQLProducts.sql";
+        }
+        public SQLCopy(string pathFile)
+        {
+            this.SqlQueryCopy = "";
+            this.pathDirectory = @pathFile;
+        }
+        public void Clear()
         {
             SqlQueryCopy = "";
         }
-        public static void WriteIntoFile()
+        public void WriteIntoFile()
         {
-            string filePath = @"D:\SQLProducts.sql";
-            using (StreamWriter file = File.AppendText(filePath))
+            try
             {
-                file.WriteLine(SqlQueryCopy);
-                file.Close();
+                string filePath = this.pathDirectory;
+                using (StreamWriter file = File.AppendText(filePath))
+                {
+                    file.WriteLine(SqlQueryCopy);
+                    file.Close();
+                }
+            }
+            catch (Exception)
+            {
             }
         }
     }

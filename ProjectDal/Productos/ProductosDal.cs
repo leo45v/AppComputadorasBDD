@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Text;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Enums;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Extras;
+using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Listas;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Operaciones;
 
 namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDal.Personas.Productos
@@ -11,12 +12,6 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
     public class ProductosDal
     {
         public static bool cascada = false;
-        //protected OperationsSql OperationsSql;
-        //public ProductosDal()
-        //{
-        //    OperationsSql = new OperationsSql();
-        //}
-
         public static bool Insertar(Producto producto)
         {
             bool estado = false;
@@ -46,9 +41,9 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             finally { if (!cascada) { OperationsSql.CloseConnection(); } }
             return estado;
         }
-        public static List<Producto> GetWithRange(int inicio, int cantidad = 10)
+        public static ListaProductos GetWithRange(int inicio, int cantidad = 10)
         {
-            List<Producto> productos = null;
+            ListaProductos productos = null;
             string query = @"SELECT pro.IdProducto, pro.Eliminado, 
                              pro.PrecioUnidad, pro.Imagen, pro.Nombre, pro.Stock, pro.IdMarca, pro.Descontinuado,
                              mar.NombreMarca
@@ -65,10 +60,10 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 List<Dictionary<string, object>> data = OperationsSql.ExecuteReaderMany();
                 if (data != null)
                 {
-                    productos = new List<Producto>();
+                    productos = new ListaProductos();
                     foreach (Dictionary<string, object> item in data)
                     {
-                        productos.Add(ProductosDal.Dictionary_A_Producto(item));
+                        productos.Add(Producto.Dictionary_A_Producto(item));
                     }
                 }
                 OperationsSql.ExecuteTransactionCommit();
@@ -80,9 +75,9 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             finally { OperationsSql.CloseConnection(); }
             return productos;
         }
-        public static List<Producto> GetWithRangeWithFillter(int inicio, int cantidad, string productName, Marca marca, ETipoProducto tipoProduct)
+        public static ListaProductos GetWithRangeWithFillter(int inicio, int cantidad, string productName, Marca marca, ETipoProducto tipoProduct)
         {
-            List<Producto> productos = null;
+            ListaProductos productos = null;
             string query = @"SELECT pro.IdProducto, pro.Eliminado, 
                              pro.PrecioUnidad, pro.Imagen, pro.Nombre, pro.Stock, pro.IdMarca, pro.Descontinuado,
                              mar.NombreMarca
@@ -124,10 +119,10 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 List<Dictionary<string, object>> data = OperationsSql.ExecuteReaderMany();
                 if (data != null)
                 {
-                    productos = new List<Producto>();
+                    productos = new ListaProductos();
                     foreach (Dictionary<string, object> item in data)
                     {
-                        productos.Add(ProductosDal.Dictionary_A_Producto(item));
+                        productos.Add(Producto.Dictionary_A_Producto(item));
                     }
                 }
                 OperationsSql.ExecuteTransactionCommit();
@@ -289,7 +284,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 Dictionary<string, object> data = OperationsSql.ExecuteReader();
                 if (data != null)
                 {
-                    producto = Dictionary_A_Producto(data);
+                    producto = Producto.Dictionary_A_Producto(data);
                 }
                 if (!cascada) { OperationsSql.ExecuteTransactionCommit(); }
                 OperationsSql.RemoveValueParams();
@@ -473,47 +468,6 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             finally { if (!cascada) { OperationsSql.CloseConnection(); } }
             return stock;
         }
-
-        //public static bool Delete(Guid idProducto)
-        //{
-        //    bool estado = false;
-        //    string query = @"DELETE FROM Producto WHERE IdProducto = @IdProducto";
-        //    try
-        //    {
-        //        OperationsSql.OpenConnection();
-        //        OperationsSql.CreateBasicCommandWithTransaction(query);
-        //        OperationsSql.AddWithValueString("IdProducto", idProducto);
-        //        OperationsSql.ExecuteBasicCommandWithTransaction();
-        //        OperationsSql.ExecuteTransactionCommit();
-        //        estado = true;
-        //    }
-        //    catch (Exception)
-        //    {
-        //        throw;
-        //    }
-        //    finally
-        //    {
-        //        OperationsSql.CloseConnection();
-        //    }
-        //    return estado;
-        //}
-        public static Producto Dictionary_A_Producto(Dictionary<string, object> data)
-        {
-            return new Producto()
-            {
-                IdProducto = (Guid)data["IdProducto"],
-                Descontinuado = (bool)data["Descontinuado"],
-                Imagen = (string)data["Imagen"],
-                Marca = new Marca()
-                {
-                    IdMarca = (byte)data["IdMarca"],
-                    NombreMarca = (string)data["NombreMarca"]
-                },
-                Nombre = (string)data["Nombre"],
-                PrecioUnidad = (decimal)data["PrecioUnidad"],
-                Stock = (short)data["Stock"],
-                Eliminado = (bool)data["Eliminado"]
-            };
-        }
+        
     }
 }

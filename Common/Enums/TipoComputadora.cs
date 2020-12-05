@@ -9,6 +9,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Enums
         Estudio = 0,
         Oficina = 1,
         TrabajoDiseno = 2,
-        Gaming = 3
+        Gaming = 3,
+        Ninguno = 4
     }
 }

@@ -57,7 +57,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 Dictionary<string, object> data = OperationsSql.ExecuteReader();
                 if (data != null)
                 {
-                    usuario = Dictionary_A_Usuario(data);
+                    usuario = Usuario.Dictionary_A_Usuario(data);
                 }
                 OperationsSql.ExecuteTransactionCommit();
             }
@@ -87,7 +87,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 List<Dictionary<string, object>> data = OperationsSql.ExecuteReaderMany();
                 foreach (Dictionary<string, object> item in data)
                 {
-                    usuarios.Add(Dictionary_A_Usuario(item));
+                    usuarios.Add(Usuario.Dictionary_A_Usuario(item));
                 }
                 OperationsSql.ExecuteTransactionCommit();
             }
@@ -259,33 +259,6 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             finally { OperationsSql.CloseConnection(); }
             return rol;
-        }
-        /*
-         * Dictionary<string,object> => Coleccion de Datos
-         * Su key o identificador es una cadena (Un texto)
-         * Su valor es un objeto osea cualquier cosa, (numero, texto, bool, etc..)
-         * ejemplo
-         * Dictionary<string,object> nuevoDiccionario = new Dictionary<string,object>();
-         * nuevoDiccionario.add("Key","Valor");
-         * nuevoDiccionario.add("Key 2",123);
-         * 
-         * print(nuevo["Key"]) => devuelve -> "Valor"
-         * print(nuevo["Key 2"]) => devuelve -> 123
-         */
-        private static Usuario Dictionary_A_Usuario(Dictionary<string, object> data)
-        {
-            return new Usuario()
-            {
-                IdUsuario = (Guid)data["IdUsuario"],
-                Contrasenia = (string)data["Contrasenia"],
-                NombreUsuario = (string)data["NombreUsuario"],
-                Eliminado = (bool)data["Deleted"],
-                Rol = new Rol()
-                {
-                    IdRol = (ERol)(byte)data["IdRol"],
-                    NombreRol = (string)data["NombreRol"],
-                }
-            };
         }
     }
 }

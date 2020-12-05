@@ -20,7 +20,6 @@
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <!--<StackPanel Grid.Column="1" Margin="5,0,0,0">-->
         <TextBox x:Name="txtAltura" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
         <StackPanel Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Horizontal">
             <ComboBox x:Name="lxtColores" TextBoxBase.TextChanged="LxtColoresChanged" Width="120">
@@ -34,7 +33,6 @@
                                             <ControlTemplate TargetType="{x:Type CheckBox}">
                                                 <StackPanel Orientation="Horizontal" x:Name="bgStackColor" Width="100">
                                                     <Border Background="{Binding Path=ColorPath}"  Width="25" Height="15" Margin="0,0,5,0"/>
-                                                    <!--<Image Source="C:\Users\leona\Pictures\1x.gif" Width="15" Height="15" Margin="5" />-->
                                                     <ContentPresenter VerticalAlignment="Center" Content="{Binding Nombre}"  />
                                                 </StackPanel>
                                                 <ControlTemplate.Triggers>
@@ -62,13 +60,10 @@
         <TextBox x:Name="txtPeso" Grid.Column="2" Grid.Row="2" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
         <TextBox x:Name="txtLargo" Grid.Column="2" Grid.Row="3" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
         <ListBox x:Name="lstSe" Grid.Column="2" Grid.Row="4" Width="120" Height="70" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" />
-        <!--</StackPanel>-->
-        <!--<StackPanel Grid.Column="0">-->
         <TextBlock HorizontalAlignment="Right" Grid.Column="0" Grid.Row="0" Text="Altura" TextWrapping="Wrap" VerticalAlignment="Center"/>
         <TextBlock HorizontalAlignment="Right" Grid.Column="0" Grid.Row="1" Text="Color" TextWrapping="Wrap" VerticalAlignment="Center" />
         <TextBlock HorizontalAlignment="Right" Grid.Column="0" Grid.Row="2" Text="Peso" TextWrapping="Wrap" VerticalAlignment="Center" />
         <TextBlock HorizontalAlignment="Right" Grid.Column="0" Grid.Row="3" Text="Largo" TextWrapping="Wrap" VerticalAlignment="Center"/>
         <TextBlock HorizontalAlignment="Right" Grid.Column="0" Grid.Row="4" Text="COLOR SELECCIONADO" TextWrapping="Wrap" VerticalAlignment="Center"/>
-        <!--</StackPanel>-->
     </Grid>
 </UserControl>

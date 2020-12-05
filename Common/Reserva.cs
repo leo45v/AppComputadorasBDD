@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Listas;
 
 namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common
 {
@@ -12,7 +13,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common
 
         public DateTime FechaReserva { get; set; } = DateTime.Now;
         public Cliente Cliente { get; set; } = new Cliente();
-        public List<Producto> Productos { get; set; } = new List<Producto>();
+        public ListaProductos Productos { get; set; } = new ListaProductos();
         public bool Recogido { get; set; } = false;
         public bool Eliminado { get; set; } = false;
 

@@ -39,5 +39,12 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectBr
         {
             return ReservasDal.QuitarProducto_Reserva(idProducto, idReserva);
         }
+        public static List<string> Errores
+        {
+            get
+            {
+                return ReservasDal.Errores;
+            }
+        }
     }
 }

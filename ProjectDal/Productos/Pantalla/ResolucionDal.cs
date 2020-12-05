@@ -28,7 +28,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             catch (Exception ex)
             {
-                Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Operaciones.LogError.SetError("Error", ex);
+                Operaciones.LogError.SetError("Error", ex);
             }
             finally
             {
@@ -56,7 +56,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             catch (Exception ex)
             {
-                Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Operaciones.LogError.SetError("Error", ex);
+                Operaciones.LogError.SetError("Error", ex);
             }
             finally
             {

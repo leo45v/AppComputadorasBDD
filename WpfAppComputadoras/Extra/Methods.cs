@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common;
@@ -22,7 +23,7 @@ namespace WpfAppComputadoras.Extra
         }
         public static BitmapImage LoadImage(string path)
         {
-            string pathImg = Path.Combine(Directory.GetCurrentDirectory(), "assets/null.jpg");
+            string pathImg = "pack://application:,,/assets/null.jpg";// Path.Combine(Directory.GetCurrentDirectory(), "assets /null.jpg");
             if (!String.IsNullOrWhiteSpace(path) && File.Exists(Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "assets", path))))
             {
                 pathImg = Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "assets", path));

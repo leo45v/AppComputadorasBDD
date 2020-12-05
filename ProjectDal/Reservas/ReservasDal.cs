@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Listas;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Operaciones;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDal.Personas.Productos;
 
@@ -9,6 +10,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
     public class ReservasDal
     {
         public static bool cascada = false;
+        public static List<string> Errores { get; private set; } = new List<string>();
         public static bool Insert(Reserva reserva)
         {
             bool estado = false;
@@ -16,6 +18,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                                                  VALUES(@IdReserva, @IdPersona, @FechaReserva, @Eliminado, @Recogido)";
             try
             {
+                Errores.Clear();
                 OperationsSql.OpenConnection();
                 cascada = true;
                 reserva.IdReserva = GetLastId() + 1;
@@ -39,6 +42,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             catch (Exception)
             {
+                Errores.Add("No se consiguio agregar la reserva");
                 OperationsSql.ExecuteTransactionCancel();
                 LogError.SetError("Problemas al Agregar Una reserva de productos");
             }
@@ -110,28 +114,12 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             finally { OperationsSql.CloseConnection(); }
             return estado;
         }
-        public static bool DetalleReserva(List<Producto> productos, long idReserva)
+        public static bool DetalleReserva(ListaProductos productos, long idReserva)
         {
             bool estado = false;
             try
             {
-                Dictionary<Guid, int> listaProductos = new Dictionary<Guid, int>();
-                List<Producto> nuevaLista = new List<Producto>();
-                for (int i = 0; i < productos.Count; i++)
-                {
-                    int cantidad = 1;
-                    for (int j = i + 1; j < productos.Count; j++)
-                    {
-                        if (productos[i].IdProducto == productos[j].IdProducto)
-                        {
-                            cantidad++;
-                        }
-                    }
-                    if (!listaProductos.ContainsKey(productos[i].IdProducto))
-                    {
-                        listaProductos.Add(productos[i].IdProducto, cantidad);
-                    }
-                }
+                Dictionary<Guid, int> listaProductos = productos.SimplificarById;
                 bool error = false;
                 foreach (var (idProducto, stock) in listaProductos)
                 {
@@ -140,6 +128,8 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                     int math = stockActual - stock;
                     if (math < 0)
                     {
+                        LogError.SetError(String.Format("El Producto {0} No tiene stock suficiente {1}:{2}", idProducto, stockActual, stock));
+                        Errores.Add(String.Format("El Producto \"{0}\" No tiene stock suficiente {1}:{2}", productos.ObtenerNombre(idProducto), stockActual, stock));
                         listaProductos = new Dictionary<Guid, int>();
                         error = true;
                         break;
@@ -149,11 +139,13 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                         if (!ProductosDal.ModificarStock(idProducto, math))
                         {
                             error = true;
+                            Errores.Add(String.Format("El producto \"{0}\" no tiene suficiente stock", productos.ObtenerNombre(idProducto)));
                             break;
                         }
                     }
                     else
                     {
+                        Errores.Add(String.Format("No se Consiguio Insertar el producto \"{0}\" en la reserva", productos.ObtenerNombre(idProducto)));
                         error = true;
                         break;
                     }
@@ -162,6 +154,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             catch (Exception)
             {
+                Errores.Add("Problemas al agregar la reserva");
                 LogError.SetError("Problemas al Agregar Una reserva de productos");
             }
             finally { ProductosDal.cascada = false; }
@@ -271,7 +264,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                     if (cli != null)
                     {
                         cascada = true;
-                        List<Producto> productos = GetProductos(idReserva);
+                        ListaProductos productos = GetProductos(idReserva);
                         cascada = false;
                         if (productos != null)
                         {
@@ -297,49 +290,9 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             finally { OperationsSql.CloseConnection(); }
             return reserva;
         }
-        //public static List<DetalleReserva> GetDetalle(long idReserva)
-        //{
-        //    List<DetalleReserva> detalleReserva = null;
-        //    string query = @"SELECT dr.IdReserva, dr.IdProducto, dr.Cantidad 
-        //                    FROM DetalleReserva dr 
-        //                    INNER JOIN Reserva r ON r.IdReserva = dr.IdReserva
-        //                    WHERE dr.IdReserva = @IdReserva AND r.Eliminado = 0";
-        //    try
-        //    {
-        //        OperationsSql.OpenConnection();
-        //        OperationsSql.CreateBasicCommandWithTransaction(query);
-        //        OperationsSql.AddWithValueString("IdReserva", idReserva);
-        //        List<Dictionary<string, object>> data = OperationsSql.ExecuteReaderMany();
-        //        if (data != null)
-        //        {
-        //            foreach (var item in data)
-        //            {
-        //                ProductosDal.cascada = true;
-        //                Producto producto = ProductosDal.Get((Guid)item["IdProducto"]);
-        //                ProductosDal.cascada = false;
-        //                if (producto != null)
-        //                {
-        //                    detalleReserva = new DetalleReserva()
-        //                    {
-        //                      Cantidad = (int)data[""],
-        //                      Producto = producto,
-        //                      Reserva = 
-        //                    };
-        //                }
-        //            }
-        //        }
-        //        OperationsSql.ExecuteTransactionCommit();
-        //    }
-        //    catch (Exception)
-        //    {
-        //        LogError.SetError("Problemas al Obtener el Producto -> Placa Base");
-        //    }
-        //    finally { OperationsSql.CloseConnection(); }
-        //    return reserva;
-        //}
-        public static List<Producto> GetProductos(long idReserva)
+        public static ListaProductos GetProductos(long idReserva)
         {
-            List<Producto> productos = null;
+            ListaProductos productos = null;
             string queryString = @"SELECT dr.IdReserva, dr.IdProducto, dr.Cantidad 
                                    FROM DetalleReserva dr
                                    INNER JOIN Reserva r ON r.IdReserva = dr.IdReserva
@@ -353,7 +306,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                 List<Dictionary<string, object>> data = OperationsSql.ExecuteReaderMany();
                 if (data != null)
                 {
-                    productos = new List<Producto>();
+                    productos = new ListaProductos();
                     foreach (Dictionary<string, object> item in data)
                     {
                         ProductosDal.cascada = true;

@@ -12,9 +12,8 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common
 {
     public class OperationsSql
     {
-        private static string myVar = ConfigurationManager.ConnectionStrings["BDDDIRECT"].ConnectionString;
-        //public static readonly string connectionString = ConfigurationManager.ConnectionStrings["BDDDIRECT"].ConnectionString;
-        private static readonly SqlConnection connection = new SqlConnection() { ConnectionString = myVar };
+        private static string connectionString = ConfigurationManager.ConnectionStrings["BDDDIRECT"].ConnectionString;
+        private static readonly SqlConnection connection = new SqlConnection() { ConnectionString = connectionString };
         private static readonly SqlCommand command = new SqlCommand() { Connection = connection, CommandType = CommandType.Text };
         private static SqlTransaction transaccion;
 
@@ -22,10 +21,13 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common
         {
             get
             {
-
-                return myVar;
+                return connectionString;
             }
-            set { connection.ConnectionString = myVar; myVar = value; }
+            set
+            {
+                connection.ConnectionString = connectionString;
+                connectionString = value;
+            }
         }
 
         public static void CloseConnection()
@@ -41,7 +43,6 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common
             {
                 connection.Open();
             }
-            //connection.Open();
         }
         private static void CreateTransaction()
         {
@@ -55,7 +56,6 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common
             CreateTransaction();
             command.Transaction = transaccion;
             command.CommandText = query;
-            //return command;
         }
         public static void AddWithValueString(string parameter, object value)
         {
@@ -97,7 +97,6 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common
             try
             {
                 command.ExecuteNonQuery();
-                SQLCopy.SqlQueryCopy += GetSqlQuery() + "\n\rGO\n\r";
             }
             catch (SqlException ex)
             {

@@ -22,14 +22,14 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
             {
                 get
                 {
-                    decimal totalCosto = (decimal)0.0;
-                    totalCosto += Fuente.PrecioUnidad.max;
-                    totalCosto += PlacaBase.PrecioUnidad.max;
-                    totalCosto += Procesador.PrecioUnidad.max;
-                    totalCosto += Ram.PrecioUnidad.max;
-                    totalCosto += TarjetaGrafica.PrecioUnidad.max;
-                    totalCosto += Monitor.PrecioUnidad.max;
-                    totalCosto += Gabinete.PrecioUnidad.max;
+                    decimal totalCosto = new Decimal(0.0);
+                    totalCosto += Fuente.PrecioUnidad.Max;
+                    totalCosto += PlacaBase.PrecioUnidad.Max;
+                    totalCosto += Procesador.PrecioUnidad.Max;
+                    totalCosto += Ram.PrecioUnidad.Max;
+                    totalCosto += TarjetaGrafica.PrecioUnidad.Max;
+                    totalCosto += Monitor.PrecioUnidad.Max;
+                    totalCosto += Gabinete.PrecioUnidad.Max;
                     return totalCosto;
                 }
             }
@@ -37,37 +37,21 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
             {
                 get
                 {
-                    decimal totalCosto = (decimal)0.0;
-                    totalCosto += Fuente.PrecioUnidad.min;
-                    totalCosto += PlacaBase.PrecioUnidad.min;
-                    totalCosto += Procesador.PrecioUnidad.min;
-                    totalCosto += Ram.PrecioUnidad.min;
-                    totalCosto += TarjetaGrafica.PrecioUnidad.min;
-                    totalCosto += Monitor.PrecioUnidad.min;
-                    totalCosto += Gabinete.PrecioUnidad.min;
-                    return totalCosto;
-                }
-            }
-            public decimal Costo
-            {
-                get
-                {
-                    decimal totalCosto = (decimal)0.0;
-                    totalCosto += Fuente.PrecioUnidad.CostoReal;
-                    totalCosto += PlacaBase.PrecioUnidad.CostoReal;
-                    totalCosto += Procesador.PrecioUnidad.CostoReal;
-                    totalCosto += Ram.PrecioUnidad.CostoReal;
-                    totalCosto += TarjetaGrafica.PrecioUnidad.CostoReal;
-                    totalCosto += Monitor.PrecioUnidad.CostoReal;
-                    totalCosto += Gabinete.PrecioUnidad.CostoReal;
+                    decimal totalCosto = new Decimal(0.0);
+                    totalCosto += Fuente.PrecioUnidad.Min;
+                    totalCosto += PlacaBase.PrecioUnidad.Min;
+                    totalCosto += Procesador.PrecioUnidad.Min;
+                    totalCosto += Ram.PrecioUnidad.Min;
+                    totalCosto += TarjetaGrafica.PrecioUnidad.Min;
+                    totalCosto += Monitor.PrecioUnidad.Min;
+                    totalCosto += Gabinete.PrecioUnidad.Min;
                     return totalCosto;
                 }
             }
             public class MinMax<T> where T : struct
             {
-                public T min { get; set; }
-                public T max { get; set; }
-                public T CostoReal { get; set; }
+                public T Min { get; set; }
+                public T Max { get; set; }
             }
             public class AlmacenamientoR
             {
@@ -116,7 +100,5 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
                 public MinMax<decimal> PrecioUnidad { get; set; }
             }
         }
-
     }
-
 }

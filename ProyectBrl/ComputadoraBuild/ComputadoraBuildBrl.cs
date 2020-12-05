@@ -23,5 +23,10 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectBr
         {
             return ComputerBuildDal.GetComputersBuild(tipoComputer);
         }
+
+        public static Computadora ObtenerComputadoraRecomendada(Requirements.TipoComputer tipoComputer)
+        {
+            return ComputerBuildDal.ObtenerComputadoraRecomendada(tipoComputer);
+        }
     }
 }
