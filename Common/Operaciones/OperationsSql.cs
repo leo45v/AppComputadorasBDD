@@ -12,12 +12,12 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common
 {
     public class OperationsSql
     {
-        private static string connectionString = ConfigurationManager.ConnectionStrings["BDDDIRECT"].ConnectionString;
-        private static readonly SqlConnection connection = new SqlConnection() { ConnectionString = connectionString };
-        private static readonly SqlCommand command = new SqlCommand() { Connection = connection, CommandType = CommandType.Text };
+        private static string connectionString = "";// = ConfigurationManager.ConnectionStrings["BDDDIRECT"].ConnectionString;
+        private static SqlConnection connection = new SqlConnection() { ConnectionString = connectionString };
+        private static SqlCommand command = new SqlCommand() { Connection = connection, CommandType = CommandType.Text };
         private static SqlTransaction transaccion;
 
-        public string MyProperty
+        public static string ConectionString
         {
             get
             {
@@ -25,7 +25,8 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common
             }
             set
             {
-                connection.ConnectionString = connectionString;
+                connection =  new SqlConnection() { ConnectionString = value };
+                command = new SqlCommand() { Connection = connection, CommandType = CommandType.Text };
                 connectionString = value;
             }
         }

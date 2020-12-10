@@ -9,6 +9,7 @@ using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectBrl;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Pantalla;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectBrl.Reservas;
 using System.Windows.Threading;
+using System.Configuration;
 
 namespace WpfAppComputadoras
 {
@@ -28,6 +29,7 @@ namespace WpfAppComputadoras
         public MainWindow()
         {
             InitializeComponent();
+            OperationsSql.ConectionString = ConfigurationManager.ConnectionStrings["BDDDIRECT"].ConnectionString;
             txt_Usuario.Focus();
 
             Thread thread = new Thread(GetDataBg);

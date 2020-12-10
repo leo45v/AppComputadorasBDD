@@ -212,8 +212,8 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configura
                     tipoComputer.Almacenamiento.Tipo.Min = ETipoDisco.HDD;
                     tipoComputer.Almacenamiento.Tipo.Max = ETipoDisco.SSD;
 
-                    tipoComputer.Fuente.PrecioUnidad.Max = 450;
-                    tipoComputer.Fuente.PrecioUnidad.Min = 200;
+                    tipoComputer.Fuente.PrecioUnidad.Max = 150;
+                    tipoComputer.Fuente.PrecioUnidad.Min = 40;
                     tipoComputer.Fuente.Certificacion.Max = ECertificacion.Bronze_80Plus;
                     tipoComputer.Fuente.Certificacion.Min = ECertificacion.None;
 

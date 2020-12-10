@@ -24,11 +24,11 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
         }
         private static readonly ConfiguracionComputerOperation configXD = new ConfiguracionComputerOperation(presupuesto);
 
-     
+
         public static Computadora ObtenerComputadoraRecomendada(Requirements.TipoComputer tipoComputer)
         {
             List<Computadora> computadoras = GetComputersBuild(tipoComputer);
-            Computadora computadora = new Computadora();
+            Computadora computadora = null;
             if (computadoras.Count > 0)
             {
                 computadora = computadoras.Last();
@@ -286,7 +286,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             return computadorita;
         }
-        
+
         private static List<List<Almacenamiento>> CombinarAlmacenamiento(List<Almacenamiento> almacenamientos, double capacidadMin, double capacidadMax)
         {
             List<List<Almacenamiento>> almacenamientos1 = new List<List<Almacenamiento>>();

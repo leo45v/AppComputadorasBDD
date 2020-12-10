@@ -10,6 +10,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common
         public string NombreUsuario { get; set; }
         public string Contrasenia { get; set; }
         public bool Eliminado { get; set; }
+        public DateTime DateOfJoing { get; set; }
 
         /// <summary>
         /// Property for Rol

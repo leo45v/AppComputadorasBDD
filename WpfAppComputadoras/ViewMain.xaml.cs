@@ -15,6 +15,7 @@ using WpfAppComputadoras.ClienteView;
 using WpfAppComputadoras.Extra;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Operaciones;
 using Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.Configuracion;
+using System.Configuration;
 
 namespace WpfAppComputadoras
 {
@@ -72,6 +73,7 @@ namespace WpfAppComputadoras
         public ViewMain(MainWindow main, Guid idUsuario)
         {
             InitializeComponent();
+            
             mainWindow = main;
             MarcaList = main.ListaMarcas;
             Colores = main.ListaColores;

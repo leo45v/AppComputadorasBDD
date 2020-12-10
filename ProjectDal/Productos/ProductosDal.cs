@@ -129,6 +129,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             catch (Exception)
             {
+                OperationsSql.ExecuteTransactionCancel();
                 LogError.SetError("Problemas al Obtener los Productos");
             }
             finally { OperationsSql.CloseConnection(); }

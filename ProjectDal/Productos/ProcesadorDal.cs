@@ -34,6 +34,10 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
                     OperationsSql.ExecuteTransactionCommit();
                     estado = true;
                 }
+                else
+                {
+                    OperationsSql.ExecuteTransactionCancel();
+                }
             }
             catch (Exception)
             {
@@ -42,7 +46,7 @@ namespace Univalle.Fie.Sistemas.BaseDeDatos2.AppComputadorasBDD.Common.ProjectDa
             }
             finally
             {
-                    ProductosDal.cascada = false;
+                ProductosDal.cascada = false;
                 OperationsSql.CloseConnection();
             }
             return estado;

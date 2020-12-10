@@ -1,0 +1,31 @@
+{
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:58248",
+      "sslPort": 44369
+    }
+  },
+  "$schema": "http://json.schemastore.org/launchsettings.json",
+  "profiles": {
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "launchUrl": "api/products",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "Authorization": "Bearer  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJwZXBlIiwiZW1haWwiOiJwZXBlQHBlcGUuY29tIiwiRGF0ZU9mSm9pbmciOiIyMDIwLTEyLTA5IiwianRpIjoiYjM2ZDUxYmEtZjI0Yy00ZDU1LWI4ZWEtMjQwYzRiOTk4MDVjIiwiZXhwIjoxNjA3NTc3OTMyLCJpc3MiOiJjb21wdXMuY29tIiwiYXVkIjoiY29tcHVzLmNvbSJ9.wBkzH4c6_R-1nMVp1gY3dMWrY-bw1hN1G5cLBon7NUw"
+      }
+    },
+    "ComputersWebService": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "weatherforecast",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:5001;http://localhost:5000"
+    }
+  }
+}
